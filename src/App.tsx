@@ -66,7 +66,7 @@ function App() {
 
 	return (
 		<main className="h-screen grid grid-rows-[2.5rem_1fr]">
-			<Menubar>
+			<Menubar className="rounded-none border-t-0 border-x-0">
 				<MenubarMenu>
 					<MenubarTrigger>File</MenubarTrigger>
 					<MenubarContent>
