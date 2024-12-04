@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Python
+.venv
+generator/blocks
+generator/*.json
