@@ -15,6 +15,7 @@ import {
 
 import ThemeChanger from "./components/menubar/theme-changer";
 import Blocks from "./components/blocks";
+import Cursor from "./components/cursor";
 
 function App() {
 	const stageContainerRef = useRef<HTMLDivElement>(null);
@@ -27,23 +28,30 @@ function App() {
 
 	const [stageScale, setStageScale] = useState(1);
 	const [stageCoords, setStageCoords] = useState<Position>({ x: 0, y: 0 });
+	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
+
+	const onMouseMove = (e) => {
+		const stage = e.target.getStage();
+		const oldScale = stage.scaleX();
+		const pointer = stage.getPointerPosition();
+
+		setMousePosition({
+			x: (pointer.x - stage.x()) / oldScale,
+			y: (pointer.y - stage.y()) / oldScale,
+		});
+	};
 
 	const onWheel = (e) => {
 		const stage = e.target.getStage();
 		const oldScale = stage.scaleX();
 		const pointer = stage.getPointerPosition();
 
-		const mousePoint = {
-			x: (pointer.x - stage.x()) / oldScale,
-			y: (pointer.y - stage.y()) / oldScale,
-		};
-
 		const newScale = e.evt.deltaY < 0 ? oldScale * 1.05 : oldScale / 1.05;
 
 		setStageScale(newScale);
 		setStageCoords({
-			x: pointer.x - mousePoint.x * newScale,
-			y: pointer.y - mousePoint.y * newScale,
+			x: pointer.x - mousePosition.x * newScale,
+			y: pointer.y - mousePosition.y * newScale,
 		});
 	};
 
@@ -96,10 +104,12 @@ function App() {
 					y={stageCoords.y}
 					scaleX={stageScale}
 					scaleY={stageScale}
+					onMouseMove={onMouseMove}
 					onWheel={onWheel}
 				>
 					<Layer imageSmoothingEnabled={false}>
 						<Blocks />
+						<Cursor mousePosition={mousePosition} />
 					</Layer>
 				</Stage>
 			</div>
