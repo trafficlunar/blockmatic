@@ -103,7 +103,7 @@ function App() {
 					scaleY={stageScale}
 					onWheel={onWheel}
 				>
-					<Layer>
+					<Layer imageSmoothingEnabled={false}>
 						<Text text="test" fontSize={20} fill="white" />
 						<Image image={image} />
 					</Layer>
