@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Image, Layer, Stage, Text } from "react-konva";
+import { Layer, Stage } from "react-konva";
 
 import {
 	Menubar,
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/menubar";
 
 import ThemeChanger from "./components/menubar/theme-changer";
-import useImage from "use-image";
+import Blocks from "./components/blocks";
 
 function App() {
 	const stageContainerRef = useRef<HTMLDivElement>(null);
@@ -26,12 +26,7 @@ function App() {
 	});
 
 	const [stageScale, setStageScale] = useState(1);
-	const [stageCoords, setStageCoords] = useState({
-		x: 0,
-		y: 0,
-	});
-
-	const [image] = useImage("/blocks/programmer-art/stone.png");
+	const [stageCoords, setStageCoords] = useState<Position>({ x: 0, y: 0 });
 
 	const onWheel = (e) => {
 		const stage = e.target.getStage();
@@ -104,8 +99,7 @@ function App() {
 					onWheel={onWheel}
 				>
 					<Layer imageSmoothingEnabled={false}>
-						<Text text="test" fontSize={20} fill="white" />
-						<Image image={image} />
+						<Blocks />
 					</Layer>
 				</Stage>
 			</div>
