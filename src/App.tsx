@@ -68,6 +68,8 @@ function App() {
 		<main className="h-screen grid grid-rows-[2.5rem_1fr]">
 			<Menubar className="rounded-none border-t-0 border-x-0">
 				<MenubarMenu>
+					<a href="https://github.com/trafficlunar/blockmatic" className="ml-4 mr-2">blockmatic</a>
+
 					<MenubarTrigger>File</MenubarTrigger>
 					<MenubarContent>
 						<MenubarItem>Open Schematic</MenubarItem>
