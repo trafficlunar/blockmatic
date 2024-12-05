@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@radix-ui/react-menubar": "^1.1.2",
+    "@radix-ui/react-toggle": "^1.1.0",
+    "@radix-ui/react-toggle-group": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "konva": "^9.3.16",

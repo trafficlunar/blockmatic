@@ -6,3 +6,5 @@ interface Position {
 interface Block extends Position {
     name: string;
 }
+
+type Tool = "hand";

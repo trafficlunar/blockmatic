@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
+import { Hand } from "lucide-react";
 
 import {
 	Menubar,
@@ -12,6 +13,7 @@ import {
 	MenubarSubTrigger,
 	MenubarTrigger,
 } from "@/components/ui/menubar";
+import { ToggleGroup, ToggleGroupItem } from "./components/ui/toggle-group";
 
 import ThemeChanger from "./components/menubar/theme-changer";
 import Blocks from "./components/blocks";
@@ -31,6 +33,7 @@ function App() {
 	const [stageCoords, setStageCoords] = useState<Position>({ x: 0, y: 0 });
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
 
+	const [tool, setTool] = useState<Tool>("hand");
 	const [blocks, setBlocks] = useState<Block[]>([]);
 
 	const onMouseMove = (e) => {
@@ -68,10 +71,12 @@ function App() {
 	}, []);
 
 	return (
-		<main className="h-screen grid grid-rows-[2.5rem_1fr]">
-			<Menubar className="rounded-none border-t-0 border-x-0">
+		<main className="h-screen grid grid-rows-[2.5rem_1fr] grid-cols-[2.5rem_1fr]">
+			<Menubar className="rounded-none border-t-0 border-x-0 col-span-2">
 				<MenubarMenu>
-					<a href="https://github.com/trafficlunar/blockmatic" className="ml-4 mr-2">blockmatic</a>
+					<a href="https://github.com/trafficlunar/blockmatic" className="ml-4 mr-2">
+						blockmatic
+					</a>
 
 					<MenubarTrigger>File</MenubarTrigger>
 					<MenubarContent>
@@ -98,6 +103,12 @@ function App() {
 					</MenubarContent>
 				</MenubarMenu>
 			</Menubar>
+
+			<ToggleGroup type="single" size={"sm"} value={tool} className="flex flex-col justify-start py-0.5 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+				<ToggleGroupItem value="hand">
+					<Hand />
+				</ToggleGroupItem>
+			</ToggleGroup>
 
 			<div ref={stageContainerRef} className="relative w-full h-full">
 				<Stage

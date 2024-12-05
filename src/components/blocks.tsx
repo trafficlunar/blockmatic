@@ -3,7 +3,7 @@ import { Image as KonvaImage } from "react-konva";
 
 import blocksData from "@/lib/blocks/programmer-art/average_colors.json";
 
-function Blocks({ blocks, setBlocks }: { blocks: Block[], setBlocks: React.Dispatch<React.SetStateAction<Block[]>> }) {
+function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispatch<React.SetStateAction<Block[]>> }) {
 	const [images, setImages] = useState<{ [key: string]: HTMLImageElement }>({});
 
 	const findClosestBlock = (r: number, g: number, b: number) => {
@@ -52,12 +52,12 @@ function Blocks({ blocks, setBlocks }: { blocks: Block[], setBlocks: React.Dispa
 					const block = findClosestBlock(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2]);
 
 					const x = Math.floor((i / 4) % imageData.width);
-					const y = Math.floor((i / 4) / imageData.width);
+					const y = Math.floor(i / 4 / imageData.width);
 
 					newBlocks.push({
 						name: block,
 						x,
-						y
+						y,
 					});
 				}
 
