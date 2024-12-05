@@ -7,4 +7,4 @@ interface Block extends Position {
     name: string;
 }
 
-type Tool = "hand";
+type Tool = "hand" | "pencil";

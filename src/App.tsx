@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
-import { Hand } from "lucide-react";
+import { Hand, Pencil } from "lucide-react";
 
 import {
 	Menubar,
@@ -34,9 +34,25 @@ function App() {
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
 
 	const [tool, setTool] = useState<Tool>("hand");
+	const [selectedBlock, setSelectedBlock] = useState("stone");
 	const [blocks, setBlocks] = useState<Block[]>([]);
 
 	const [cssCursor, setCssCursor] = useState("grab");
+	const [mouseDown, setMouseDown] = useState(false);
+
+	const onToolChange = (value) => {
+		setTool(value);
+
+		switch (value) {
+			case "hand":
+				setCssCursor("grab");
+				break;
+
+			default:
+				setCssCursor("auto");
+				break;
+		}
+	};
 
 	const onMouseMove = (e) => {
 		const stage = e.target.getStage();
@@ -47,15 +63,15 @@ function App() {
 			x: (pointer.x - stage.x()) / oldScale,
 			y: (pointer.y - stage.y()) / oldScale,
 		});
-	};
 
-	const onMouseDown = (e) => {
-		if (tool == "hand") {
-			setCssCursor("grabbing");
+		if (mouseDown) {
+			onClick(e);
 		}
 	};
 
 	const onMouseUp = (e) => {
+		setMouseDown(false);
+
 		if (tool == "hand") {
 			setCssCursor("grab");
 		}
@@ -73,6 +89,28 @@ function App() {
 			x: pointer.x - mousePosition.x * newScale,
 			y: pointer.y - mousePosition.y * newScale,
 		});
+	};
+
+	const onClick = (e) => {
+		switch (tool) {
+			case "hand":
+				setCssCursor("grabbing");
+				break;
+			case "pencil": {
+				const blockX = Math.floor(mousePosition.x / 16);
+				const blockY = Math.floor(mousePosition.y / 16);
+				const updatedBlocks = blocks.filter((b) => !(b.x === blockX && b.y === blockY));
+
+				setBlocks([
+					...updatedBlocks,
+					{
+						name: selectedBlock,
+						x: blockX,
+						y: blockY,
+					},
+				]);
+			}
+		}
 	};
 
 	useEffect(() => {
@@ -118,9 +156,18 @@ function App() {
 				</MenubarMenu>
 			</Menubar>
 
-			<ToggleGroup type="single" size={"sm"} value={tool} className="flex flex-col justify-start py-0.5 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+			<ToggleGroup
+				type="single"
+				size={"sm"}
+				value={tool}
+				onValueChange={onToolChange}
+				className="flex flex-col gap-0.5 justify-start py-0.5 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
+			>
 				<ToggleGroupItem value="hand">
 					<Hand />
+				</ToggleGroupItem>
+				<ToggleGroupItem value="pencil">
+					<Pencil />
 				</ToggleGroupItem>
 			</ToggleGroup>
 
@@ -128,16 +175,17 @@ function App() {
 				<Stage
 					width={stageSize.width}
 					height={stageSize.height}
-					draggable
+					draggable={tool == "hand"}
 					ref={stageRef}
 					x={stageCoords.x}
 					y={stageCoords.y}
 					scaleX={stageScale}
 					scaleY={stageScale}
 					onMouseMove={onMouseMove}
-					onMouseDown={onMouseDown}
+					onMouseDown={() => setMouseDown(true)}
 					onMouseUp={onMouseUp}
 					onWheel={onWheel}
+					onClick={onClick}
 					style={{ cursor: cssCursor }}
 				>
 					<Layer imageSmoothingEnabled={false}>
