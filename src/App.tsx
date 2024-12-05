@@ -16,6 +16,7 @@ import {
 import ThemeChanger from "./components/menubar/theme-changer";
 import Blocks from "./components/blocks";
 import Cursor from "./components/cursor";
+import CursorInformation from "./components/cursor-information";
 
 function App() {
 	const stageContainerRef = useRef<HTMLDivElement>(null);
@@ -29,6 +30,8 @@ function App() {
 	const [stageScale, setStageScale] = useState(1);
 	const [stageCoords, setStageCoords] = useState<Position>({ x: 0, y: 0 });
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
+
+	const [blocks, setBlocks] = useState<Block[]>([]);
 
 	const onMouseMove = (e) => {
 		const stage = e.target.getStage();
@@ -96,7 +99,7 @@ function App() {
 				</MenubarMenu>
 			</Menubar>
 
-			<div ref={stageContainerRef} className="w-full h-full">
+			<div ref={stageContainerRef} className="relative w-full h-full">
 				<Stage
 					width={stageSize.width}
 					height={stageSize.height}
@@ -110,10 +113,12 @@ function App() {
 					onWheel={onWheel}
 				>
 					<Layer imageSmoothingEnabled={false}>
-						<Blocks />
+						<Blocks blocks={blocks} setBlocks={setBlocks} />
 						<Cursor mousePosition={mousePosition} />
 					</Layer>
 				</Stage>
+
+				<CursorInformation mousePosition={mousePosition} blocks={blocks} />
 			</div>
 		</main>
 	);
