@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
-import { Hand, Pencil } from "lucide-react";
+import { Eraser, Hand, Pencil } from "lucide-react";
 
 import {
 	Menubar,
@@ -92,15 +92,15 @@ function App() {
 	};
 
 	const onClick = (e) => {
+		const blockX = Math.floor(mousePosition.x / 16);
+		const blockY = Math.floor(mousePosition.y / 16);
+		const updatedBlocks = blocks.filter((b) => !(b.x === blockX && b.y === blockY));
+
 		switch (tool) {
 			case "hand":
 				setCssCursor("grabbing");
 				break;
 			case "pencil": {
-				const blockX = Math.floor(mousePosition.x / 16);
-				const blockY = Math.floor(mousePosition.y / 16);
-				const updatedBlocks = blocks.filter((b) => !(b.x === blockX && b.y === blockY));
-
 				setBlocks([
 					...updatedBlocks,
 					{
@@ -109,6 +109,11 @@ function App() {
 						y: blockY,
 					},
 				]);
+				break;
+			}
+			case "eraser": {
+				setBlocks(updatedBlocks);
+				break;
 			}
 		}
 	};
@@ -158,16 +163,18 @@ function App() {
 
 			<ToggleGroup
 				type="single"
-				size={"sm"}
 				value={tool}
 				onValueChange={onToolChange}
-				className="flex flex-col gap-0.5 justify-start py-0.5 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
+				className="flex flex-col justify-start py-1 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
 			>
 				<ToggleGroupItem value="hand">
 					<Hand />
 				</ToggleGroupItem>
 				<ToggleGroupItem value="pencil">
 					<Pencil />
+				</ToggleGroupItem>
+				<ToggleGroupItem value="eraser">
+					<Eraser />
 				</ToggleGroupItem>
 			</ToggleGroup>
 
