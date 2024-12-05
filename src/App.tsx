@@ -36,6 +36,8 @@ function App() {
 	const [tool, setTool] = useState<Tool>("hand");
 	const [blocks, setBlocks] = useState<Block[]>([]);
 
+	const [cssCursor, setCssCursor] = useState("grab");
+
 	const onMouseMove = (e) => {
 		const stage = e.target.getStage();
 		const oldScale = stage.scaleX();
@@ -45,6 +47,18 @@ function App() {
 			x: (pointer.x - stage.x()) / oldScale,
 			y: (pointer.y - stage.y()) / oldScale,
 		});
+	};
+
+	const onMouseDown = (e) => {
+		if (tool == "hand") {
+			setCssCursor("grabbing");
+		}
+	};
+
+	const onMouseUp = (e) => {
+		if (tool == "hand") {
+			setCssCursor("grab");
+		}
 	};
 
 	const onWheel = (e) => {
@@ -121,7 +135,10 @@ function App() {
 					scaleX={stageScale}
 					scaleY={stageScale}
 					onMouseMove={onMouseMove}
+					onMouseDown={onMouseDown}
+					onMouseUp={onMouseUp}
 					onWheel={onWheel}
+					style={{ cursor: cssCursor }}
 				>
 					<Layer imageSmoothingEnabled={false}>
 						<Blocks blocks={blocks} setBlocks={setBlocks} />
