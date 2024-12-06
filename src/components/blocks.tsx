@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
-import blocksData from "@/lib/blocks/programmer-art/average_colors.json";
+import blocksData from "@/lib/data/blocks/programmer-art/average_colors.json";
+import welcomeBlocksData from "@/lib/data/welcome.json";
+
 import { Sprite } from "@pixi/react";
 
 function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispatch<React.SetStateAction<Block[]>> }) {
@@ -65,12 +67,7 @@ function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispa
 			}
 		});
 
-		setBlocks([
-			{ name: "stone", x: 0, y: 0 },
-			{ name: "birch_log", x: 1, y: 1 },
-			{ name: "redstone_lamp", x: 2, y: 0 },
-			{ name: "dirt", x: 3, y: 1 },
-		]);
+		setBlocks(welcomeBlocksData);
 	}, []);
 
 	return (
