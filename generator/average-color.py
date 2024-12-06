@@ -10,7 +10,7 @@ output = Path("average_colors.json")
 # Main function
 def calculate(image_path):
     image = Image.open(image_path)
-    image = image.convert("RGB")
+    image = image.convert("RGBA")
     pixels = np.array(image)
     color = pixels.mean(axis=(0, 1))
     return tuple(int(c) for c in color)

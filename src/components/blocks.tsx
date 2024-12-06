@@ -6,12 +6,12 @@ import { Sprite } from "@pixi/react";
 function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispatch<React.SetStateAction<Block[]>> }) {
 	const [images, setImages] = useState<{ [key: string]: HTMLImageElement }>({});
 
-	const findClosestBlock = (r: number, g: number, b: number) => {
+	const findClosestBlock = (r: number, g: number, b: number, a: number) => {
 		let closestBlock = "";
 		let closestDistance = Infinity;
 
-		Object.entries(blocksData).forEach(([block, rgb]) => {
-			const distance = Math.sqrt(Math.pow(r - rgb[0], 2) + Math.pow(g - rgb[1], 2) + Math.pow(b - rgb[2], 2));
+		Object.entries(blocksData).forEach(([block, rgba]) => {
+			const distance = Math.sqrt(Math.pow(r - rgba[0], 2) + Math.pow(g - rgba[1], 2) + Math.pow(b - rgba[2], 2) + Math.pow(a - rgba[3], 3));
 			if (distance < closestDistance) {
 				closestDistance = distance;
 				closestBlock = block;
@@ -49,7 +49,7 @@ function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispa
 				const newBlocks: Block[] = [];
 
 				for (let i = 0; i < imageData.data.length; i += 4) {
-					const block = findClosestBlock(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2]);
+					const block = findClosestBlock(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
 
 					const x = Math.floor((i / 4) % imageData.width);
 					const y = Math.floor(i / 4 / imageData.width);
