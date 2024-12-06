@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Image as KonvaImage } from "react-konva";
 
 import blocksData from "@/lib/blocks/programmer-art/average_colors.json";
+import { Sprite } from "@pixi/react";
 
 function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispatch<React.SetStateAction<Block[]>> }) {
 	const [images, setImages] = useState<{ [key: string]: HTMLImageElement }>({});
@@ -43,9 +43,9 @@ function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispa
 			if (ctx) {
 				canvas.width = image.width;
 				canvas.height = image.height;
-				ctx.drawImage(image, 0, 0, image.width / 8, image.height / 8);
+				ctx.drawImage(image, 0, 0, image.width / 4, image.height / 4);
 
-				const imageData = ctx.getImageData(0, 0, image.width / 8, image.height / 8);
+				const imageData = ctx.getImageData(0, 0, image.width / 4, image.height / 4);
 				const newBlocks: Block[] = [];
 
 				for (let i = 0; i < imageData.data.length; i += 4) {
@@ -76,7 +76,7 @@ function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispa
 	return (
 		<>
 			{blocks.map((block, index) => (
-				<KonvaImage key={index} image={images[block.name]} x={block.x * 16} y={block.y * 16} />
+				<Sprite key={index} image={images[block.name]} x={block.x * 16} y={block.y * 16} />
 			))}
 		</>
 	);

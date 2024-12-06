@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { Layer, Stage } from "react-konva";
+import React, { useEffect, useRef, useState } from "react";
 import { Eraser, Hand, Pencil } from "lucide-react";
+
+import * as PIXI from "pixi.js";
+import { Container, Stage } from "@pixi/react";
 
 import {
 	Menubar,
@@ -20,80 +22,62 @@ import Blocks from "./components/blocks";
 import Cursor from "./components/cursor";
 import CursorInformation from "./components/cursor-information";
 
+// Set scale mode to NEAREST
+PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
 function App() {
 	const stageContainerRef = useRef<HTMLDivElement>(null);
-	const stageRef = useRef(null);
 
-	const [stageSize, setStageSize] = useState({
-		width: 0,
-		height: 0,
-	});
-
-	const [stageScale, setStageScale] = useState(1);
-	const [stageCoords, setStageCoords] = useState<Position>({ x: 0, y: 0 });
+	const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
+	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
-
-	const [tool, setTool] = useState<Tool>("hand");
-	const [selectedBlock, setSelectedBlock] = useState("stone");
+	const [localMousePosition, setLocalMousePosition] = useState<Position>({ x: 0, y: 0 });
+	const [dragging, setDragging] = useState(false);
+	const [scale, setScale] = useState(1);
 	const [blocks, setBlocks] = useState<Block[]>([]);
 
 	const [cssCursor, setCssCursor] = useState("grab");
-	const [mouseDown, setMouseDown] = useState(false);
+	const [tool, setTool] = useState<Tool>("hand");
+	const [selectedBlock, setSelectedBlock] = useState("stone");
 
-	const onToolChange = (value) => {
+	const onToolChange = (value: Tool) => {
 		setTool(value);
-
-		switch (value) {
-			case "hand":
-				setCssCursor("grab");
-				break;
-
-			default:
-				setCssCursor("auto");
-				break;
-		}
+		setCssCursor(value === "hand" ? "grab" : "pointer");
 	};
 
-	const onMouseMove = (e) => {
-		const stage = e.target.getStage();
-		const oldScale = stage.scaleX();
-		const pointer = stage.getPointerPosition();
+	const onMouseMove = (e: React.MouseEvent) => {
+		if (dragging) {
+			if (tool === "hand") {
+				setCoords((prevCoords) => ({
+					x: prevCoords.x + e.movementX,
+					y: prevCoords.y + e.movementY,
+				}));
+			}
+
+			onMouseDown(e);
+		}
+
+		const stageRect = stageContainerRef.current?.getBoundingClientRect();
+		if (!stageRect) return;
+
+		const mouseX = e.clientX - stageRect.left;
+		const mouseY = e.clientY - stageRect.top;
 
 		setMousePosition({
-			x: (pointer.x - stage.x()) / oldScale,
-			y: (pointer.y - stage.y()) / oldScale,
+			x: mouseX,
+			y: mouseY
 		});
-
-		if (mouseDown) {
-			onClick(e);
-		}
-	};
-
-	const onMouseUp = (e) => {
-		setMouseDown(false);
-
-		if (tool == "hand") {
-			setCssCursor("grab");
-		}
-	};
-
-	const onWheel = (e) => {
-		const stage = e.target.getStage();
-		const oldScale = stage.scaleX();
-		const pointer = stage.getPointerPosition();
-
-		const newScale = e.evt.deltaY < 0 ? oldScale * 1.05 : oldScale / 1.05;
-
-		setStageScale(newScale);
-		setStageCoords({
-			x: pointer.x - mousePosition.x * newScale,
-			y: pointer.y - mousePosition.y * newScale,
+		setLocalMousePosition({
+			x: (mouseX - coords.x) / scale,
+			y: (mouseY - coords.y) / scale
 		});
 	};
 
-	const onClick = (e) => {
-		const blockX = Math.floor(mousePosition.x / 16);
-		const blockY = Math.floor(mousePosition.y / 16);
+	const onMouseDown = (e: React.MouseEvent) => {
+		setDragging(true);
+
+		const blockX = Math.floor(localMousePosition.x / 16);
+		const blockY = Math.floor(localMousePosition.y / 16);
 		const updatedBlocks = blocks.filter((b) => !(b.x === blockX && b.y === blockY));
 
 		switch (tool) {
@@ -111,15 +95,32 @@ function App() {
 				]);
 				break;
 			}
-			case "eraser": {
+			case "eraser":
 				setBlocks(updatedBlocks);
 				break;
-			}
 		}
 	};
 
+	const onMouseUp = () => {
+		setDragging(false);
+		setCssCursor(tool === "hand" ? "grab" : "pointer");
+	};
+
+	const onWheel = (e: React.WheelEvent) => {
+		e.preventDefault();
+
+		const scaleChange = e.deltaY > 0 ? -0.1 : 0.1;
+		const newScale = Math.min(Math.max(scale + scaleChange, 0.25), 16);
+
+		setScale(newScale);
+		setCoords({
+			x: mousePosition.x - localMousePosition.x * newScale,
+			y: mousePosition.y - localMousePosition.y * newScale,
+		});
+	};
+
 	useEffect(() => {
-		if (stageContainerRef.current && stageRef.current) {
+		if (stageContainerRef.current) {
 			setStageSize({
 				width: stageContainerRef.current.offsetWidth,
 				height: stageContainerRef.current.offsetHeight,
@@ -182,26 +183,19 @@ function App() {
 				<Stage
 					width={stageSize.width}
 					height={stageSize.height}
-					draggable={tool == "hand"}
-					ref={stageRef}
-					x={stageCoords.x}
-					y={stageCoords.y}
-					scaleX={stageScale}
-					scaleY={stageScale}
 					onMouseMove={onMouseMove}
-					onMouseDown={() => setMouseDown(true)}
+					onMouseDown={onMouseDown}
 					onMouseUp={onMouseUp}
 					onWheel={onWheel}
-					onClick={onClick}
 					style={{ cursor: cssCursor }}
 				>
-					<Layer imageSmoothingEnabled={false}>
+					<Container x={coords.x} y={coords.y} scale={scale}>
 						<Blocks blocks={blocks} setBlocks={setBlocks} />
-						<Cursor mousePosition={mousePosition} />
-					</Layer>
+						<Cursor localMousePosition={localMousePosition} />
+					</Container>
 				</Stage>
 
-				<CursorInformation mousePosition={mousePosition} blocks={blocks} />
+				<CursorInformation localMousePosition={localMousePosition} blocks={blocks} />
 			</div>
 		</main>
 	);

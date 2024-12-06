@@ -10,16 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pixi/react": "7",
     "@radix-ui/react-menubar": "^1.1.2",
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "konva": "^9.3.16",
     "lucide-react": "^0.464.0",
+    "pixi.js": "7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-konva": "^18.2.10",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7"
   },

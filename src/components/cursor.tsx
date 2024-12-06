@@ -1,22 +1,29 @@
 import { useEffect, useState } from "react";
-import { Rect } from "react-konva";
+import { Graphics } from "@pixi/react";
 
-function Cursor({ mousePosition }: { mousePosition: Position }) {
+function Cursor({ localMousePosition }: { localMousePosition: Position }) {
 	const [position, setPosition] = useState({ x: 0, y: 0 });
 
 	useEffect(() => {
-		if (mousePosition) {
-			const snappedX = Math.floor(mousePosition.x / 16) * 16;
-			const snappedY = Math.floor(mousePosition.y / 16) * 16;
+		if (localMousePosition) {
+			const x = Math.floor(localMousePosition.x / 16) * 16;
+			const y = Math.floor(localMousePosition.y / 16) * 16;
 
-			setPosition({
-				x: snappedX,
-				y: snappedY,
-			});
+			setPosition({ x, y });
 		}
-	}, [mousePosition]);
+	}, [localMousePosition]);
 
-	return <Rect x={position.x} y={position.y} width={16} height={16} stroke={"white"} strokeWidth={0.5} dash={[2.5]} />;
+	return (
+		<Graphics
+			x={position.x}
+			y={position.y}
+			draw={(g) => {
+				g.clear();
+				g.lineStyle(1, 0xffffff, 1);
+				g.drawRect(0, 0, 16, 16);
+			}}
+		/>
+	);
 }
 
 export default Cursor;
