@@ -267,7 +267,6 @@
 	"diamond_block": [97, 219, 213, 255],
 	"chiseled_stone_bricks": [118, 118, 118, 255],
 	"lapis_block": [38, 67, 137, 255],
-	"end_portal_frame_side": [119, 130, 100, 207],
 	"nether_wart_block": [117, 6, 7, 255],
 	"observer_top": [97, 97, 97, 255]
 }
