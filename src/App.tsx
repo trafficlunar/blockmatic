@@ -54,7 +54,7 @@ function App() {
 				}));
 			}
 
-			onMouseDown(e);
+			onMouseDown();
 		}
 
 		const stageRect = stageContainerRef.current?.getBoundingClientRect();
@@ -65,15 +65,15 @@ function App() {
 
 		setMousePosition({
 			x: mouseX,
-			y: mouseY
+			y: mouseY,
 		});
 		setLocalMousePosition({
 			x: (mouseX - coords.x) / scale,
-			y: (mouseY - coords.y) / scale
+			y: (mouseY - coords.y) / scale,
 		});
 	};
 
-	const onMouseDown = (e: React.MouseEvent) => {
+	const onMouseDown = () => {
 		setDragging(true);
 
 		const blockX = Math.floor(localMousePosition.x / 16);
@@ -120,11 +120,17 @@ function App() {
 	};
 
 	useEffect(() => {
-		if (stageContainerRef.current) {
-			setStageSize({
-				width: stageContainerRef.current.offsetWidth,
-				height: stageContainerRef.current.offsetHeight,
-			});
+		const resizeCanvas = () => {
+			if (stageContainerRef.current) {
+				setStageSize({
+					width: stageContainerRef.current.offsetWidth,
+					height: stageContainerRef.current.offsetHeight,
+				});
+			}
+		};
+
+		resizeCanvas();
+		window.addEventListener("resize", resizeCanvas);
 		}
 	}, []);
 
