@@ -15,12 +15,14 @@ import {
 	MenubarSubTrigger,
 	MenubarTrigger,
 } from "@/components/ui/menubar";
-import { ToggleGroup, ToggleGroupItem } from "./components/ui/toggle-group";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 import ThemeChanger from "./components/menubar/theme-changer";
 import Blocks from "./components/blocks";
 import Cursor from "./components/cursor";
 import CursorInformation from "./components/cursor-information";
+
+import spritesheet from "@/lib/data/blocks/programmer-art/spritesheet.json";
 
 // Set scale mode to NEAREST
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -35,6 +37,7 @@ function App() {
 	const [dragging, setDragging] = useState(false);
 	const [scale, setScale] = useState(1);
 	const [blocks, setBlocks] = useState<Block[]>([]);
+	const [textures, setTextures] = useState<Record<string, PIXI.Texture>>({});
 
 	const [cssCursor, setCssCursor] = useState("grab");
 	const [tool, setTool] = useState<Tool>("hand");
@@ -110,7 +113,7 @@ function App() {
 		e.preventDefault();
 
 		const scaleChange = e.deltaY > 0 ? -0.1 : 0.1;
-		const newScale = Math.min(Math.max(scale + (scaleChange * scale), 0.25), 32);
+		const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.25), 32);
 
 		setScale(newScale);
 		setCoords({
@@ -131,7 +134,13 @@ function App() {
 
 		resizeCanvas();
 		window.addEventListener("resize", resizeCanvas);
-		}
+
+		const loadSpritesheet = async () => {
+			const sheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/programmer-art/spritesheet.png"), spritesheet);
+			await sheet.parse();
+			setTextures(sheet.textures);
+		};
+		loadSpritesheet();
 	}, []);
 
 	return (
@@ -196,7 +205,7 @@ function App() {
 					style={{ cursor: cssCursor }}
 				>
 					<Container x={coords.x} y={coords.y} scale={scale}>
-						<Blocks blocks={blocks} setBlocks={setBlocks} />
+						{textures && <Blocks blocks={blocks} setBlocks={setBlocks} textures={textures} />}
 						<Cursor localMousePosition={localMousePosition} />
 					</Container>
 				</Stage>

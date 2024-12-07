@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { Texture } from "pixi.js";
+import { Sprite } from "@pixi/react";
 
 import blocksData from "@/lib/data/blocks/programmer-art/average_colors.json";
 import welcomeBlocksData from "@/lib/data/welcome.json";
 
-import { Sprite } from "@pixi/react";
-
-function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispatch<React.SetStateAction<Block[]>> }) {
-	const [images, setImages] = useState<{ [key: string]: HTMLImageElement }>({});
-
+function Blocks({
+	blocks,
+	setBlocks,
+	textures,
+}: {
+	blocks: Block[];
+	setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
+	textures: Record<string, Texture>;
+}) {
 	const findClosestBlock = (r: number, g: number, b: number, a: number) => {
 		let closestBlock = "";
 		let closestDistance = Infinity;
@@ -24,17 +30,6 @@ function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispa
 	};
 
 	useEffect(() => {
-		// Load images
-		const loadedImages: { [key: string]: HTMLImageElement } = {};
-
-		for (const name of Object.keys(blocksData)) {
-			const image = new Image();
-			image.src = `/blocks/programmer-art/${name}.png`;
-			loadedImages[name] = image;
-		}
-
-		setImages(loadedImages);
-
 		// TESTING: convert image to blocks
 		const image = new Image();
 		image.src = "/bliss.png";
@@ -72,9 +67,15 @@ function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: React.Dispa
 
 	return (
 		<>
-			{blocks.map((block, index) => (
-				<Sprite key={index} image={images[block.name]} x={block.x * 16} y={block.y * 16} />
-			))}
+			{blocks.map((block, index) => {
+				const texture = textures[block.name];
+				if (!texture) {
+					console.warn(`Texture not found for block: ${block.name}`);
+					return null;
+				}
+
+				return <Sprite key={index} texture={texture} x={block.x * 16} y={block.y * 16} />;
+			})}
 		</>
 	);
 }
