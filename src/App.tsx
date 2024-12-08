@@ -183,13 +183,13 @@ function App() {
 				onValueChange={onToolChange}
 				className="flex flex-col justify-start py-1 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
 			>
-				<ToggleGroupItem value="hand">
+				<ToggleGroupItem value="hand" className="!p-0 !h-8 !min-w-8">
 					<Hand />
 				</ToggleGroupItem>
-				<ToggleGroupItem value="pencil">
+				<ToggleGroupItem value="pencil" className="!p-0 !h-8 !min-w-8">
 					<Pencil />
 				</ToggleGroupItem>
-				<ToggleGroupItem value="eraser">
+				<ToggleGroupItem value="eraser" className="!p-0 !h-8 !min-w-8">
 					<Eraser />
 				</ToggleGroupItem>
 			</ToggleGroup>
