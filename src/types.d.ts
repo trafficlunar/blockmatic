@@ -1,3 +1,5 @@
+type Theme = "dark" | "light" | "system";
+
 interface Position {
     x: number;
     y: number

@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 
-function CursorInformation({ localMousePosition, blocks }: { localMousePosition: Position; blocks: Block[] }) {
-	const [position, setPosition] = useState({ x: 0, y: 0 });
+interface Props {
+	mouseCoords: Position;
+	blocks: Block[];
+}
+
+function CursorInformation({ mouseCoords, blocks }: Props) {
+	const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
 	const [block, setBlock] = useState<Block>();
 
 	useEffect(() => {
-		if (localMousePosition) {
-			const x = Math.floor(localMousePosition.x / 16);
-			const y = Math.floor(localMousePosition.y / 16);
+		setPosition({
+			x: mouseCoords.x,
+			y: mouseCoords.y,
+		});
 
-			setPosition({
-				x,
-				y,
-			});
-
-			setBlock(blocks.find((b) => b.x === x && b.y === y));
-		}
-	}, [localMousePosition]);
+		setBlock(blocks.find((b) => b.x === mouseCoords.x && b.y === mouseCoords.y));
+	}, [mouseCoords]);
 
 	return (
 		<div className="absolute left-4 bottom-4 flex flex-col gap-1">
