@@ -1,24 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: Geist, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: Geist, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 @layer base {
-  :root {
-    --radius: 0.5rem;
-  }
+	:root {
+		--radius: 0.5rem;
+	}
 }
 
 body {
-  @apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50;
+	@apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50;
+}
+
+.info-child {
+	@apply bg-white dark:bg-zinc-950 px-2 py-1 rounded shadow-xl w-fit border border-zinc-200 dark:border-zinc-800;
 }

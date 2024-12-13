@@ -7,7 +7,8 @@ import { TexturesContext } from "@/context/TexturesContext";
 
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
-import CursorInformation from "./CursorInformation";
+import CursorInformation from "./information/Cursor";
+import CanvasInformation from "./information/Canvas";
 
 // Set scale mode to NEAREST
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -139,6 +140,7 @@ function Canvas() {
 			</Stage>
 
 			<CursorInformation mouseCoords={mouseCoords} blocks={blocks} />
+			<CanvasInformation scale={scale} setScale={setScale} blocks={blocks} />
 		</div>
 	);
 }
