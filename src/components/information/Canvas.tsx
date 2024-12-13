@@ -1,32 +1,13 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Slider } from "@/components/ui/slider";
 
 interface Props {
 	scale: number;
 	setScale: React.Dispatch<React.SetStateAction<number>>;
-	blocks: Block[];
+	canvasSize: CanvasSize;
 }
 
-function CanvasInformation({ scale, setScale, blocks }: Props) {
-	const canvasSize = useMemo(() => {
-		let minX = Infinity,
-			maxX = -Infinity;
-		let minY = Infinity,
-			maxY = -Infinity;
-
-		blocks.forEach((coord) => {
-			if (coord.x < minX) minX = coord.x;
-			if (coord.x > maxX) maxX = coord.x;
-			if (coord.y < minY) minY = coord.y;
-			if (coord.y > maxY) maxY = coord.y;
-		});
-
-		return {
-			width: maxX - minX,
-			height: maxY - minY,
-		};
-	}, [blocks]);
-
+function CanvasInformation({ scale, setScale, canvasSize }: Props) {
 	const onValueChange = (value: number[]) => {
 		setScale(value[0]);
 	};
@@ -36,8 +17,8 @@ function CanvasInformation({ scale, setScale, blocks }: Props) {
 			<div className="flex flex-col items-end gap-1">
 				<div className="info-child">{Math.floor(scale * 100)}%</div>
 				<div className="info-child">
-					<span>W: {canvasSize.width} </span>
-					<span>H: {canvasSize.height}</span>
+					<span>W: {canvasSize.maxX - canvasSize.minX} </span>
+					<span>H: {canvasSize.maxY - canvasSize.minY}</span>
 				</div>
 			</div>
 

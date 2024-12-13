@@ -10,6 +10,13 @@ interface Dimension {
 	height: number;
 }
 
+interface CanvasSize {
+	minX: number;
+	minY: number;
+	maxX: number;
+	maxY: number;
+}
+
 interface Block extends Position {
 	name: string;
 }
@@ -18,4 +25,5 @@ type Tool = "hand" | "pencil" | "eraser";
 
 interface Settings {
 	grid: boolean;
+	canvasBorder: boolean;
 }

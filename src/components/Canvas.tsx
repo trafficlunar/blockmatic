@@ -11,6 +11,7 @@ import Grid from "./Grid";
 import Cursor from "./Cursor";
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
+import CanvasBorder from "./CanvasBorder";
 
 // Set scale mode to NEAREST
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -35,6 +36,27 @@ function Canvas() {
 	const updatedBlocks = useMemo(() => {
 		return blocks.filter((b) => !(b.x === mouseCoords.x && b.y === mouseCoords.y));
 	}, [blocks, mouseCoords]);
+
+	const canvasSize = useMemo(() => {
+		let minX = Infinity,
+			maxX = -Infinity;
+		let minY = Infinity,
+			maxY = -Infinity;
+
+		blocks.forEach((coord) => {
+			if (coord.x < minX) minX = coord.x;
+			if (coord.x > maxX) maxX = coord.x;
+			if (coord.y < minY) minY = coord.y;
+			if (coord.y > maxY) maxY = coord.y;
+		});
+
+		return {
+			minX,
+			minY,
+			maxX: maxX + 1,
+			maxY: maxY + 1,
+		};
+	}, [blocks]);
 
 	const onToolUse = useCallback(() => {
 		switch (tool) {
@@ -137,6 +159,7 @@ function Canvas() {
 			>
 				<Container x={coords.x} y={coords.y} scale={scale}>
 					<Blocks blocks={blocks} setBlocks={setBlocks} textures={textures} />
+					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} />}
 					<Cursor mouseCoords={mouseCoords} />
 				</Container>
 
@@ -148,7 +171,7 @@ function Canvas() {
 			</Stage>
 
 			<CursorInformation mouseCoords={mouseCoords} blocks={blocks} />
-			<CanvasInformation scale={scale} setScale={setScale} blocks={blocks} />
+			<CanvasInformation scale={scale} setScale={setScale} canvasSize={canvasSize} />
 		</div>
 	);
 }

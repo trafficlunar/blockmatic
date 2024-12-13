@@ -16,6 +16,9 @@ function ViewMenu() {
 				<MenubarCheckboxItem checked={settings.grid} onCheckedChange={onCheckedChange("grid")}>
 					Grid
 				</MenubarCheckboxItem>
+				<MenubarCheckboxItem checked={settings.canvasBorder} onCheckedChange={onCheckedChange("canvasBorder")}>
+					Canvas Border
+				</MenubarCheckboxItem>
 			</MenubarContent>
 		</MenubarMenu>
 	);
