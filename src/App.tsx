@@ -1,3 +1,4 @@
+import { SettingsProvider } from "./context/SettingsContext";
 import { TexturesProvider } from "./context/TexturesContext";
 import { ToolProvider } from "./context/ToolContext";
 
@@ -7,15 +8,17 @@ import Canvas from "./components/Canvas";
 
 function App() {
 	return (
-		<TexturesProvider>
-			<ToolProvider>
-				<main className="h-screen grid grid-rows-[2.5rem_1fr] grid-cols-[2.5rem_1fr]">
-					<Menubar />
-					<Toolbar />
-					<Canvas />
-				</main>
-			</ToolProvider>
-		</TexturesProvider>
+		<SettingsProvider>
+			<TexturesProvider>
+				<ToolProvider>
+					<main className="h-screen grid grid-rows-[2.5rem_1fr] grid-cols-[2.5rem_1fr]">
+						<Menubar />
+						<Toolbar />
+						<Canvas />
+					</main>
+				</ToolProvider>
+			</TexturesProvider>
+		</SettingsProvider>
 	);
 }
 

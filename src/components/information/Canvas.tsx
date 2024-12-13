@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Slider } from "@/components/ui/slider";
 
 interface Props {
@@ -22,8 +22,8 @@ function CanvasInformation({ scale, setScale, blocks }: Props) {
 		});
 
 		return {
-			x: maxX - minX,
-			y: maxY - minY,
+			width: maxX - minX,
+			height: maxY - minY,
 		};
 	}, [blocks]);
 
@@ -36,8 +36,8 @@ function CanvasInformation({ scale, setScale, blocks }: Props) {
 			<div className="flex flex-col items-end gap-1">
 				<div className="info-child">{Math.floor(scale * 100)}%</div>
 				<div className="info-child">
-					<span>W: {canvasSize.x} </span>
-					<span>H: {canvasSize.y}</span>
+					<span>W: {canvasSize.width} </span>
+					<span>H: {canvasSize.height}</span>
 				</div>
 			</div>
 

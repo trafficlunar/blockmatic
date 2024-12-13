@@ -2,10 +2,12 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import { Container, Stage } from "@pixi/react";
 import * as PIXI from "pixi.js";
 
+import { SettingsContext } from "@/context/SettingsContext";
 import { ToolContext } from "@/context/ToolContext";
 import { TexturesContext } from "@/context/TexturesContext";
 
 import Blocks from "./Blocks";
+import Grid from "./Grid";
 import Cursor from "./Cursor";
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
@@ -14,11 +16,12 @@ import CanvasInformation from "./information/Canvas";
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
+	const { settings } = useContext(SettingsContext);
 	const { tool, selectedBlock } = useContext(ToolContext);
 	const textures = useContext(TexturesContext);
 
 	const stageContainerRef = useRef<HTMLDivElement>(null);
-	const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
+	const [stageSize, setStageSize] = useState<Dimension>({ width: 0, height: 0 });
 
 	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
 	const [scale, setScale] = useState(1);
@@ -136,6 +139,12 @@ function Canvas() {
 					<Blocks blocks={blocks} setBlocks={setBlocks} textures={textures} />
 					<Cursor mouseCoords={mouseCoords} />
 				</Container>
+
+				{settings.grid && (
+					<Container>
+						<Grid stageSize={stageSize} coords={coords} scale={scale} />
+					</Container>
+				)}
 			</Stage>
 
 			<CursorInformation mouseCoords={mouseCoords} blocks={blocks} />
