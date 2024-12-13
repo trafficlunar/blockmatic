@@ -23,6 +23,7 @@ function Canvas() {
 	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
 	const [scale, setScale] = useState(1);
 
+	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
 	const [dragging, setDragging] = useState(false);
 
@@ -69,6 +70,10 @@ function Canvas() {
 			const mouseX = e.clientX - rect.left;
 			const mouseY = e.clientY - rect.top;
 
+			setMousePosition({
+				x: mouseX,
+				y: mouseY,
+			});
 			setMouseCoords({
 				x: Math.floor((mouseX - coords.x) / (16 * scale)),
 				y: Math.floor((mouseY - coords.y) / (16 * scale)),
@@ -90,22 +95,16 @@ function Canvas() {
 		(e: React.WheelEvent) => {
 			e.preventDefault();
 
-			// if (!stageContainerRef.current) return;
-
-			// const rect = stageContainerRef.current.getBoundingClientRect();
-			// const mouseX = e.clientX - rect.left;
-			// const mouseY = e.clientY - rect.top;
-
 			const scaleChange = e.deltaY > 0 ? -0.1 : 0.1;
 			const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.25), 32);
 
 			setScale(newScale);
-			// setCoords({
-			// 	x: -(mouseX * scale) + e.clientX,
-			// 	y: -(mouseY * scale) + e.clientY,
-			// });
+			setCoords({
+				x: mousePosition.x - mouseCoords.x * 16 * newScale,
+				y: mousePosition.y - mouseCoords.y * 16 * newScale,
+			});
 		},
-		[scale]
+		[scale, mouseCoords, mousePosition]
 	);
 
 	useEffect(() => {
