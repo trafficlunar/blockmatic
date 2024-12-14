@@ -37,7 +37,7 @@ function CanvasInformation({ scale, setScale, setCoords, canvasSize, stageSize }
 			<div className="info-child">
 				<Slider
 					defaultValue={[1]}
-					min={0.25}
+					min={0.1}
 					max={32}
 					step={0.1}
 					value={[scale]}

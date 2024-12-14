@@ -125,7 +125,7 @@ function Canvas() {
 			e.preventDefault();
 
 			const scaleChange = e.deltaY > 0 ? -0.1 : 0.1;
-			const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.25), 32);
+			const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
 
 			setScale(newScale);
 			setCoords({
