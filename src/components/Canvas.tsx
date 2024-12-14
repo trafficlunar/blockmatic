@@ -171,7 +171,7 @@ function Canvas() {
 			</Stage>
 
 			<CursorInformation mouseCoords={mouseCoords} blocks={blocks} />
-			<CanvasInformation scale={scale} setScale={setScale} canvasSize={canvasSize} />
+			<CanvasInformation scale={scale} setScale={setScale} setCoords={setCoords} canvasSize={canvasSize} stageSize={stageSize} />
 		</div>
 	);
 }

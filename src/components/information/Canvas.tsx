@@ -4,12 +4,24 @@ import { Slider } from "@/components/ui/slider";
 interface Props {
 	scale: number;
 	setScale: React.Dispatch<React.SetStateAction<number>>;
+	setCoords: React.Dispatch<React.SetStateAction<Position>>;
 	canvasSize: CanvasSize;
+	stageSize: Dimension;
 }
 
-function CanvasInformation({ scale, setScale, canvasSize }: Props) {
+function CanvasInformation({ scale, setScale, setCoords, canvasSize, stageSize }: Props) {
 	const onValueChange = (value: number[]) => {
-		setScale(value[0]);
+		const newScale = value[0];
+		setScale(newScale);
+
+		// Center canvas
+		const blockCenterX = ((canvasSize.minX + canvasSize.maxX) * 16) / 2;
+		const blockCenterY = ((canvasSize.minY + canvasSize.maxY) * 16) / 2;
+
+		setCoords({
+			x: stageSize.width / 2 - blockCenterX * newScale,
+			y: stageSize.height / 2 - blockCenterY * newScale,
+		});
 	};
 
 	return (
