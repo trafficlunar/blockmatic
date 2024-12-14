@@ -37,6 +37,8 @@ function Canvas() {
 
 	const [blocks, setBlocks] = useState<Block[]>([]);
 
+	const [oldTool, setOldTool] = useState<Tool>("hand");
+
 	const updatedBlocks = useMemo(() => {
 		return blocks.filter((b) => !(b.x === mouseCoords.x && b.y === mouseCoords.y));
 	}, [blocks, mouseCoords]);
@@ -138,6 +140,35 @@ function Canvas() {
 		[scale, coords, mousePosition]
 	);
 
+	const onKeyDown = (e: KeyboardEvent) => {
+		switch (e.key) {
+			case " ": // Space
+				setDragging(true);
+				setOldTool(tool);
+				setTool("hand");
+				setCssCursor("grabbing");
+				break;
+			case "1":
+				setTool("hand");
+				break;
+			case "2":
+				setTool("pencil");
+				break;
+			case "3":
+				setTool("eraser");
+				break;
+		}
+	};
+
+	const onKeyUp = (e: KeyboardEvent) => {
+		if (e.key == " ") {
+			// Space
+			setDragging(false);
+			setCssCursor("grab");
+			setTool(oldTool);
+		}
+	};
+
 	useEffect(() => {
 		const resizeCanvas = () => {
 			if (stageContainerRef.current) {
@@ -149,10 +180,18 @@ function Canvas() {
 		};
 
 		resizeCanvas();
-		window.addEventListener("resize", resizeCanvas);
-
 		setBlocks(welcomeBlocksData);
-		return () => window.removeEventListener("resize", resizeCanvas);
+
+		window.addEventListener("resize", resizeCanvas);
+		window.addEventListener("keydown", onKeyDown);
+		window.addEventListener("keyup", onKeyUp);
+
+		return () => {
+			window.removeEventListener("resize", resizeCanvas);
+			window.removeEventListener("keydown", onKeyDown);
+			window.removeEventListener("keyup", onKeyUp);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
