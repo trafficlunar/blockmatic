@@ -125,11 +125,11 @@ function Canvas() {
 
 			setScale(newScale);
 			setCoords({
-				x: mousePosition.x - mouseCoords.x * 16 * newScale,
-				y: mousePosition.y - mouseCoords.y * 16 * newScale,
+				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
+				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
 			});
 		},
-		[scale, mouseCoords, mousePosition]
+		[scale, coords, mousePosition]
 	);
 
 	useEffect(() => {
