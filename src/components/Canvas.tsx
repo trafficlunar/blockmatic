@@ -9,10 +9,10 @@ import { ToolContext } from "@/context/ToolContext";
 
 import Blocks from "./Blocks";
 import Grid from "./Grid";
+import CanvasBorder from "./CanvasBorder";
 import Cursor from "./Cursor";
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
-import CanvasBorder from "./CanvasBorder";
 
 import welcomeBlocksData from "@/data/welcome.json";
 
@@ -23,7 +23,7 @@ function Canvas() {
 	const { image, imageDimensions } = useContext(ImageContext);
 	const { settings } = useContext(SettingsContext);
 	const textures = useContext(TexturesContext);
-	const { tool, selectedBlock } = useContext(ToolContext);
+	const { tool, selectedBlock, cssCursor, setTool, setCssCursor } = useContext(ToolContext);
 
 	const stageContainerRef = useRef<HTMLDivElement>(null);
 	const [stageSize, setStageSize] = useState<Dimension>({ width: 0, height: 0 });
@@ -114,10 +114,12 @@ function Canvas() {
 	const onMouseDown = useCallback(() => {
 		setDragging(true);
 		onToolUse();
-	}, [onToolUse]);
+		setCssCursor(tool === "hand" ? "grabbing" : "");
+	}, [onToolUse, tool, setCssCursor]);
 
 	const onMouseUp = () => {
 		setDragging(false);
+		setCssCursor(tool === "hand" ? "grab" : "");
 	};
 
 	const onWheel = useCallback(
@@ -154,7 +156,7 @@ function Canvas() {
 	}, []);
 
 	return (
-		<div ref={stageContainerRef} className="relative w-full h-full">
+		<div ref={stageContainerRef} className="relative w-full h-full" style={{ cursor: cssCursor }}>
 			<Stage
 				width={stageSize.width}
 				height={stageSize.height}
