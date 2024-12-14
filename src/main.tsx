@@ -1,13 +1,23 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import { ThemeProvider } from '@/context/ThemeContext.tsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </StrictMode>,
-)
+import { ThemeProvider } from "@/context/ThemeContext.tsx";
+
+import IndexPage from "./pages/IndexPage.tsx";
+import AppPage from "./pages/AppPage.tsx";
+
+import "./index.css";
+
+createRoot(document.getElementById("root")!).render(
+	<StrictMode>
+		<ThemeProvider>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<IndexPage />} />
+					<Route path="/app" element={<AppPage />} />
+				</Routes>
+			</BrowserRouter>
+		</ThemeProvider>
+	</StrictMode>
+);
