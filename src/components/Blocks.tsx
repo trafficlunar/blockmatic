@@ -2,16 +2,17 @@ import { useEffect } from "react";
 import { Sprite } from "@pixi/react";
 
 import blocksData from "@/data/blocks/programmer-art/average_colors.json";
-import welcomeBlocksData from "@/data/welcome.json";
 import { Texture } from "pixi.js";
 
 interface Props {
 	blocks: Block[];
 	setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
 	textures: Record<string, Texture>;
+	image: HTMLImageElement | undefined;
+	imageDimensions: Dimension;
 }
 
-function Blocks({ blocks, setBlocks, textures }: Props) {
+function Blocks({ blocks, setBlocks, textures, image, imageDimensions }: Props) {
 	const findClosestBlock = (r: number, g: number, b: number, a: number) => {
 		let closestBlock = "";
 		let closestDistance = Infinity;
@@ -28,19 +29,16 @@ function Blocks({ blocks, setBlocks, textures }: Props) {
 	};
 
 	useEffect(() => {
-		// TESTING: convert image to blocks
-		const image = new Image();
-		image.src = "/bliss.png";
-		image.addEventListener("load", () => {
+		if (image) {
 			const canvas = document.createElement("canvas");
 			const ctx = canvas.getContext("2d");
 
 			if (ctx) {
-				canvas.width = image.width;
-				canvas.height = image.height;
-				ctx.drawImage(image, 0, 0, image.width / 4, image.height / 4);
+				canvas.width = imageDimensions.width;
+				canvas.height = imageDimensions.height;
+				ctx.drawImage(image, 0, 0, imageDimensions.width, imageDimensions.height);
 
-				const imageData = ctx.getImageData(0, 0, image.width / 4, image.height / 4);
+				const imageData = ctx.getImageData(0, 0, imageDimensions.width, imageDimensions.height);
 				const newBlocks: Block[] = [];
 
 				for (let i = 0; i < imageData.data.length; i += 4) {
@@ -58,10 +56,8 @@ function Blocks({ blocks, setBlocks, textures }: Props) {
 
 				setBlocks(newBlocks);
 			}
-		});
-
-		setBlocks(welcomeBlocksData);
-	}, [textures]);
+		}
+	}, [image, imageDimensions, setBlocks]);
 
 	return (
 		<>

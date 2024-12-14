@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { CircleAlertIcon, UploadIcon } from "lucide-react";
@@ -8,7 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-function OpenImage() {
+import { ImageContext } from "@/context/ImageContext";
+
+function OpenImage({ close }: DialogProps) {
+	const { setImage: setContextImage, setImageDimensions: setContextImageDimensions } = useContext(ImageContext);
+
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
 		accept: {
 			"image/*": [".png", ".jpg", ".jpeg", ".bmp", ".webp", ".tiff"],
@@ -17,6 +21,7 @@ function OpenImage() {
 
 	const [image, setImage] = useState<HTMLImageElement>();
 	const [imageDimensions, setImageDimensions] = useState<Dimension>({ width: 0, height: 0 });
+	const [aspectRatio, setAspectRatio] = useState(1);
 
 	useEffect(() => {
 		if (acceptedFiles[0]) {
@@ -24,6 +29,7 @@ function OpenImage() {
 			img.onload = () => {
 				setImage(img);
 				setImageDimensions({ width: img.width, height: img.height });
+				setAspectRatio(img.width / img.height);
 			};
 			img.src = URL.createObjectURL(acceptedFiles[0]);
 		}
@@ -31,9 +37,8 @@ function OpenImage() {
 
 	const onDimensionChange = (e: React.ChangeEvent<HTMLInputElement>, isWidth: boolean) => {
 		const newDimension = Number(e.target.value);
-		const aspectRatio = imageDimensions.width / imageDimensions.height;
-
 		if (newDimension < 1 || newDimension > 10000) return;
+
 		setImageDimensions(() => {
 			if (isWidth) {
 				return { width: newDimension, height: Math.round(newDimension / aspectRatio) };
@@ -41,6 +46,14 @@ function OpenImage() {
 				return { width: Math.round(newDimension / aspectRatio), height: newDimension };
 			}
 		});
+	};
+
+	const onSubmit = () => {
+		if (image) {
+			setContextImage(image);
+			setContextImageDimensions(imageDimensions);
+			close();
+		}
 	};
 
 	return (
@@ -106,7 +119,7 @@ function OpenImage() {
 					</div>
 				)}
 
-				<Button type="submit" className="ml-auto">
+				<Button type="submit" className="ml-auto" onClick={onSubmit}>
 					Submit
 				</Button>
 			</DialogFooter>

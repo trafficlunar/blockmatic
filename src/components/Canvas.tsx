@@ -2,9 +2,10 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import { Container, Stage } from "@pixi/react";
 import * as PIXI from "pixi.js";
 
+import { ImageContext } from "@/context/ImageContext";
 import { SettingsContext } from "@/context/SettingsContext";
-import { ToolContext } from "@/context/ToolContext";
 import { TexturesContext } from "@/context/TexturesContext";
+import { ToolContext } from "@/context/ToolContext";
 
 import Blocks from "./Blocks";
 import Grid from "./Grid";
@@ -13,13 +14,16 @@ import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
 import CanvasBorder from "./CanvasBorder";
 
+import welcomeBlocksData from "@/data/welcome.json";
+
 // Set scale mode to NEAREST
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
+	const { image, imageDimensions } = useContext(ImageContext);
 	const { settings } = useContext(SettingsContext);
-	const { tool, selectedBlock } = useContext(ToolContext);
 	const textures = useContext(TexturesContext);
+	const { tool, selectedBlock } = useContext(ToolContext);
 
 	const stageContainerRef = useRef<HTMLDivElement>(null);
 	const [stageSize, setStageSize] = useState<Dimension>({ width: 0, height: 0 });
@@ -144,6 +148,8 @@ function Canvas() {
 
 		resizeCanvas();
 		window.addEventListener("resize", resizeCanvas);
+
+		setBlocks(welcomeBlocksData);
 		return () => window.removeEventListener("resize", resizeCanvas);
 	}, []);
 
@@ -158,7 +164,7 @@ function Canvas() {
 				onWheel={onWheel}
 			>
 				<Container x={coords.x} y={coords.y} scale={scale}>
-					<Blocks blocks={blocks} setBlocks={setBlocks} textures={textures} />
+					<Blocks blocks={blocks} setBlocks={setBlocks} textures={textures} image={image} imageDimensions={imageDimensions} />
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} />}
 					<Cursor mouseCoords={mouseCoords} />
 				</Container>

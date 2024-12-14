@@ -27,3 +27,7 @@ interface Settings {
 	grid: boolean;
 	canvasBorder: boolean;
 }
+
+interface DialogProps {
+	close: () => void;
+}
