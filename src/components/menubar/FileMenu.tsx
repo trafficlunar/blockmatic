@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import {
 	MenubarContent,
 	MenubarItem,
@@ -9,14 +11,17 @@ import {
 	MenubarTrigger,
 } from "@/components/ui/menubar";
 
+import { DialogContext } from "@/context/DialogContext";
+
 function FileMenu() {
+	const openDialog = useContext(DialogContext);
+
 	return (
 		<MenubarMenu>
 			<MenubarTrigger>File</MenubarTrigger>
 			<MenubarContent>
 				<MenubarItem>Open Schematic</MenubarItem>
-				<MenubarItem>Open Image</MenubarItem>
-
+				<MenubarItem onClick={() => openDialog("OpenImage")}>Open Image</MenubarItem>
 				<MenubarSeparator />
 
 				<MenubarSub>
