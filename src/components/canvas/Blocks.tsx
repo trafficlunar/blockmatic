@@ -59,6 +59,10 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions }: Props) 
 		}
 	}, [image, imageDimensions, setBlocks]);
 
+	useEffect(() => {
+		console.log(blocks);
+	}, [blocks]);
+
 	return (
 		<>
 			{blocks.map((block, index) => {

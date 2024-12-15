@@ -1,11 +1,11 @@
-import { ImageProvider } from "@/context/ImageContext";
+import { ImageProvider } from "../context/ImageContext";
 import { SettingsProvider } from "../context/SettingsContext";
 import { TexturesProvider } from "../context/TexturesContext";
 import { ToolProvider } from "../context/ToolContext";
 
 import Menubar from "../components/menubar";
-import Toolbar from "../components/Toolbar";
-import Canvas from "../components/Canvas";
+import Toolbar from "../components/toolbar";
+import Canvas from "../components/canvas/Canvas";
 
 function AppPage() {
 	return (

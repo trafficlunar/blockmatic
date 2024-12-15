@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Eraser, Hand, Pencil } from "lucide-react";
+import { EraserIcon, HandIcon, PencilIcon, ZoomInIcon } from "lucide-react";
 
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { ToolContext } from "@/context/ToolContext";
 
 function Toolbar() {
@@ -17,13 +17,16 @@ function Toolbar() {
 			className="flex flex-col justify-start py-1 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
 		>
 			<ToggleGroupItem value="hand" className="!p-0 !h-8 !min-w-8">
-				<Hand />
+				<HandIcon />
 			</ToggleGroupItem>
 			<ToggleGroupItem value="pencil" className="!p-0 !h-8 !min-w-8">
-				<Pencil />
+				<PencilIcon />
 			</ToggleGroupItem>
 			<ToggleGroupItem value="eraser" className="!p-0 !h-8 !min-w-8">
-				<Eraser />
+				<EraserIcon />
+			</ToggleGroupItem>
+			<ToggleGroupItem value="zoom" className="!p-0 !h-8 !min-w-8">
+				<ZoomInIcon />
 			</ToggleGroupItem>
 		</ToggleGroup>
 	);
