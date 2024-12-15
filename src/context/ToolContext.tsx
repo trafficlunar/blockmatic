@@ -19,7 +19,18 @@ export const ToolProvider = ({ children }: Props) => {
 	const [cssCursor, setCssCursor] = useState("pointer");
 
 	useEffect(() => {
-		setCssCursor(tool === "hand" ? "grab" : "pointer");
+		switch (tool) {
+			case "hand":
+				setCssCursor("grab");
+				break;
+			case "zoom":
+				setCssCursor("zoom-in");
+				break;
+
+			default:
+				setCssCursor("pointer");
+				break;
+		}
 	}, [tool]);
 
 	return <ToolContext.Provider value={{ tool, selectedBlock, cssCursor, setTool, setSelectedBlock, setCssCursor }}>{children}</ToolContext.Provider>;

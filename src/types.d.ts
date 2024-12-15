@@ -21,7 +21,7 @@ interface Block extends Position {
 	name: string;
 }
 
-type Tool = "hand" | "pencil" | "eraser";
+type Tool = "hand" | "pencil" | "eraser" | "zoom";
 
 interface Settings {
 	grid: boolean;

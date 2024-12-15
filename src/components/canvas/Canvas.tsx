@@ -37,6 +37,7 @@ function Canvas() {
 
 	const [blocks, setBlocks] = useState<Block[]>([]);
 
+	const [holdingAlt, setHoldingAlt] = useState(false);
 	const [oldTool, setOldTool] = useState<Tool>("hand");
 
 	const updatedBlocks = useMemo(() => {
@@ -63,6 +64,25 @@ function Canvas() {
 			maxY: maxY + 1,
 		};
 	}, [blocks]);
+
+	const zoomToMousePosition = useCallback(
+		(newScale: number) => {
+			setCoords({
+				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
+				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
+			});
+		},
+		[coords, mousePosition, scale]
+	);
+
+	const updateCssCursor = useCallback(() => {
+		const cursorMapping: Partial<Record<Tool, string>> = {
+			hand: dragging ? "grabbing" : "grab",
+			zoom: holdingAlt ? "zoom-out" : "zoom-in",
+		};
+
+		setCssCursor(cursorMapping[tool] || "pointer");
+	}, [dragging, holdingAlt, tool, setCssCursor]);
 
 	const onToolUse = useCallback(() => {
 		switch (tool) {
@@ -116,29 +136,33 @@ function Canvas() {
 	const onMouseDown = useCallback(() => {
 		setDragging(true);
 		onToolUse();
-		setCssCursor(tool === "hand" ? "grabbing" : "");
-	}, [onToolUse, tool, setCssCursor]);
+		updateCssCursor();
+	}, [onToolUse, updateCssCursor]);
 
-	const onMouseUp = () => {
+	const onMouseUp = useCallback(() => {
 		setDragging(false);
-		setCssCursor(tool === "hand" ? "grab" : "");
-	};
+		updateCssCursor();
+	}, [updateCssCursor]);
 
 	const onWheel = useCallback(
 		(e: React.WheelEvent) => {
 			e.preventDefault();
-
 			const scaleChange = e.deltaY > 0 ? -0.1 : 0.1;
 			const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
-
 			setScale(newScale);
-			setCoords({
-				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
-				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
-			});
+			zoomToMousePosition(newScale);
 		},
-		[scale, coords, mousePosition]
+		[scale, zoomToMousePosition]
 	);
+
+	const onClick = useCallback(() => {
+		if (tool === "zoom") {
+			const scaleChange = holdingAlt ? -0.1 : 0.1;
+			const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
+			setScale(newScale);
+			zoomToMousePosition(newScale);
+		}
+	}, [tool, holdingAlt, scale, zoomToMousePosition]);
 
 	const onKeyDown = (e: KeyboardEvent) => {
 		switch (e.key) {
@@ -157,15 +181,27 @@ function Canvas() {
 			case "3":
 				setTool("eraser");
 				break;
+			case "4":
+				setTool("zoom");
+				break;
+			case "Alt":
+				setHoldingAlt(true);
+				setCssCursor("zoom-out");
+				break;
 		}
 	};
 
 	const onKeyUp = (e: KeyboardEvent) => {
-		if (e.key == " ") {
-			// Space
-			setDragging(false);
-			setCssCursor("grab");
-			setTool(oldTool);
+		switch (e.key) {
+			case " ": // Space
+				setDragging(false);
+				setCssCursor("grab");
+				setTool(oldTool);
+				break;
+			case "Alt":
+				setHoldingAlt(false);
+				setCssCursor("zoom-in");
+				break;
 		}
 	};
 
@@ -203,6 +239,7 @@ function Canvas() {
 				onMouseDown={onMouseDown}
 				onMouseUp={onMouseUp}
 				onWheel={onWheel}
+				onClick={onClick}
 			>
 				<Container x={coords.x} y={coords.y} scale={scale}>
 					<Blocks blocks={blocks} setBlocks={setBlocks} textures={textures} image={image} imageDimensions={imageDimensions} />
