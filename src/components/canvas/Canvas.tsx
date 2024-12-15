@@ -65,6 +65,29 @@ function Canvas() {
 		};
 	}, [blocks]);
 
+	const visibleArea = useMemo(() => {
+		const blockSize = 16 * scale;
+
+		const visibleWidthBlocks = Math.ceil(stageSize.width / blockSize);
+		const visibleHeightBlocks = Math.ceil(stageSize.height / blockSize);
+
+		const startX = Math.floor(-coords.x / blockSize);
+		const startY = Math.floor(-coords.y / blockSize);
+
+		return {
+			startX,
+			startY,
+			endX: startX + visibleWidthBlocks + 1,
+			endY: startY + visibleHeightBlocks + 1,
+		};
+	}, [coords, scale, stageSize]);
+
+	const visibleBlocks = useMemo(() => {
+		return blocks.filter(
+			(block) => block.x >= visibleArea.startX && block.x < visibleArea.endX && block.y >= visibleArea.startY && block.y < visibleArea.endY
+		);
+	}, [blocks, visibleArea]);
+
 	const zoomToMousePosition = useCallback(
 		(newScale: number) => {
 			setCoords({
@@ -242,7 +265,7 @@ function Canvas() {
 				onClick={onClick}
 			>
 				<Container x={coords.x} y={coords.y} scale={scale}>
-					<Blocks blocks={blocks} setBlocks={setBlocks} textures={textures} image={image} imageDimensions={imageDimensions} />
+					<Blocks blocks={visibleBlocks} setBlocks={setBlocks} textures={textures} image={image} imageDimensions={imageDimensions} />
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} />}
 					<Cursor mouseCoords={mouseCoords} />
 				</Container>
