@@ -1,18 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Sprite } from "@pixi/react";
 
 import blocksData from "@/data/blocks/programmer-art/average_colors.json";
-import { Texture } from "pixi.js";
+import * as PIXI from "pixi.js";
 
 interface Props {
 	blocks: Block[];
 	setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
-	textures: Record<string, Texture>;
+	textures: Record<string, PIXI.Texture>;
 	image: HTMLImageElement | undefined;
 	imageDimensions: Dimension;
 }
 
 function Blocks({ blocks, setBlocks, textures, image, imageDimensions }: Props) {
+	const [missingTexture, setMissingTexture] = useState<PIXI.Texture>();
+
 	const findClosestBlock = (r: number, g: number, b: number, a: number) => {
 		let closestBlock = "";
 		let closestDistance = Infinity;
@@ -29,6 +31,12 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions }: Props) 
 	};
 
 	useEffect(() => {
+		const loadMissingTexture = async () => {
+			const mTexture = await PIXI.Texture.from("/blocks/missing.png");
+			setMissingTexture(mTexture);
+		};
+		loadMissingTexture();
+
 		if (image) {
 			const canvas = document.createElement("canvas");
 			const ctx = canvas.getContext("2d");
@@ -59,17 +67,12 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions }: Props) 
 		}
 	}, [image, imageDimensions, setBlocks]);
 
-	useEffect(() => {
-		console.log(blocks);
-	}, [blocks]);
-
 	return (
 		<>
 			{blocks.map((block, index) => {
-				const texture = textures[block.name];
+				const texture = textures[block.name] ?? missingTexture;
 				if (!texture) {
 					console.warn(`Texture not found for block: ${block.name}`);
-					return null;
 				}
 
 				return <Sprite key={index} texture={texture} x={block.x * 16} y={block.y * 16} />;
