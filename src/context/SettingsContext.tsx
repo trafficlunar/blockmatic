@@ -5,7 +5,8 @@ interface Props {
 }
 
 const defaultSettings: Settings = {
-	grid: false,
+	grid: true,
+	canvasBorder: false,
 };
 
 export const SettingsContext = createContext({
