@@ -4,7 +4,7 @@ import { Sprite, useApp } from "@pixi/react";
 import blocksData from "@/data/blocks/programmer-art/average_colors.json";
 import * as PIXI from "pixi.js";
 
-import { CompositeTilemap } from "@pixi/tilemap";
+import { CompositeTilemap, settings } from "@pixi/tilemap";
 
 interface Props {
 	blocks: Block[];
@@ -15,6 +15,9 @@ interface Props {
 	coords: Position;
 	scale: number;
 }
+
+// Lifts 16,000 tiles limit
+settings.use32bitIndex = true;
 
 function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, scale }: Props) {
 	const app = useApp();
