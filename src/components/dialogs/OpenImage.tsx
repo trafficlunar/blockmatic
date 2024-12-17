@@ -15,7 +15,7 @@ function OpenImage({ close }: DialogProps) {
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
 		accept: {
-			"image/*": [".png", ".jpg", ".jpeg", ".bmp", ".webp", ".tiff"],
+			"image/*": [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".tiff", ".svg"],
 		},
 	});
 
