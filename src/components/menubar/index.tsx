@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
 import { Menubar as UIMenubar } from "@/components/ui/menubar";
-import { DialogProvider } from "@/context/DialogContext";
+import { DialogProvider } from "@/context/Dialog";
 
 import FileMenu from "./FileMenu";
 import ViewMenu from "./ViewMenu";

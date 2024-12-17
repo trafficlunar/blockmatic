@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { EraserIcon, HandIcon, PencilIcon, ZoomInIcon } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { ToolContext } from "@/context/ToolContext";
+import { ToolContext } from "@/context/Tool";
 
 function Toolbar() {
 	const { tool, setTool } = useContext(ToolContext);

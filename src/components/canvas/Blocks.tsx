@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Sprite, useApp } from "@pixi/react";
+
+import * as PIXI from "pixi.js";
+import { useApp } from "@pixi/react";
+import { CompositeTilemap, settings } from "@pixi/tilemap";
 
 import blocksData from "@/data/blocks/programmer-art/average_colors.json";
-import * as PIXI from "pixi.js";
-
-import { CompositeTilemap, settings } from "@pixi/tilemap";
 
 interface Props {
 	blocks: Block[];

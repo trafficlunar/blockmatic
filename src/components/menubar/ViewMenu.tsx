@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { MenubarCheckboxItem, MenubarContent, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
-import { SettingsContext } from "@/context/SettingsContext";
+import { SettingsContext } from "@/context/Settings";
 
 function ViewMenu() {
 	const { settings, setSetting } = useContext(SettingsContext);

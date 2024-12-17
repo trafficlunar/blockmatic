@@ -1,16 +1,18 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Container, Stage } from "@pixi/react";
-import * as PIXI from "pixi.js";
 
-import { ImageContext } from "@/context/ImageContext";
-import { SettingsContext } from "@/context/SettingsContext";
-import { TexturesContext } from "@/context/TexturesContext";
-import { ToolContext } from "@/context/ToolContext";
+import * as PIXI from "pixi.js";
+import { Container, Stage } from "@pixi/react";
+
+import { ImageContext } from "@/context/Image";
+import { SettingsContext } from "@/context/Settings";
+import { TexturesContext } from "@/context/Textures";
+import { ToolContext } from "@/context/Tool";
 
 import Blocks from "./Blocks";
+import Cursor from "./Cursor";
 import Grid from "./Grid";
 import CanvasBorder from "./CanvasBorder";
-import Cursor from "./Cursor";
+
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
 

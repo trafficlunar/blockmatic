@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { ImageContext } from "@/context/ImageContext";
+import { ImageContext } from "@/context/Image";
 
 function OpenImage({ close }: DialogProps) {
 	const { setImage: setContextImage, setImageDimensions: setContextImageDimensions } = useContext(ImageContext);

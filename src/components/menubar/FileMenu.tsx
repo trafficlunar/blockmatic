@@ -11,7 +11,7 @@ import {
 	MenubarTrigger,
 } from "@/components/ui/menubar";
 
-import { DialogContext } from "@/context/DialogContext";
+import { DialogContext } from "@/context/Dialog";
 
 function FileMenu() {
 	const openDialog = useContext(DialogContext);

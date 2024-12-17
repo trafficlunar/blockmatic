@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 
-import { ThemeProvider } from "@/context/ThemeContext.tsx";
+import { ThemeProvider } from "@/context/Theme.tsx";
 
 import IndexPage from "./pages/IndexPage.tsx";
 import AppPage from "./pages/AppPage.tsx";

@@ -1,7 +1,7 @@
-import { ImageProvider } from "../context/ImageContext";
-import { SettingsProvider } from "../context/SettingsContext";
-import { TexturesProvider } from "../context/TexturesContext";
-import { ToolProvider } from "../context/ToolContext";
+import { ImageProvider } from "../context/Image";
+import { SettingsProvider } from "../context/Settings";
+import { TexturesProvider } from "../context/Textures";
+import { ToolProvider } from "../context/Tool";
 
 import Menubar from "../components/menubar";
 import Toolbar from "../components/toolbar";
