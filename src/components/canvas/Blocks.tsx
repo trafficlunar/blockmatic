@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import { Sprite } from "@pixi/react";
+import { useEffect, useRef, useState } from "react";
+import { Sprite, useApp } from "@pixi/react";
 
 import blocksData from "@/data/blocks/programmer-art/average_colors.json";
 import * as PIXI from "pixi.js";
+
+import { CompositeTilemap } from "@pixi/tilemap";
 
 interface Props {
 	blocks: Block[];
@@ -10,10 +12,15 @@ interface Props {
 	textures: Record<string, PIXI.Texture>;
 	image: HTMLImageElement | undefined;
 	imageDimensions: Dimension;
+	coords: Position;
+	scale: number;
 }
 
-function Blocks({ blocks, setBlocks, textures, image, imageDimensions }: Props) {
+function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, scale }: Props) {
+	const app = useApp();
 	const [missingTexture, setMissingTexture] = useState<PIXI.Texture>();
+
+	const tilemapRef = useRef<CompositeTilemap>();
 
 	const findClosestBlock = (r: number, g: number, b: number, a: number) => {
 		let closestBlock = "";
@@ -30,55 +37,79 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions }: Props) 
 		return closestBlock;
 	};
 
+	const tileBlocks = () => {
+		if (!tilemapRef.current) return;
+		const tilemap = tilemapRef.current;
+		tilemap.clear();
+
+		console.log(tilemap.texturesPerTilemap);
+
+		blocks.forEach((block) => {
+			tilemap.tile(textures[block.name] ?? missingTexture, block.x * 16, block.y * 16);
+		});
+	};
+
 	useEffect(() => {
+		// Load the missing texture
 		const loadMissingTexture = async () => {
 			const mTexture = await PIXI.Texture.from("/blocks/missing.png");
 			setMissingTexture(mTexture);
 		};
 		loadMissingTexture();
 
-		if (image) {
-			const canvas = document.createElement("canvas");
-			const ctx = canvas.getContext("2d");
+		// Create tilemap
+		const tilemap = new CompositeTilemap();
+		tilemapRef.current = tilemap;
+		tilemap.cullable = true;
+		app.stage.addChildAt(tilemap, 0);
 
-			if (ctx) {
-				canvas.width = imageDimensions.width;
-				canvas.height = imageDimensions.height;
-				ctx.drawImage(image, 0, 0, imageDimensions.width, imageDimensions.height);
+		tileBlocks();
+	}, []);
 
-				const imageData = ctx.getImageData(0, 0, imageDimensions.width, imageDimensions.height);
-				const newBlocks: Block[] = [];
+	useEffect(tileBlocks, [blocks]);
 
-				for (let i = 0; i < imageData.data.length; i += 4) {
-					const block = findClosestBlock(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
+	useEffect(() => {
+		if (!tilemapRef.current) return;
 
-					const x = Math.floor((i / 4) % imageData.width);
-					const y = Math.floor(i / 4 / imageData.width);
+		tileBlocks();
 
-					newBlocks.push({
-						name: block,
-						x,
-						y,
-					});
-				}
+		tilemapRef.current.x = coords.x;
+		tilemapRef.current.y = coords.y;
+		tilemapRef.current.scale.set(scale, scale);
+	}, [coords, scale]);
 
-				setBlocks(newBlocks);
+	useEffect(() => {
+		if (!image) return;
+
+		const canvas = document.createElement("canvas");
+		const ctx = canvas.getContext("2d");
+
+		if (ctx) {
+			canvas.width = imageDimensions.width;
+			canvas.height = imageDimensions.height;
+			ctx.drawImage(image, 0, 0, imageDimensions.width, imageDimensions.height);
+
+			const imageData = ctx.getImageData(0, 0, imageDimensions.width, imageDimensions.height);
+			const newBlocks: Block[] = [];
+
+			for (let i = 0; i < imageData.data.length; i += 4) {
+				const block = findClosestBlock(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
+
+				const x = Math.floor((i / 4) % imageData.width);
+				const y = Math.floor(i / 4 / imageData.width);
+
+				newBlocks.push({
+					name: block,
+					x,
+					y,
+				});
 			}
+
+			setBlocks(newBlocks);
 		}
-	}, [image, imageDimensions, setBlocks]);
+	}, [image, imageDimensions]);
 
-	return (
-		<>
-			{blocks.map((block, index) => {
-				const texture = textures[block.name] ?? missingTexture;
-				if (!texture) {
-					console.warn(`Texture not found for block: ${block.name}`);
-				}
-
-				return <Sprite key={index} texture={texture} x={block.x * 16} y={block.y * 16} />;
-			})}
-		</>
-	);
+	return null;
 }
 
 export default Blocks;
