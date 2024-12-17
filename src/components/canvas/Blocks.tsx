@@ -25,27 +25,10 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, s
 
 	const tilemapRef = useRef<CompositeTilemap>();
 
-	const findClosestBlock = (r: number, g: number, b: number, a: number) => {
-		let closestBlock = "";
-		let closestDistance = Infinity;
-
-		Object.entries(blocksData).forEach(([block, rgba]) => {
-			const distance = Math.sqrt(Math.pow(r - rgba[0], 2) + Math.pow(g - rgba[1], 2) + Math.pow(b - rgba[2], 2) + Math.pow(a - rgba[3], 3));
-			if (distance < closestDistance) {
-				closestDistance = distance;
-				closestBlock = block;
-			}
-		});
-
-		return closestBlock;
-	};
-
 	const tileBlocks = () => {
 		if (!tilemapRef.current) return;
 		const tilemap = tilemapRef.current;
 		tilemap.clear();
-
-		console.log(tilemap.texturesPerTilemap);
 
 		blocks.forEach((block) => {
 			tilemap.tile(textures[block.name] ?? missingTexture, block.x * 16, block.y * 16);
@@ -80,6 +63,21 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, s
 		tilemapRef.current.y = coords.y;
 		tilemapRef.current.scale.set(scale, scale);
 	}, [coords, scale]);
+
+	const findClosestBlock = (r: number, g: number, b: number, a: number) => {
+		let closestBlock = "";
+		let closestDistance = Infinity;
+
+		Object.entries(blocksData).forEach(([block, rgba]) => {
+			const distance = Math.sqrt(Math.pow(r - rgba[0], 2) + Math.pow(g - rgba[1], 2) + Math.pow(b - rgba[2], 2) + Math.pow(a - rgba[3], 3));
+			if (distance < closestDistance) {
+				closestDistance = distance;
+				closestBlock = block;
+			}
+		});
+
+		return closestBlock;
+	};
 
 	useEffect(() => {
 		if (!image) return;
