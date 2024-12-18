@@ -3,7 +3,10 @@ import { EraserIcon, HandIcon, PencilIcon, ZoomInIcon } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 import { ToolContext } from "@/context/Tool";
+
+import SelectedBlock from "./SelectedBlock";
 
 function Toolbar() {
 	const { tool, setTool } = useContext(ToolContext);
@@ -65,6 +68,8 @@ function Toolbar() {
 						<p>Zoom (4)</p>
 					</TooltipContent>
 				</Tooltip>
+
+				<SelectedBlock />
 			</ToggleGroup>
 		</TooltipProvider>
 	);
