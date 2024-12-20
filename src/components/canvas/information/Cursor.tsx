@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { CanvasContext } from "@/context/Canvas";
+import { useContext, useEffect, useState } from "react";
 
 interface Props {
 	mouseCoords: Position;
-	blocks: Block[];
 }
 
-function CursorInformation({ mouseCoords, blocks }: Props) {
+function CursorInformation({ mouseCoords }: Props) {
+	const { blocks } = useContext(CanvasContext);
+
 	const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
 	const [block, setBlock] = useState<Block>();
 

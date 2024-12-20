@@ -23,17 +23,13 @@ import welcomeBlocksData from "@/data/welcome.json";
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
-	const { canvasSize, blocks, setBlocks } = useContext(CanvasContext);
+	const { stageSize, canvasSize, blocks, coords, scale, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
 	const { image, imageDimensions } = useContext(ImageContext);
 	const { settings } = useContext(SettingsContext);
 	const textures = useContext(TexturesContext);
 	const { tool, selectedBlock, cssCursor, setTool, setCssCursor } = useContext(ToolContext);
 
 	const stageContainerRef = useRef<HTMLDivElement>(null);
-	const [stageSize, setStageSize] = useState<Dimension>({ width: 0, height: 0 });
-
-	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
-	const [scale, setScale] = useState(1);
 
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
@@ -76,7 +72,7 @@ function Canvas() {
 				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
 			});
 		},
-		[coords, mousePosition, scale]
+		[coords, mousePosition, scale, setCoords]
 	);
 
 	const updateCssCursor = useCallback(() => {
@@ -134,7 +130,7 @@ function Canvas() {
 				y: Math.floor((mouseY - coords.y) / (16 * scale)),
 			});
 		},
-		[dragging, coords, scale, tool, onToolUse]
+		[dragging, coords, scale, tool, onToolUse, setCoords]
 	);
 
 	const onMouseDown = useCallback(() => {
@@ -156,7 +152,7 @@ function Canvas() {
 			setScale(newScale);
 			zoomToMousePosition(newScale);
 		},
-		[scale, zoomToMousePosition]
+		[scale, zoomToMousePosition, setScale]
 	);
 
 	const onClick = useCallback(() => {
@@ -166,7 +162,7 @@ function Canvas() {
 			setScale(newScale);
 			zoomToMousePosition(newScale);
 		}
-	}, [tool, holdingAlt, scale, zoomToMousePosition]);
+	}, [tool, holdingAlt, scale, zoomToMousePosition, setScale]);
 
 	const onKeyDown = (e: KeyboardEvent) => {
 		switch (e.key) {
@@ -267,8 +263,8 @@ function Canvas() {
 				)}
 			</Stage>
 
-			<CursorInformation mouseCoords={mouseCoords} blocks={blocks} />
-			<CanvasInformation scale={scale} setScale={setScale} setCoords={setCoords} canvasSize={canvasSize} stageSize={stageSize} />
+			<CursorInformation mouseCoords={mouseCoords} />
+			<CanvasInformation />
 		</div>
 	);
 }

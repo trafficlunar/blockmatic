@@ -1,15 +1,10 @@
-import React from "react";
+import { useContext } from "react";
+import { CanvasContext } from "@/context/Canvas";
 import { Slider } from "@/components/ui/slider";
 
-interface Props {
-	scale: number;
-	setScale: React.Dispatch<React.SetStateAction<number>>;
-	setCoords: React.Dispatch<React.SetStateAction<Position>>;
-	canvasSize: CanvasSize;
-	stageSize: Dimension;
-}
+function CanvasInformation() {
+	const { stageSize, canvasSize, scale, setCoords, setScale } = useContext(CanvasContext);
 
-function CanvasInformation({ scale, setScale, setCoords, canvasSize, stageSize }: Props) {
 	const onValueChange = (value: number[]) => {
 		const newScale = value[0];
 		setScale(newScale);
