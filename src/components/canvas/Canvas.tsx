@@ -98,10 +98,13 @@ function Canvas() {
 				break;
 			}
 			case "eraser":
+				// Fixes Infinity and NaN errors
+				if (blocks.length == 1) break;
+
 				setBlocks(updatedBlocks);
 				break;
 		}
-	}, [tool, mouseCoords, selectedBlock, updatedBlocks, setBlocks]);
+	}, [tool, mouseCoords, selectedBlock, updatedBlocks, setBlocks, blocks.length]);
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
