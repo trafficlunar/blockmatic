@@ -138,6 +138,9 @@ function SaveLitematic({ close }: DialogProps) {
 			</div>
 
 			<DialogFooter>
+				<Button variant="outline" onClick={close}>
+					Cancel
+				</Button>
 				<Button type="submit" onClick={onSubmit}>
 					Download
 				</Button>

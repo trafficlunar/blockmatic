@@ -111,15 +111,18 @@ function OpenImage({ close }: DialogProps) {
 				</div>
 			</div>
 
-			<DialogFooter className="!justify-between items-center">
+			<DialogFooter className="items-center">
 				{imageDimensions.height > 384 && (
-					<div className="flex items-center gap-1 h-min">
+					<div className="flex items-center gap-1 h-min mr-auto">
 						<CircleAlertIcon className="text-red-400" size={22} />
 						<span className="text-red-400 text-sm">The height is above 384 blocks!</span>
 					</div>
 				)}
 
-				<Button type="submit" className="ml-auto" onClick={onSubmit}>
+				<Button variant="outline" onClick={close}>
+					Cancel
+				</Button>
+				<Button type="submit" onClick={onSubmit}>
 					Submit
 				</Button>
 			</DialogFooter>
