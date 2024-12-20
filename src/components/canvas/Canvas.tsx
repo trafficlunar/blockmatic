@@ -3,6 +3,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import * as PIXI from "pixi.js";
 import { Container, Stage } from "@pixi/react";
 
+import { CanvasContext } from "@/context/Canvas";
 import { ImageContext } from "@/context/Image";
 import { SettingsContext } from "@/context/Settings";
 import { TexturesContext } from "@/context/Textures";
@@ -22,6 +23,7 @@ import welcomeBlocksData from "@/data/welcome.json";
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
+	const { canvasSize, blocks, setBlocks } = useContext(CanvasContext);
 	const { image, imageDimensions } = useContext(ImageContext);
 	const { settings } = useContext(SettingsContext);
 	const textures = useContext(TexturesContext);
@@ -37,35 +39,12 @@ function Canvas() {
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
 	const [dragging, setDragging] = useState(false);
 
-	const [blocks, setBlocks] = useState<Block[]>([]);
-
 	const [holdingAlt, setHoldingAlt] = useState(false);
 	const [oldTool, setOldTool] = useState<Tool>("hand");
 
 	const updatedBlocks = useMemo(() => {
 		return blocks.filter((b) => !(b.x === mouseCoords.x && b.y === mouseCoords.y));
 	}, [blocks, mouseCoords]);
-
-	const canvasSize = useMemo(() => {
-		let minX = Infinity,
-			maxX = -Infinity;
-		let minY = Infinity,
-			maxY = -Infinity;
-
-		blocks.forEach((coord) => {
-			if (coord.x < minX) minX = coord.x;
-			if (coord.x > maxX) maxX = coord.x;
-			if (coord.y < minY) minY = coord.y;
-			if (coord.y > maxY) maxY = coord.y;
-		});
-
-		return {
-			minX,
-			minY,
-			maxX: maxX + 1,
-			maxY: maxY + 1,
-		};
-	}, [blocks]);
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -126,7 +105,7 @@ function Canvas() {
 				setBlocks(updatedBlocks);
 				break;
 		}
-	}, [tool, mouseCoords, selectedBlock, updatedBlocks]);
+	}, [tool, mouseCoords, selectedBlock, updatedBlocks, setBlocks]);
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
