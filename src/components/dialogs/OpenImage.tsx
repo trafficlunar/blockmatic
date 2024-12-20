@@ -112,10 +112,10 @@ function OpenImage({ close }: DialogProps) {
 			</div>
 
 			<DialogFooter className="!justify-between items-center">
-				{imageDimensions.height > 320 && (
+				{imageDimensions.height > 384 && (
 					<div className="flex items-center gap-1 h-min">
 						<CircleAlertIcon className="text-red-400" size={22} />
-						<span className="text-red-400 text-sm">The height is above 320 blocks!</span>
+						<span className="text-red-400 text-sm">The height is above 384 blocks!</span>
 					</div>
 				)}
 
