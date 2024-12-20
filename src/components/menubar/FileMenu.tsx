@@ -28,7 +28,7 @@ function FileMenu() {
 					<MenubarSubTrigger>Export to...</MenubarSubTrigger>
 					<MenubarSubContent>
 						<MenubarItem>.schematic</MenubarItem>
-						<MenubarItem>.litematic</MenubarItem>
+						<MenubarItem onClick={() => openDialog("SaveLitematic")}>.litematic</MenubarItem>
 						<MenubarItem>image</MenubarItem>
 					</MenubarSubContent>
 				</MenubarSub>
