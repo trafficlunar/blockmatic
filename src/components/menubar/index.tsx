@@ -8,6 +8,7 @@ import ViewMenu from "./ViewMenu";
 import MoreMenu from "./MoreMenu";
 
 import BlockmaticText from "@/assets/blockmatic-text.svg?react";
+import GithubIcon from "@/assets/github.svg?react";
 
 function Menubar() {
 	return (
@@ -20,6 +21,10 @@ function Menubar() {
 				<FileMenu />
 				<ViewMenu />
 				<MoreMenu />
+
+				<a href="https://github.com/trafficlunar/blockmatic" className="w-5 absolute right-2">
+					<GithubIcon fill="white" />
+				</a>
 			</UIMenubar>
 		</DialogProvider>
 	);
