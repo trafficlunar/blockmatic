@@ -7,6 +7,9 @@ import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTit
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import _blockData from "@/data/blocks/data.json";
+const blockData: BlockData = _blockData;
+
 function SaveLitematic({ close }: DialogProps) {
 	const { canvasSize, blocks } = useContext(CanvasContext);
 
@@ -34,7 +37,18 @@ function SaveLitematic({ close }: DialogProps) {
 		// Generate the block pallete
 		const blockStatePallete = [
 			{ Name: "minecraft:air" },
-			...Array.from(new Set(blocks.map((block) => `minecraft:${block.name}`))).map((name) => ({ Name: name })),
+			...Array.from(new Set(blocks.map((block) => `minecraft:${block.name}`))).map((name) => {
+				const blockInfo = blockData[name.replace("minecraft:", "")];
+
+				const returnData: { Name: string; Properties?: Record<string, string> } = {
+					Name: name,
+				};
+
+				if (blockInfo.id) returnData["Name"] = `minecraft:${blockInfo.id[0]}`;
+				if (blockInfo.properties) returnData["Properties"] = blockInfo.properties;
+
+				return returnData;
+			}),
 		];
 
 		// Get the block states
@@ -42,7 +56,11 @@ function SaveLitematic({ close }: DialogProps) {
 		const blockStates = new BigInt64Array(Math.ceil((filledBlocks.length * requiredBits) / 64));
 
 		filledBlocks.forEach((block) => {
-			const blockId = blockStatePallete.findIndex((entry) => entry.Name === `minecraft:${block.name}`);
+			const blockInfo = blockData[block.name.replace("minecraft:", "")];
+			let blockName = block.name;
+			if (blockInfo.id) blockName = blockInfo.id[0].toString();
+
+			const blockId = blockStatePallete.findIndex((entry) => entry.Name === `minecraft:${blockName}`);
 
 			const reversedY = height - 1 - block.y;
 			const index = reversedY * width + block.x;
@@ -53,7 +71,7 @@ function SaveLitematic({ close }: DialogProps) {
 			const mask = (1 << requiredBits) - 1;
 
 			blockStates[startArrayIndex] =
-				(blockStates[startArrayIndex] & ~(BigInt(1) << BigInt(bitOffset))) | (BigInt(blockId & mask) << BigInt(bitOffset));
+				(blockStates[startArrayIndex] & ~(BigInt(mask) << BigInt(bitOffset))) | (BigInt(blockId & mask) << BigInt(bitOffset));
 
 			if (startArrayIndex !== endArrayIndex) {
 				const endOffset = 64 - bitOffset;
