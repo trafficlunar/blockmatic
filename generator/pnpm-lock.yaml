@@ -11,6 +11,9 @@ importers:
       fast-average-color-node:
         specifier: ^3.1.0
         version: 3.1.0
+      sharp:
+        specifier: ^0.33.5
+        version: 0.33.5
       spritesheet-js:
         specifier: ^1.2.8
         version: 1.2.8
