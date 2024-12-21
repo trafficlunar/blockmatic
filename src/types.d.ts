@@ -31,3 +31,4 @@ interface Settings {
 interface DialogProps {
 	close: () => void;
 }
+
