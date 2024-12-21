@@ -25,12 +25,13 @@
 	".*repeater.*",
 	"(?<=_)on(?=.*)",
 	".*dust.*",
-	"red_mushroom",
+	"^(?!.*red_mushroom_block).*red_mushroom.*",
 	".*rail.*",
 	"quartz_(pillar_top|block_(top|bottom))",
 	"purpur_pillar_top",
 	"pumpkin_top",
-	".*stem.*",
+	"melon_top",
+	"^(?!.*mushroom_stem).*stem.*",
 	".*stage.*",
 	".*poppy.*",
 	"(?!piston_top).*piston.*",
@@ -73,7 +74,7 @@
 	"(?!cauldron_side).*cauldron.*",
 	".*cake.*",
 	".*cactus.*",
-	"brown_mushroom",
+	"^(?!.*brown_mushroom_block).*brown_mushroom.*",
 	".*brewing_stand.*",
 	".*orchid.*",
 	".*allium.*",
@@ -83,5 +84,7 @@
 	"^(?!.*dried_kelp_side).*kelp.*",
 	"podzol_top",
 	"frosted_ice",
-	"iron_trapdoor"
+	"iron_trapdoor",
+	"item_frame",
+	"jukebox"
 ]
