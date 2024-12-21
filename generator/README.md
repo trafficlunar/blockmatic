@@ -1,2 +1,3 @@
-# blockmatic/generator
-Collection of Python scripts to generate data for blockmatic.
+# @blockmatic/generator
+
+Collection of Node.JS scripts to generate data for blockmatic.

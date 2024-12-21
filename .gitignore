@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Python
-.venv
-generator/blocks
-generator/*.json
+# Generator
+generator/blocks/
+generator/data/

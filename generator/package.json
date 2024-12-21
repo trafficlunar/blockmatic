@@ -1,0 +1,8 @@
+{
+	"name": "@blockmatic/generator",
+	"type": "commonjs",
+	"version": "1.0.0",
+	"dependencies": {
+		"fast-average-color-node": "^3.1.0",
+	}
+}
