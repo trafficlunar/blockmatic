@@ -10,6 +10,9 @@ function SelectedBlock() {
 	const { selectedBlock } = useContext(ToolContext);
 
 	const convertToDataUrl = (textureName: string): string => {
+		// Show missing texture if fail
+		if (!textures["stone"])
+			return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR42mPABX4w/MCKaKJhVMPgcOuoBgDZRfgBVl5QdQAAAABJRU5ErkJggg==";
 		const texture = textures[textureName];
 
 		const canvas = document.createElement("canvas");

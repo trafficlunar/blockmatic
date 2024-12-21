@@ -31,7 +31,7 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, s
 		tilemap.clear();
 
 		blocks.forEach((block) => {
-			tilemap.tile(textures[block.name] ?? missingTexture, block.x * 16, block.y * 16);
+			tilemap.tile(textures[`${block.name}.png`] ?? missingTexture, block.x * 16, block.y * 16);
 		});
 	};
 
