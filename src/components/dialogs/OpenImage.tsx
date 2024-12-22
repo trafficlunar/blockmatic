@@ -9,8 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { ImageContext } from "@/context/Image";
+import { LoadingContext } from "@/context/Loading";
 
 function OpenImage({ close }: DialogProps) {
+	const { setLoading } = useContext(LoadingContext);
 	const { setImage: setContextImage, setImageDimensions: setContextImageDimensions } = useContext(ImageContext);
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -50,9 +52,14 @@ function OpenImage({ close }: DialogProps) {
 
 	const onSubmit = () => {
 		if (image) {
-			setContextImage(image);
-			setContextImageDimensions(imageDimensions);
-			close();
+			setLoading(true);
+
+			// Wait for loading indicator to appear
+			setTimeout(() => {
+				setContextImage(image);
+				setContextImageDimensions(imageDimensions);
+				close();
+			}, 100);
 		}
 	};
 

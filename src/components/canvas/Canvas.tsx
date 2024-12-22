@@ -5,6 +5,7 @@ import { Container, Stage } from "@pixi/react";
 
 import { CanvasContext } from "@/context/Canvas";
 import { ImageContext } from "@/context/Image";
+import { LoadingContext } from "@/context/Loading";
 import { SettingsContext } from "@/context/Settings";
 import { TexturesContext } from "@/context/Textures";
 import { ToolContext } from "@/context/Tool";
@@ -25,6 +26,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 function Canvas() {
 	const { stageSize, canvasSize, blocks, coords, scale, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
 	const { image, imageDimensions } = useContext(ImageContext);
+	const { setLoading } = useContext(LoadingContext);
 	const { settings } = useContext(SettingsContext);
 	const textures = useContext(TexturesContext);
 	const { tool, selectedBlock, cssCursor, setTool, setCssCursor } = useContext(ToolContext);
@@ -252,6 +254,7 @@ function Canvas() {
 					imageDimensions={imageDimensions}
 					coords={coords}
 					scale={scale}
+					setLoading={setLoading}
 				/>
 
 				<Container x={coords.x} y={coords.y} scale={scale}>

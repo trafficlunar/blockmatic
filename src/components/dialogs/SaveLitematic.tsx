@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import * as nbt from "nbtify";
 
 import { CanvasContext } from "@/context/Canvas";
+import { LoadingContext } from "@/context/Loading";
 
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -12,10 +13,15 @@ const blockData: BlockData = _blockData;
 
 function SaveLitematic({ close }: DialogProps) {
 	const { canvasSize, blocks } = useContext(CanvasContext);
+	const { setLoading } = useContext(LoadingContext);
 
 	const [fileName, setFileName] = useState("blockmatic");
 
 	const onSubmit = async () => {
+		setLoading(true);
+		// Wait for loading indicator to appear
+		await new Promise((resolve) => setTimeout(resolve, 100));
+
 		// todo: check if file name input is empty/valid
 		const width = canvasSize.maxX - canvasSize.minX;
 		const height = canvasSize.maxY - canvasSize.minY;
@@ -129,6 +135,8 @@ function SaveLitematic({ close }: DialogProps) {
 
 		const blob = new Blob([compressed], { type: "application/x-gzip" });
 		const url = URL.createObjectURL(blob);
+
+		setLoading(false);
 
 		const a = document.createElement("a");
 		a.href = url;

@@ -14,12 +14,13 @@ interface Props {
 	imageDimensions: Dimension;
 	coords: Position;
 	scale: number;
+	setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Lifts 16,000 tiles limit
 settings.use32bitIndex = true;
 
-function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, scale }: Props) {
+function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, scale, setLoading }: Props) {
 	const app = useApp();
 	const [missingTexture, setMissingTexture] = useState<PIXI.Texture>();
 
@@ -109,6 +110,7 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, s
 			}
 
 			setBlocks(newBlocks);
+			setLoading(false);
 		}
 	}, [image, imageDimensions]);
 
