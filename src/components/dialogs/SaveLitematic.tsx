@@ -43,18 +43,21 @@ function SaveLitematic({ close }: DialogProps) {
 		// Generate the block pallete
 		const blockStatePallete = [
 			{ Name: "minecraft:air" },
-			...Array.from(new Set(blocks.map((block) => `minecraft:${block.name}`))).map((name) => {
-				const blockInfo = blockData[name.replace("minecraft:", "")];
+			...Array.from(
+				new Set(
+					blocks.map((block) => {
+						const blockInfo = blockData[block.name.replace("minecraft:", "")];
 
-				const returnData: { Name: string; Properties?: Record<string, string> } = {
-					Name: name,
-				};
+						const returnData: { Name: string; Properties?: Record<string, string> } = {
+							Name: `minecraft:${blockInfo.id[0]}`,
+						};
 
-				if (blockInfo.id) returnData["Name"] = `minecraft:${blockInfo.id[0]}`;
-				if (blockInfo.properties) returnData["Properties"] = blockInfo.properties;
+						if (blockInfo.properties) returnData["Properties"] = blockInfo.properties;
 
-				return returnData;
-			}),
+						return returnData;
+					})
+				)
+			),
 		];
 
 		// Get the block states

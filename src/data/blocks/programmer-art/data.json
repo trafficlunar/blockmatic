@@ -24,7 +24,10 @@
 		"name": "Acacia Trapdoor",
 		"version": "1.13",
 		"id": ["acacia_trapdoor", 206],
-		"color": [160, 89, 53, 195]
+		"color": [160, 89, 53, 195],
+		"properties": {
+			"open": "true"
+		}
 	},
 	"andesite": {
 		"name": "Andesite",
@@ -64,7 +67,10 @@
 		"name": "Birch Trapdoor",
 		"version": "1.13",
 		"id": ["birch_trapdoor", 204],
-		"color": [211, 199, 166, 255]
+		"color": [211, 199, 166, 255],
+		"properties": {
+			"open": "true"
+		}
 	},
 	"black_concrete": {
 		"name": "Black Concrete",
@@ -89,7 +95,8 @@
 		"name": "Black Shulker Box",
 		"version": "1.11",
 		"id": ["black_shulker_box", 498],
-		"color": [26, 26, 30, 255]
+		"color": [26, 26, 30, 255],
+		"tile_entity": true
 	},
 	"black_stained_glass": {
 		"name": "Black Stained Glass",
@@ -138,7 +145,8 @@
 		"name": "Blue Shulker Box",
 		"version": "1.11",
 		"id": ["blue_shulker_box", 494],
-		"color": [44, 46, 141, 255]
+		"color": [44, 46, 141, 255],
+		"tile_entity": true
 	},
 	"blue_stained_glass": {
 		"name": "Blue Stained Glass",
@@ -221,7 +229,8 @@
 		"name": "Brown Shulker Box",
 		"version": "1.11",
 		"id": ["brown_shulker_box", 495],
-		"color": [107, 66, 36, 255]
+		"color": [107, 66, 36, 255],
+		"tile_entity": true
 	},
 	"brown_stained_glass": {
 		"name": "Brown Stained Glass",
@@ -381,7 +390,8 @@
 		"name": "Cyan Shulker Box",
 		"version": "1.11",
 		"id": ["cyan_shulker_box", 492],
-		"color": [20, 122, 136, 255]
+		"color": [20, 122, 136, 255],
+		"tile_entity": true
 	},
 	"cyan_stained_glass": {
 		"name": "Cyan Stained Glass",
@@ -426,7 +436,10 @@
 		"name": "Dark Oak Trapdoor",
 		"version": "1.13",
 		"id": ["dark_oak_trapdoor", 207],
-		"color": [78, 51, 24, 255]
+		"color": [78, 51, 24, 255],
+		"properties": {
+			"open": "true"
+		}
 	},
 	"dark_prismarine": {
 		"name": "Dark Prismarine",
@@ -486,7 +499,10 @@
 		"name": "Dispenser",
 		"version": "1.2",
 		"id": ["dispenser", 69],
-		"color": [129, 129, 129, 255]
+		"color": [129, 129, 129, 255],
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"dried_kelp_side": {
 		"name": "Dried Kelp Block",
@@ -498,7 +514,10 @@
 		"name": "Dropper",
 		"version": "1.5",
 		"id": ["dropper", 318],
-		"color": [130, 130, 130, 255]
+		"color": [130, 130, 130, 255],
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"emerald_block": {
 		"name": "Block of Emerald",
@@ -528,7 +547,10 @@
 		"name": "Furnace",
 		"version": "1.0",
 		"id": ["furnace", 149],
-		"color": [96, 96, 96, 255]
+		"color": [96, 96, 96, 255],
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"furnace_side": {
 		"name": "Furnace (Side)",
@@ -610,7 +632,8 @@
 		"name": "Gray Shulker Box",
 		"version": "1.11",
 		"id": ["gray_shulker_box", 490],
-		"color": [56, 59, 63, 255]
+		"color": [56, 59, 63, 255],
+		"tile_entity": true
 	},
 	"gray_stained_glass": {
 		"name": "Gray Stained Glass",
@@ -653,7 +676,8 @@
 		"name": "Green Shulker Box",
 		"version": "1.11",
 		"id": ["green_shulker_box", 496],
-		"color": [79, 101, 32, 255]
+		"color": [79, 101, 32, 255],
+		"tile_entity": true
 	},
 	"green_stained_glass": {
 		"name": "Green Stained Glass",
@@ -744,7 +768,10 @@
 		"name": "Jungle Trapdoor",
 		"version": "1.13",
 		"id": ["jungle_trapdoor", 205],
-		"color": [156, 113, 80, 213]
+		"color": [156, 113, 80, 213],
+		"properties": {
+			"open": "true"
+		}
 	},
 	"lapis_block": {
 		"name": "Lapis Lazuli Block",
@@ -781,7 +808,8 @@
 		"name": "Light Blue Shulker Box",
 		"version": "1.11",
 		"id": ["light_blue_shulker_box", 486],
-		"color": [50, 165, 212, 255]
+		"color": [50, 165, 212, 255],
+		"tile_entity": true
 	},
 	"light_blue_stained_glass": {
 		"name": "Light Blue Stained Glass",
@@ -824,7 +852,8 @@
 		"name": "Light Gray Shulker Box",
 		"version": "1.11",
 		"id": ["light_gray_shulker_box", 491],
-		"color": [126, 126, 117, 255]
+		"color": [126, 126, 117, 255],
+		"tile_entity": true
 	},
 	"light_gray_stained_glass": {
 		"name": "Light Gray Stained Glass",
@@ -867,7 +896,8 @@
 		"name": "Lime Shulker Box",
 		"version": "1.11",
 		"id": ["lime_shulker_box", 488],
-		"color": [101, 174, 23, 255]
+		"color": [101, 174, 23, 255],
+		"tile_entity": true
 	},
 	"lime_stained_glass": {
 		"name": "Lime Stained Glass",
@@ -910,7 +940,8 @@
 		"name": "Magenta Shulker Box",
 		"version": "1.11",
 		"id": ["magenta_shulker_box", 485],
-		"color": [174, 55, 164, 255]
+		"color": [174, 55, 164, 255],
+		"tile_entity": true
 	},
 	"magenta_stained_glass": {
 		"name": "Magenta Stained Glass",
@@ -970,7 +1001,8 @@
 		"name": "Mycelium",
 		"version": "1.0",
 		"id": ["mycelium", 232],
-		"color": [118, 92, 80, 255]
+		"color": [118, 92, 80, 255],
+		"creative": true
 	},
 	"nether_bricks": {
 		"name": "Nether Bricks",
@@ -1027,7 +1059,10 @@
 		"name": "Oak Trapdoor",
 		"version": "1.8",
 		"id": ["oak_trapdoor", 202],
-		"color": [129, 96, 48, 219]
+		"color": [129, 96, 48, 219],
+		"properties": {
+			"open": "true"
+		}
 	},
 	"observer_back": {
 		"name": "Observer (Back)",
@@ -1076,7 +1111,8 @@
 		"name": "Orange Shulker Box",
 		"version": "1.11",
 		"id": ["orange_shulker_box", 484],
-		"color": [235, 107, 11, 255]
+		"color": [235, 107, 11, 255],
+		"tile_entity": true
 	},
 	"orange_stained_glass": {
 		"name": "Orange Stained Glass",
@@ -1125,7 +1161,8 @@
 		"name": "Pink Shulker Box",
 		"version": "1.11",
 		"id": ["pink_shulker_box", 489],
-		"color": [231, 123, 158, 255]
+		"color": [231, 123, 158, 255],
+		"tile_entity": true
 	},
 	"pink_stained_glass": {
 		"name": "Pink Stained Glass",
@@ -1228,7 +1265,8 @@
 		"name": "Purple Shulker Box",
 		"version": "1.11",
 		"id": ["purple_shulker_box", 493],
-		"color": [104, 33, 157, 255]
+		"color": [104, 33, 157, 255],
+		"tile_entity": true
 	},
 	"purple_stained_glass": {
 		"name": "Purple Stained Glass",
@@ -1320,7 +1358,8 @@
 		"name": "Red Shulker Box",
 		"version": "1.11",
 		"id": ["red_shulker_box", 497],
-		"color": [141, 32, 30, 255]
+		"color": [141, 32, 30, 255],
+		"tile_entity": true
 	},
 	"red_stained_glass": {
 		"name": "Red Stained Glass",
@@ -1388,7 +1427,8 @@
 		"name": "Shulker Box",
 		"version": "1.11",
 		"id": ["shulker_box", 482],
-		"color": [140, 97, 140, 255]
+		"color": [140, 97, 140, 255],
+		"tile_entity": true
 	},
 	"slime_block": {
 		"name": "Slime Block",
@@ -1445,7 +1485,10 @@
 		"name": "Spruce Trapdoor",
 		"version": "1.13",
 		"id": ["spruce_trapdoor", 203],
-		"color": [102, 78, 51, 255]
+		"color": [102, 78, 51, 255],
+		"properties": {
+			"open": "true"
+		}
 	},
 	"stone": {
 		"name": "Stone",
@@ -1460,10 +1503,13 @@
 		"color": [123, 123, 123, 255]
 	},
 	"stone_slab_side": {
-		"name": "Stone Slab",
+		"name": "Smooth Stone Slab",
 		"version": "1.0",
-		"id": ["stone_slab", 434],
-		"color": [168, 168, 168, 255]
+		"id": ["smooth_stone_slab", 444],
+		"color": [168, 168, 168, 255],
+		"properties": {
+			"type": "double"
+		}
 	},
 	"stripped_acacia_log": {
 		"name": "Stripped Acacia Log",
@@ -1610,7 +1656,8 @@
 		"name": "White Shulker Box",
 		"version": "1.11",
 		"id": ["white_shulker_box", 483],
-		"color": [216, 221, 222, 255]
+		"color": [216, 221, 222, 255],
+		"tile_entity": true
 	},
 	"white_stained_glass": {
 		"name": "White Stained Glass",
@@ -1653,7 +1700,8 @@
 		"name": "Yellow Shulker Box",
 		"version": "1.11",
 		"id": ["yellow_shulker_box", 487],
-		"color": [248, 189, 30, 255]
+		"color": [248, 189, 30, 255],
+		"tile_entity": true
 	},
 	"yellow_stained_glass": {
 		"name": "Yellow Stained Glass",
