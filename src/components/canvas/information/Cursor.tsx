@@ -1,7 +1,7 @@
 import { CanvasContext } from "@/context/Canvas";
 import { useContext, useEffect, useState } from "react";
 
-import _blockData from "@/data/blocks/data.json";
+import _blockData from "@/data/blocks/programmer-art/data.json";
 const blockData: BlockData = _blockData;
 
 interface Props {

@@ -7,7 +7,7 @@ import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTit
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import _blockData from "@/data/blocks/data.json";
+import _blockData from "@/data/blocks/programmer-art/data.json";
 const blockData: BlockData = _blockData;
 
 function SaveLitematic({ close }: DialogProps) {

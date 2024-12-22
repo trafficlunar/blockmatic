@@ -4,7 +4,7 @@ import * as PIXI from "pixi.js";
 import { useApp } from "@pixi/react";
 import { CompositeTilemap, settings } from "@pixi/tilemap";
 
-import blocksData from "@/data/blocks/programmer-art/average_colors.json";
+import blocksData from "@/data/blocks/programmer-art/data.json";
 
 interface Props {
 	blocks: Block[];
@@ -68,8 +68,10 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, s
 		let closestBlock = "";
 		let closestDistance = Infinity;
 
-		Object.entries(blocksData).forEach(([block, rgba]) => {
-			const distance = Math.sqrt(Math.pow(r - rgba[0], 2) + Math.pow(g - rgba[1], 2) + Math.pow(b - rgba[2], 2) + Math.pow(a - rgba[3], 3));
+		Object.entries(blocksData).forEach(([block, data]) => {
+			const distance = Math.sqrt(
+				Math.pow(r - data.color[0], 2) + Math.pow(g - data.color[1], 2) + Math.pow(b - data.color[2], 2) + Math.pow(a - data.color[3], 3)
+			);
 			if (distance < closestDistance) {
 				closestDistance = distance;
 				closestBlock = block;
