@@ -25,4 +25,4 @@ dist-ssr
 
 # Generator
 generator/blocks/
-generator/data/
+generator/output/

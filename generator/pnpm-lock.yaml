@@ -11,6 +11,9 @@ importers:
       fast-average-color-node:
         specifier: ^3.1.0
         version: 3.1.0
+      minecraft-data:
+        specifier: ^3.80.0
+        version: 3.80.0
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -172,6 +175,9 @@ packages:
 
   lru-cache@2.7.3:
     resolution: {integrity: sha512-WpibWJ60c3AgAz8a2iYErDrcT2C7OmKnsWhIcHOjkUHFjkXncJhtLxNSqUmxRxRunpb5I8Vprd7aNSd2NtksJQ==}
+
+  minecraft-data@3.80.0:
+    resolution: {integrity: sha512-UYq+ADpS9K1+cqiJiz6tqkht4y4cRYF3qOYanG9eIiHY+VC+qIAC7/UcW6G3adayvj5YBOCurlqaw3E0TMAtHg==}
 
   minimatch@0.3.0:
     resolution: {integrity: sha512-WFX1jI1AaxNTZVOHLBVazwTWKaQjoykSzCBNXB72vDTCzopQGtyP91tKdFK5cv1+qMwPyiTu1HqUriqplI8pcA==}
@@ -340,6 +346,8 @@ snapshots:
   is-arrayish@0.3.2: {}
 
   lru-cache@2.7.3: {}
+
+  minecraft-data@3.80.0: {}
 
   minimatch@0.3.0:
     dependencies:

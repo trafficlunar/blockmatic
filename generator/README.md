@@ -4,7 +4,7 @@ Collection of Node.JS scripts to generate data for blockmatic. See below to see 
 
 Before running any of these scripts you need to have a `blocks` directory with Minecraft textures in them. See below on how to do that.
 
-1. Create a `blocks` directory
+1. Create a `blocks` directory in the same folder where this README file is
 2. Open a Minecraft client jar in a zip extraction program (such as 7zip, WinRAR, Xarchiver, etc.)
 3. Go to `assets/minecraft/textures/blocks`
 4. Copy all textures into the `blocks` directory
@@ -13,21 +13,21 @@ Before running any of these scripts you need to have a `blocks` directory with M
 
 > Deletes every unneeded texture in the `blocks` directory
 
-1. Run `node filter.js`
+1. Run `node scripts/filter.js`
 2. Every unneeded texture has been deleted
 
 ## resize.js
 
 > Resizes image files bigger than 16x16 (these files are usually for animations such as fire)
 
-1. Run `node resize.js`
+1. Run `node scripts/resize.js`
 2. Every file has been resized accordingly
 
-## averageColors.js
+## data.js
 
-> Calculates the average color for each texture and outputs it into a JSON file
+> Generates average colors, versions, names, ids, properties for blocks (NEEDS MANUAL EDITING AFTER!)
 
-1. Run `node averageColors.js`
+1. Run `node scripts/data.js`
 2. In the `data` directory there should be a JSON file generated
 3. Put that JSON file into `src/data`
 
@@ -35,7 +35,7 @@ Before running any of these scripts you need to have a `blocks` directory with M
 
 > Generates a spritesheet for Pixi.JS to use
 
-1. Run `node spritesheet.js`
+1. Run `node scripts/spritesheet.js`
 2. In the `data` directory there should be two files generated - `spritesheet.json` and `spritesheet.png`
 3. Put `spritesheet.png` into the `public` folder
 4. Put `spritesheet.json` into `src/data`
@@ -47,6 +47,6 @@ Before running any of these scripts you need to have a `blocks` directory with M
 You probably don't need to run this script.
 
 ```bash
-$ chmod +x ./deleteBlocks.sh
-$ ./deleteBlocks.sh
+$ chmod +x ./scripts/deleteBlocks.sh
+$ ./scripts/deleteBlocks.sh
 ```

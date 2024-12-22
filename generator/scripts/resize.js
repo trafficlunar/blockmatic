@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const sharp = require("sharp");
 
-const INPUT = path.join(__dirname, "blocks/");
+const INPUT = path.join(__dirname, "../blocks/");
 
 (async () => {
 	const files = fs.readdirSync(INPUT);
