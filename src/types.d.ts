@@ -32,3 +32,14 @@ interface DialogProps {
 	close: () => void;
 }
 
+type BlockData = Record<
+	string,
+	{
+		name: string;
+		version: string;
+		id?: (string | number)[];
+		fallable?: boolean;
+		creative?: boolean;
+		properties?: Record<string, string>;
+	}
+>;
