@@ -4,12 +4,14 @@ import * as PIXI from "pixi.js";
 import { useApp } from "@pixi/react";
 import { CompositeTilemap, settings } from "@pixi/tilemap";
 
-import blocksData from "@/data/blocks/programmer-art/data.json";
+import _blockData from "@/data/blocks/programmer-art/data.json";
+const blockData: BlockData = _blockData;
 
 interface Props {
 	blocks: Block[];
 	setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
 	textures: Record<string, PIXI.Texture>;
+	solidTextures: Record<string, PIXI.Texture>;
 	image: HTMLImageElement | undefined;
 	imageDimensions: Dimension;
 	coords: Position;
@@ -20,7 +22,7 @@ interface Props {
 // Lifts 16,000 tiles limit
 settings.use32bitIndex = true;
 
-function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, scale, setLoading }: Props) {
+function Blocks({ blocks, setBlocks, textures, solidTextures, image, imageDimensions, coords, scale, setLoading }: Props) {
 	const app = useApp();
 	const [missingTexture, setMissingTexture] = useState<PIXI.Texture>();
 
@@ -31,9 +33,16 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, s
 		const tilemap = tilemapRef.current;
 		tilemap.clear();
 
-		blocks.forEach((block) => {
-			tilemap.tile(textures[`${block.name}.png`] ?? missingTexture, block.x * 16, block.y * 16);
-		});
+		// Tile solid colors at smaller scales
+		if (scale >= 0.5) {
+			blocks.forEach((block) => {
+				tilemap.tile(textures[`${block.name}.png`] ?? missingTexture, block.x * 16, block.y * 16);
+			});
+		} else {
+			blocks.forEach((block) => {
+				tilemap.tile(solidTextures[`${block.name}`] ?? missingTexture, block.x * 16, block.y * 16);
+			});
+		}
 	};
 
 	useEffect(() => {
@@ -69,7 +78,7 @@ function Blocks({ blocks, setBlocks, textures, image, imageDimensions, coords, s
 		let closestBlock = "";
 		let closestDistance = Infinity;
 
-		Object.entries(blocksData).forEach(([block, data]) => {
+		Object.entries(blockData).forEach(([block, data]) => {
 			const distance = Math.sqrt(
 				Math.pow(r - data.color[0], 2) + Math.pow(g - data.color[1], 2) + Math.pow(b - data.color[2], 2) + Math.pow(a - data.color[3], 3)
 			);
