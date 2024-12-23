@@ -4,6 +4,8 @@ import * as PIXI from "pixi.js";
 import { useApp } from "@pixi/react";
 import { CompositeTilemap, settings } from "@pixi/tilemap";
 
+import constants from "@/constants";
+
 import _blockData from "@/data/blocks/programmer-art/data.json";
 const blockData: BlockData = _blockData;
 
@@ -24,8 +26,6 @@ settings.use32bitIndex = true;
 
 function Blocks({ blocks, setBlocks, textures, solidTextures, image, imageDimensions, coords, scale, setLoading }: Props) {
 	const app = useApp();
-	const [missingTexture, setMissingTexture] = useState<PIXI.Texture>();
-
 	const tilemapRef = useRef<CompositeTilemap>();
 
 	const tileBlocks = () => {
@@ -36,24 +36,16 @@ function Blocks({ blocks, setBlocks, textures, solidTextures, image, imageDimens
 		// Tile solid colors at smaller scales
 		if (scale >= 0.5) {
 			blocks.forEach((block) => {
-				tilemap.tile(textures[`${block.name}.png`] ?? missingTexture, block.x * 16, block.y * 16);
+				tilemap.tile(textures[`${block.name}.png`] ?? constants.MISSING_TEXTURE, block.x * 16, block.y * 16);
 			});
 		} else {
 			blocks.forEach((block) => {
-				tilemap.tile(solidTextures[`${block.name}`] ?? missingTexture, block.x * 16, block.y * 16);
+				tilemap.tile(solidTextures[`${block.name}`] ?? constants.MISSING_TEXTURE, block.x * 16, block.y * 16);
 			});
 		}
 	};
 
 	useEffect(() => {
-		// Load the missing texture
-		const loadMissingTexture = async () => {
-			const mTexture = await PIXI.Texture.from("/blocks/missing.png");
-			setMissingTexture(mTexture);
-		};
-		loadMissingTexture();
-
-		// Create tilemap
 		const tilemap = new CompositeTilemap();
 		tilemapRef.current = tilemap;
 		tilemap.cullable = true;

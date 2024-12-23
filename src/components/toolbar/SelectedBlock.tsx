@@ -1,5 +1,7 @@
 import { useContext } from "react";
 
+import constants from "@/constants";
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { TexturesContext } from "@/context/Textures";
@@ -11,9 +13,8 @@ function SelectedBlock() {
 
 	const convertToDataUrl = (textureName: string): string => {
 		// Show missing texture if fail
-		if (!textures["stone"])
-			return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR42mPABX4w/MCKaKJhVMPgcOuoBgDZRfgBVl5QdQAAAABJRU5ErkJggg==";
 		const texture = textures[textureName];
+		if (!texture) return constants.MISSING_TEXTURE;
 
 		const canvas = document.createElement("canvas");
 		const context = canvas.getContext("2d");
