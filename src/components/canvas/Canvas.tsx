@@ -28,7 +28,7 @@ function Canvas() {
 	const { image, imageDimensions } = useContext(ImageContext);
 	const { setLoading } = useContext(LoadingContext);
 	const { settings } = useContext(SettingsContext);
-	const { textures, solidTextures } = useContext(TexturesContext);
+	const { missingTexture, textures, solidTextures } = useContext(TexturesContext);
 	const { tool, selectedBlock, cssCursor, setTool, setCssCursor } = useContext(ToolContext);
 
 	const stageContainerRef = useRef<HTMLDivElement>(null);
@@ -249,6 +249,7 @@ function Canvas() {
 				<Blocks
 					blocks={visibleBlocks}
 					setBlocks={setBlocks}
+					missingTexture={missingTexture}
 					textures={textures}
 					solidTextures={solidTextures}
 					image={image}

@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const TexturesContext = createContext({
+	missingTexture: {} as PIXI.Texture | undefined,
 	textures: {} as Record<string, PIXI.Texture>,
 	solidTextures: {} as Record<string, PIXI.Texture>,
 });
@@ -19,10 +20,18 @@ export const TexturesContext = createContext({
 export const TexturesProvider = ({ children }: Props) => {
 	const { setLoading } = useContext(LoadingContext);
 
+	const [missingTexture, setMissingTexture] = useState<PIXI.Texture>();
 	const [textures, setTextures] = useState<Record<string, PIXI.Texture>>({});
 	const [solidTextures, setSolidTextures] = useState<Record<string, PIXI.Texture>>({});
 
 	useEffect(() => {
+		// Load missing texture
+		const baseTexture = new PIXI.BaseTexture(
+			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR42mPABX4w/MCKaKJhVMPgcOuoBgDZRfgBVl5QdQAAAABJRU5ErkJggg=="
+		);
+		setMissingTexture(new PIXI.Texture(baseTexture));
+
+		// Load textures
 		const sheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/programmer-art/spritesheet.png"), spritesheet);
 		sheet.parse().then((t) => {
 			setTextures(t);
@@ -54,5 +63,5 @@ export const TexturesProvider = ({ children }: Props) => {
 		setLoading(false);
 	}, []);
 
-	return <TexturesContext.Provider value={{ textures, solidTextures }}>{children}</TexturesContext.Provider>;
+	return <TexturesContext.Provider value={{ missingTexture, textures, solidTextures }}>{children}</TexturesContext.Provider>;
 };

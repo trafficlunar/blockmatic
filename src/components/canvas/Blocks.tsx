@@ -1,10 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from "react";
 
 import * as PIXI from "pixi.js";
 import { useApp } from "@pixi/react";
 import { CompositeTilemap, settings } from "@pixi/tilemap";
-
-import constants from "@/constants";
 
 import _blockData from "@/data/blocks/programmer-art/data.json";
 const blockData: BlockData = _blockData;
@@ -12,6 +11,7 @@ const blockData: BlockData = _blockData;
 interface Props {
 	blocks: Block[];
 	setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
+	missingTexture: PIXI.Texture | undefined;
 	textures: Record<string, PIXI.Texture>;
 	solidTextures: Record<string, PIXI.Texture>;
 	image: HTMLImageElement | undefined;
@@ -24,7 +24,7 @@ interface Props {
 // Lifts 16,000 tiles limit
 settings.use32bitIndex = true;
 
-function Blocks({ blocks, setBlocks, textures, solidTextures, image, imageDimensions, coords, scale, setLoading }: Props) {
+function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, image, imageDimensions, coords, scale, setLoading }: Props) {
 	const app = useApp();
 	const tilemapRef = useRef<CompositeTilemap>();
 
@@ -36,11 +36,11 @@ function Blocks({ blocks, setBlocks, textures, solidTextures, image, imageDimens
 		// Tile solid colors at smaller scales
 		if (scale >= 0.5) {
 			blocks.forEach((block) => {
-				tilemap.tile(textures[`${block.name}.png`] ?? constants.MISSING_TEXTURE, block.x * 16, block.y * 16);
+				tilemap.tile(textures[`${block.name}.png`] ?? missingTexture, block.x * 16, block.y * 16);
 			});
 		} else {
 			blocks.forEach((block) => {
-				tilemap.tile(solidTextures[`${block.name}`] ?? constants.MISSING_TEXTURE, block.x * 16, block.y * 16);
+				tilemap.tile(solidTextures[`${block.name}`] ?? missingTexture, block.x * 16, block.y * 16);
 			});
 		}
 	};
