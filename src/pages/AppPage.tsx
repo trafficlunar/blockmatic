@@ -8,7 +8,7 @@ import { ToolProvider } from "@/context/Tool";
 import Menubar from "@/components/menubar";
 import Toolbar from "@/components/toolbar";
 import Canvas from "@/components/canvas/Canvas";
-import BlockSelector from "@/components/block-selector";
+import ToolSettings from "@/components/tool-settings";
 
 function AppPage() {
 	return (
@@ -22,7 +22,7 @@ function AppPage() {
 									<Menubar />
 									<Toolbar />
 									<Canvas />
-									<BlockSelector />
+									<ToolSettings />
 								</main>
 							</ToolProvider>
 						</TexturesProvider>

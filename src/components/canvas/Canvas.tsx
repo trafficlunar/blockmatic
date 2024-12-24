@@ -29,7 +29,7 @@ function Canvas() {
 	const { setLoading } = useContext(LoadingContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture, textures, solidTextures } = useContext(TexturesContext);
-	const { tool, selectedBlock, cssCursor, setTool, setCssCursor } = useContext(ToolContext);
+	const { tool, radius, selectedBlock, cssCursor, setTool, setCssCursor } = useContext(ToolContext);
 
 	const stageContainerRef = useRef<HTMLDivElement>(null);
 
@@ -39,10 +39,6 @@ function Canvas() {
 
 	const [holdingAlt, setHoldingAlt] = useState(false);
 	const [oldTool, setOldTool] = useState<Tool>("hand");
-
-	const updatedBlocks = useMemo(() => {
-		return blocks.filter((b) => !(b.x === mouseCoords.x && b.y === mouseCoords.y));
-	}, [blocks, mouseCoords]);
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -87,26 +83,58 @@ function Canvas() {
 	}, [dragging, holdingAlt, tool, setCssCursor]);
 
 	const onToolUse = useCallback(() => {
+		// Radius calculation - if odd number cursor is in center, if even cursor is in top-left corner
+		const getBlocksWithinRadius = (centerX: number, centerY: number, radius: number, blockName: string): Block[] => {
+			const radiusBlocks = [];
+			const halfSize = Math.floor(radius / 2);
+
+			const startX = centerX - (radius % 2 === 0 ? 0 : halfSize);
+			const startY = centerY - (radius % 2 === 0 ? 0 : halfSize);
+
+			for (let x = 0; x < radius; x++) {
+				for (let y = 0; y < radius; y++) {
+					const tileX = startX + x;
+					const tileY = startY + y;
+
+					radiusBlocks.push({
+						name: blockName,
+						x: tileX,
+						y: tileY,
+					});
+				}
+			}
+
+			return radiusBlocks;
+		};
+
 		switch (tool) {
 			case "pencil": {
-				setBlocks([
-					...updatedBlocks,
-					{
-						name: selectedBlock,
-						x: mouseCoords.x,
-						y: mouseCoords.y,
-					},
-				]);
+				const newBlocks = getBlocksWithinRadius(mouseCoords.x, mouseCoords.y, radius, selectedBlock);
+				const mergedBlocks = blocks.filter((block) => {
+					return !newBlocks.some((newBlock) => block.x === newBlock.x && block.y === newBlock.y);
+				});
+
+				setBlocks([...mergedBlocks, ...newBlocks]);
 				break;
 			}
-			case "eraser":
+			case "eraser": {
 				// Fixes Infinity and NaN errors
 				if (blocks.length == 1) break;
 
-				setBlocks(updatedBlocks);
+				const halfSize = Math.floor(radius / 2);
+				const startX = mouseCoords.x - (radius % 2 === 0 ? 0 : halfSize);
+				const startY = mouseCoords.y - (radius % 2 === 0 ? 0 : halfSize);
+
+				const updated = blocks.filter((block) => {
+					const withinSquare = block.x >= startX && block.x < startX + radius && block.y >= startY && block.y < startY + radius;
+					return !withinSquare;
+				});
+
+				setBlocks(updated);
 				break;
+			}
 		}
-	}, [tool, mouseCoords, selectedBlock, updatedBlocks, setBlocks, blocks.length]);
+	}, [tool, mouseCoords, selectedBlock, setBlocks, blocks, radius]);
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
@@ -261,7 +289,7 @@ function Canvas() {
 
 				<Container x={coords.x} y={coords.y} scale={scale}>
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} />}
-					<Cursor mouseCoords={mouseCoords} />
+					<Cursor mouseCoords={mouseCoords} radius={radius} />
 				</Container>
 
 				{settings.grid && (

@@ -13,7 +13,7 @@ import GithubIcon from "@/assets/github.svg?react";
 function Menubar() {
 	return (
 		<DialogProvider>
-			<UIMenubar className="rounded-none border-t-0 border-x-0 col-span-2">
+			<UIMenubar className="rounded-none border-t-0 border-x-0 col-span-3">
 				<Link to={{ pathname: "/" }} className="px-4 w-32">
 					<BlockmaticText className="h-full w-full" fill="white" />
 				</Link>
