@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-
-import constants from "@/constants";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Container, Sprite, Stage } from "@pixi/react";
+import * as PIXI from "pixi.js";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -11,65 +11,31 @@ import _blockData from "@/data/blocks/programmer-art/data.json";
 const blockData: BlockData = _blockData;
 
 function SelectedBlock() {
-	const { textures } = useContext(TexturesContext);
+	const { missingTexture, textures } = useContext(TexturesContext);
 	const { selectedBlock } = useContext(ToolContext);
 
+	const divRef = useRef<HTMLDivElement>(null);
+
 	const [selectedBlockName, setSelectedBlockName] = useState("Stone");
-	const [selectedBlockTexture, setSelectedBlockTexture] = useState(constants.MISSING_TEXTURE);
+	const [selectedBlockTexture, setSelectedBlockTexture] = useState<PIXI.Texture>();
 
 	useEffect(() => {
 		const blockInfo = blockData[selectedBlock];
 		setSelectedBlockName(blockInfo.name);
-
-		const texture = textures[`${selectedBlock}.png`];
-		if (!texture) {
-			setSelectedBlockTexture(constants.MISSING_TEXTURE);
-			return;
-		}
-
-		const canvas = document.createElement("canvas");
-		const ctx = canvas.getContext("2d");
-		canvas.width = 16;
-		canvas.height = 16;
-
-		if (!ctx) {
-			setSelectedBlockTexture(constants.MISSING_TEXTURE);
-			return;
-		}
-
-		const image = new Image();
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		image.src = (texture.baseTexture.resource as any).url;
-		image.onload = () => {
-			ctx.drawImage(
-				image,
-				texture.frame.x,
-				texture.frame.y,
-				texture.frame.width,
-				texture.frame.height,
-				0,
-				0,
-				texture.frame.width,
-				texture.frame.height
-			);
-
-			setSelectedBlockTexture(canvas.toDataURL());
-		};
-
-		image.onerror = () => {
-			setSelectedBlockTexture(constants.MISSING_TEXTURE);
-		};
-	}, [textures, selectedBlock]);
+		setSelectedBlockTexture(textures[`${selectedBlock}.png`] ?? missingTexture);
+	}, [textures, selectedBlock, missingTexture]);
 
 	return (
 		<TooltipProvider>
 			<Tooltip delayDuration={0}>
 				<TooltipTrigger asChild>
-					<img
-						src={selectedBlockTexture}
-						className="absolute bottom-1 w-8 h-8 cursor-pointer border border-zinc-800 dark:border-zinc-200 rounded"
-						style={{ imageRendering: "pixelated" }}
-					/>
+					<div ref={divRef} className="absolute bottom-1 w-8 h-8 border border-zinc-800 dark:border-zinc-200">
+						<Stage width={divRef.current?.clientWidth} height={divRef.current?.clientHeight}>
+							<Container>
+								<Sprite texture={selectedBlockTexture} scale={2} />
+							</Container>
+						</Stage>
+					</div>
 				</TooltipTrigger>
 				<TooltipContent side="right" sideOffset={10}>
 					<p>{selectedBlockName}</p>
