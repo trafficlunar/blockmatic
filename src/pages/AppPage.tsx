@@ -1,13 +1,14 @@
 import { CanvasProvider } from "@/context/Canvas";
-import { ImageProvider } from "../context/Image";
+import { ImageProvider } from "@/context/Image";
 import { LoadingProvider } from "@/context/Loading";
-import { SettingsProvider } from "../context/Settings";
-import { TexturesProvider } from "../context/Textures";
-import { ToolProvider } from "../context/Tool";
+import { SettingsProvider } from "@/context/Settings";
+import { TexturesProvider } from "@/context/Textures";
+import { ToolProvider } from "@/context/Tool";
 
-import Menubar from "../components/menubar";
-import Toolbar from "../components/toolbar";
-import Canvas from "../components/canvas/Canvas";
+import Menubar from "@/components/menubar";
+import Toolbar from "@/components/toolbar";
+import Canvas from "@/components/canvas/Canvas";
+import BlockSelector from "@/components/block-selector";
 
 function AppPage() {
 	return (
@@ -17,10 +18,11 @@ function AppPage() {
 					<SettingsProvider>
 						<TexturesProvider>
 							<ToolProvider>
-								<main className="h-screen grid grid-rows-[2.5rem_1fr] grid-cols-[2.5rem_1fr]">
+								<main className="h-screen grid grid-rows-[2.5rem_minmax(0,1fr)] grid-cols-[2.5rem_1fr_auto]">
 									<Menubar />
 									<Toolbar />
 									<Canvas />
+									<BlockSelector />
 								</main>
 							</ToolProvider>
 						</TexturesProvider>

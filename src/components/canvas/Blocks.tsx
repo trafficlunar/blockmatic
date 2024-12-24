@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import * as PIXI from "pixi.js";
 import { useApp } from "@pixi/react";
