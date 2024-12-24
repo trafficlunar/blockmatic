@@ -1,11 +1,9 @@
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Container, Graphics, Sprite, Stage } from "@pixi/react";
-import * as PIXI from "pixi.js";
-
 import { BlocksIcon } from "lucide-react";
 
-import constants from "@/constants";
 import { TexturesContext } from "@/context/Textures";
+import { ToolContext } from "@/context/Tool";
 
 import _blockData from "@/data/blocks/programmer-art/data.json";
 const blockData: BlockData = _blockData;
@@ -16,28 +14,32 @@ interface Props {
 }
 
 function SelectorBlocks({ stageWidth, searchInput }: Props) {
-	const { textures } = useContext(TexturesContext);
+	const { missingTexture, textures } = useContext(TexturesContext);
+	const { selectedBlock, setSelectedBlock } = useContext(ToolContext);
 
-	const blocksPerColumn = Math.floor(stageWidth / (32 + 1));
-	const blocks = useMemo(() => Object.keys(blockData).filter((value) => value.includes(searchInput)), [searchInput]);
+	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
+	const [selectedBlockPosition, setSelectedBlockPosition] = useState<Position | null>({ x: 0, y: 0 });
 
-	const textureCache = useMemo(() => {
-		return (blockName: string) => {
-			let texture = textures[`${blockName}.png`];
-			if (!texture) {
-				const baseTexture = new PIXI.BaseTexture(constants.MISSING_TEXTURE);
-				texture = new PIXI.Texture(baseTexture);
-			}
+	const blocksPerColumn = Math.floor(stageWidth / (32 + 2));
+	const filteredBlocks = useMemo(() => Object.keys(blockData).filter((value) => value.includes(searchInput)), [searchInput]);
 
-			return texture;
-		};
-	}, [textures]);
-
-	const onMouseMove = (e: React.MouseEvent) => {
-		console.log(e.clientX, e.clientY);
+	const getBlockPosition = (index: number): Position => {
+		const x = (index % blocksPerColumn) * (32 + 2) + 2;
+		const y = Math.floor(index / blocksPerColumn) * (32 + 2) + 2;
+		return { x, y };
 	};
 
-	if (blocks.length == 0) {
+	useEffect(() => {
+		const index = filteredBlocks.indexOf(selectedBlock);
+		if (index == -1) {
+			setSelectedBlockPosition(null);
+			return;
+		}
+		const position = getBlockPosition(index);
+		setSelectedBlockPosition(position);
+	}, [searchInput, selectedBlock]);
+
+	if (filteredBlocks.length == 0) {
 		return (
 			<div className="w-full h-full flex flex-col justify-center items-center gap-1 text-zinc-400">
 				<BlocksIcon size={40} />
@@ -51,24 +53,53 @@ function SelectorBlocks({ stageWidth, searchInput }: Props) {
 			width={stageWidth}
 			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2)}
 			options={{ backgroundAlpha: 0 }}
-			onMouseMove={onMouseMove}
+			onMouseLeave={() => setHoverPosition(null)}
 		>
 			<Container>
-				{blocks.map((block, index) => {
-					const texture = textureCache(block);
-					const x = (index % blocksPerColumn) * (32 + 2);
-					const y = Math.floor(index / blocksPerColumn) * (32 + 2);
+				{filteredBlocks.map((block, index) => {
+					const texture = textures[`${block}.png`] ?? missingTexture;
+					const { x, y } = getBlockPosition(index);
 
-					return <Sprite texture={texture} x={x} y={y} scale={2} />;
+					return (
+						<Sprite
+							texture={texture}
+							x={x}
+							y={y}
+							scale={2}
+							interactive={true}
+							pointerover={() => setHoverPosition({ x, y })}
+							click={() => {
+								setSelectedBlock(block);
+								setSelectedBlockPosition({ x, y });
+							}}
+						/>
+					);
 				})}
 
-				<Graphics
-					draw={(g) => {
-						g.clear();
-						g.lineStyle(1, 0xffffff, 1);
-						g.drawRect(0, 0, 16, 16);
-					}}
-				/>
+				{hoverPosition && (
+					<Graphics
+						x={hoverPosition.x}
+						y={hoverPosition.y}
+						draw={(g) => {
+							g.clear();
+							g.beginFill("#0000004D");
+							g.lineStyle(2, 0xffffff, 1, 1);
+							g.drawRect(0, 0, 32, 32);
+						}}
+					/>
+				)}
+
+				{selectedBlockPosition && (
+					<Graphics
+						x={selectedBlockPosition.x}
+						y={selectedBlockPosition.y}
+						draw={(g) => {
+							g.clear();
+							g.lineStyle(2, 0xffffff, 1, 1);
+							g.drawRect(0, 0, 32, 32);
+						}}
+					/>
+				)}
 			</Container>
 		</Stage>
 	);
