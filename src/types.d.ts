@@ -24,6 +24,7 @@ interface Block extends Position {
 type Tool = "hand" | "pencil" | "eraser" | "zoom";
 
 interface Settings {
+	blockSelectorWindow: boolean;
 	grid: boolean;
 	canvasBorder: boolean;
 }
@@ -37,9 +38,11 @@ type BlockData = Record<
 	{
 		name: string;
 		version: string;
-		id?: (string | number)[];
+		id: (string | number)[];
+		color: number[];
 		fallable?: boolean;
 		creative?: boolean;
+		tile_entity?: boolean;
 		properties?: Record<string, string>;
 	}
 >;
