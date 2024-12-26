@@ -24,6 +24,17 @@ function ViewMenu() {
 				<MenubarCheckboxItem checked={settings.canvasBorder} onCheckedChange={onCheckedChange("canvasBorder")}>
 					Canvas Border
 				</MenubarCheckboxItem>
+
+				<MenubarSeparator />
+				<MenubarCheckboxItem checked={settings.colorPicker} onCheckedChange={onCheckedChange("colorPicker")}>
+					Color Picker
+				</MenubarCheckboxItem>
+				<MenubarCheckboxItem checked={settings.radiusChanger} onCheckedChange={onCheckedChange("radiusChanger")}>
+					Radius Changer
+				</MenubarCheckboxItem>
+				<MenubarCheckboxItem checked={settings.blockSelector} onCheckedChange={onCheckedChange("blockSelector")}>
+					Block Selector
+				</MenubarCheckboxItem>
 			</MenubarContent>
 		</MenubarMenu>
 	);

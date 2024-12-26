@@ -24,9 +24,11 @@ interface Block extends Position {
 type Tool = "hand" | "pencil" | "eraser" | "eyedropper" | "zoom";
 
 interface Settings {
-	blockSelectorWindow: boolean;
 	grid: boolean;
 	canvasBorder: boolean;
+	colorPicker: boolean;
+	radiusChanger: boolean;
+	blockSelector: boolean;
 }
 
 interface DialogProps {

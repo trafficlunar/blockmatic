@@ -7,6 +7,9 @@ interface Props {
 const defaultSettings: Settings = {
 	grid: true,
 	canvasBorder: false,
+	colorPicker: false,
+	radiusChanger: true,
+	blockSelector: true,
 };
 
 export const SettingsContext = createContext({
