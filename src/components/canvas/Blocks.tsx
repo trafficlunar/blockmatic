@@ -5,8 +5,7 @@ import * as PIXI from "pixi.js";
 import { useApp } from "@pixi/react";
 import { CompositeTilemap, settings } from "@pixi/tilemap";
 
-import _blockData from "@/data/blocks/programmer-art/data.json";
-const blockData: BlockData = _blockData;
+import { findBlockFromRgb } from "@/utils/findBlockFromRgb";
 
 interface Props {
 	blocks: Block[];
@@ -66,23 +65,6 @@ function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, im
 		tilemapRef.current.scale.set(scale, scale);
 	}, [coords, scale]);
 
-	const findClosestBlock = (r: number, g: number, b: number, a: number) => {
-		let closestBlock = "";
-		let closestDistance = Infinity;
-
-		Object.entries(blockData).forEach(([block, data]) => {
-			const distance = Math.sqrt(
-				Math.pow(r - data.color[0], 2) + Math.pow(g - data.color[1], 2) + Math.pow(b - data.color[2], 2) + Math.pow(a - data.color[3], 3)
-			);
-			if (distance < closestDistance) {
-				closestDistance = distance;
-				closestBlock = block;
-			}
-		});
-
-		return closestBlock;
-	};
-
 	useEffect(() => {
 		if (!image) return;
 
@@ -98,7 +80,7 @@ function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, im
 			const newBlocks: Block[] = [];
 
 			for (let i = 0; i < imageData.data.length; i += 4) {
-				const block = findClosestBlock(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
+				const block = findBlockFromRgb(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
 
 				const x = Math.floor((i / 4) % imageData.width);
 				const y = Math.floor(i / 4 / imageData.width);

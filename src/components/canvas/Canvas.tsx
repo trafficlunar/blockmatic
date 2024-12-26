@@ -206,7 +206,7 @@ function Canvas() {
 			default:
 				break;
 		}
-	}, [tool, holdingAlt, scale, zoomToMousePosition, setScale]);
+	}, [tool, holdingAlt, scale, mouseCoords, blocks, zoomToMousePosition, setScale, setSelectedBlock]);
 
 	const onKeyDown = (e: KeyboardEvent) => {
 		switch (e.key) {
