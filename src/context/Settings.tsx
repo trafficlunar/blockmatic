@@ -1,5 +1,10 @@
 import { createContext, ReactNode, useState } from "react";
 
+interface Context {
+	settings: Settings;
+	setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
+}
+
 interface Props {
 	children: ReactNode;
 }
@@ -12,10 +17,7 @@ const defaultSettings: Settings = {
 	blockSelector: true,
 };
 
-export const SettingsContext = createContext({
-	settings: defaultSettings,
-	setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => {},
-});
+export const SettingsContext = createContext<Context>({} as Context);
 
 export const SettingsProvider = ({ children }: Props) => {
 	const [settings, setSettings] = useState<Settings>(defaultSettings);

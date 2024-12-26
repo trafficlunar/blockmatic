@@ -1,11 +1,13 @@
 import { Dialog } from "@/components/ui/dialog";
 import { createContext, lazy, ReactNode, Suspense, useState } from "react";
 
+type Context = (id: string) => void;
+
 interface Props {
 	children: ReactNode;
 }
 
-export const DialogContext = createContext((id: string) => {});
+export const DialogContext = createContext<Context>({} as Context);
 
 export const DialogProvider = ({ children }: Props) => {
 	const [open, setOpen] = useState(false);

@@ -1,14 +1,16 @@
 import { createContext, ReactNode, useState } from "react";
 import LoadingIndicator from "@/assets/loading.svg?react";
 
+interface Context {
+	loading: boolean;
+	setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 interface Props {
 	children: ReactNode;
 }
 
-export const LoadingContext = createContext({
-	loading: false,
-	setLoading: ((value: boolean) => {}) as React.Dispatch<React.SetStateAction<boolean>>,
-});
+export const LoadingContext = createContext<Context>({} as Context);
 
 export const LoadingProvider = ({ children }: Props) => {
 	const [loading, setLoading] = useState(true);

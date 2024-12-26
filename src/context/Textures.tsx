@@ -7,15 +7,17 @@ import spritesheet from "@/data/blocks/programmer-art/spritesheet.json";
 import _blockData from "@/data/blocks/programmer-art/data.json";
 const blockData: BlockData = _blockData;
 
+interface Context {
+	missingTexture: PIXI.Texture | undefined;
+	textures: Record<string, PIXI.Texture>;
+	solidTextures: Record<string, PIXI.Texture>;
+}
+
 interface Props {
 	children: ReactNode;
 }
 
-export const TexturesContext = createContext({
-	missingTexture: {} as PIXI.Texture | undefined,
-	textures: {} as Record<string, PIXI.Texture>,
-	solidTextures: {} as Record<string, PIXI.Texture>,
-});
+export const TexturesContext = createContext<Context>({} as Context);
 
 export const TexturesProvider = ({ children }: Props) => {
 	const { setLoading } = useContext(LoadingContext);

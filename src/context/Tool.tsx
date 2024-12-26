@@ -1,19 +1,21 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 
+interface Context {
+	tool: Tool;
+	radius: number;
+	selectedBlock: string;
+	cssCursor: string;
+	setTool: React.Dispatch<React.SetStateAction<Tool>>;
+	setRadius: React.Dispatch<React.SetStateAction<number>>;
+	setSelectedBlock: React.Dispatch<React.SetStateAction<string>>;
+	setCssCursor: React.Dispatch<React.SetStateAction<string>>;
+}
+
 interface Props {
 	children: ReactNode;
 }
 
-export const ToolContext = createContext({
-	tool: "hand" as Tool,
-	radius: 1,
-	selectedBlock: "stone",
-	cssCursor: "pointer",
-	setTool: ((tool: Tool) => {}) as React.Dispatch<React.SetStateAction<Tool>>,
-	setRadius: ((value: number) => {}) as React.Dispatch<React.SetStateAction<number>>,
-	setSelectedBlock: ((block: string) => {}) as React.Dispatch<React.SetStateAction<string>>,
-	setCssCursor: ((cursor: string) => {}) as React.Dispatch<React.SetStateAction<string>>,
-});
+export const ToolContext = createContext<Context>({} as Context);
 
 export const ToolProvider = ({ children }: Props) => {
 	const [tool, setTool] = useState<Tool>("hand");

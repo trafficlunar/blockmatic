@@ -1,20 +1,22 @@
 import React, { createContext, ReactNode, useMemo, useState } from "react";
 
+interface Context {
+	stageSize: Dimension;
+	canvasSize: Dimension;
+	blocks: Block[];
+	coords: Position;
+	scale: number;
+	setStageSize: React.Dispatch<React.SetStateAction<Dimension>>;
+	setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
+	setCoords: React.Dispatch<React.SetStateAction<Position>>;
+	setScale: React.Dispatch<React.SetStateAction<number>>;
+}
+
 interface Props {
 	children: ReactNode;
 }
 
-export const CanvasContext = createContext({
-	stageSize: { width: 0, height: 0 } as Dimension,
-	canvasSize: { minX: 0, minY: 0, maxX: 0, maxY: 0 },
-	blocks: [] as Block[],
-	coords: { x: 0, y: 0 } as Position,
-	scale: 0,
-	setStageSize: ((size: Dimension) => {}) as React.Dispatch<React.SetStateAction<Dimension>>,
-	setBlocks: ((blocks: Block[]) => {}) as React.Dispatch<React.SetStateAction<Block[]>>,
-	setCoords: ((coords: Position) => {}) as React.Dispatch<React.SetStateAction<Position>>,
-	setScale: ((value: number) => {}) as React.Dispatch<React.SetStateAction<number>>,
-});
+export const CanvasContext = createContext<Context>({} as Context);
 
 export const CanvasProvider = ({ children }: Props) => {
 	const [stageSize, setStageSize] = useState({ width: 0, height: 0 } as Dimension);
