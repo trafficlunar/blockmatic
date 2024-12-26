@@ -3,9 +3,10 @@ import { Graphics } from "@pixi/react";
 interface Props {
 	mouseCoords: Position;
 	radius: number;
+	isDark: boolean;
 }
 
-function Cursor({ mouseCoords, radius }: Props) {
+function Cursor({ mouseCoords, radius, isDark }: Props) {
 	const isOddRadius = radius % 2 !== 0;
 	const halfSize = Math.floor(radius / 2);
 
@@ -18,7 +19,7 @@ function Cursor({ mouseCoords, radius }: Props) {
 			y={(mouseCoords.y + offset) * 16}
 			draw={(g) => {
 				g.clear();
-				g.lineStyle(1, 0xffffff, 1);
+				g.lineStyle(1, isDark ? 0xffffff : 0x000000, 1);
 				g.drawRect(0, 0, size, size);
 			}}
 		/>

@@ -8,6 +8,7 @@ import { ImageContext } from "@/context/Image";
 import { LoadingContext } from "@/context/Loading";
 import { SettingsContext } from "@/context/Settings";
 import { TexturesContext } from "@/context/Textures";
+import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
 import Blocks from "./Blocks";
@@ -29,6 +30,7 @@ function Canvas() {
 	const { setLoading } = useContext(LoadingContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture, textures, solidTextures } = useContext(TexturesContext);
+	const { isDark } = useContext(ThemeContext);
 	const { tool, radius, selectedBlock, cssCursor, setTool, setSelectedBlock, setCssCursor } = useContext(ToolContext);
 
 	const stageContainerRef = useRef<HTMLDivElement>(null);
@@ -278,7 +280,7 @@ function Canvas() {
 	}, []);
 
 	return (
-		<div ref={stageContainerRef} className="relative w-full h-full" style={{ cursor: cssCursor }}>
+		<div ref={stageContainerRef} className="relative w-full h-full bg-zinc-200 dark:bg-black" style={{ cursor: cssCursor }}>
 			<Stage
 				width={stageSize.width}
 				height={stageSize.height}
@@ -287,6 +289,7 @@ function Canvas() {
 				onMouseUp={onMouseUp}
 				onWheel={onWheel}
 				onClick={onClick}
+				options={{ backgroundAlpha: 0 }}
 			>
 				<Blocks
 					blocks={visibleBlocks}
@@ -302,13 +305,13 @@ function Canvas() {
 				/>
 
 				<Container x={coords.x} y={coords.y} scale={scale}>
-					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} />}
-					<Cursor mouseCoords={mouseCoords} radius={radius} />
+					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
+					<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} />
 				</Container>
 
 				{settings.grid && (
 					<Container>
-						<Grid stageSize={stageSize} coords={coords} scale={scale} />
+						<Grid stageSize={stageSize} coords={coords} scale={scale} isDark={isDark} />
 					</Container>
 				)}
 			</Stage>

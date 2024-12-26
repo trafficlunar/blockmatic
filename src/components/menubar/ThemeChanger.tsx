@@ -1,8 +1,9 @@
+import { useContext } from "react";
+import { ThemeContext } from "@/context/Theme";
 import { MenubarRadioGroup, MenubarRadioItem, MenubarSub, MenubarSubContent, MenubarSubTrigger } from "@/components/ui/menubar";
-import { useTheme } from "@/context/Theme";
 
 function ThemeChanger() {
-	const { setTheme, theme } = useTheme();
+	const { setTheme, theme } = useContext(ThemeContext);
 
 	return (
 		<MenubarSub>

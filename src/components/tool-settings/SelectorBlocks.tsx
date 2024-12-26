@@ -3,6 +3,7 @@ import { Container, Graphics, Sprite, Stage } from "@pixi/react";
 import { BlocksIcon } from "lucide-react";
 
 import { TexturesContext } from "@/context/Textures";
+import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
 import _blockData from "@/data/blocks/programmer-art/data.json";
@@ -15,6 +16,7 @@ interface Props {
 
 function SelectorBlocks({ stageWidth, searchInput }: Props) {
 	const { missingTexture, textures } = useContext(TexturesContext);
+	const { isDark } = useContext(ThemeContext);
 	const { selectedBlock, setSelectedBlock } = useContext(ToolContext);
 
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
@@ -82,8 +84,8 @@ function SelectorBlocks({ stageWidth, searchInput }: Props) {
 						y={hoverPosition.y}
 						draw={(g) => {
 							g.clear();
-							g.beginFill("#0000004D");
-							g.lineStyle(2, 0xffffff, 1, 1);
+							g.beginFill(0x000000, 0.5);
+							g.lineStyle(2, isDark ? 0xffffff : 0x000000, 1, 1);
 							g.drawRect(0, 0, 32, 32);
 						}}
 					/>
@@ -95,7 +97,7 @@ function SelectorBlocks({ stageWidth, searchInput }: Props) {
 						y={selectedBlockPosition.y}
 						draw={(g) => {
 							g.clear();
-							g.lineStyle(2, 0xffffff, 1, 1);
+							g.lineStyle(2, isDark ? 0xffffff : 0x000000, 1, 1);
 							g.drawRect(0, 0, 32, 32);
 						}}
 					/>

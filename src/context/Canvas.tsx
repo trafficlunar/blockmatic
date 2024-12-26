@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useMemo, useState } from "react";
 
 interface Context {
 	stageSize: Dimension;
-	canvasSize: Dimension;
+	canvasSize: CanvasSize;
 	blocks: Block[];
 	coords: Position;
 	scale: number;

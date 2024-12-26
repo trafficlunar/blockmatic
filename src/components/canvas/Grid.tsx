@@ -4,14 +4,15 @@ interface Props {
 	stageSize: Dimension;
 	coords: Position;
 	scale: number;
+	isDark: boolean;
 }
 
-function Grid({ stageSize, coords, scale }: Props) {
+function Grid({ stageSize, coords, scale, isDark }: Props) {
 	return (
 		<Graphics
 			draw={(g) => {
 				g.clear();
-				g.lineStyle(1, 0xffffff, 0.1);
+				g.lineStyle(1, isDark ? 0xffffff : 0x000000, 0.1);
 
 				const tileSize = 16 * scale;
 
