@@ -21,7 +21,7 @@ interface Block extends Position {
 	name: string;
 }
 
-type Tool = "hand" | "pencil" | "eraser" | "zoom";
+type Tool = "hand" | "pencil" | "eraser" | "eyedropper" | "zoom";
 
 interface Settings {
 	blockSelectorWindow: boolean;

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EraserIcon, HandIcon, PencilIcon, ZoomInIcon } from "lucide-react";
+import { EraserIcon, HandIcon, PencilIcon, PipetteIcon, ZoomInIcon } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -57,6 +57,18 @@ function Toolbar() {
 					</TooltipContent>
 				</Tooltip>
 
+				{/* Eyedropper */}
+				<Tooltip delayDuration={0}>
+					<TooltipTrigger>
+						<ToggleGroupItem value="eyedropper" className="!p-0 !h-8 !min-w-8">
+							<PipetteIcon />
+						</ToggleGroupItem>
+					</TooltipTrigger>
+					<TooltipContent side="right" sideOffset={10}>
+						<p>Eyedropper (4)</p>
+					</TooltipContent>
+				</Tooltip>
+
 				{/* Zoom */}
 				<Tooltip delayDuration={0}>
 					<TooltipTrigger>
@@ -65,7 +77,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Zoom (4)</p>
+						<p>Zoom (5)</p>
 					</TooltipContent>
 				</Tooltip>
 

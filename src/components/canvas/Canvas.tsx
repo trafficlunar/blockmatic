@@ -29,7 +29,7 @@ function Canvas() {
 	const { setLoading } = useContext(LoadingContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture, textures, solidTextures } = useContext(TexturesContext);
-	const { tool, radius, selectedBlock, cssCursor, setTool, setCssCursor } = useContext(ToolContext);
+	const { tool, radius, selectedBlock, cssCursor, setTool, setSelectedBlock, setCssCursor } = useContext(ToolContext);
 
 	const stageContainerRef = useRef<HTMLDivElement>(null);
 
@@ -189,11 +189,22 @@ function Canvas() {
 	);
 
 	const onClick = useCallback(() => {
-		if (tool === "zoom") {
-			const scaleChange = holdingAlt ? -0.1 : 0.1;
-			const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
-			setScale(newScale);
-			zoomToMousePosition(newScale);
+		switch (tool) {
+			case "eyedropper": {
+				const mouseBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
+				if (mouseBlock) setSelectedBlock(mouseBlock.name);
+				break;
+			}
+			case "zoom": {
+				const scaleChange = holdingAlt ? -0.1 : 0.1;
+				const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
+				setScale(newScale);
+				zoomToMousePosition(newScale);
+				break;
+			}
+
+			default:
+				break;
 		}
 	}, [tool, holdingAlt, scale, zoomToMousePosition, setScale]);
 
@@ -215,6 +226,9 @@ function Canvas() {
 				setTool("eraser");
 				break;
 			case "4":
+				setTool("eyedropper");
+				break;
+			case "5":
 				setTool("zoom");
 				break;
 			case "Alt":
