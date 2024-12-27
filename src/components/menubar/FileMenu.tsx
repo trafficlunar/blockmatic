@@ -29,7 +29,7 @@ function FileMenu() {
 					<MenubarSubContent>
 						<MenubarItem>.schematic</MenubarItem>
 						<MenubarItem onClick={() => openDialog("SaveLitematic")}>.litematic</MenubarItem>
-						<MenubarItem>image</MenubarItem>
+						<MenubarItem onClick={() => openDialog("SaveImage")}>image</MenubarItem>
 					</MenubarSubContent>
 				</MenubarSub>
 				<MenubarSeparator />
