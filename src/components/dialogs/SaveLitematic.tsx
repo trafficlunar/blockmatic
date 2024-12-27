@@ -67,7 +67,7 @@ function SaveLitematic({ close }: DialogProps) {
 		filledBlocks.forEach((block) => {
 			const blockInfo = blockData[block.name.replace("minecraft:", "")];
 			let blockName = block.name;
-			if (blockInfo.id) blockName = blockInfo.id[0].toString();
+			if (blockInfo) blockName = blockInfo.id[0].toString();
 
 			const blockId = blockStatePallete.findIndex((entry) => entry.Name === `minecraft:${blockName}`);
 
@@ -141,13 +141,10 @@ function SaveLitematic({ close }: DialogProps) {
 
 		setLoading(false);
 
-		const a = document.createElement("a");
-		a.href = url;
-		a.download = `${fileName}.litematic`;
-
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a);
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = `${fileName}.litematic`;
+		link.click();
 
 		URL.revokeObjectURL(url);
 
