@@ -1,13 +1,13 @@
 {
 	"acacia_log": {
 		"name": "Acacia Log",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["acacia_log", 38],
 		"color": [108, 101, 91, 255]
 	},
 	"acacia_log_top": {
 		"name": "Acacia Log (Top)",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["acacia_log", 38],
 		"color": [158, 92, 65, 255],
 		"properties": {
@@ -16,13 +16,13 @@
 	},
 	"acacia_planks": {
 		"name": "Acacia Planks",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["acacia_planks", 17],
 		"color": [171, 93, 51, 255]
 	},
 	"acacia_trapdoor": {
 		"name": "Acacia Trapdoor",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["acacia_trapdoor", 206],
 		"color": [160, 89, 53, 195],
 		"properties": {
@@ -31,26 +31,26 @@
 	},
 	"andesite": {
 		"name": "Andesite",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["andesite", 6],
 		"color": [133, 133, 133, 255]
 	},
 	"bedrock": {
 		"name": "Bedrock",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["bedrock", 25],
 		"color": [94, 94, 94, 255],
 		"creative": true
 	},
 	"birch_log": {
 		"name": "Birch Log",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["birch_log", 36],
 		"color": [215, 215, 210, 255]
 	},
 	"birch_log_top": {
 		"name": "Birch Log (Top)",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["birch_log", 36],
 		"color": [189, 172, 131, 255],
 		"properties": {
@@ -59,13 +59,13 @@
 	},
 	"birch_planks": {
 		"name": "Birch Planks",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["birch_planks", 15],
 		"color": [197, 181, 124, 255]
 	},
 	"birch_trapdoor": {
 		"name": "Birch Trapdoor",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["birch_trapdoor", 204],
 		"color": [211, 199, 166, 255],
 		"properties": {
@@ -74,107 +74,107 @@
 	},
 	"black_concrete": {
 		"name": "Black Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["black_concrete", 530],
 		"color": [8, 10, 15, 255]
 	},
 	"black_concrete_powder": {
 		"name": "Black Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["black_concrete_powder", 546],
 		"color": [27, 28, 33, 255],
 		"fallable": true
 	},
 	"black_glazed_terracotta": {
 		"name": "Black Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["black_glazed_terracotta", 514],
 		"color": [86, 34, 36, 255]
 	},
 	"black_shulker_box": {
 		"name": "Black Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["black_shulker_box", 498],
 		"color": [26, 26, 30, 255],
 		"tile_entity": true
 	},
 	"black_stained_glass": {
 		"name": "Black Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["black_stained_glass", 201],
 		"color": [25, 25, 25, 123]
 	},
 	"black_terracotta": {
 		"name": "Black Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["black_terracotta", 334],
 		"color": [37, 23, 16, 255]
 	},
 	"black_wool": {
 		"name": "Black Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["black_wool", 116],
 		"color": [22, 23, 27, 255]
 	},
 	"blue_concrete": {
 		"name": "Blue Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["blue_concrete", 526],
 		"color": [45, 47, 143, 255]
 	},
 	"blue_concrete_powder": {
 		"name": "Blue Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["blue_concrete_powder", 542],
 		"color": [70, 74, 167, 255],
 		"fallable": true
 	},
 	"blue_glazed_terracotta": {
 		"name": "Blue Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["blue_glazed_terracotta", 510],
 		"color": [49, 75, 150, 255]
 	},
 	"blue_ice": {
 		"name": "Blue Ice",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["blue_ice", 592],
 		"color": [117, 168, 253, 255]
 	},
 	"blue_shulker_box": {
 		"name": "Blue Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["blue_shulker_box", 494],
 		"color": [44, 46, 141, 255],
 		"tile_entity": true
 	},
 	"blue_stained_glass": {
 		"name": "Blue Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["blue_stained_glass", 197],
 		"color": [51, 76, 178, 123]
 	},
 	"blue_terracotta": {
 		"name": "Blue Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["blue_terracotta", 330],
 		"color": [74, 60, 91, 255]
 	},
 	"blue_wool": {
 		"name": "Blue Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["blue_wool", 112],
 		"color": [53, 58, 158, 255]
 	},
 	"bone_block_side": {
 		"name": "Bone Block (Side)",
-		"version": "1.10",
+		"version": 1100,
 		"id": ["bone_block", 479],
 		"color": [225, 221, 201, 255]
 	},
 	"bone_block_top": {
 		"name": "Bone Block (Top)",
-		"version": "1.10",
+		"version": 1100,
 		"id": ["bone_block", 479],
 		"color": [207, 202, 179, 255],
 		"properties": {
@@ -183,243 +183,243 @@
 	},
 	"bookshelf": {
 		"name": "Bookshelf",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["bookshelf", 134],
 		"color": [121, 100, 73, 255]
 	},
 	"brain_coral_block": {
 		"name": "Brain Coral Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["brain_coral_block", 557],
 		"color": [208, 95, 161, 255],
 		"creative": true
 	},
 	"bricks": {
 		"name": "Bricks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["bricks", 132],
 		"color": [148, 106, 95, 255]
 	},
 	"brown_concrete": {
 		"name": "Brown Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["brown_concrete", 527],
 		"color": [96, 60, 32, 255]
 	},
 	"brown_concrete_powder": {
 		"name": "Brown Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["brown_concrete_powder", 543],
 		"color": [126, 85, 54, 255],
 		"fallable": true
 	},
 	"brown_glazed_terracotta": {
 		"name": "Brown Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["brown_glazed_terracotta", 511],
 		"color": [135, 110, 95, 255]
 	},
 	"brown_mushroom_block": {
 		"name": "Brown Mushroom Block",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["brown_mushroom_block", 218],
 		"color": [143, 107, 84, 255]
 	},
 	"brown_shulker_box": {
 		"name": "Brown Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["brown_shulker_box", 495],
 		"color": [107, 66, 36, 255],
 		"tile_entity": true
 	},
 	"brown_stained_glass": {
 		"name": "Brown Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["brown_stained_glass", 198],
 		"color": [102, 76, 51, 123]
 	},
 	"brown_terracotta": {
 		"name": "Brown Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["brown_terracotta", 331],
 		"color": [77, 51, 36, 255]
 	},
 	"brown_wool": {
 		"name": "Brown Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["brown_wool", 113],
 		"color": [115, 72, 41, 255]
 	},
 	"bubble_coral_block": {
 		"name": "Bubble Coral Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["bubble_coral_block", 558],
 		"color": [168, 29, 163, 255],
 		"creative": true
 	},
 	"carved_pumpkin": {
 		"name": "Carved Pumpkin",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["carved_pumpkin", 182],
 		"color": [155, 91, 19, 255]
 	},
 	"cauldron_side": {
 		"name": "Cauldron",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["cauldron", 240],
 		"color": [63, 63, 63, 243]
 	},
 	"chain_command_block_front": {
 		"name": "Chain Command Block",
-		"version": "1.4.2",
+		"version": 1042,
 		"id": ["chain_command_block", 474],
 		"color": [136, 165, 153, 255],
 		"creative": true
 	},
 	"chiseled_quartz_block": {
 		"name": "Chiseled Quartz Block",
-		"version": "1.5",
+		"version": 1050,
 		"id": ["chiseled_quartz_block", 314],
 		"color": [232, 229, 220, 255]
 	},
 	"chiseled_red_sandstone": {
 		"name": "Chiseled Red Sandstone",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["chiseled_red_sandstone", 425],
 		"color": [163, 83, 28, 255]
 	},
 	"chiseled_sandstone": {
 		"name": "Chiseled Sandstone",
-		"version": "1.2.4",
+		"version": 1024,
 		"id": ["chiseled_sandstone", 71],
 		"color": [216, 209, 157, 255]
 	},
 	"chiseled_stone_bricks": {
 		"name": "Chiseled Stone Bricks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["chiseled_stone_bricks", 217],
 		"color": [121, 121, 121, 255]
 	},
 	"clay": {
 		"name": "Clay",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["clay", 173],
 		"color": [159, 164, 177, 255]
 	},
 	"coal_block": {
 		"name": "Block of Coal",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["coal_block", 384],
 		"color": [20, 20, 20, 255]
 	},
 	"coal_ore": {
 		"name": "Coal Ore",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["coal_ore", 33],
 		"color": [118, 118, 118, 255]
 	},
 	"coarse_dirt": {
 		"name": "Coarse Dirt",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["coarse_dirt", 10],
 		"color": [124, 89, 62, 255]
 	},
 	"cobblestone": {
 		"name": "Cobblestone",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["cobblestone", 12],
 		"color": [126, 126, 126, 255]
 	},
 	"cobweb": {
 		"name": "Cobweb",
-		"version": "1.5",
+		"version": 1050,
 		"id": ["cobweb", 93],
 		"color": [220, 220, 220, 105]
 	},
 	"command_block_front": {
 		"name": "Command Block",
-		"version": "1.4.2",
+		"version": 1042,
 		"id": ["command_block", 256],
 		"color": [177, 138, 119, 255],
 		"creative": true
 	},
 	"cracked_stone_bricks": {
 		"name": "Cracked Stone Bricks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["cracked_stone_bricks", 216],
 		"color": [120, 120, 120, 255]
 	},
 	"crafting_table_front": {
 		"name": "Crafting Table",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["crafting_table", 146],
 		"color": [132, 111, 82, 255]
 	},
 	"cut_red_sandstone": {
 		"name": "Cut Red Sandstone",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["cut_red_sandstone", 426],
 		"color": [168, 86, 31, 255]
 	},
 	"cut_sandstone": {
 		"name": "Cut Sandstone",
-		"version": "1.2.4",
+		"version": 1024,
 		"id": ["cut_sandstone", 72],
 		"color": [220, 212, 163, 255]
 	},
 	"cyan_concrete": {
 		"name": "Cyan Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["cyan_concrete", 524],
 		"color": [21, 119, 136, 255]
 	},
 	"cyan_concrete_powder": {
 		"name": "Cyan Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["cyan_concrete_powder", 540],
 		"color": [37, 148, 157, 255],
 		"fallable": true
 	},
 	"cyan_glazed_terracotta": {
 		"name": "Cyan Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["cyan_glazed_terracotta", 508],
 		"color": [74, 128, 134, 255]
 	},
 	"cyan_shulker_box": {
 		"name": "Cyan Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["cyan_shulker_box", 492],
 		"color": [20, 122, 136, 255],
 		"tile_entity": true
 	},
 	"cyan_stained_glass": {
 		"name": "Cyan Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["cyan_stained_glass", 195],
 		"color": [76, 127, 153, 123]
 	},
 	"cyan_terracotta": {
 		"name": "Cyan Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["cyan_terracotta", 328],
 		"color": [87, 91, 91, 255]
 	},
 	"cyan_wool": {
 		"name": "Cyan Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["cyan_wool", 110],
 		"color": [21, 138, 145, 255]
 	},
 	"dark_oak_log": {
 		"name": "Dark Oak Log",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["dark_oak_log", 39],
 		"color": [55, 42, 24, 255]
 	},
 	"dark_oak_log_top": {
 		"name": "Dark Oak Log (Top)",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["dark_oak_log", 39],
 		"color": [81, 65, 43, 255],
 		"properties": {
@@ -428,13 +428,13 @@
 	},
 	"dark_oak_planks": {
 		"name": "Dark Oak Planks",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["dark_oak_planks", 18],
 		"color": [62, 40, 19, 255]
 	},
 	"dark_oak_trapdoor": {
 		"name": "Dark Oak Trapdoor",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["dark_oak_trapdoor", 207],
 		"color": [78, 51, 24, 255],
 		"properties": {
@@ -443,61 +443,61 @@
 	},
 	"dark_prismarine": {
 		"name": "Dark Prismarine",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["dark_prismarine", 358],
 		"color": [62, 90, 77, 255]
 	},
 	"dead_brain_coral_block": {
 		"name": "Dead Brain Coral Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["dead_brain_coral_block", 552],
 		"color": [126, 119, 116, 255]
 	},
 	"dead_bubble_coral_block": {
 		"name": "Dead Bubble Coral Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["dead_bubble_coral_block", 553],
 		"color": [133, 125, 121, 255]
 	},
 	"dead_horn_coral_block": {
 		"name": "Dead Horn Coral Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["dead_horn_coral_block", 555],
 		"color": [136, 128, 124, 255]
 	},
 	"dead_tube_coral_block": {
 		"name": "Dead Tube Coral Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["dead_tube_coral_block", 551],
 		"color": [132, 125, 121, 255]
 	},
 	"diamond_block": {
 		"name": "Block of Diamond",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["diamond_block", 145],
 		"color": [116, 220, 214, 255]
 	},
 	"diamond_ore": {
 		"name": "Diamond Ore",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["diamond_ore", 144],
 		"color": [132, 145, 150, 255]
 	},
 	"diorite": {
 		"name": "Diorite",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["diorite", 4],
 		"color": [183, 183, 186, 255]
 	},
 	"dirt": {
 		"name": "Dirt",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["dirt", 9],
 		"color": [137, 99, 69, 255]
 	},
 	"dispenser_front": {
 		"name": "Dispenser",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["dispenser", 69],
 		"color": [129, 129, 129, 255],
 		"properties": {
@@ -506,13 +506,13 @@
 	},
 	"dried_kelp_side": {
 		"name": "Dried Kelp Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["dried_kelp_block", 549],
 		"color": [47, 55, 38, 255]
 	},
 	"dropper_front": {
 		"name": "Dropper",
-		"version": "1.5",
+		"version": 1050,
 		"id": ["dropper", 318],
 		"color": [130, 130, 130, 255],
 		"properties": {
@@ -521,31 +521,31 @@
 	},
 	"emerald_block": {
 		"name": "Block of Emerald",
-		"version": "1.3.1",
+		"version": 1031,
 		"id": ["emerald_block", 252],
 		"color": [86, 218, 120, 255]
 	},
 	"emerald_ore": {
 		"name": "Emerald Ore",
-		"version": "1.3.1",
+		"version": 1031,
 		"id": ["emerald_ore", 248],
 		"color": [117, 134, 121, 255]
 	},
 	"end_stone": {
 		"name": "End Stone",
-		"version": "1.0.0",
+		"version": 1000,
 		"id": ["end_stone", 243],
 		"color": [222, 225, 167, 255]
 	},
 	"end_stone_bricks": {
 		"name": "End Stone Bricks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["end_stone_bricks", 469],
 		"color": [226, 232, 172, 255]
 	},
 	"furnace_front": {
 		"name": "Furnace",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["furnace", 149],
 		"color": [96, 96, 96, 255],
 		"properties": {
@@ -554,158 +554,158 @@
 	},
 	"furnace_side": {
 		"name": "Furnace (Side)",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["furnace", 149],
 		"color": [122, 122, 122, 255]
 	},
 	"glass": {
 		"name": "Glass",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["glass", 66],
 		"color": [221, 241, 245, 71]
 	},
 	"glowstone": {
 		"name": "Glowstone",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["glowstone", 180],
 		"color": [157, 131, 89, 255]
 	},
 	"gold_block": {
 		"name": "Block of Gold",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["gold_block", 130],
 		"color": [249, 237, 81, 255]
 	},
 	"gold_ore": {
 		"name": "Gold Ore",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["gold_ore", 31],
 		"color": [151, 145, 129, 255]
 	},
 	"granite": {
 		"name": "Granite",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["granite", 2],
 		"color": [158, 119, 104, 255]
 	},
 	"grass_block_side": {
 		"name": "Grass Block",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["grass_block", 8],
 		"color": [130, 114, 68, 255],
 		"creative": true
 	},
 	"grass_block_snow": {
 		"name": "Grass Block (Snow)",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["grass_block", 8],
 		"color": [158, 137, 122, 255],
 		"creative": true
 	},
 	"gravel": {
 		"name": "Gravel",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["gravel", 30],
 		"color": [129, 126, 125, 255],
 		"fallable": true
 	},
 	"gray_concrete": {
 		"name": "Gray Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["gray_concrete", 522],
 		"color": [55, 58, 62, 255]
 	},
 	"gray_concrete_powder": {
 		"name": "Gray Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["gray_concrete_powder", 538],
 		"color": [77, 81, 85, 255],
 		"fallable": true
 	},
 	"gray_glazed_terracotta": {
 		"name": "Gray Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["gray_glazed_terracotta", 506],
 		"color": [90, 96, 99, 255]
 	},
 	"gray_shulker_box": {
 		"name": "Gray Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["gray_shulker_box", 490],
 		"color": [56, 59, 63, 255],
 		"tile_entity": true
 	},
 	"gray_stained_glass": {
 		"name": "Gray Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["gray_stained_glass", 193],
 		"color": [76, 76, 76, 123]
 	},
 	"gray_terracotta": {
 		"name": "Gray Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["gray_terracotta", 326],
 		"color": [58, 42, 36, 255]
 	},
 	"gray_wool": {
 		"name": "Gray Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["gray_wool", 108],
 		"color": [63, 69, 72, 255]
 	},
 	"green_concrete": {
 		"name": "Green Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["green_concrete", 528],
 		"color": [73, 91, 36, 255]
 	},
 	"green_concrete_powder": {
 		"name": "Green Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["green_concrete_powder", 544],
 		"color": [97, 119, 45, 255],
 		"fallable": true
 	},
 	"green_glazed_terracotta": {
 		"name": "Green Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["green_glazed_terracotta", 512],
 		"color": [125, 148, 94, 255]
 	},
 	"green_shulker_box": {
 		"name": "Green Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["green_shulker_box", 496],
 		"color": [79, 101, 32, 255],
 		"tile_entity": true
 	},
 	"green_stained_glass": {
 		"name": "Green Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["green_stained_glass", 199],
 		"color": [102, 127, 51, 123]
 	},
 	"green_terracotta": {
 		"name": "Green Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["green_terracotta", 332],
 		"color": [76, 83, 42, 255]
 	},
 	"green_wool": {
 		"name": "Green Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["green_wool", 114],
 		"color": [85, 110, 28, 255]
 	},
 	"hay_block_side": {
 		"name": "Hay Bale",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["hay_block", 366],
 		"color": [162, 124, 19, 255]
 	},
 	"hay_block_top": {
 		"name": "Hay Bale (Top)",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["hay_block", 366],
 		"color": [170, 141, 16, 255],
 		"properties": {
@@ -714,44 +714,44 @@
 	},
 	"horn_coral_block": {
 		"name": "Horn Coral Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["horn_coral_block", 560],
 		"color": [217, 202, 67, 255],
 		"creative": true
 	},
 	"ice": {
 		"name": "Ice",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["ice", 170],
 		"color": [128, 174, 255, 159]
 	},
 	"iron_block": {
 		"name": "Block of Iron",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["iron_block", 131],
 		"color": [220, 220, 220, 255]
 	},
 	"iron_ore": {
 		"name": "Iron Ore",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["iron_ore", 32],
 		"color": [139, 132, 128, 255]
 	},
 	"jack_o_lantern": {
 		"name": "Jack o'Lantern",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["jack_o_lantern", 183],
 		"color": [192, 150, 37, 255]
 	},
 	"jungle_log": {
 		"name": "Jungle Log",
-		"version": "1.2.1",
+		"version": 1021,
 		"id": ["jungle_log", 37],
 		"color": [90, 70, 28, 255]
 	},
 	"jungle_log_top": {
 		"name": "Jungle Log (Top)",
-		"version": "1.2.1",
+		"version": 1021,
 		"id": ["jungle_log", 37],
 		"color": [159, 123, 78, 255],
 		"properties": {
@@ -760,13 +760,13 @@
 	},
 	"jungle_planks": {
 		"name": "Jungle Planks",
-		"version": "1.2.1",
+		"version": 1021,
 		"id": ["jungle_planks", 16],
 		"color": [157, 113, 80, 255]
 	},
 	"jungle_trapdoor": {
 		"name": "Jungle Trapdoor",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["jungle_trapdoor", 205],
 		"color": [156, 113, 80, 213],
 		"properties": {
@@ -775,274 +775,274 @@
 	},
 	"lapis_block": {
 		"name": "Lapis Lazuli Block",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["lapis_block", 68],
 		"color": [40, 68, 139, 255]
 	},
 	"lapis_ore": {
 		"name": "Lapis Lazuli Ore",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["lapis_ore", 67],
 		"color": [111, 115, 137, 255]
 	},
 	"light_blue_concrete": {
 		"name": "Light Blue Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["light_blue_concrete", 518],
 		"color": [36, 137, 199, 255]
 	},
 	"light_blue_concrete_powder": {
 		"name": "Light Blue Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["light_blue_concrete_powder", 534],
 		"color": [75, 181, 213, 255],
 		"fallable": true
 	},
 	"light_blue_glazed_terracotta": {
 		"name": "Light Blue Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["light_blue_glazed_terracotta", 502],
 		"color": [122, 177, 212, 255]
 	},
 	"light_blue_shulker_box": {
 		"name": "Light Blue Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["light_blue_shulker_box", 486],
 		"color": [50, 165, 212, 255],
 		"tile_entity": true
 	},
 	"light_blue_stained_glass": {
 		"name": "Light Blue Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["light_blue_stained_glass", 189],
 		"color": [102, 153, 216, 123]
 	},
 	"light_blue_terracotta": {
 		"name": "Light Blue Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["light_blue_terracotta", 322],
 		"color": [114, 109, 138, 255]
 	},
 	"light_blue_wool": {
 		"name": "Light Blue Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["light_blue_wool", 104],
 		"color": [59, 176, 218, 255]
 	},
 	"light_gray_concrete": {
 		"name": "Light Gray Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["light_gray_concrete", 523],
 		"color": [125, 125, 115, 255]
 	},
 	"light_gray_concrete_powder": {
 		"name": "Light Gray Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["light_gray_concrete_powder", 539],
 		"color": [155, 155, 149, 255],
 		"fallable": true
 	},
 	"light_gray_glazed_terracotta": {
 		"name": "Light Gray Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["light_gray_glazed_terracotta", 507],
 		"color": [157, 171, 172, 255]
 	},
 	"light_gray_shulker_box": {
 		"name": "Light Gray Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["light_gray_shulker_box", 491],
 		"color": [126, 126, 117, 255],
 		"tile_entity": true
 	},
 	"light_gray_stained_glass": {
 		"name": "Light Gray Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["light_gray_stained_glass", 194],
 		"color": [153, 153, 153, 123]
 	},
 	"light_gray_terracotta": {
 		"name": "Light Gray Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["light_gray_terracotta", 327],
 		"color": [135, 107, 98, 255]
 	},
 	"light_gray_wool": {
 		"name": "Light Gray Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["light_gray_wool", 109],
 		"color": [142, 142, 135, 255]
 	},
 	"lime_concrete": {
 		"name": "Lime Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["lime_concrete", 520],
 		"color": [94, 169, 25, 255]
 	},
 	"lime_concrete_powder": {
 		"name": "Lime Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["lime_concrete_powder", 536],
 		"color": [126, 189, 42, 255],
 		"fallable": true
 	},
 	"lime_glazed_terracotta": {
 		"name": "Lime Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["lime_glazed_terracotta", 504],
 		"color": [174, 200, 75, 255]
 	},
 	"lime_shulker_box": {
 		"name": "Lime Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["lime_shulker_box", 488],
 		"color": [101, 174, 23, 255],
 		"tile_entity": true
 	},
 	"lime_stained_glass": {
 		"name": "Lime Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["lime_stained_glass", 191],
 		"color": [127, 204, 25, 123]
 	},
 	"lime_terracotta": {
 		"name": "Lime Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["lime_terracotta", 324],
 		"color": [104, 118, 53, 255]
 	},
 	"lime_wool": {
 		"name": "Lime Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["lime_wool", 106],
 		"color": [113, 185, 26, 255]
 	},
 	"magenta_concrete": {
 		"name": "Magenta Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["magenta_concrete", 517],
 		"color": [169, 48, 159, 255]
 	},
 	"magenta_concrete_powder": {
 		"name": "Magenta Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["magenta_concrete_powder", 533],
 		"color": [193, 85, 185, 255],
 		"fallable": true
 	},
 	"magenta_glazed_terracotta": {
 		"name": "Magenta Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["magenta_glazed_terracotta", 501],
 		"color": [210, 109, 193, 255]
 	},
 	"magenta_shulker_box": {
 		"name": "Magenta Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["magenta_shulker_box", 485],
 		"color": [174, 55, 164, 255],
 		"tile_entity": true
 	},
 	"magenta_stained_glass": {
 		"name": "Magenta Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["magenta_stained_glass", 188],
 		"color": [178, 76, 216, 123]
 	},
 	"magenta_terracotta": {
 		"name": "Magenta Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["magenta_terracotta", 321],
 		"color": [150, 88, 109, 255]
 	},
 	"magenta_wool": {
 		"name": "Magenta Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["magenta_wool", 103],
 		"color": [190, 70, 180, 255]
 	},
 	"magma": {
 		"name": "Magma Block",
-		"version": "1.10",
+		"version": 1100,
 		"id": ["magma_block", 476],
 		"color": [153, 76, 28, 255]
 	},
 	"melon_side": {
 		"name": "Melon",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["melon", 223],
 		"color": [145, 149, 37, 255]
 	},
 	"mossy_cobblestone": {
 		"name": "Mossy Cobblestone",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["mossy_cobblestone", 135],
 		"color": [113, 125, 113, 255]
 	},
 	"mossy_stone_bricks": {
 		"name": "Mossy Stone Bricks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["mossy_stone_bricks", 215],
 		"color": [116, 120, 110, 255]
 	},
 	"mushroom_block_inside": {
 		"name": "Mushroom Block (Inside)",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["brown_mushroom_block", 218],
 		"color": [203, 171, 121, 255]
 	},
 	"mushroom_stem": {
 		"name": "Mushroom Stem",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["mushroom_stem", 220],
 		"color": [208, 205, 194, 255]
 	},
 	"mycelium_side": {
 		"name": "Mycelium",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["mycelium", 232],
 		"color": [118, 92, 80, 255],
 		"creative": true
 	},
 	"nether_bricks": {
 		"name": "Nether Bricks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["nether_bricks", 234],
 		"color": [46, 23, 27, 255]
 	},
 	"nether_quartz_ore": {
 		"name": "Nether Quartz Ore",
-		"version": "1.5",
+		"version": 1050,
 		"id": ["nether_quartz_ore", 311],
 		"color": [141, 109, 103, 255]
 	},
 	"nether_wart_block": {
 		"name": "Nether Wart Block",
-		"version": "1.10",
+		"version": 1100,
 		"id": ["nether_wart_block", 477],
 		"color": [119, 11, 12, 255]
 	},
 	"netherrack": {
 		"name": "Netherrack",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["netherrack", 178],
 		"color": [122, 67, 64, 255]
 	},
 	"note_block": {
 		"name": "Note Block",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["note_block", 73],
 		"color": [108, 71, 53, 255]
 	},
 	"oak_log": {
 		"name": "Oak Log",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["oak_log", 34],
 		"color": [107, 85, 52, 255]
 	},
 	"oak_log_top": {
 		"name": "Oak Log (Top)",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["oak_log", 34],
 		"color": [160, 129, 80, 255],
 		"properties": {
@@ -1051,13 +1051,13 @@
 	},
 	"oak_planks": {
 		"name": "Oak Planks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["oak_planks", 13],
 		"color": [160, 130, 81, 255]
 	},
 	"oak_trapdoor": {
 		"name": "Oak Trapdoor",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["oak_trapdoor", 202],
 		"color": [129, 96, 48, 219],
 		"properties": {
@@ -1066,125 +1066,125 @@
 	},
 	"observer_back": {
 		"name": "Observer (Back)",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["observer", 481],
 		"color": [73, 71, 71, 255]
 	},
 	"observer_front": {
 		"name": "Observer",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["observer", 481],
 		"color": [116, 116, 116, 255]
 	},
 	"observer_side": {
 		"name": "Observer (Side)",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["observer", 481],
 		"color": [66, 64, 64, 255]
 	},
 	"obsidian": {
 		"name": "Obsidian",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["obsidian", 136],
 		"color": [24, 21, 35, 255]
 	},
 	"orange_concrete": {
 		"name": "Orange Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["orange_concrete", 516],
 		"color": [224, 97, 1, 255]
 	},
 	"orange_concrete_powder": {
 		"name": "Orange Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["orange_concrete_powder", 532],
 		"color": [227, 132, 34, 255],
 		"fallable": true
 	},
 	"orange_glazed_terracotta": {
 		"name": "Orange Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["orange_glazed_terracotta", 500],
 		"color": [188, 153, 122, 255]
 	},
 	"orange_shulker_box": {
 		"name": "Orange Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["orange_shulker_box", 484],
 		"color": [235, 107, 11, 255],
 		"tile_entity": true
 	},
 	"orange_stained_glass": {
 		"name": "Orange Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["orange_stained_glass", 187],
 		"color": [216, 127, 51, 123]
 	},
 	"orange_terracotta": {
 		"name": "Orange Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["orange_terracotta", 320],
 		"color": [162, 84, 38, 255]
 	},
 	"orange_wool": {
 		"name": "Orange Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["orange_wool", 102],
 		"color": [241, 119, 23, 255]
 	},
 	"packed_ice": {
 		"name": "Packed Ice",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["packed_ice", 385],
 		"color": [165, 195, 246, 255]
 	},
 	"pink_concrete": {
 		"name": "Pink Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["pink_concrete", 521],
 		"color": [214, 101, 143, 255]
 	},
 	"pink_concrete_powder": {
 		"name": "Pink Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["pink_concrete_powder", 537],
 		"color": [229, 154, 181, 255],
 		"fallable": true
 	},
 	"pink_glazed_terracotta": {
 		"name": "Pink Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["pink_glazed_terracotta", 505],
 		"color": [236, 158, 183, 255]
 	},
 	"pink_shulker_box": {
 		"name": "Pink Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["pink_shulker_box", 489],
 		"color": [231, 123, 158, 255],
 		"tile_entity": true
 	},
 	"pink_stained_glass": {
 		"name": "Pink Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["pink_stained_glass", 192],
 		"color": [242, 127, 165, 123]
 	},
 	"pink_terracotta": {
 		"name": "Pink Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["pink_terracotta", 325],
 		"color": [162, 78, 79, 255]
 	},
 	"pink_wool": {
 		"name": "Pink Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["pink_wool", 107],
 		"color": [238, 143, 173, 255]
 	},
 	"piston_top": {
 		"name": "Piston",
-		"version": "1.7",
+		"version": 1070,
 		"id": ["piston", 99],
 		"color": [159, 136, 104, 255],
 		"properties": {
@@ -1193,7 +1193,7 @@
 	},
 	"piston_top_sticky": {
 		"name": "Piston (Sticky)",
-		"version": "1.7",
+		"version": 1070,
 		"id": ["piston", 99],
 		"color": [147, 153, 112, 255],
 		"properties": {
@@ -1202,273 +1202,273 @@
 	},
 	"podzol_side": {
 		"name": "Podzol",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["podzol", 11],
 		"color": [127, 91, 61, 255]
 	},
 	"polished_andesite": {
 		"name": "Polished Andesite",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["polished_andesite", 7],
 		"color": [135, 135, 136, 255]
 	},
 	"polished_diorite": {
 		"name": "Polished Diorite",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["polished_diorite", 5],
 		"color": [187, 187, 189, 255]
 	},
 	"polished_granite": {
 		"name": "Polished Granite",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["polished_granite", 3],
 		"color": [162, 118, 101, 255]
 	},
 	"prismarine": {
 		"name": "Prismarine",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["prismarine", 356],
 		"color": [111, 172, 154, 255]
 	},
 	"prismarine_bricks": {
 		"name": "Prismarine Bricks",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["prismarine_bricks", 357],
 		"color": [103, 162, 146, 255]
 	},
 	"pumpkin_side": {
 		"name": "Pumpkin",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["pumpkin", 177],
 		"color": [200, 124, 29, 255]
 	},
 	"purple_concrete": {
 		"name": "Purple Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["purple_concrete", 525],
 		"color": [100, 32, 156, 255]
 	},
 	"purple_concrete_powder": {
 		"name": "Purple Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["purple_concrete_powder", 541],
 		"color": [132, 56, 178, 255],
 		"fallable": true
 	},
 	"purple_glazed_terracotta": {
 		"name": "Purple Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["purple_glazed_terracotta", 509],
 		"color": [117, 51, 163, 255]
 	},
 	"purple_shulker_box": {
 		"name": "Purple Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["purple_shulker_box", 493],
 		"color": [104, 33, 157, 255],
 		"tile_entity": true
 	},
 	"purple_stained_glass": {
 		"name": "Purple Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["purple_stained_glass", 196],
 		"color": [127, 63, 178, 123]
 	},
 	"purple_terracotta": {
 		"name": "Purple Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["purple_terracotta", 329],
 		"color": [118, 70, 86, 255]
 	},
 	"purple_wool": {
 		"name": "Purple Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["purple_wool", 111],
 		"color": [123, 43, 173, 255]
 	},
 	"purpur_block": {
 		"name": "Purpur Block",
-		"version": "1.9",
+		"version": 1090,
 		"id": ["purpur_block", 466],
 		"color": [167, 123, 167, 255]
 	},
 	"purpur_pillar": {
 		"name": "Purpur Pillar",
-		"version": "1.9",
+		"version": 1090,
 		"id": ["purpur_pillar", 467],
 		"color": [171, 128, 171, 255]
 	},
 	"quartz_block_side": {
 		"name": "Quartz Block",
-		"version": "1.5",
+		"version": 1050,
 		"id": ["quartz_block", 313],
 		"color": [236, 233, 226, 255]
 	},
 	"quartz_pillar": {
 		"name": "Quartz Pillar",
-		"version": "1.5",
+		"version": 1050,
 		"id": ["quartz_pillar", 315],
 		"color": [232, 228, 220, 255]
 	},
 	"red_concrete": {
 		"name": "Red Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["red_concrete", 529],
 		"color": [142, 33, 33, 255]
 	},
 	"red_concrete_powder": {
 		"name": "Red Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["red_concrete_powder", 545],
 		"color": [168, 54, 51, 255],
 		"fallable": true
 	},
 	"red_glazed_terracotta": {
 		"name": "Red Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["red_glazed_terracotta", 513],
 		"color": [184, 66, 58, 255]
 	},
 	"red_mushroom_block": {
 		"name": "Red Mushroom Block",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["red_mushroom_block", 219],
 		"color": [183, 55, 54, 255]
 	},
 	"red_nether_bricks": {
 		"name": "Red Nether Bricks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["red_nether_bricks", 478],
 		"color": [71, 7, 9, 255]
 	},
 	"red_sand": {
 		"name": "Red Sand",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["red_sand", 29],
 		"color": [170, 88, 34, 255],
 		"fallable": true
 	},
 	"red_sandstone": {
 		"name": "Red Sandstone",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["red_sandstone", 424],
 		"color": [166, 85, 30, 255]
 	},
 	"red_shulker_box": {
 		"name": "Red Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["red_shulker_box", 497],
 		"color": [141, 32, 30, 255],
 		"tile_entity": true
 	},
 	"red_stained_glass": {
 		"name": "Red Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["red_stained_glass", 200],
 		"color": [153, 51, 51, 123]
 	},
 	"red_terracotta": {
 		"name": "Red Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["red_terracotta", 333],
 		"color": [143, 61, 47, 255]
 	},
 	"red_wool": {
 		"name": "Red Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["red_wool", 115],
 		"color": [161, 40, 35, 255]
 	},
 	"redstone_block": {
 		"name": "Block of Redstone",
-		"version": "1.5",
+		"version": 1050,
 		"id": ["redstone_block", 310],
 		"color": [176, 29, 10, 255]
 	},
 	"redstone_lamp": {
 		"name": "Redstone Lamp",
-		"version": "1.2.1",
+		"version": 1021,
 		"id": ["redstone_lamp", 245],
 		"color": [87, 54, 34, 255]
 	},
 	"redstone_ore": {
 		"name": "Redstone Ore",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["redstone_ore", 165],
 		"color": [136, 116, 116, 255]
 	},
 	"repeating_command_block_front": {
 		"name": "Repeating Command Block",
-		"version": "1.4.2",
+		"version": 1042,
 		"id": ["repeating_command_block", 473],
 		"color": [131, 117, 178, 255],
 		"creative": true
 	},
 	"sand": {
 		"name": "Sand",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["sand", 28],
 		"color": [219, 212, 161, 255],
 		"fallable": true
 	},
 	"sandstone": {
 		"name": "Sandstone",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["sandstone", 70],
 		"color": [218, 210, 159, 255]
 	},
 	"sea_lantern": {
 		"name": "Sea Lantern",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["sea_lantern", 365],
 		"color": [182, 204, 196, 255]
 	},
 	"shulker_box": {
 		"name": "Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["shulker_box", 482],
 		"color": [140, 97, 140, 255],
 		"tile_entity": true
 	},
 	"slime_block": {
 		"name": "Slime Block",
-		"version": "1.8",
+		"version": 1080,
 		"id": ["slime_block", 353],
 		"color": [121, 200, 102, 188]
 	},
 	"snow": {
-		"name": "Snow",
-		"version": "1.0",
-		"id": ["snow", 169],
+		"name": "Snow Block",
+		"version": 1000,
+		"id": ["snow_block", 262],
 		"color": [240, 251, 251, 255]
 	},
 	"soul_sand": {
 		"name": "Soul Sand",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["soul_sand", 179],
 		"color": [89, 69, 56, 255]
 	},
 	"spawner": {
 		"name": "Spawner",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["spawner", 140],
 		"color": [27, 40, 50, 155]
 	},
 	"sponge": {
 		"name": "Sponge",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["sponge", 64],
 		"color": [196, 197, 86, 255]
 	},
 	"spruce_log": {
 		"name": "Spruce Log",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["spruce_log", 35],
 		"color": [51, 33, 15, 255]
 	},
 	"spruce_log_top": {
 		"name": "Spruce Log (Top)",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["spruce_log", 35],
 		"color": [108, 83, 49, 255],
 		"properties": {
@@ -1477,13 +1477,13 @@
 	},
 	"spruce_planks": {
 		"name": "Spruce Planks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["spruce_planks", 14],
 		"color": [106, 79, 47, 255]
 	},
 	"spruce_trapdoor": {
 		"name": "Spruce Trapdoor",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["spruce_trapdoor", 203],
 		"color": [102, 78, 51, 255],
 		"properties": {
@@ -1492,19 +1492,19 @@
 	},
 	"stone": {
 		"name": "Stone",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["stone", 1],
 		"color": [126, 126, 126, 255]
 	},
 	"stone_bricks": {
 		"name": "Stone Bricks",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["stone_bricks", 214],
 		"color": [123, 123, 123, 255]
 	},
 	"stone_slab_side": {
 		"name": "Smooth Stone Slab",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["smooth_stone_slab", 444],
 		"color": [168, 168, 168, 255],
 		"properties": {
@@ -1513,13 +1513,13 @@
 	},
 	"stripped_acacia_log": {
 		"name": "Stripped Acacia Log",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_acacia_log", 43],
 		"color": [175, 93, 60, 255]
 	},
 	"stripped_acacia_log_top": {
 		"name": "Stripped Acacia Log (Top)",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_acacia_log", 43],
 		"color": [168, 92, 59, 255],
 		"properties": {
@@ -1528,13 +1528,13 @@
 	},
 	"stripped_birch_log": {
 		"name": "Stripped Birch Log",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_birch_log", 41],
 		"color": [197, 176, 119, 255]
 	},
 	"stripped_birch_log_top": {
 		"name": "Stripped Birch Log (Top)",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_birch_log", 41],
 		"color": [186, 162, 105, 255],
 		"properties": {
@@ -1543,13 +1543,13 @@
 	},
 	"stripped_dark_oak_log": {
 		"name": "Stripped Dark Oak Log",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_dark_oak_log", 44],
 		"color": [97, 76, 50, 255]
 	},
 	"stripped_dark_oak_log_top": {
 		"name": "Stripped Dark Oak Log (Top)",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_dark_oak_log", 44],
 		"color": [87, 70, 46, 255],
 		"properties": {
@@ -1558,13 +1558,13 @@
 	},
 	"stripped_jungle_log": {
 		"name": "Stripped Jungle Log",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_jungle_log", 42],
 		"color": [172, 133, 85, 255]
 	},
 	"stripped_jungle_log_top": {
 		"name": "Stripped Jungle Log (Top)",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_jungle_log", 42],
 		"color": [171, 134, 85, 255],
 		"properties": {
@@ -1573,13 +1573,13 @@
 	},
 	"stripped_oak_log": {
 		"name": "Stripped Oak Log",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_oak_log", 45],
 		"color": [178, 145, 87, 255]
 	},
 	"stripped_oak_log_top": {
 		"name": "Stripped Oak Log (Top)",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_oak_log", 45],
 		"color": [166, 135, 82, 255],
 		"properties": {
@@ -1588,13 +1588,13 @@
 	},
 	"stripped_spruce_log": {
 		"name": "Stripped Spruce Log",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_spruce_log", 40],
 		"color": [116, 90, 53, 255]
 	},
 	"stripped_spruce_log_top": {
 		"name": "Stripped Spruce Log (Top)",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["stripped_spruce_log", 40],
 		"color": [114, 89, 52, 255],
 		"properties": {
@@ -1603,121 +1603,121 @@
 	},
 	"structure_block": {
 		"name": "Structure Block",
-		"version": "1.9",
+		"version": 1090,
 		"id": ["structure_block", 597],
 		"color": [117, 98, 117, 255],
 		"creative": true
 	},
 	"terracotta": {
 		"name": "Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["terracotta", 383],
 		"color": [151, 93, 67, 255]
 	},
 	"tnt_side": {
 		"name": "TNT",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["tnt", 133],
 		"color": [179, 117, 110, 255]
 	},
 	"tube_coral_block": {
 		"name": "Tube Coral Block",
-		"version": "1.13",
+		"version": 1130,
 		"id": ["tube_coral_block", 556],
 		"color": [51, 90, 209, 255],
 		"creative": true
 	},
 	"wet_sponge": {
 		"name": "Wet Sponge",
-		"version": "1.0",
+		"version": 1000,
 		"id": ["wet_sponge", 65],
 		"color": [163, 161, 65, 255]
 	},
 	"white_concrete": {
 		"name": "White Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["white_concrete", 515],
 		"color": [207, 213, 214, 255]
 	},
 	"white_concrete_powder": {
 		"name": "White Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["white_concrete_powder", 531],
 		"color": [226, 228, 228, 255],
 		"fallable": true
 	},
 	"white_glazed_terracotta": {
 		"name": "White Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["white_glazed_terracotta", 499],
 		"color": [209, 218, 213, 255]
 	},
 	"white_shulker_box": {
 		"name": "White Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["white_shulker_box", 483],
 		"color": [216, 221, 222, 255],
 		"tile_entity": true
 	},
 	"white_stained_glass": {
 		"name": "White Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["white_stained_glass", 186],
 		"color": [255, 255, 255, 123]
 	},
 	"white_terracotta": {
 		"name": "White Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["white_terracotta", 319],
 		"color": [210, 178, 161, 255]
 	},
 	"white_wool": {
 		"name": "White Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["white_wool", 101],
 		"color": [234, 237, 237, 255]
 	},
 	"yellow_concrete": {
 		"name": "Yellow Concrete",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["yellow_concrete", 519],
 		"color": [241, 175, 21, 255]
 	},
 	"yellow_concrete_powder": {
 		"name": "Yellow Concrete Powder",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["yellow_concrete_powder", 535],
 		"color": [233, 199, 57, 255],
 		"fallable": true
 	},
 	"yellow_glazed_terracotta": {
 		"name": "Yellow Glazed Terracotta",
-		"version": "1.12",
+		"version": 1120,
 		"id": ["yellow_glazed_terracotta", 503],
 		"color": [237, 197, 109, 255]
 	},
 	"yellow_shulker_box": {
 		"name": "Yellow Shulker Box",
-		"version": "1.11",
+		"version": 1110,
 		"id": ["yellow_shulker_box", 487],
 		"color": [248, 189, 30, 255],
 		"tile_entity": true
 	},
 	"yellow_stained_glass": {
 		"name": "Yellow Stained Glass",
-		"version": "1.7.2",
+		"version": 1072,
 		"id": ["yellow_stained_glass", 190],
 		"color": [229, 229, 51, 123]
 	},
 	"yellow_terracotta": {
 		"name": "Yellow Terracotta",
-		"version": "1.6.1",
+		"version": 1061,
 		"id": ["yellow_terracotta", 323],
 		"color": [186, 133, 35, 255]
 	},
 	"yellow_wool": {
 		"name": "Yellow Wool",
-		"version": "1.2",
+		"version": 1020,
 		"id": ["yellow_wool", 105],
 		"color": [249, 198, 41, 255]
 	}

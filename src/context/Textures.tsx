@@ -3,8 +3,8 @@ import * as PIXI from "pixi.js";
 
 import { LoadingContext } from "./Loading";
 
-import spritesheet from "@/data/blocks/programmer-art/spritesheet.json";
-import _blockData from "@/data/blocks/programmer-art/data.json";
+import spritesheet from "@/data/blocks/spritesheet.json";
+import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
 
 interface Context {
@@ -34,7 +34,7 @@ export const TexturesProvider = ({ children }: Props) => {
 		setMissingTexture(new PIXI.Texture(baseTexture));
 
 		// Load textures
-		const sheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/programmer-art/spritesheet.png"), spritesheet);
+		const sheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/spritesheet.png"), spritesheet);
 		sheet.parse().then((t) => {
 			setTextures(t);
 		});

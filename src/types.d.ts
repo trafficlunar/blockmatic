@@ -39,7 +39,7 @@ type BlockData = Record<
 	string,
 	{
 		name: string;
-		version: string;
+		version: number;
 		id: (string | number)[];
 		color: number[];
 		fallable?: boolean;

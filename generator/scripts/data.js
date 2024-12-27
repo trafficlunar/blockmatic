@@ -9,7 +9,7 @@ const versionRegex = require("../data/versions.json");
 const INPUT = path.join(__dirname, "../blocks/");
 const OUTPUT_DIR = path.join(__dirname, "../output/");
 const OUTPUT = path.join(OUTPUT_DIR, "data.json");
-const VERSION_DATA = minecraftData("1.13.2");
+const VERSION_DATA = minecraftData("1.21.3");
 
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
 
@@ -24,7 +24,7 @@ const data = {};
 
 		const color = await getAverageColor(filePath);
 
-		const nameRegex = ["_top", "_side", "_front", "_back"];
+		const nameRegex = ["_top", "_side", "_front", "_back", "_bottom"];
 		const pattern = new RegExp(nameRegex.join("|"), "g");
 		const blockName = fileName.replace(pattern, "");
 

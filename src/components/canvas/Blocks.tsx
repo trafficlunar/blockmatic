@@ -5,6 +5,7 @@ import * as PIXI from "pixi.js";
 import { useApp } from "@pixi/react";
 import { CompositeTilemap, settings } from "@pixi/tilemap";
 
+import { getBlockData } from "@/utils/getBlockData";
 import { findBlockFromRgb } from "@/utils/findBlockFromRgb";
 
 interface Props {
@@ -17,15 +18,18 @@ interface Props {
 	imageDimensions: Dimension;
 	coords: Position;
 	scale: number;
+	version: number;
 	setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Lifts 16,000 tiles limit
 settings.use32bitIndex = true;
 
-function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, image, imageDimensions, coords, scale, setLoading }: Props) {
+function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, image, imageDimensions, coords, scale, version, setLoading }: Props) {
 	const app = useApp();
 	const tilemapRef = useRef<CompositeTilemap>();
+
+	const blockData = getBlockData(version);
 
 	const tileBlocks = () => {
 		if (!tilemapRef.current) return;
@@ -80,7 +84,7 @@ function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, im
 			const newBlocks: Block[] = [];
 
 			for (let i = 0; i < imageData.data.length; i += 4) {
-				const block = findBlockFromRgb(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
+				const block = findBlockFromRgb(blockData, imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
 
 				const x = Math.floor((i / 4) % imageData.width);
 				const y = Math.floor(i / 4 / imageData.width);

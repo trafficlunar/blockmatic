@@ -8,7 +8,7 @@ import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTit
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import _blockData from "@/data/blocks/programmer-art/data.json";
+import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
 
 function SaveLitematic({ close }: DialogProps) {
@@ -92,7 +92,7 @@ function SaveLitematic({ close }: DialogProps) {
 
 		// Generate NBT data
 		const data = {
-			MinecraftDataVersion: new nbt.Int32(3955),
+			MinecraftDataVersion: new nbt.Int32(4189),
 			Version: new nbt.Int32(7),
 			SubVersion: new nbt.Int32(1),
 			Metadata: {

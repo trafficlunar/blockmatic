@@ -2,12 +2,12 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { Container, Graphics, Sprite, Stage } from "@pixi/react";
 import { BlocksIcon } from "lucide-react";
 
+import { CanvasContext } from "@/context/Canvas";
 import { TexturesContext } from "@/context/Textures";
 import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
-import _blockData from "@/data/blocks/programmer-art/data.json";
-const blockData: BlockData = _blockData;
+import { getBlockData } from "@/utils/getBlockData";
 
 interface Props {
 	stageWidth: number;
@@ -15,6 +15,7 @@ interface Props {
 }
 
 function SelectorBlocks({ stageWidth, searchInput }: Props) {
+	const { version } = useContext(CanvasContext);
 	const { missingTexture, textures } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
 	const { selectedBlock, setSelectedBlock } = useContext(ToolContext);
@@ -22,8 +23,10 @@ function SelectorBlocks({ stageWidth, searchInput }: Props) {
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
 	const [selectedBlockPosition, setSelectedBlockPosition] = useState<Position | null>({ x: 0, y: 0 });
 
+	const blockData = getBlockData(version);
+
 	const blocksPerColumn = Math.floor(stageWidth / (32 + 2));
-	const filteredBlocks = useMemo(() => Object.keys(blockData).filter((value) => value.includes(searchInput)), [searchInput]);
+	const filteredBlocks = useMemo(() => Object.keys(blockData).filter((value) => value.includes(searchInput)), [searchInput, blockData]);
 
 	const getBlockPosition = (index: number): Position => {
 		const x = (index % blocksPerColumn) * (32 + 2) + 2;

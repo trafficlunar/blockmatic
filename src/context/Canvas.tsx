@@ -6,10 +6,12 @@ interface Context {
 	blocks: Block[];
 	coords: Position;
 	scale: number;
+	version: number;
 	setStageSize: React.Dispatch<React.SetStateAction<Dimension>>;
 	setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
 	setCoords: React.Dispatch<React.SetStateAction<Position>>;
 	setScale: React.Dispatch<React.SetStateAction<number>>;
+	setVersion: React.Dispatch<React.SetStateAction<number>>;
 }
 
 interface Props {
@@ -23,6 +25,7 @@ export const CanvasProvider = ({ children }: Props) => {
 	const [blocks, setBlocks] = useState<Block[]>([]);
 	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
 	const [scale, setScale] = useState(1);
+	const [version, setVersion] = useState(1200);
 
 	const canvasSize = useMemo(() => {
 		let minX = Infinity,
@@ -46,7 +49,9 @@ export const CanvasProvider = ({ children }: Props) => {
 	}, [blocks]);
 
 	return (
-		<CanvasContext.Provider value={{ stageSize, canvasSize, blocks, coords, scale, setStageSize, setBlocks, setCoords, setScale }}>
+		<CanvasContext.Provider
+			value={{ stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale, setVersion }}
+		>
 			{children}
 		</CanvasContext.Provider>
 	);

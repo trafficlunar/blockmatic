@@ -1,32 +1,34 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Alpha, ShadeSlider, Wheel, hsvaToHex, hsvaToRgba, rgbaToHsva } from "@uiw/react-color";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+import { CanvasContext } from "@/context/Canvas";
 import { ToolContext } from "@/context/Tool";
 
+import { getBlockData } from "@/utils/getBlockData";
 import { findBlockFromRgb } from "@/utils/findBlockFromRgb";
 
-import _blockData from "@/data/blocks/programmer-art/data.json";
-import { Button } from "../ui/button";
-const blockData: BlockData = _blockData;
-
 function ColorPicker() {
+	const { version } = useContext(CanvasContext);
 	const { selectedBlock, setSelectedBlock } = useContext(ToolContext);
 
 	const [hsva, setHsva] = useState({ h: 0, s: 0, v: 49.4, a: 1 });
 	const rgb = useMemo(() => hsvaToRgba(hsva), [hsva]);
 
 	const limitRgba = (x: number) => Math.min(Math.max(x, 0), 255);
+	const blockData = getBlockData(version);
 
 	useEffect(() => {
 		const blockInfo = blockData[selectedBlock];
 		const rgbColor = { r: blockInfo.color[0], g: blockInfo.color[1], b: blockInfo.color[2], a: blockInfo.color[3] / 255 };
 		setHsva(rgbaToHsva(rgbColor));
-	}, [selectedBlock]);
+	}, [selectedBlock, blockData]);
 
 	const onClickSet = () => {
-		const block = findBlockFromRgb(rgb.r, rgb.g, rgb.b, rgb.a * 255);
+		const block = findBlockFromRgb(blockData, rgb.r, rgb.g, rgb.b, rgb.a * 255);
 		setSelectedBlock(block);
 	};
 

@@ -25,7 +25,7 @@ import welcomeBlocksData from "@/data/welcome.json";
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
-	const { stageSize, canvasSize, blocks, coords, scale, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
+	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
 	const { image, imageDimensions } = useContext(ImageContext);
 	const { setLoading } = useContext(LoadingContext);
 	const { settings } = useContext(SettingsContext);
@@ -301,6 +301,7 @@ function Canvas() {
 					imageDimensions={imageDimensions}
 					coords={coords}
 					scale={scale}
+					version={version}
 					setLoading={setLoading}
 				/>
 

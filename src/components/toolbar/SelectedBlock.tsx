@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { TexturesContext } from "@/context/Textures";
 import { ToolContext } from "@/context/Tool";
 
-import _blockData from "@/data/blocks/programmer-art/data.json";
+import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
 
 function SelectedBlock() {
