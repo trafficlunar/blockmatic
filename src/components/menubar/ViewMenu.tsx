@@ -29,6 +29,9 @@ function ViewMenu() {
 				<MenubarCheckboxItem checked={settings.colorPicker} onCheckedChange={onCheckedChange("colorPicker")}>
 					Color Picker
 				</MenubarCheckboxItem>
+				<MenubarCheckboxItem checked={settings.blocksReplacer} onCheckedChange={onCheckedChange("blocksReplacer")}>
+					Blocks Replacer
+				</MenubarCheckboxItem>
 				<MenubarCheckboxItem checked={settings.radiusChanger} onCheckedChange={onCheckedChange("radiusChanger")}>
 					Radius Changer
 				</MenubarCheckboxItem>

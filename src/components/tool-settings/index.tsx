@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 
 import ColorPicker from "./ColorPicker";
+import Replace from "./Replace";
 import Radius from "./Radius";
 import SelectorBlocks from "./SelectorBlocks";
 
@@ -24,11 +25,18 @@ function ToolSettings() {
 
 	return (
 		<>
-			{(settings.colorPicker || settings.radiusChanger || settings.blockSelector) && (
+			{(settings.colorPicker || settings.blocksReplacer || settings.radiusChanger || settings.blockSelector) && (
 				<div className="w-72 border-l border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 pb-0 flex flex-col h-full gap-2">
 					{settings.colorPicker && (
 						<>
 							<ColorPicker />
+							<Separator />
+						</>
+					)}
+
+					{settings.blocksReplacer && (
+						<>
+							<Replace />
 							<Separator />
 						</>
 					)}

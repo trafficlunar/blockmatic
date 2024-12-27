@@ -27,6 +27,7 @@ interface Settings {
 	grid: boolean;
 	canvasBorder: boolean;
 	colorPicker: boolean;
+	blocksReplacer: boolean;
 	radiusChanger: boolean;
 	blockSelector: boolean;
 }
