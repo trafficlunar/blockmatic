@@ -27,9 +27,10 @@ Before running any of these scripts you need to have a `blocks` directory with M
 
 > Generates average colors, versions, names, ids, properties for blocks (NEEDS MANUAL EDITING AFTER!)
 
-1. Run `node scripts/data.js`
-2. In the `data` directory there should be a JSON file generated
-3. Put that JSON file into `src/data`
+1. Change the version in `scripts/data.js`
+2. Run `node scripts/data.js`
+3. In the `data` directory there should be a JSON file generated
+4. Put that JSON file into `src/data`
 
 ## spritesheet.js
 
