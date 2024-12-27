@@ -29,7 +29,7 @@ function SelectedBlock() {
 		<TooltipProvider>
 			<Tooltip delayDuration={0}>
 				<TooltipTrigger asChild>
-					<div ref={divRef} className="absolute bottom-1 w-8 h-8 border border-zinc-800 dark:border-zinc-200">
+					<div ref={divRef} className="absolute bottom-1 w-8 h-8 outline outline-1 outline-zinc-800 dark:outline-zinc-200">
 						<Stage width={divRef.current?.clientWidth} height={divRef.current?.clientHeight}>
 							<Container>
 								<Sprite texture={selectedBlockTexture} scale={2} />
