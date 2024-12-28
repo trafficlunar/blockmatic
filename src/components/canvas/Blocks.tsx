@@ -5,7 +5,6 @@ import * as PIXI from "pixi.js";
 import { useApp } from "@pixi/react";
 import { CompositeTilemap, settings } from "@pixi/tilemap";
 
-import { getBlockData } from "@/utils/getBlockData";
 import { findBlockFromRgb } from "@/utils/findBlockFromRgb";
 
 interface Props {
@@ -37,13 +36,10 @@ function Blocks({
 	usableBlocks,
 	coords,
 	scale,
-	version,
 	setLoading,
 }: Props) {
 	const app = useApp();
 	const tilemapRef = useRef<CompositeTilemap>();
-
-	const blockData = getBlockData(version);
 
 	const tileBlocks = () => {
 		if (!tilemapRef.current) return;
