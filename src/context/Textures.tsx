@@ -27,7 +27,7 @@ export const TexturesProvider = ({ children }: Props) => {
 	const [solidTextures, setSolidTextures] = useState<Record<string, PIXI.Texture>>({});
 
 	useEffect(() => {
-		// Load missing texture
+		// Load missing texture through data string just incase of network errors
 		const missingBaseTexture = new PIXI.BaseTexture(
 			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR42mPABX4w/MCKaKJhVMPgcOuoBgDZRfgBVl5QdQAAAABJRU5ErkJggg=="
 		);

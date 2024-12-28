@@ -1,17 +1,29 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-import { CircleAlertIcon, UploadIcon } from "lucide-react";
+import { CircleAlertIcon, LinkIcon, UploadIcon } from "lucide-react";
 
-import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
+import { CanvasContext } from "@/context/Canvas";
 import { ImageContext } from "@/context/Image";
 import { LoadingContext } from "@/context/Loading";
 
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckedState } from "@radix-ui/react-checkbox";
+import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Toggle } from "@/components/ui/toggle";
+
+import { getBlockData } from "@/utils/getBlockData";
+
+import BlockSelector from "./open-image/BlockSelector";
+
 function OpenImage({ close }: DialogProps) {
+	const { version } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
 	const { setImage: setContextImage, setImageDimensions: setContextImageDimensions } = useContext(ImageContext);
 
@@ -21,9 +33,24 @@ function OpenImage({ close }: DialogProps) {
 		},
 	});
 
+	const divRef = useRef<HTMLDivElement>(null);
+
 	const [image, setImage] = useState<HTMLImageElement>();
 	const [imageDimensions, setImageDimensions] = useState<Dimension>({ width: 0, height: 0 });
 	const [aspectRatio, setAspectRatio] = useState(1);
+	const [linkAspectRatio, setLinkAspectRatio] = useState(true);
+
+	const [searchInput, setSearchInput] = useState("");
+	const [stageWidth, setStageWidth] = useState(0);
+
+	const [selectedBlocks, setSelectedBlocks] = useState<string[]>(["stone"]);
+	const [blockTypeCheckboxesChecked, setBlockTypeCheckboxesChecked] = useState({
+		creative: false,
+		tile_entity: false,
+		fallable: false,
+	});
+
+	const blockData = getBlockData(version);
 
 	useEffect(() => {
 		if (acceptedFiles[0]) {
@@ -41,13 +68,25 @@ function OpenImage({ close }: DialogProps) {
 		const newDimension = Number(e.target.value);
 		if (newDimension < 1 || newDimension > 10000) return;
 
-		setImageDimensions(() => {
-			if (isWidth) {
-				return { width: newDimension, height: Math.round(newDimension / aspectRatio) };
-			} else {
-				return { width: Math.round(newDimension * aspectRatio), height: newDimension };
-			}
+		setImageDimensions((prev) => {
+			if (isWidth)
+				return linkAspectRatio ? { width: newDimension, height: Math.round(newDimension / aspectRatio) } : { ...prev, width: newDimension };
+			return linkAspectRatio ? { width: Math.round(newDimension * aspectRatio), height: newDimension } : { ...prev, height: newDimension };
 		});
+	};
+
+	const onBlockTypeCheckedChange = (checked: CheckedState, property: keyof BlockData[string]) => {
+		const blocksWithProperty = Object.entries(blockData)
+			.filter(([, data]) => data[property] === true)
+			.map(([blockName]) => blockName);
+
+		if (checked) {
+			setSelectedBlocks((prev) => [...prev, ...blocksWithProperty]);
+		} else {
+			setSelectedBlocks((prev) => prev.filter((block) => !blocksWithProperty.includes(block)));
+		}
+
+		setBlockTypeCheckboxesChecked((prev) => ({ ...prev, [property]: checked }));
 	};
 
 	const onSubmit = () => {
@@ -63,74 +102,176 @@ function OpenImage({ close }: DialogProps) {
 		}
 	};
 
+	useEffect(() => {
+		Object.keys(blockTypeCheckboxesChecked).forEach((property) => {
+			const blocksWithProperty = Object.entries(blockData)
+				.filter(([, data]) => data[property as keyof BlockData[string]] === true)
+				.map(([blockName]) => blockName);
+
+			const propertyChecked = blocksWithProperty.every((block) => selectedBlocks.includes(block));
+			setBlockTypeCheckboxesChecked((prev) => ({ ...prev, [property]: propertyChecked }));
+		});
+	}, [selectedBlocks]);
+
+	useEffect(() => {
+		if (!divRef.current) return;
+		setStageWidth(divRef.current.clientWidth);
+
+		console.log(stageWidth);
+	}, []);
+
 	return (
-		<DialogContent>
+		<DialogContent ref={divRef}>
 			<DialogHeader>
 				<DialogTitle>Open Image</DialogTitle>
 				<DialogDescription>Open your image to load as blocks into the canvas</DialogDescription>
 			</DialogHeader>
 
-			<div className="flex flex-col gap-2">
-				<div
-					{...getRootProps({
-						className: "flex flex-col justify-center items-center gap-2 p-4 rounded border border-2 border-dashed select-none",
-					})}
-				>
-					<input {...getInputProps({ multiple: false })} />
-					<UploadIcon />
-					<p>Drag and drop your image here</p>
-				</div>
+			<div ref={divRef}>
+				<Tabs defaultValue="image">
+					<TabsList className="grid w-full grid-cols-2">
+						<TabsTrigger value="image">Image</TabsTrigger>
+						<TabsTrigger value="blocks">Blocks</TabsTrigger>
+					</TabsList>
 
-				<div className="grid grid-cols-[auto,1fr] gap-2">
-					{image && acceptedFiles[0] && (
-						<>
-							<img
-								src={image.src}
-								alt="your image"
-								className="w-48 h-48 object-contain border rounded-lg"
-								style={{ background: "repeating-conic-gradient(#fff 0 90deg, #bbb 0 180deg) 0 0/25% 25%" }}
-							/>
+					<TabsContent value="image" className="flex flex-col gap-2">
+						<div
+							{...getRootProps({
+								className: "flex flex-col justify-center items-center gap-2 p-4 rounded border border-2 border-dashed select-none",
+							})}
+						>
+							<input {...getInputProps({ multiple: false })} />
+							<UploadIcon />
+							<p>Drag and drop your image here or click to open</p>
+						</div>
 
-							<div className="flex flex-col gap-2">
-								<div>
-									<Label>File name</Label>
-									<p>{acceptedFiles[0].name}</p>
-								</div>
-
-								<div>
-									<Label htmlFor="width">Width (blocks)</Label>
-									<Input type="number" id="width" placeholder="Width" value={imageDimensions.width} onChange={(e) => onDimensionChange(e, true)} />
-								</div>
-
-								<div>
-									<Label htmlFor="height">Height (blocks)</Label>
-									<Input
-										type="number"
-										id="height"
-										placeholder="Height"
-										value={imageDimensions.height}
-										onChange={(e) => onDimensionChange(e, false)}
+						<div className="grid grid-cols-[auto,1fr] gap-2">
+							{image && acceptedFiles[0] && (
+								<>
+									<img
+										src={image.src}
+										alt="your image"
+										className="w-48 h-48 object-contain border rounded-lg"
+										style={{ background: "repeating-conic-gradient(#fff 0 90deg, #bbb 0 180deg) 0 0/25% 25%" }}
 									/>
+
+									<div className="flex flex-col gap-2">
+										<div>
+											<Label htmlFor="file-name">File name</Label>
+											<p id="file-name" className="text-wrap">
+												{acceptedFiles[0].name}
+											</p>
+										</div>
+
+										<div className="grid grid-cols-[1fr_auto_1fr] gap-1">
+											<div>
+												<Label htmlFor="width">Width (blocks)</Label>
+												<Input
+													type="number"
+													id="width"
+													placeholder="Width"
+													value={imageDimensions.width}
+													onChange={(e) => onDimensionChange(e, true)}
+												/>
+											</div>
+
+											<Toggle
+												aria-label="Link aspect ratio"
+												variant="outline"
+												pressed={linkAspectRatio}
+												onPressedChange={() => setLinkAspectRatio(!linkAspectRatio)}
+												className="h-8 !min-w-8 p-0 mt-auto mb-1"
+											>
+												<LinkIcon />
+											</Toggle>
+
+											<div>
+												<Label htmlFor="height">Height (blocks)</Label>
+												<Input
+													type="number"
+													id="height"
+													placeholder="Height"
+													value={imageDimensions.height}
+													onChange={(e) => onDimensionChange(e, false)}
+												/>
+											</div>
+										</div>
+
+										{imageDimensions.height > 384 && (
+											<div className="flex items-center gap-1 mt-auto mb-1">
+												<CircleAlertIcon className="text-red-400" size={22} />
+												<span className="text-red-400 text-sm">The height is above 384 blocks!</span>
+											</div>
+										)}
+									</div>
+								</>
+							)}
+						</div>
+					</TabsContent>
+
+					<TabsContent value="blocks" className="flex flex-col gap-2">
+						<div className="grid grid-cols-2">
+							<div className="grid grid-rows-3 gap-2 *:flex *:items-center *:gap-1">
+								<div>
+									<Checkbox
+										id="creative"
+										checked={blockTypeCheckboxesChecked.creative}
+										onCheckedChange={(value) => onBlockTypeCheckedChange(value, "creative")}
+									/>
+									<Label htmlFor="creative">Creative only</Label>
+								</div>
+								<div>
+									<Checkbox
+										id="tile_entity"
+										checked={blockTypeCheckboxesChecked.tile_entity}
+										onCheckedChange={(value) => onBlockTypeCheckedChange(value, "tile_entity")}
+									/>
+									<Label htmlFor="tile_entity">Tile entities</Label>
+								</div>
+								<div>
+									<Checkbox
+										id="fallable"
+										checked={blockTypeCheckboxesChecked.fallable}
+										onCheckedChange={(value) => onBlockTypeCheckedChange(value, "fallable")}
+									/>
+									<Label htmlFor="fallable">Fallable</Label>
 								</div>
 							</div>
-						</>
-					)}
-				</div>
+
+							<div className="grid grid-rows-2 gap-1">
+								<Button className="h-8" onClick={() => setSelectedBlocks(Object.keys(blockData))}>
+									Check all blocks
+								</Button>
+								<Button className="h-8" onClick={() => setSelectedBlocks([])}>
+									Uncheck all blocks
+								</Button>
+							</div>
+						</div>
+
+						<Separator />
+
+						<Input placeholder="Search for blocks..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
+
+						<ScrollArea className="h-96">
+							<BlockSelector
+								stageWidth={stageWidth}
+								searchInput={searchInput}
+								selectedBlocks={selectedBlocks}
+								setSelectedBlocks={setSelectedBlocks}
+							/>
+						</ScrollArea>
+					</TabsContent>
+				</Tabs>
 			</div>
 
-			<DialogFooter className="items-center">
-				{imageDimensions.height > 384 && (
-					<div className="flex items-center gap-1 h-min mr-auto">
-						<CircleAlertIcon className="text-red-400" size={22} />
-						<span className="text-red-400 text-sm">The height is above 384 blocks!</span>
-					</div>
-				)}
+			<DialogFooter>
+				{/* todo: add version selector here */}
 
 				<Button variant="outline" onClick={close}>
 					Cancel
 				</Button>
 				<Button type="submit" onClick={onSubmit}>
-					Submit
+					Open
 				</Button>
 			</DialogFooter>
 		</DialogContent>
