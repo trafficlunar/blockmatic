@@ -37,11 +37,17 @@ function OpenImage({ close }: DialogProps) {
 		}
 	}, [acceptedFiles]);
 
-	const onDimensionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const onDimensionChange = (e: React.ChangeEvent<HTMLInputElement>, isWidth: boolean) => {
 		const newDimension = Number(e.target.value);
 		if (newDimension < 1 || newDimension > 10000) return;
 
-		setImageDimensions(() => ({ width: newDimension, height: Math.round(newDimension / aspectRatio) }));
+		setImageDimensions(() => {
+			if (isWidth) {
+				return { width: newDimension, height: Math.round(newDimension / aspectRatio) };
+			} else {
+				return { width: Math.round(newDimension * aspectRatio), height: newDimension };
+			}
+		});
 	};
 
 	const onSubmit = () => {
@@ -93,12 +99,18 @@ function OpenImage({ close }: DialogProps) {
 
 								<div>
 									<Label htmlFor="width">Width (blocks)</Label>
-									<Input type="number" id="width" placeholder="Width" value={imageDimensions.width} onChange={(e) => onDimensionChange(e)} />
+									<Input type="number" id="width" placeholder="Width" value={imageDimensions.width} onChange={(e) => onDimensionChange(e, true)} />
 								</div>
 
 								<div>
 									<Label htmlFor="height">Height (blocks)</Label>
-									<Input type="number" id="height" placeholder="Height" value={imageDimensions.height} onChange={(e) => onDimensionChange(e)} />
+									<Input
+										type="number"
+										id="height"
+										placeholder="Height"
+										value={imageDimensions.height}
+										onChange={(e) => onDimensionChange(e, false)}
+									/>
 								</div>
 							</div>
 						</>
