@@ -14,7 +14,7 @@ interface Props {
 	searchInput: string;
 }
 
-function SelectorBlocks({ stageWidth, searchInput }: Props) {
+function BlockSelector({ stageWidth, searchInput }: Props) {
 	const { version } = useContext(CanvasContext);
 	const { missingTexture, textures } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
@@ -67,6 +67,7 @@ function SelectorBlocks({ stageWidth, searchInput }: Props) {
 
 					return (
 						<Sprite
+							key={block}
 							texture={texture}
 							x={x}
 							y={y}
@@ -110,4 +111,4 @@ function SelectorBlocks({ stageWidth, searchInput }: Props) {
 	);
 }
 
-export default SelectorBlocks;
+export default BlockSelector;

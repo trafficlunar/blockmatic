@@ -8,7 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import ColorPicker from "./ColorPicker";
 import Replace from "./Replace";
 import Radius from "./Radius";
-import SelectorBlocks from "./SelectorBlocks";
+import BlockSelector from "./BlockSelector";
+import { ScrollArea } from "../ui/scroll-area";
 
 function ToolSettings() {
 	const { settings } = useContext(SettingsContext);
@@ -18,14 +19,13 @@ function ToolSettings() {
 	const [searchInput, setSearchInput] = useState("");
 
 	useEffect(() => {
-		if (divRef.current) {
-			setStageWidth(divRef.current.clientWidth);
-		}
+		if (!divRef.current) return;
+		setStageWidth(divRef.current.clientWidth);
 	}, []);
 
 	return (
 		<>
-			{(settings.colorPicker || settings.blocksReplacer || settings.radiusChanger || settings.blockSelector) && (
+			{(settings.colorPicker || settings.blockReplacer || settings.radiusChanger || settings.blockSelector) && (
 				<div className="w-72 border-l border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 pb-0 flex flex-col h-full gap-2">
 					{settings.colorPicker && (
 						<>
@@ -34,7 +34,7 @@ function ToolSettings() {
 						</>
 					)}
 
-					{settings.blocksReplacer && (
+					{settings.blockReplacer && (
 						<>
 							<Replace />
 							<Separator />
@@ -51,9 +51,9 @@ function ToolSettings() {
 					{settings.blockSelector && (
 						<>
 							<Input placeholder="Search for blocks..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
-							<div ref={divRef} className="w-full flex-1 overflow-y-auto pb-2">
-								<SelectorBlocks stageWidth={stageWidth} searchInput={searchInput} />
-							</div>
+							<ScrollArea ref={divRef} className="w-full flex-1 pb-2">
+								<BlockSelector stageWidth={stageWidth} searchInput={searchInput} />
+							</ScrollArea>
 						</>
 					)}
 				</div>
