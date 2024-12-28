@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { Analytics } from "@vercel/analytics/react";
 
 import { ThemeProvider } from "@/context/Theme.tsx";
 
@@ -17,6 +18,8 @@ createRoot(document.getElementById("root")!).render(
 					<Route path="/" element={<IndexPage />} />
 					<Route path="/app" element={<AppPage />} />
 				</Routes>
+
+				<Analytics />
 			</BrowserRouter>
 		</ThemeProvider>
 	</StrictMode>
