@@ -34,6 +34,7 @@ function FileMenu() {
 				</MenubarSub>
 				<MenubarSeparator />
 
+				<MenubarItem onClick={() => openDialog("SetVersion")}>Set Version</MenubarItem>
 				<MenubarItem onClick={() => openDialog("ClearBlocks")}>Clear All Blocks</MenubarItem>
 			</MenubarContent>
 		</MenubarMenu>

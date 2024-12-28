@@ -503,13 +503,13 @@
 	},
 	"chiseled_nether_bricks": {
 		"name": "Chiseled Nether Bricks",
-		"version": 1000,
+		"version": 1160,
 		"id": ["chiseled_nether_bricks", 887],
 		"color": [48, 24, 29, 255]
 	},
 	"chiseled_polished_blackstone": {
 		"name": "Chiseled Polished Blackstone",
-		"version": 1000,
+		"version": 1160,
 		"id": ["chiseled_polished_blackstone", 877],
 		"color": [57, 53, 61, 255]
 	},
@@ -539,7 +539,7 @@
 	},
 	"chiseled_stone_bricks": {
 		"name": "Chiseled Stone Bricks",
-		"version": 1000,
+		"version": 1020,
 		"id": ["chiseled_stone_bricks", 310],
 		"color": [122, 121, 122, 255]
 	},
@@ -1505,7 +1505,7 @@
 	},
 	"lodestone_side": {
 		"name": "Lodestone",
-		"version": 1000,
+		"version": 1160,
 		"id": ["lodestone", 869],
 		"color": [124, 125, 128, 255]
 	},
@@ -1669,7 +1669,7 @@
 	},
 	"nether_gold_ore": {
 		"name": "Nether Gold Ore",
-		"version": 1000,
+		"version": 1160,
 		"id": ["nether_gold_ore", 48],
 		"color": [124, 74, 47, 255]
 	},
@@ -1857,7 +1857,7 @@
 	},
 	"packed_ice": {
 		"name": "Packed Ice",
-		"version": 1000,
+		"version": 1072,
 		"id": ["packed_ice", 513],
 		"color": [142, 180, 251, 255]
 	},
@@ -2177,7 +2177,7 @@
 	},
 	"red_nether_bricks": {
 		"name": "Red Nether Bricks",
-		"version": 1000,
+		"version": 1100,
 		"id": ["red_nether_bricks", 630],
 		"color": [73, 10, 12, 255]
 	},
@@ -2259,7 +2259,7 @@
 	},
 	"resin_bricks": {
 		"name": "Resin Bricks",
-		"version": 1000,
+		"version": 1214,
 		"id": ["resin_bricks", -1],
 		"color": [207, 94, 29, 255]
 	},
@@ -2271,7 +2271,7 @@
 	},
 	"rooted_dirt": {
 		"name": "Rooted Dirt",
-		"version": 1000,
+		"version": 1170,
 		"id": ["rooted_dirt", 1042],
 		"color": [147, 107, 81, 255]
 	},
@@ -2357,7 +2357,7 @@
 	},
 	"smooth_stone_slab_side": {
 		"name": "Smooth Stone Slab",
-		"version": 1000,
+		"version": 1140,
 		"id": ["smooth_stone_slab", 568],
 		"color": [169, 169, 169, 255],
 		"properties": {
@@ -2453,13 +2453,13 @@
 	},
 	"stripped_bamboo_block": {
 		"name": "Block of Stripped Bamboo",
-		"version": 1130,
+		"version": 1200,
 		"id": ["stripped_bamboo_block", 70],
 		"color": [195, 175, 82, 255]
 	},
 	"stripped_bamboo_block_top": {
 		"name": "Block of Stripped Bamboo (Top)",
-		"version": 1130,
+		"version": 1200,
 		"id": ["stripped_bamboo_block", 70],
 		"color": [183, 163, 77, 255],
 		"properties": {
@@ -2483,13 +2483,13 @@
 	},
 	"stripped_cherry_log": {
 		"name": "Stripped Cherry Log",
-		"version": 1130,
+		"version": 1200,
 		"id": ["stripped_cherry_log", 65],
 		"color": [215, 145, 149, 255]
 	},
 	"stripped_cherry_log_top": {
 		"name": "Stripped Cherry Log (Top)",
-		"version": 1130,
+		"version": 1200,
 		"id": ["stripped_cherry_log", 65],
 		"color": [221, 166, 159, 255],
 		"properties": {
@@ -2498,13 +2498,13 @@
 	},
 	"stripped_crimson_stem": {
 		"name": "Stripped Crimson Stem",
-		"version": 1130,
+		"version": 1160,
 		"id": ["stripped_crimson_stem", 820],
 		"color": [138, 58, 90, 255]
 	},
 	"stripped_crimson_stem_top": {
 		"name": "Stripped Crimson Stem (Top)",
-		"version": 1130,
+		"version": 1160,
 		"id": ["stripped_crimson_stem", 820],
 		"color": [123, 57, 83, 255],
 		"properties": {
@@ -2543,13 +2543,13 @@
 	},
 	"stripped_mangrove_log": {
 		"name": "Stripped Mangrove Log",
-		"version": 1130,
+		"version": 1190,
 		"id": ["stripped_mangrove_log", 69],
 		"color": [120, 55, 48, 255]
 	},
 	"stripped_mangrove_log_top": {
 		"name": "Stripped Mangrove Log (Top)",
-		"version": 1130,
+		"version": 1190,
 		"id": ["stripped_mangrove_log", 69],
 		"color": [109, 45, 44, 255],
 		"properties": {
@@ -2573,13 +2573,13 @@
 	},
 	"stripped_pale_oak_log": {
 		"name": "Stripped Pale Oak Log",
-		"version": 1130,
+		"version": 1214,
 		"id": ["stripped_pale_oak_log", 67],
 		"color": [246, 238, 237, 255]
 	},
 	"stripped_pale_oak_log_top": {
 		"name": "Stripped Pale Oak Log (Top)",
-		"version": 1130,
+		"version": 1214,
 		"id": ["stripped_pale_oak_log", 67],
 		"color": [236, 228, 226, 255],
 		"properties": {
@@ -2603,13 +2603,13 @@
 	},
 	"stripped_warped_stem": {
 		"name": "Stripped Warped Stem",
-		"version": 1130,
+		"version": 1160,
 		"id": ["stripped_warped_stem", 811],
 		"color": [58, 151, 148, 255]
 	},
 	"stripped_warped_stem_top": {
 		"name": "Stripped Warped Stem (Top)",
-		"version": 1130,
+		"version": 1160,
 		"id": ["stripped_warped_stem", 811],
 		"color": [53, 130, 126, 255],
 		"properties": {
@@ -2632,7 +2632,7 @@
 	},
 	"suspicious_sand_0": {
 		"name": "Suspicious Sand",
-		"version": 1000,
+		"version": 1200,
 		"id": ["suspicious_sand", -1],
 		"color": [218, 205, 160, 255],
 		"fallable": true
@@ -2651,7 +2651,7 @@
 	},
 	"tinted_glass": {
 		"name": "Tinted Glass",
-		"version": 1000,
+		"version": 1170,
 		"id": ["tinted_glass", 945],
 		"color": [45, 39, 48, 131]
 	},
@@ -2663,7 +2663,7 @@
 	},
 	"trial_spawner_side_inactive": {
 		"name": "Trial Spawner",
-		"version": 1000,
+		"version": 1210,
 		"id": ["trial_spawner", -1],
 		"color": [56, 76, 90, 193],
 		"creative": true
@@ -2683,7 +2683,7 @@
 	},
 	"tuff_bricks": {
 		"name": "Tuff Bricks",
-		"version": 1000,
+		"version": 1210,
 		"id": ["tuff_bricks", 939],
 		"color": [101, 105, 98, 255]
 	},

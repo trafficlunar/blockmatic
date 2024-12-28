@@ -25,7 +25,7 @@ export const CanvasProvider = ({ children }: Props) => {
 	const [blocks, setBlocks] = useState<Block[]>([]);
 	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
 	const [scale, setScale] = useState(1);
-	const [version, setVersion] = useState(1200);
+	const [version, setVersion] = useState(1214);
 
 	const canvasSize = useMemo(() => {
 		let minX = Infinity,
