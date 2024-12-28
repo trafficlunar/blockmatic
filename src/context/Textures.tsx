@@ -28,19 +28,22 @@ export const TexturesProvider = ({ children }: Props) => {
 
 	useEffect(() => {
 		// Load missing texture
-		const baseTexture = new PIXI.BaseTexture(
+		const missingBaseTexture = new PIXI.BaseTexture(
 			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR42mPABX4w/MCKaKJhVMPgcOuoBgDZRfgBVl5QdQAAAABJRU5ErkJggg=="
 		);
-		setMissingTexture(new PIXI.Texture(baseTexture));
+		setMissingTexture(new PIXI.Texture(missingBaseTexture));
 
 		// Load textures
 		const sheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/spritesheet.png"), spritesheet);
 		sheet.parse().then((t) => {
-			setTextures(t);
+			// Add air texture
+			const airBaseTexture = new PIXI.BaseTexture("/blocks/air.png");
+
+			setTextures({ ...t, "air.png": new PIXI.Texture(airBaseTexture) });
 		});
 
 		// Load solid textures
-		const solidT: Record<string, PIXI.Texture> = {};
+		const solidTexturesCollection: Record<string, PIXI.Texture> = {};
 
 		const canvas = document.createElement("canvas");
 		canvas.width = 16;
@@ -58,10 +61,10 @@ export const TexturesProvider = ({ children }: Props) => {
 
 			const baseTexture = new PIXI.BaseTexture(image);
 			const texture = new PIXI.Texture(baseTexture);
-			solidT[blockName] = texture;
+			solidTexturesCollection[blockName] = texture;
 		});
 
-		setSolidTextures(solidT);
+		setSolidTextures(solidTexturesCollection);
 		setLoading(false);
 	}, []);
 

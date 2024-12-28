@@ -25,7 +25,12 @@ function Replace() {
 	};
 
 	const onClickReplace = () => {
-		setBlocks((prevBlocks) => prevBlocks.map((block) => (block.name === block1 ? { ...block, name: block2 } : block)));
+		// If block2 name is air, delete the block instead.
+		setBlocks((prevBlocks) =>
+			prevBlocks
+				.map((block) => (block.name === block1 ? (block2 === "air" ? null : { ...block, name: block2 }) : block))
+				.filter((block) => block !== null)
+		);
 	};
 
 	useEffect(() => {

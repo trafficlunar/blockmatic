@@ -109,8 +109,29 @@ function Canvas() {
 			return radiusBlocks;
 		};
 
+		const eraseTool = () => {
+			// Fixes Infinity and NaN errors
+			if (blocks.length == 1) return;
+
+			const halfSize = Math.floor(radius / 2);
+			const startX = mouseCoords.x - (radius % 2 === 0 ? 0 : halfSize);
+			const startY = mouseCoords.y - (radius % 2 === 0 ? 0 : halfSize);
+
+			const updated = blocks.filter((block) => {
+				const withinSquare = block.x >= startX && block.x < startX + radius && block.y >= startY && block.y < startY + radius;
+				return !withinSquare;
+			});
+
+			setBlocks(updated);
+		};
+
 		switch (tool) {
 			case "pencil": {
+				if (selectedBlock == "air") {
+					eraseTool();
+					break;
+				}
+
 				const newBlocks = getBlocksWithinRadius(mouseCoords.x, mouseCoords.y, radius, selectedBlock);
 				const mergedBlocks = blocks.filter((block) => {
 					return !newBlocks.some((newBlock) => block.x === newBlock.x && block.y === newBlock.y);
@@ -120,19 +141,7 @@ function Canvas() {
 				break;
 			}
 			case "eraser": {
-				// Fixes Infinity and NaN errors
-				if (blocks.length == 1) break;
-
-				const halfSize = Math.floor(radius / 2);
-				const startX = mouseCoords.x - (radius % 2 === 0 ? 0 : halfSize);
-				const startY = mouseCoords.y - (radius % 2 === 0 ? 0 : halfSize);
-
-				const updated = blocks.filter((block) => {
-					const withinSquare = block.x >= startX && block.x < startX + radius && block.y >= startY && block.y < startY + radius;
-					return !withinSquare;
-				});
-
-				setBlocks(updated);
+				eraseTool();
 				break;
 			}
 		}

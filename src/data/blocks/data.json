@@ -1,4 +1,10 @@
 {
+	"air": {
+		"name": "Air",
+		"version": 1000,
+		"id": ["air", 0],
+		"color": [0, 0, 0, 0]
+	},
 	"acacia_log": {
 		"name": "Acacia Log",
 		"version": 1072,

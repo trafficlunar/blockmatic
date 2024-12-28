@@ -85,6 +85,7 @@ function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, im
 
 			for (let i = 0; i < imageData.data.length; i += 4) {
 				const block = findBlockFromRgb(blockData, imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
+				if (block == "air") continue;
 
 				const x = Math.floor((i / 4) % imageData.width);
 				const y = Math.floor(i / 4 / imageData.width);
