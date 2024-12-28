@@ -26,7 +26,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
 	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
-	const { image, imageDimensions } = useContext(ImageContext);
+	const { image, imageDimensions, usableBlocks } = useContext(ImageContext);
 	const { setLoading } = useContext(LoadingContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture, textures, solidTextures } = useContext(TexturesContext);
@@ -308,6 +308,7 @@ function Canvas() {
 					solidTextures={solidTextures}
 					image={image}
 					imageDimensions={imageDimensions}
+					usableBlocks={usableBlocks}
 					coords={coords}
 					scale={scale}
 					version={version}

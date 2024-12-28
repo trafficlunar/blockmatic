@@ -12,9 +12,10 @@ interface Props {
 	searchInput: string;
 	selectedBlocks: string[];
 	setSelectedBlocks: React.Dispatch<React.SetStateAction<string[]>>;
+	userModifiedBlocks: React.MutableRefObject<boolean>;
 }
 
-function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlocks }: Props) {
+function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlocks, userModifiedBlocks }: Props) {
 	const { version } = useContext(CanvasContext);
 	const { missingTexture, textures } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
@@ -27,6 +28,8 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 	const blocksPerColumn = Math.floor(stageWidth / (32 + 2));
 
 	const onClick = (block: string) => {
+		userModifiedBlocks.current = true;
+
 		if (selectedBlocks.includes(block)) {
 			setSelectedBlocks((prev) => prev.filter((blockName) => blockName !== block));
 		} else {

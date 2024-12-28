@@ -21,11 +21,12 @@ import { Toggle } from "@/components/ui/toggle";
 import { getBlockData } from "@/utils/getBlockData";
 
 import BlockSelector from "./open-image/BlockSelector";
+import VersionCombobox from "../VersionCombobox";
 
 function OpenImage({ close }: DialogProps) {
-	const { version } = useContext(CanvasContext);
+	const { version, setVersion } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
-	const { setImage: setContextImage, setImageDimensions: setContextImageDimensions } = useContext(ImageContext);
+	const { setImage: setContextImage, setImageDimensions: setContextImageDimensions, setUsableBlocks } = useContext(ImageContext);
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
 		accept: {
@@ -33,7 +34,9 @@ function OpenImage({ close }: DialogProps) {
 		},
 	});
 
+	const blockData = getBlockData(version);
 	const divRef = useRef<HTMLDivElement>(null);
+	const userModifiedBlocks = useRef(false);
 
 	const [image, setImage] = useState<HTMLImageElement>();
 	const [imageDimensions, setImageDimensions] = useState<Dimension>({ width: 0, height: 0 });
@@ -43,14 +46,12 @@ function OpenImage({ close }: DialogProps) {
 	const [searchInput, setSearchInput] = useState("");
 	const [stageWidth, setStageWidth] = useState(0);
 
-	const [selectedBlocks, setSelectedBlocks] = useState<string[]>(["stone"]);
+	const [selectedBlocks, setSelectedBlocks] = useState<string[]>(Object.keys(blockData));
 	const [blockTypeCheckboxesChecked, setBlockTypeCheckboxesChecked] = useState({
 		creative: false,
 		tile_entity: false,
 		fallable: false,
 	});
-
-	const blockData = getBlockData(version);
 
 	useEffect(() => {
 		if (acceptedFiles[0]) {
@@ -89,9 +90,15 @@ function OpenImage({ close }: DialogProps) {
 		setBlockTypeCheckboxesChecked((prev) => ({ ...prev, [property]: checked }));
 	};
 
+	const onBlockSelectionChange = (newValue: string[]) => {
+		userModifiedBlocks.current = true;
+		setSelectedBlocks(newValue);
+	};
+
 	const onSubmit = () => {
 		if (image) {
 			setLoading(true);
+			setUsableBlocks(selectedBlocks);
 
 			// Wait for loading indicator to appear
 			setTimeout(() => {
@@ -112,6 +119,12 @@ function OpenImage({ close }: DialogProps) {
 			setBlockTypeCheckboxesChecked((prev) => ({ ...prev, [property]: propertyChecked }));
 		});
 	}, [selectedBlocks]);
+
+	useEffect(() => {
+		if (!userModifiedBlocks.current) {
+			setSelectedBlocks(Object.keys(blockData));
+		}
+	}, [version]);
 
 	useEffect(() => {
 		if (!divRef.current) return;
@@ -237,10 +250,10 @@ function OpenImage({ close }: DialogProps) {
 							</div>
 
 							<div className="grid grid-rows-2 gap-1">
-								<Button className="h-8" onClick={() => setSelectedBlocks(Object.keys(blockData))}>
+								<Button className="h-8" onClick={() => onBlockSelectionChange(Object.keys(blockData))}>
 									Check all blocks
 								</Button>
-								<Button className="h-8" onClick={() => setSelectedBlocks([])}>
+								<Button className="h-8" onClick={() => onBlockSelectionChange([])}>
 									Uncheck all blocks
 								</Button>
 							</div>
@@ -256,21 +269,24 @@ function OpenImage({ close }: DialogProps) {
 								searchInput={searchInput}
 								selectedBlocks={selectedBlocks}
 								setSelectedBlocks={setSelectedBlocks}
+								userModifiedBlocks={userModifiedBlocks}
 							/>
 						</ScrollArea>
 					</TabsContent>
 				</Tabs>
 			</div>
 
-			<DialogFooter>
-				{/* todo: add version selector here */}
+			<DialogFooter className="!justify-between">
+				<VersionCombobox version={version} setVersion={setVersion} />
 
-				<Button variant="outline" onClick={close}>
-					Cancel
-				</Button>
-				<Button type="submit" onClick={onSubmit}>
-					Open
-				</Button>
+				<div className="flex gap-2">
+					<Button variant="outline" onClick={close}>
+						Cancel
+					</Button>
+					<Button type="submit" onClick={onSubmit}>
+						Open
+					</Button>
+				</div>
 			</DialogFooter>
 		</DialogContent>
 	);

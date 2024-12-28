@@ -16,6 +16,7 @@ interface Props {
 	solidTextures: Record<string, PIXI.Texture>;
 	image: HTMLImageElement | undefined;
 	imageDimensions: Dimension;
+	usableBlocks: string[];
 	coords: Position;
 	scale: number;
 	version: number;
@@ -25,7 +26,20 @@ interface Props {
 // Lifts 16,000 tiles limit
 settings.use32bitIndex = true;
 
-function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, image, imageDimensions, coords, scale, version, setLoading }: Props) {
+function Blocks({
+	blocks,
+	setBlocks,
+	missingTexture,
+	textures,
+	solidTextures,
+	image,
+	imageDimensions,
+	usableBlocks,
+	coords,
+	scale,
+	version,
+	setLoading,
+}: Props) {
 	const app = useApp();
 	const tilemapRef = useRef<CompositeTilemap>();
 
@@ -84,7 +98,7 @@ function Blocks({ blocks, setBlocks, missingTexture, textures, solidTextures, im
 			const newBlocks: Block[] = [];
 
 			for (let i = 0; i < imageData.data.length; i += 4) {
-				const block = findBlockFromRgb(blockData, imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
+				const block = findBlockFromRgb(usableBlocks, imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
 				if (block == "air") continue;
 
 				const x = Math.floor((i / 4) % imageData.width);
