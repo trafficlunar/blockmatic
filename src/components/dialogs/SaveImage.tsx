@@ -46,7 +46,7 @@ function SaveImage({ close }: DialogProps) {
 
 			const link = document.createElement("a");
 			link.href = URL.createObjectURL(blob);
-			link.download = "blockmatic.png";
+			link.download = `${fileName}.png`;
 			link.click();
 
 			URL.revokeObjectURL(link.href);
