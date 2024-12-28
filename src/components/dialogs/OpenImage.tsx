@@ -116,12 +116,10 @@ function OpenImage({ close }: DialogProps) {
 	useEffect(() => {
 		if (!divRef.current) return;
 		setStageWidth(divRef.current.clientWidth);
-
-		console.log(stageWidth);
-	}, []);
+	}, [divRef.current?.clientWidth]);
 
 	return (
-		<DialogContent ref={divRef}>
+		<DialogContent>
 			<DialogHeader>
 				<DialogTitle>Open Image</DialogTitle>
 				<DialogDescription>Open your image to load as blocks into the canvas</DialogDescription>
@@ -252,7 +250,7 @@ function OpenImage({ close }: DialogProps) {
 
 						<Input placeholder="Search for blocks..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
 
-						<ScrollArea className="h-96">
+						<ScrollArea className="h-60">
 							<BlockSelector
 								stageWidth={stageWidth}
 								searchInput={searchInput}

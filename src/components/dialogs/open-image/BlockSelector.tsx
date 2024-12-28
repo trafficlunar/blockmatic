@@ -24,7 +24,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
 
 	const filteredBlocks = useMemo(() => Object.keys(blockData).filter((value) => value.includes(searchInput)), [searchInput, blockData]);
-	const blocksPerColumn = Math.floor(462 / (32 + 2));
+	const blocksPerColumn = Math.floor(stageWidth / (32 + 2));
 
 	const onClick = (block: string) => {
 		if (selectedBlocks.includes(block)) {
@@ -36,7 +36,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 
 	return (
 		<Stage
-			width={462}
+			width={stageWidth}
 			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2)}
 			options={{ backgroundAlpha: 0 }}
 			onMouseLeave={() => setHoverPosition(null)}
