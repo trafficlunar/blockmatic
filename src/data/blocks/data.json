@@ -1041,7 +1041,7 @@
 	},
 	"end_stone_bricks": {
 		"name": "End Stone Bricks",
-		"version": 1000,
+		"version": 1090,
 		"id": ["end_stone_bricks", 618],
 		"color": [219, 226, 164, 255]
 	},
