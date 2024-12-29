@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Container, Sprite, Stage } from "@pixi/react";
-import * as PIXI from "pixi.js";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 

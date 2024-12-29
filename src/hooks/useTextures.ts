@@ -1,5 +1,5 @@
 import { useContext, useMemo } from "react";
-import { BaseTexture, Texture } from "pixi.js";
+import { Texture } from "pixi.js";
 
 import { TexturesContext } from "@/context/Textures";
 import { useBlockData } from "./useBlockData";
