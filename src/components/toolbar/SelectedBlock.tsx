@@ -3,15 +3,18 @@ import { Container, Sprite, Stage } from "@pixi/react";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+import { CanvasContext } from "@/context/Canvas";
+import { TexturesContext } from "@/context/Textures";
 import { ToolContext } from "@/context/Tool";
 
-import _blockData from "@/data/blocks/data.json";
 import { useTextures } from "@/hooks/useTextures";
-import { CanvasContext } from "@/context/Canvas";
+
+import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
 
 function SelectedBlock() {
 	const { version } = useContext(CanvasContext);
+	const { missingTexture } = useContext(TexturesContext);
 	const { selectedBlock } = useContext(ToolContext);
 
 	const textures = useTextures(version);
@@ -31,7 +34,7 @@ function SelectedBlock() {
 					<div ref={divRef} className="absolute bottom-1 w-8 h-8 outline outline-1 outline-zinc-800 dark:outline-zinc-200">
 						<Stage width={divRef.current?.clientWidth} height={divRef.current?.clientHeight}>
 							<Container>
-								<Sprite texture={textures[selectedBlock]} scale={2} />
+								<Sprite texture={textures[selectedBlock] ?? missingTexture} scale={2} />
 							</Container>
 						</Stage>
 					</div>

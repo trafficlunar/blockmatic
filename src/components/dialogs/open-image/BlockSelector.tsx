@@ -3,6 +3,7 @@ import { Container, Graphics, Sprite, Stage } from "@pixi/react";
 
 import { CanvasContext } from "@/context/Canvas";
 import { ThemeContext } from "@/context/Theme";
+import { TexturesContext } from "@/context/Textures";
 
 import { useBlockData } from "@/hooks/useBlockData";
 import { useTextures } from "@/hooks/useTextures";
@@ -17,6 +18,7 @@ interface Props {
 
 function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlocks, userModifiedBlocks }: Props) {
 	const { version } = useContext(CanvasContext);
+	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
 
 	const blockData = useBlockData(version);
@@ -53,7 +55,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 						<>
 							<Sprite
 								key={block}
-								texture={textures[block]}
+								texture={textures[block] ?? missingTexture}
 								x={x}
 								y={y}
 								scale={2}
