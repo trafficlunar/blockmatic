@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { CanvasContext } from "@/context/Canvas";
 import { ToolContext } from "@/context/Tool";
 
-import { getBlockData } from "@/utils/getBlockData";
+import { useBlockData } from "@/hooks/useBlockData";
 import { findBlockFromRgb } from "@/utils/findBlockFromRgb";
 
 function ColorPicker() {
@@ -19,7 +19,7 @@ function ColorPicker() {
 	const rgb = useMemo(() => hsvaToRgba(hsva), [hsva]);
 
 	const limitRgba = (x: number) => Math.min(Math.max(x, 0), 255);
-	const blockData = getBlockData(version);
+	const blockData = useBlockData(version);
 
 	useEffect(() => {
 		const blockInfo = blockData[selectedBlock];

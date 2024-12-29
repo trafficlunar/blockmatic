@@ -6,12 +6,16 @@ import { ToolContext } from "@/context/Tool";
 import { TexturesContext } from "@/context/Textures";
 
 import { Label } from "@/components/ui/label";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+
+import { useTextures } from "@/hooks/useTextures";
 
 function Replace() {
-	const { setBlocks } = useContext(CanvasContext);
+	const { version, setBlocks } = useContext(CanvasContext);
 	const { selectedBlock, tool, setTool } = useContext(ToolContext);
-	const { missingTexture, textures } = useContext(TexturesContext);
+	const { missingTexture } = useContext(TexturesContext);
+
+	const textures = useTextures(version);
 
 	const [oldTool, setOldTool] = useState<Tool>("hand");
 	const [waitingId, setWaitingId] = useState<number | null>(null);
@@ -55,7 +59,7 @@ function Replace() {
 			>
 				<Stage width={32} height={32} options={{ backgroundAlpha: 0 }}>
 					<Container>
-						<Sprite texture={textures[`${block1}.png`] ?? missingTexture} scale={2} />
+						<Sprite texture={textures[block1] ?? missingTexture} scale={2} />
 					</Container>
 				</Stage>
 			</button>
@@ -67,7 +71,7 @@ function Replace() {
 			>
 				<Stage width={32} height={32} options={{ backgroundAlpha: 0 }}>
 					<Container>
-						<Sprite texture={textures[`${block2}.png`] ?? missingTexture} scale={2} />
+						<Sprite texture={textures[block2] ?? missingTexture} scale={2} />
 					</Container>
 				</Stage>
 			</button>

@@ -2,10 +2,10 @@ import React, { useContext, useMemo, useState } from "react";
 import { Container, Graphics, Sprite, Stage } from "@pixi/react";
 
 import { CanvasContext } from "@/context/Canvas";
-import { TexturesContext } from "@/context/Textures";
 import { ThemeContext } from "@/context/Theme";
 
-import { getBlockData } from "@/utils/getBlockData";
+import { useBlockData } from "@/hooks/useBlockData";
+import { useTextures } from "@/hooks/useTextures";
 
 interface Props {
 	stageWidth: number;
@@ -17,10 +17,10 @@ interface Props {
 
 function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlocks, userModifiedBlocks }: Props) {
 	const { version } = useContext(CanvasContext);
-	const { missingTexture, textures } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
 
-	const blockData = getBlockData(version);
+	const blockData = useBlockData(version);
+	const textures = useTextures(version);
 
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
 
@@ -46,7 +46,6 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 		>
 			<Container>
 				{filteredBlocks.map((block, index) => {
-					const texture = textures[`${block}.png`] ?? missingTexture;
 					const x = (index % blocksPerColumn) * (32 + 2) + 2;
 					const y = Math.floor(index / blocksPerColumn) * (32 + 2) + 2;
 
@@ -54,7 +53,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 						<>
 							<Sprite
 								key={block}
-								texture={texture}
+								texture={textures[block]}
 								x={x}
 								y={y}
 								scale={2}

@@ -11,6 +11,8 @@ import { TexturesContext } from "@/context/Textures";
 import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
+import { useTextures } from "@/hooks/useTextures";
+
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
 import Grid from "./Grid";
@@ -29,10 +31,11 @@ function Canvas() {
 	const { image, imageDimensions, usableBlocks } = useContext(ImageContext);
 	const { setLoading } = useContext(LoadingContext);
 	const { settings } = useContext(SettingsContext);
-	const { missingTexture, textures, solidTextures } = useContext(TexturesContext);
+	const { missingTexture, solidTextures } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
 	const { tool, radius, selectedBlock, cssCursor, setTool, setSelectedBlock, setCssCursor } = useContext(ToolContext);
 
+	const textures = useTextures(version);
 	const stageContainerRef = useRef<HTMLDivElement>(null);
 
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });

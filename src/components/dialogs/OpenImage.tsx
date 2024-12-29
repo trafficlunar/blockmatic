@@ -18,7 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toggle } from "@/components/ui/toggle";
 
-import { getBlockData } from "@/utils/getBlockData";
+import { useBlockData } from "@/hooks/useBlockData";
 
 import BlockSelector from "./open-image/BlockSelector";
 import VersionCombobox from "../VersionCombobox";
@@ -34,7 +34,7 @@ function OpenImage({ close }: DialogProps) {
 		},
 	});
 
-	const blockData = getBlockData(version);
+	const blockData = useBlockData(version);
 	const divRef = useRef<HTMLDivElement>(null);
 	const userModifiedBlocks = useRef(false);
 

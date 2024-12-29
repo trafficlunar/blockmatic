@@ -36,6 +36,7 @@ function Blocks({
 	usableBlocks,
 	coords,
 	scale,
+	version,
 	setLoading,
 }: Props) {
 	const app = useApp();
@@ -49,7 +50,7 @@ function Blocks({
 		// Tile solid colors at smaller scales
 		if (scale >= 0.5) {
 			blocks.forEach((block) => {
-				tilemap.tile(textures[`${block.name}.png`] ?? missingTexture, block.x * 16, block.y * 16);
+				tilemap.tile(textures[block.name], block.x * 16, block.y * 16);
 			});
 		} else {
 			blocks.forEach((block) => {
@@ -67,7 +68,7 @@ function Blocks({
 		tileBlocks();
 	}, []);
 
-	useEffect(tileBlocks, [blocks]);
+	useEffect(tileBlocks, [blocks, version]);
 
 	useEffect(() => {
 		if (!tilemapRef.current) return;

@@ -2,17 +2,18 @@ import { useContext, useState } from "react";
 import * as PIXI from "pixi.js";
 
 import { CanvasContext } from "@/context/Canvas";
-import { TexturesContext } from "@/context/Textures";
 
 import { Button } from "@/components/ui/button";
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
+import { useTextures } from "@/hooks/useTextures";
+
 function SaveImage({ close }: DialogProps) {
-	const { blocks, canvasSize } = useContext(CanvasContext);
-	const { missingTexture, textures } = useContext(TexturesContext);
+	const { blocks, canvasSize, version } = useContext(CanvasContext);
 
 	const [fileName, setFileName] = useState("blockmatic");
+	const textures = useTextures(version);
 
 	const onSubmit = () => {
 		const width = canvasSize.maxX - canvasSize.minX;
@@ -26,8 +27,7 @@ function SaveImage({ close }: DialogProps) {
 
 		const container = new PIXI.Container();
 		blocks.forEach((block) => {
-			const texture = textures[`${block.name}.png`] ?? missingTexture;
-			const sprite = new PIXI.Sprite(texture);
+			const sprite = new PIXI.Sprite(textures[block.name]);
 			sprite.x = block.x * 16;
 			sprite.y = block.y * 16;
 			container.addChild(sprite);

@@ -3,11 +3,11 @@ import { Container, Graphics, Sprite, Stage } from "@pixi/react";
 import { BlocksIcon } from "lucide-react";
 
 import { CanvasContext } from "@/context/Canvas";
-import { TexturesContext } from "@/context/Textures";
 import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
-import { getBlockData } from "@/utils/getBlockData";
+import { useBlockData } from "@/hooks/useBlockData";
+import { useTextures } from "@/hooks/useTextures";
 
 interface Props {
 	stageWidth: number;
@@ -16,17 +16,17 @@ interface Props {
 
 function BlockSelector({ stageWidth, searchInput }: Props) {
 	const { version } = useContext(CanvasContext);
-	const { missingTexture, textures } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
 	const { selectedBlock, setSelectedBlock } = useContext(ToolContext);
 
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
 	const [selectedBlockPosition, setSelectedBlockPosition] = useState<Position | null>({ x: 0, y: 0 });
 
-	const blockData = getBlockData(version);
-
 	const blocksPerColumn = Math.floor(stageWidth / (32 + 2));
+
+	const blockData = useBlockData(version);
 	const filteredBlocks = useMemo(() => Object.keys(blockData).filter((value) => value.includes(searchInput)), [searchInput, blockData]);
+	const textures = useTextures(version, filteredBlocks);
 
 	const getBlockPosition = (index: number): Position => {
 		const x = (index % blocksPerColumn) * (32 + 2) + 2;
@@ -62,7 +62,7 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 		>
 			<Container>
 				{filteredBlocks.map((block, index) => {
-					const texture = textures[`${block}.png`] ?? missingTexture;
+					const texture = textures[block];
 					const { x, y } = getBlockPosition(index);
 
 					return (

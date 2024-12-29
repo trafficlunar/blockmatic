@@ -4,12 +4,15 @@ import * as PIXI from "pixi.js";
 import { LoadingContext } from "./Loading";
 
 import spritesheet from "@/data/blocks/spritesheet.json";
+import programmerArtSpritesheet from "@/data/blocks/programmer-art/spritesheet.json";
+
 import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
 
 interface Context {
 	missingTexture: PIXI.Texture | undefined;
 	textures: Record<string, PIXI.Texture>;
+	programmerArtTextures: Record<string, PIXI.Texture>;
 	solidTextures: Record<string, PIXI.Texture>;
 }
 
@@ -24,6 +27,7 @@ export const TexturesProvider = ({ children }: Props) => {
 
 	const [missingTexture, setMissingTexture] = useState<PIXI.Texture>();
 	const [textures, setTextures] = useState<Record<string, PIXI.Texture>>({});
+	const [programmerArtTextures, setProgrammerArtTextures] = useState<Record<string, PIXI.Texture>>({});
 	const [solidTextures, setSolidTextures] = useState<Record<string, PIXI.Texture>>({});
 
 	useEffect(() => {
@@ -34,12 +38,18 @@ export const TexturesProvider = ({ children }: Props) => {
 		setMissingTexture(new PIXI.Texture(missingBaseTexture));
 
 		// Load textures
+		// Add air texture
+		const airBaseTexture = new PIXI.BaseTexture("/blocks/air.png");
+		const airTexture = new PIXI.Texture(airBaseTexture);
+
 		const sheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/spritesheet.png"), spritesheet);
 		sheet.parse().then((t) => {
-			// Add air texture
-			const airBaseTexture = new PIXI.BaseTexture("/blocks/air.png");
+			setTextures({ ...t, "air.png": airTexture });
+		});
 
-			setTextures({ ...t, "air.png": new PIXI.Texture(airBaseTexture) });
+		const programmerArtSheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/programmer-art/spritesheet.png"), programmerArtSpritesheet);
+		programmerArtSheet.parse().then((t) => {
+			setProgrammerArtTextures({ ...t, "air.png": airTexture });
 		});
 
 		// Load solid textures
@@ -68,5 +78,5 @@ export const TexturesProvider = ({ children }: Props) => {
 		setLoading(false);
 	}, []);
 
-	return <TexturesContext.Provider value={{ missingTexture, textures, solidTextures }}>{children}</TexturesContext.Provider>;
+	return <TexturesContext.Provider value={{ missingTexture, textures, programmerArtTextures, solidTextures }}>{children}</TexturesContext.Provider>;
 };

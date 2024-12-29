@@ -4,26 +4,26 @@ import * as PIXI from "pixi.js";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-import { TexturesContext } from "@/context/Textures";
 import { ToolContext } from "@/context/Tool";
 
 import _blockData from "@/data/blocks/data.json";
+import { useTextures } from "@/hooks/useTextures";
+import { CanvasContext } from "@/context/Canvas";
 const blockData: BlockData = _blockData;
 
 function SelectedBlock() {
-	const { missingTexture, textures } = useContext(TexturesContext);
+	const { version } = useContext(CanvasContext);
 	const { selectedBlock } = useContext(ToolContext);
 
+	const textures = useTextures(version);
 	const divRef = useRef<HTMLDivElement>(null);
 
 	const [selectedBlockName, setSelectedBlockName] = useState("Stone");
-	const [selectedBlockTexture, setSelectedBlockTexture] = useState<PIXI.Texture>();
 
 	useEffect(() => {
 		const blockInfo = blockData[selectedBlock];
 		setSelectedBlockName(blockInfo.name);
-		setSelectedBlockTexture(textures[`${selectedBlock}.png`] ?? missingTexture);
-	}, [textures, selectedBlock, missingTexture]);
+	}, [textures, selectedBlock]);
 
 	return (
 		<TooltipProvider>
@@ -32,7 +32,7 @@ function SelectedBlock() {
 					<div ref={divRef} className="absolute bottom-1 w-8 h-8 outline outline-1 outline-zinc-800 dark:outline-zinc-200">
 						<Stage width={divRef.current?.clientWidth} height={divRef.current?.clientHeight}>
 							<Container>
-								<Sprite texture={selectedBlockTexture} scale={2} />
+								<Sprite texture={textures[selectedBlock]} scale={2} />
 							</Container>
 						</Stage>
 					</div>
