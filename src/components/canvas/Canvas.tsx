@@ -298,7 +298,12 @@ function Canvas() {
 	}, []);
 
 	return (
-		<div ref={stageContainerRef} className="relative w-full h-full bg-zinc-200 dark:bg-black" style={{ cursor: cssCursor }}>
+		<div
+			ref={stageContainerRef}
+			onContextMenu={() => null}
+			style={{ cursor: cssCursor }}
+			className="relative w-full h-full bg-zinc-200 dark:bg-black"
+		>
 			<Stage
 				width={stageSize.width}
 				height={stageSize.height}
