@@ -6,11 +6,6 @@ import { Button } from "@/components/ui/button";
 import BlockmaticLogo from "@/assets/blockmatic.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
 
-// @ts-expect-error - vite-imagetools plugin
-import Screenshot1 from "@/assets/screenshot1.png?format=webp";
-// @ts-expect-error - vite-imagetools plugin
-import Screenshot2 from "@/assets/screenshot2.png?format=webp";
-
 function IndexPage() {
 	return (
 		<main className="flex flex-col items-center">
@@ -29,12 +24,12 @@ function IndexPage() {
 
 			<div className="absolute w-full h-full -z-20">
 				<div className="absolute inset-0 bg-gradient-to-t from-black/100 to-black/0 z-10"></div>
-				<img src={Screenshot1} alt="screenshot" className="w-full h-full object-cover" />
+				<img src="/screenshot1.png" alt="screenshot" className="w-full h-full object-cover" />
 			</div>
 
 			<h1 className="text-5xl font-[Inter] font-bold mt-32">Convert your images to schematics</h1>
 
-			<img src={Screenshot2} alt="bliss" className="w-[90%] rounded-xl mt-32 border border-zinc-700 glow" />
+			<img src="/screenshot2.png" alt="bliss" className="w-[90%] rounded-xl mt-32 border border-zinc-700 glow" />
 		</main>
 	);
 }
