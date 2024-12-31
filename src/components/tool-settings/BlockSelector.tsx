@@ -56,7 +56,7 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 	return (
 		<Stage
 			width={stageWidth}
-			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2)}
+			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2) + 8}
 			options={{ backgroundAlpha: 0 }}
 			onMouseLeave={() => setHoverPosition(null)}
 		>

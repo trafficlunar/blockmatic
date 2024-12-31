@@ -18,7 +18,7 @@ function AppPage() {
 					<SettingsProvider>
 						<TexturesProvider>
 							<ToolProvider>
-								<main className="h-screen grid grid-rows-[2.5rem_minmax(0,1fr)] grid-cols-[2.5rem_1fr_auto]">
+								<main className="h-screen grid grid-rows-[2.5rem_minmax(0,1fr)] grid-cols-[2.5rem_minmax(0,1fr)_auto]">
 									<Menubar />
 									<Toolbar />
 									<Canvas />

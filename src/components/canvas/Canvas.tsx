@@ -267,24 +267,30 @@ function Canvas() {
 	};
 
 	useEffect(() => {
+		const container = stageContainerRef.current;
+		if (!container) return;
+
 		const resizeCanvas = () => {
-			if (stageContainerRef.current) {
-				setStageSize({
-					width: stageContainerRef.current.offsetWidth,
-					height: stageContainerRef.current.offsetHeight,
-				});
-			}
+			setStageSize({
+				width: container.offsetWidth,
+				height: container.offsetHeight,
+			});
 		};
 
+		const resizeObserver = new ResizeObserver(resizeCanvas);
+		resizeObserver.observe(container);
+
 		resizeCanvas();
+		return () => resizeObserver.disconnect();
+	}, [stageContainerRef]);
+
+	useEffect(() => {
 		setBlocks(welcomeBlocksData);
 
-		window.addEventListener("resize", resizeCanvas);
 		window.addEventListener("keydown", onKeyDown);
 		window.addEventListener("keyup", onKeyUp);
 
 		return () => {
-			window.removeEventListener("resize", resizeCanvas);
 			window.removeEventListener("keydown", onKeyDown);
 			window.removeEventListener("keyup", onKeyUp);
 		};
