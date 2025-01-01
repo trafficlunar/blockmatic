@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import BlockmaticLogo from "@/assets/blockmatic.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
 
+import ImageComparison from "@/components/ImageComparison";
+
 function IndexPage() {
 	return (
 		<main className="flex flex-col items-center">
@@ -27,9 +29,12 @@ function IndexPage() {
 				<img src="/screenshot1.png" alt="screenshot" className="w-full h-full object-cover" />
 			</div>
 
-			<h1 className="text-5xl font-[Inter] font-bold mt-32">Convert your images to schematics</h1>
+			<h1 className="text-6xl font-[Inter] font-extrabold mt-32">Convert your images to schematics</h1>
 
 			<img src="/screenshot2.png" alt="bliss" className="w-[90%] rounded-xl mt-32 border border-zinc-700 glow" />
+
+			<h1 className="text-5xl font-[Inter] font-bold mt-32">Original vs. blockmatic</h1>
+			<ImageComparison />
 		</main>
 	);
 }
