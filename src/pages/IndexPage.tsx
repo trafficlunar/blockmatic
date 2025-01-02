@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import BlockmaticLogo from "@/assets/blockmatic.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
 
-import ImageComparison from "@/components/ImageComparison";
+import ImageComparison from "@/components/home/ImageComparison";
 
 function IndexPage() {
 	return (

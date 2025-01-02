@@ -41,6 +41,8 @@ function ImageComparison() {
 				</div>
 			</div>
 
+			<span className="absolute -bottom-6 left-1 text-zinc-500 text-xs">Windows XP Background 'Bliss' image owned by Microsoft Corporation</span>
+
 			<div className="absolute left-[105%] bottom-48 bg-zinc-200 w-48 h-48 flex justify-center items-center">
 				<div className="relative w-[11.5rem] h-[11.5rem]">
 					<img
