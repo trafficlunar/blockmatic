@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import BlockmaticLogo from "@/assets/blockmatic.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
 
+import ThemeIcon from "@/components/home/ThemeIcon";
 import AppPreview from "@/components/home/AppPreview";
 import ImageComparison from "@/components/home/ImageComparison";
 
@@ -15,13 +16,15 @@ function IndexPage() {
 			<header className="w-full flex justify-evenly p-8">
 				<BlockmaticLogo className="h-16 w-max" fill={"white"} />
 
-				<div className="flex items-center gap-8">
-					<Button variant="link" asChild>
+				<div className="flex items-center gap-2">
+					<Button className="bg-white text-black hover:bg-zinc-50/90 mr-4" asChild>
 						<Link to={{ pathname: "/app" }}>Go to app</Link>
 					</Button>
-					<a href="https://github.com/trafficlunar/blockmatic" className="w-6">
+
+					<a href="https://github.com/trafficlunar/blockmatic" className="w-8">
 						<GithubIcon fill="white" />
 					</a>
+					<ThemeIcon />
 				</div>
 			</header>
 
