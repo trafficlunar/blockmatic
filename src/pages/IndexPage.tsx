@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import BlockmaticLogo from "@/assets/blockmatic.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
 
+import AppPreview from "@/components/home/AppPreview";
 import ImageComparison from "@/components/home/ImageComparison";
 
 function IndexPage() {
@@ -24,16 +25,18 @@ function IndexPage() {
 				</div>
 			</header>
 
-			<div className="absolute w-full h-full -z-20">
-				<div className="absolute inset-0 bg-gradient-to-t from-black/100 to-black/0 z-10"></div>
-				<img src="/screenshot1.png" alt="screenshot" className="w-full h-full object-cover" />
-			</div>
+			<img
+				src="/screenshot1.png"
+				alt="screenshot"
+				className="absolute w-full h-full object-cover -z-20"
+				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(255,255,255,0) 100%)" }}
+			/>
 
-			<h1 className="text-6xl font-[Inter] font-extrabold mt-32">Convert your images to schematics</h1>
+			<h1 className="text-6xl font-[Inter] font-extrabold mt-32 text-white text-center">Convert your images to schematics</h1>
 
-			<img src="/screenshot2.png" alt="bliss" className="w-[90%] rounded-xl mt-32 border border-zinc-700 glow" />
+			<AppPreview />
 
-			<h1 className="text-5xl font-[Inter] font-bold mt-32">Original vs. blockmatic</h1>
+			<h1 className="text-5xl font-[Inter] font-bold mt-32">See the difference</h1>
 			<ImageComparison />
 
 			<footer>
