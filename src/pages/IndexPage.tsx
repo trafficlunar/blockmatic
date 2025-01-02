@@ -35,6 +35,10 @@ function IndexPage() {
 
 			<h1 className="text-5xl font-[Inter] font-bold mt-32">Original vs. blockmatic</h1>
 			<ImageComparison />
+
+			<footer>
+				<Link to={{ pathname: "/privacy-policy" }}>Privacy Policy</Link>
+			</footer>
 		</main>
 	);
 }
