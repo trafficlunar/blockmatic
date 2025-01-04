@@ -66,8 +66,7 @@ function SaveLitematic({ close }: DialogProps) {
 
 		filledBlocks.forEach((block) => {
 			const blockInfo = blockData[block.name.replace("minecraft:", "")];
-			let blockName = block.name;
-			if (blockInfo) blockName = blockInfo.id[0].toString();
+			const blockName = blockInfo ? blockInfo.id[0].toString() : block.name;
 
 			const blockId = blockStatePallete.findIndex((entry) => entry.Name === `minecraft:${blockName}`);
 
