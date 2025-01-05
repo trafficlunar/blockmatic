@@ -53,8 +53,12 @@ function SaveLitematic({ close }: DialogProps) {
 			new Set(
 				filledBlocks.map((block) => {
 					const blockInfo = blockData[block.name.replace("minecraft:", "")];
-					// todo: add block properties
-					return `minecraft:${blockInfo.id[0]}`;
+					const properties = blockInfo.properties
+						? `[${Object.entries(blockInfo.properties)
+								.map(([key, value]) => `${key}=${value}`)
+								.join(",")}]`
+						: "";
+					return `minecraft:${blockInfo.id[0]}${properties}`;
 				})
 			)
 		).reduce<Record<string, nbt.Int32<number>>>((acc, blockName, index) => {
@@ -69,7 +73,12 @@ function SaveLitematic({ close }: DialogProps) {
 		filledBlocks.forEach((block, index) => {
 			const blockInfo = blockData[block.name.replace("minecraft:", "")];
 			const blockName = blockInfo ? blockInfo.id[0].toString() : block.name;
-			const blockId = blockPallete[`minecraft:${blockName}`];
+			const properties = blockInfo.properties
+				? `[${Object.entries(blockInfo.properties)
+						.map(([key, value]) => `${key}=${value}`)
+						.join(",")}]`
+				: "";
+			const blockId = blockPallete[`minecraft:${blockName}${properties}`];
 
 			blockPlaceData[index] = parseInt(blockId.toString());
 		});
