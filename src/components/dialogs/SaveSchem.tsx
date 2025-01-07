@@ -48,8 +48,8 @@ function SaveLitematic({ close }: DialogProps) {
 			return a.x - b.x;
 		});
 
-		// Generate the block pallete
-		const blockPallete = Array.from(
+		// Generate the block palette
+		const blockPalette = Array.from(
 			new Set(
 				filledBlocks.map((block) => {
 					const blockInfo = blockData[block.name.replace("minecraft:", "")];
@@ -78,7 +78,7 @@ function SaveLitematic({ close }: DialogProps) {
 						.map(([key, value]) => `${key}=${value}`)
 						.join(",")}]`
 				: "";
-			const blockId = blockPallete[`minecraft:${blockName}${properties}`];
+			const blockId = blockPalette[`minecraft:${blockName}${properties}`];
 
 			blockPlaceData[index] = parseInt(blockId.toString());
 		});
@@ -96,7 +96,7 @@ function SaveLitematic({ close }: DialogProps) {
 				},
 				Blocks: {
 					Data: blockPlaceData,
-					Palette: blockPallete,
+					Palette: blockPalette,
 				},
 			},
 		};

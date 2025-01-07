@@ -40,8 +40,8 @@ function SaveLitematic({ close }: DialogProps) {
 			}
 		}
 
-		// Generate the block pallete
-		const blockStatePallete = [
+		// Generate the block palette
+		const blockStatePalette = [
 			{ Name: "minecraft:air" },
 			...Array.from(
 				new Set(
@@ -61,14 +61,14 @@ function SaveLitematic({ close }: DialogProps) {
 		];
 
 		// Get the block states
-		const requiredBits = Math.max(Math.ceil(Math.log2(blockStatePallete.length)), 2);
+		const requiredBits = Math.max(Math.ceil(Math.log2(blockStatePalette.length)), 2);
 		const blockStates = new BigInt64Array(Math.ceil((filledBlocks.length * requiredBits) / 64));
 
 		filledBlocks.forEach((block) => {
 			const blockInfo = blockData[block.name.replace("minecraft:", "")];
 			const blockName = blockInfo ? blockInfo.id[0].toString() : block.name;
 
-			const blockId = blockStatePallete.findIndex((entry) => entry.Name === `minecraft:${blockName}`);
+			const blockId = blockStatePalette.findIndex((entry) => entry.Name === `minecraft:${blockName}`);
 
 			const reversedY = height - 1 - block.y;
 			const index = reversedY * width + block.x;
@@ -122,7 +122,7 @@ function SaveLitematic({ close }: DialogProps) {
 						z: new nbt.Int32(1),
 					},
 					BlockStates: blockStates,
-					BlockStatePalette: blockStatePallete,
+					BlockStatePalette: blockStatePalette,
 					TileEntities: [],
 					Entities: [],
 					PendingBlockTicks: [],
