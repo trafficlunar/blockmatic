@@ -50,14 +50,14 @@ function SaveLitematic({ close }: DialogProps) {
 
 						const returnData: { Name: string; Properties?: Record<string, string> } = {
 							Name: `minecraft:${blockInfo.id[0]}`,
+							...(blockInfo.properties ? { Properties: blockInfo.properties } : {}),
 						};
 
-						if (blockInfo.properties) returnData["Properties"] = blockInfo.properties;
-
-						return returnData;
+						// Stringify to remove duplicates
+						return JSON.stringify(returnData);
 					})
 				)
-			),
+			).map((serialized) => JSON.parse(serialized)),
 		];
 
 		// Get the block states
