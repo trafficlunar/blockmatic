@@ -46,7 +46,7 @@ function OpenSchematic({ close }: DialogProps) {
 			await new Promise((resolve) => setTimeout(resolve, 100));
 
 			const fileExtension = file.name.split(".").pop();
-			const bytes = await file.bytes();
+			const bytes = await file.arrayBuffer();
 			const data = await nbt.read(bytes);
 
 			if (fileExtension == "litematic") {

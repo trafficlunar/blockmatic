@@ -3,11 +3,11 @@ on: [deployment_status]
 
 jobs:
   notify:
-    if: github.event.deployment_status.state == "failure" | github.event.deployment_status.state == "success"
+    if: github.event.deployment_status.state == 'failure' | github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Notify on Success
-        if: github.event.deployment_status.state == "success"
+        if: github.event.deployment_status.state == 'success'
         run: |
           curl \
             -H "Authorization: Bearer ${{ secrets.NTFY_TOKEN }}" \
@@ -18,7 +18,7 @@ jobs:
             ${{ secrets.NTFY_URL }}
 
       - name: Notify on Failure
-        if: github.event.deployment_status.state == "failure"
+        if: github.event.deployment_status.state == 'failure'
         run: |
           curl \
             -H "Authorization: Bearer ${{ secrets.NTFY_TOKEN }}" \
