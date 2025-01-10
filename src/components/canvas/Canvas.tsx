@@ -289,6 +289,9 @@ function Canvas() {
 
 		window.addEventListener("keydown", onKeyDown);
 		window.addEventListener("keyup", onKeyUp);
+		window.addEventListener("beforeunload", (e) => {
+			e.preventDefault();
+		});
 
 		return () => {
 			window.removeEventListener("keydown", onKeyDown);
