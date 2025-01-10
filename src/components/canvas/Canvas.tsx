@@ -84,7 +84,7 @@ function Canvas() {
 			zoom: holdingAlt ? "zoom-out" : "zoom-in",
 		};
 
-		setCssCursor(cursorMapping[tool] || "pointer");
+		setCssCursor(cursorMapping[tool] || "crosshair");
 	}, [dragging, holdingAlt, tool, setCssCursor]);
 
 	const onToolUse = useCallback(() => {

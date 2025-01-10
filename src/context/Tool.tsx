@@ -21,7 +21,7 @@ export const ToolProvider = ({ children }: Props) => {
 	const [tool, setTool] = useState<Tool>("hand");
 	const [radius, setRadius] = useState(1);
 	const [selectedBlock, setSelectedBlock] = useState("stone");
-	const [cssCursor, setCssCursor] = useState("pointer");
+	const [cssCursor, setCssCursor] = useState("crosshair");
 
 	useEffect(() => {
 		switch (tool) {
@@ -33,7 +33,7 @@ export const ToolProvider = ({ children }: Props) => {
 				break;
 
 			default:
-				setCssCursor("pointer");
+				setCssCursor("crosshair");
 				break;
 		}
 	}, [tool]);
