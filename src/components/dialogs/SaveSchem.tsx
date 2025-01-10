@@ -58,7 +58,7 @@ function SaveLitematic({ close }: DialogProps) {
 								.map(([key, value]) => `${key}=${value}`)
 								.join(",")}]`
 						: "";
-					return `minecraft:${blockInfo.id[0]}${properties}`;
+					return `minecraft:${blockInfo}${properties}`;
 				})
 			)
 		).reduce<Record<string, nbt.Int32<number>>>((acc, blockName, index) => {
@@ -72,7 +72,7 @@ function SaveLitematic({ close }: DialogProps) {
 
 		filledBlocks.forEach((block, index) => {
 			const blockInfo = blockData[block.name.replace("minecraft:", "")];
-			const blockName = blockInfo ? blockInfo.id[0].toString() : block.name;
+			const blockName = blockInfo ? blockInfo.id : block.name;
 			const properties = blockInfo.properties
 				? `[${Object.entries(blockInfo.properties)
 						.map(([key, value]) => `${key}=${value}`)

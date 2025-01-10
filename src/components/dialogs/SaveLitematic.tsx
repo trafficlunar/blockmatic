@@ -48,7 +48,7 @@ function SaveLitematic({ close }: DialogProps) {
 					blocks.map((block) => {
 						const blockInfo = blockData[block.name.replace("minecraft:", "")];
 						const returnData: { Name: string; Properties?: Record<string, string> } = {
-							Name: `minecraft:${blockInfo.id[0]}`,
+							Name: `minecraft:${blockInfo.id}`,
 							...(blockInfo.properties ? { Properties: blockInfo.properties } : {}),
 						};
 
@@ -65,7 +65,7 @@ function SaveLitematic({ close }: DialogProps) {
 
 		filledBlocks.forEach((block) => {
 			const blockInfo = blockData[block.name.replace("minecraft:", "")];
-			const blockName = blockInfo ? blockInfo.id[0].toString() : block.name;
+			const blockName = blockInfo ? blockInfo.id : block.name;
 
 			const blockId = blockStatePalette.findIndex((entry) => entry.Name === `minecraft:${blockName}`);
 

@@ -28,10 +28,6 @@ const data = {};
 		const pattern = new RegExp(nameRegex.join("|"), "g");
 		const blockName = fileName.replace(pattern, "");
 
-		function getDataBlockProperty(property) {
-			return VERSION_DATA.blocksByName[blockName] ? VERSION_DATA.blocksByName[blockName][property] : "REPLACE_ME_REPLACE_ME_REPLACE_ME_REPLACE_ME";
-		}
-
 		function getVersion() {
 			for (const key of Object.keys(versionRegex)) {
 				if (blockName.includes(key)) {
@@ -44,7 +40,7 @@ const data = {};
 		data[fileName] = {
 			name: VERSION_DATA.blocksByName[fileName] ? VERSION_DATA.blocksByName[fileName].displayName : "REPLACE_ME_REPLACE_ME_REPLACE_ME_REPLACE_ME",
 			version: getVersion(),
-			id: [getDataBlockProperty("name"), getDataBlockProperty("id")],
+			id: VERSION_DATA.blocksByName[blockName] ? VERSION_DATA.blocksByName[blockName][property] : "REPLACE_ME_REPLACE_ME_REPLACE_ME_REPLACE_ME",
 			color: [color.value[0], color.value[1], color.value[2], color.value[3]],
 		};
 	}

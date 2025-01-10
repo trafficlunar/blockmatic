@@ -3,7 +3,7 @@ on: [deployment_status]
 
 jobs:
   notify:
-    if: github.event.deployment_status.state == 'failure' | github.event.deployment_status.state == 'success'
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Notify on Success

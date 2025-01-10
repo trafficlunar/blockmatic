@@ -96,8 +96,7 @@ function OpenSchematic({ close }: DialogProps) {
 						if (blockId == "air") continue;
 
 						for (const name in blockData) {
-							const dataId = blockData[name].id[0];
-							if (dataId !== blockId) continue;
+							if (blockData[name].id !== blockId) continue;
 
 							const paletteProperties = paletteBlock.Properties;
 							const dataProperties = blockData[name].properties;
