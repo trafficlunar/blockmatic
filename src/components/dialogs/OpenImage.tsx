@@ -152,8 +152,12 @@ function OpenImage({ close }: DialogProps) {
 							})}
 						>
 							<input {...getInputProps({ multiple: false })} />
-							<UploadIcon />
-							<p>Drag and drop your image here or click to open</p>
+							<UploadIcon size={30} />
+							<p className="text-center">
+								Drag and drop your image here
+								<br />
+								or click to open
+							</p>
 						</div>
 
 						<div className="grid grid-cols-[auto,1fr] gap-2">

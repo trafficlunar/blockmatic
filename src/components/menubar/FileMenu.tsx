@@ -20,7 +20,7 @@ function FileMenu() {
 		<MenubarMenu>
 			<MenubarTrigger>File</MenubarTrigger>
 			<MenubarContent>
-				<MenubarItem>Open Schematic</MenubarItem>
+				<MenubarItem onClick={() => openDialog("OpenSchematic")}>Open Schematic</MenubarItem>
 				<MenubarItem onClick={() => openDialog("OpenImage")}>Open Image</MenubarItem>
 				<MenubarSeparator />
 

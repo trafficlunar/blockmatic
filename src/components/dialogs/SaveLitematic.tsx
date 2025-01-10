@@ -47,7 +47,6 @@ function SaveLitematic({ close }: DialogProps) {
 				new Set(
 					blocks.map((block) => {
 						const blockInfo = blockData[block.name.replace("minecraft:", "")];
-
 						const returnData: { Name: string; Properties?: Record<string, string> } = {
 							Name: `minecraft:${blockInfo.id[0]}`,
 							...(blockInfo.properties ? { Properties: blockInfo.properties } : {}),
@@ -72,6 +71,8 @@ function SaveLitematic({ close }: DialogProps) {
 
 			const reversedY = height - 1 - block.y;
 			const index = reversedY * width + block.x;
+
+			// setAt() implementation - LitematicaBitArray.java
 			const startOffset = index * requiredBits;
 			const startArrayIndex = Math.floor(startOffset / 64);
 			const endArrayIndex = ((index + 1) * requiredBits - 1) >> 6;
