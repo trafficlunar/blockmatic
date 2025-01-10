@@ -1,0 +1,21 @@
+- name: Notify on Success
+  if: success()
+  run: |
+    curl \
+      -H "Authorization: Bearer ${{ secrets.NTFY_TOKEN }}" \
+      -H "Title: blockmatic deployment succeeded" \
+      -H "Priority: low" \
+      -H "Tags: white_check_mark" \
+      -d $'Commit: ${{ github.event.head_commit.message }}\nHash: ${{ github.sha }}' \
+      ${{ secrets.NTFY_URL }}
+
+- name: Notify on Failure
+  if: failure()
+  run: |
+    curl \
+      -H "Authorization: Bearer ${{ secrets.NTFY_TOKEN }}" \
+      -H "Title: blockmatic deployment failed" \
+      -H "Priority: max" \
+      -H "Tags: x" \
+      -d $'Commit: ${{ github.event.head_commit.message }}\nHash: ${{ github.sha }}' \
+      ${{ secrets.NTFY_URL }}
