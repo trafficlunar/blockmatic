@@ -66,6 +66,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 
 							{selectedBlocks.includes(block) && (
 								<Graphics
+									key={index}
 									x={x}
 									y={y}
 									draw={(g) => {
