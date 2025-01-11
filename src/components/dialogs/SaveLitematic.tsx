@@ -133,10 +133,8 @@ function SaveLitematic({ close }: DialogProps) {
 		};
 
 		// Write to file
-		const bytes = await nbt.write(data);
-		const compressed = await nbt.compress(bytes, "gzip");
-
-		const blob = new Blob([compressed], { type: "application/x-gzip" });
+		const bytes = await nbt.write(data, { compression: "gzip" });
+		const blob = new Blob([bytes], { type: "application/x-gzip" });
 		const url = URL.createObjectURL(blob);
 
 		setLoading(false);
