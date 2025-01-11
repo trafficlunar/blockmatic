@@ -2,6 +2,7 @@
 import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 import BlockmaticLogo from "@/assets/blockmatic.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
@@ -32,18 +33,36 @@ function IndexPage() {
 				src="/screenshot1.png"
 				alt="screenshot"
 				className="absolute w-full h-full object-cover -z-20"
-				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(255,255,255,0) 100%)" }}
+				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(255,255,255,0) 100%)" }}
 			/>
 
-			<h1 className="text-6xl font-[Inter] font-extrabold mt-32 text-white text-center">Convert your images to schematics</h1>
+			<div className="absolute w-[30rem] -top-8 flex">
+				<img src="/oak_hanging_sign.png" alt="sign" className="absolute w-full -z-10" style={{ imageRendering: "pixelated" }} />
+
+				<Link to={{ pathname: "/app" }} className="text-6xl font-minecraft mt-[15.5rem] text-black text-center">
+					Create pixel art for Minecraft in minutes
+				</Link>
+			</div>
 
 			<AppPreview />
 
-			<h1 className="text-5xl font-[Inter] font-bold mt-32">See the difference</h1>
+			<h1 className="text-5xl font-pixel font-bold mt-32">See the difference</h1>
 			<ImageComparison />
 
-			<footer>
-				<Link to={{ pathname: "/privacy-policy" }}>Privacy Policy</Link>
+			<footer className="w-full h-16 mt-20 flex flex-col items-center">
+				<Separator className="w-2/5" />
+
+				<div className="mt-8 flex justify-center items-center gap-16 text-zinc-500">
+					<Link to={{ pathname: "/privacy-policy" }}>Privacy</Link>
+
+					<a href="mailto:hello@trafficlunar.net">hello@trafficlunar.net</a>
+				</div>
+				<span className="text-zinc-400 mt-2 pb-8">
+					made by{" "}
+					<span className="text-orange-400 opacity-75">
+						<a href="https://trafficlunar.net">trafficlunar</a>
+					</span>
+				</span>
 			</footer>
 		</main>
 	);

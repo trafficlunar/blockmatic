@@ -15,7 +15,7 @@ function ImageComparison() {
 	return (
 		<div onMouseMove={onMouseMove} className="mt-10 relative select-none w-1/2 h-[calc(50vw*217/270)] flex justify-center">
 			<img
-				src="/bliss_original.png"
+				src="/bliss/bliss_original.png"
 				alt="original version of bliss"
 				draggable={false}
 				className="absolute w-full"
@@ -23,7 +23,7 @@ function ImageComparison() {
 			/>
 
 			<img
-				src="/bliss.png"
+				src="/bliss/bliss.png"
 				alt="blockmatic version of bliss"
 				draggable={false}
 				className="absolute w-full"
@@ -46,7 +46,7 @@ function ImageComparison() {
 			<div className="absolute left-[105%] bottom-48 bg-zinc-200 w-48 h-48 flex justify-center items-center">
 				<div className="relative w-[11.5rem] h-[11.5rem]">
 					<img
-						src="/bliss_original_zoomed.png"
+						src="/bliss/bliss_original_zoomed.png"
 						alt="zoomed in version of blockmatic version of bliss"
 						draggable={false}
 						className="absolute w-full"
@@ -54,7 +54,7 @@ function ImageComparison() {
 					/>
 
 					<img
-						src="/bliss_zoomed.png"
+						src="/bliss/bliss_zoomed.png"
 						alt="zoomed in version of blockmatic version of bliss"
 						draggable={false}
 						className="absolute w-full"

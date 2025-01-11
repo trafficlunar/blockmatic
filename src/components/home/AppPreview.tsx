@@ -38,7 +38,7 @@ function AppPreview() {
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			onMouseMove={onMouseMove}
-			className={`w-[90%] rounded-xl mt-32 border border-zinc-700 ${
+			className={`w-[90%] rounded-xl mt-[26rem] border border-zinc-700 ${
 				leaving ? "transition-transform duration-500 ease-in-out" : "duration-100 ease-out"
 			}`}
 			style={{ transform }}
