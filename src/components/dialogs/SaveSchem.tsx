@@ -58,7 +58,7 @@ function SaveLitematic({ close }: DialogProps) {
 								.map(([key, value]) => `${key}=${value}`)
 								.join(",")}]`
 						: "";
-					return `minecraft:${blockInfo}${properties}`;
+					return `minecraft:${blockInfo.id}${properties}`;
 				})
 			)
 		).reduce<Record<string, nbt.Int32<number>>>((acc, blockName, index) => {
