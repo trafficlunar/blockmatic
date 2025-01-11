@@ -2628,14 +2628,16 @@
 		"version": 1200,
 		"id": "suspicious_gravel",
 		"color": [131, 127, 126, 255],
-		"fallable": true
+		"fallable": true,
+		"creative": true
 	},
 	"suspicious_sand_0": {
 		"name": "Suspicious Sand",
 		"version": 1200,
 		"id": "suspicious_sand",
 		"color": [218, 205, 160, 255],
-		"fallable": true
+		"fallable": true,
+		"creative": true
 	},
 	"target_side": {
 		"name": "Target",
