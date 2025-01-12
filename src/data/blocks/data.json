@@ -682,12 +682,6 @@
 		"id": "cracked_stone_bricks",
 		"color": [120, 119, 120, 255]
 	},
-	"crafter_bottom": {
-		"name": "Crafter (Bottom)",
-		"version": 1200,
-		"id": "crafter",
-		"color": [80, 80, 80, 255]
-	},
 	"crafter_north": {
 		"name": "Crafter",
 		"version": 1200,
@@ -698,22 +692,19 @@
 		"name": "Crafter (South)",
 		"version": 1200,
 		"id": "crafter",
-		"color": [129, 118, 104, 255]
-	},
-	"crafter_top": {
-		"name": "Crafter (Top)",
-		"version": 1200,
-		"id": "crafter",
-		"color": [118, 112, 113, 255],
+		"color": [129, 118, 104, 255],
 		"properties": {
-			"axis": "z"
+			"orientation": "south_up"
 		}
 	},
 	"crafter_west": {
 		"name": "Crafter (West)",
 		"version": 1200,
 		"id": "crafter",
-		"color": [136, 122, 103, 255]
+		"color": [136, 122, 103, 255],
+		"properties": {
+			"orientation": "east_up"
+		}
 	},
 	"crafting_table_front": {
 		"name": "Crafting Table",

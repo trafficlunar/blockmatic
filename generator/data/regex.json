@@ -156,6 +156,8 @@
 	"azalea",
 	"_bloom",
 	"crafter_east",
+	"crafter_top",
+	"crafter_bottom",
 	"^(?!.*cartography_table_side1).*cartography.*",
 	"_particle",
 	"_gate",
