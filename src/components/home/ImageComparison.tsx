@@ -13,12 +13,12 @@ function ImageComparison() {
 	};
 
 	return (
-		<div onMouseMove={onMouseMove} className="mt-10 relative select-none w-1/2 h-[calc(50vw*217/270)] flex justify-center">
+		<div onMouseMove={onMouseMove} className="relative select-none w-full h-[calc(40vw*217/270)] flex justify-center">
 			<img
 				src="/bliss/bliss_original.png"
 				alt="original version of bliss"
 				draggable={false}
-				className="absolute w-full"
+				className="absolute w-full -z-20"
 				style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`, imageRendering: "pixelated" }}
 			/>
 
@@ -26,7 +26,7 @@ function ImageComparison() {
 				src="/bliss/bliss.png"
 				alt="blockmatic version of bliss"
 				draggable={false}
-				className="absolute w-full"
+				className="absolute w-full -z-20"
 				style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
 			/>
 
@@ -41,28 +41,24 @@ function ImageComparison() {
 				</div>
 			</div>
 
-			<span className="absolute -bottom-6 left-1 text-zinc-500 text-xs">Windows XP Background 'Bliss' image owned by Microsoft Corporation</span>
+			<span className="absolute top-[101.5%] left-1 text-zinc-500 text-xs">Windows XP Background 'Bliss' image owned by Microsoft Corporation</span>
 
-			<div className="absolute left-[105%] bottom-48 bg-zinc-200 w-48 h-48 flex justify-center items-center">
-				<div className="relative w-[11.5rem] h-[11.5rem]">
-					<img
-						src="/bliss/bliss_original_zoomed.png"
-						alt="zoomed in version of blockmatic version of bliss"
-						draggable={false}
-						className="absolute w-full"
-						style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`, imageRendering: "pixelated" }}
-					/>
+			<div className="absolute right-2 top-1/2 w-1/5 h-1/5 flex justify-center items-center -z-10">
+				<img
+					src="/bliss/bliss_original_zoomed.png"
+					alt="zoomed in version of blockmatic version of bliss"
+					draggable={false}
+					className="absolute w-full rounded-full"
+					style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`, imageRendering: "pixelated" }}
+				/>
 
-					<img
-						src="/bliss/bliss_zoomed.png"
-						alt="zoomed in version of blockmatic version of bliss"
-						draggable={false}
-						className="absolute w-full"
-						style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
-					/>
-
-					<span className="text-zinc-500 absolute -bottom-7 text-xs">Use the slider to see this</span>
-				</div>
+				<img
+					src="/bliss/bliss_zoomed.png"
+					alt="zoomed in version of blockmatic version of bliss"
+					draggable={false}
+					className="absolute w-full rounded-full"
+					style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
+				/>
 			</div>
 		</div>
 	);

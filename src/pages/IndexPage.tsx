@@ -46,8 +46,23 @@ function IndexPage() {
 
 			<AppPreview />
 
-			<h1 className="text-5xl font-pixel font-bold mt-32">See the difference</h1>
-			<ImageComparison />
+			<div className="grid grid-cols-2 w-4/5 mt-8">
+				<div className="pr-32 py-32">
+					<h1 className="text-5xl font-minecraft font-bold mb-2">See the difference</h1>
+					<p>
+						Blockmatic lets you transform images into pixel art schematics for Minecraft. Easily adjust the width and height, and select the blocks
+						you want to use with the dialog.
+						<br />
+						<br />
+						Use the comparsion slider adjacent featuring the Windows XP background (also known as Bliss) to see the feature in action. Move it to the
+						left to see the blockmatic version and move it to the right to see the original version.
+						<br />
+						<br />
+						Try it out in the editor by opening the File menu at the top then clicking the Open Image button.
+					</p>
+				</div>
+				<ImageComparison />
+			</div>
 
 			<footer className="w-full h-16 mt-20 flex flex-col items-center">
 				<Separator className="w-2/5" />
