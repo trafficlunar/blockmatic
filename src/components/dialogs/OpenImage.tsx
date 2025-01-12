@@ -4,7 +4,6 @@ import { useDropzone } from "react-dropzone";
 import { CircleAlertIcon, LinkIcon, UploadIcon } from "lucide-react";
 
 import { CanvasContext } from "@/context/Canvas";
-import { ImageContext } from "@/context/Image";
 import { LoadingContext } from "@/context/Loading";
 
 import { Button } from "@/components/ui/button";
@@ -22,11 +21,11 @@ import { useBlockData } from "@/hooks/useBlockData";
 
 import BlockSelector from "./open-image/BlockSelector";
 import VersionCombobox from "../VersionCombobox";
+import { findBlockFromRgb } from "@/utils/findBlockFromRgb";
 
 function OpenImage({ close }: DialogProps) {
-	const { version, setVersion } = useContext(CanvasContext);
+	const { version, setVersion, setBlocks } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
-	const { setImage: setContextImage, setImageDimensions: setContextImageDimensions, setUsableBlocks } = useContext(ImageContext);
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
 		accept: {
@@ -95,17 +94,44 @@ function OpenImage({ close }: DialogProps) {
 		setSelectedBlocks(newValue);
 	};
 
-	const onSubmit = () => {
+	const onSubmit = async () => {
 		if (image) {
 			setLoading(true);
-			setUsableBlocks(selectedBlocks);
-
 			// Wait for loading indicator to appear
-			setTimeout(() => {
-				setContextImage(image);
-				setContextImageDimensions(imageDimensions);
-				close();
-			}, 100);
+			await new Promise((resolve) => setTimeout(resolve, 100));
+
+			// Load image through JS canvas
+			const canvas = document.createElement("canvas");
+			const ctx = canvas.getContext("2d");
+
+			if (ctx) {
+				canvas.width = imageDimensions.width;
+				canvas.height = imageDimensions.height;
+				ctx.drawImage(image, 0, 0, imageDimensions.width, imageDimensions.height);
+
+				const imageData = ctx.getImageData(0, 0, imageDimensions.width, imageDimensions.height);
+				const newBlocks: Block[] = [];
+
+				// Go through each pixel in the image and find block by checking closest RGB to the average color of the texture
+				for (let i = 0; i < imageData.data.length; i += 4) {
+					const block = findBlockFromRgb(selectedBlocks, imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]);
+					if (block == "air") continue;
+
+					const x = Math.floor((i / 4) % imageData.width);
+					const y = Math.floor(i / 4 / imageData.width);
+
+					newBlocks.push({
+						name: block,
+						x,
+						y,
+					});
+				}
+
+				setBlocks(newBlocks);
+			}
+
+			setLoading(false);
+			close();
 		}
 	};
 
