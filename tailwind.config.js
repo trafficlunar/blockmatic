@@ -14,6 +14,7 @@ export default {
 			colors: {},
 			fontFamily: {
 				minecraft: ["Minecraft", "sans-serif"],
+				inter: ["Inter", "sans-serif"],
 			},
 		},
 	},

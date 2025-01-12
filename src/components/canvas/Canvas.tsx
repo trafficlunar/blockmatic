@@ -282,6 +282,7 @@ function Canvas() {
 
 		resizeCanvas();
 		return () => resizeObserver.disconnect();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [stageContainerRef]);
 
 	useEffect(() => {

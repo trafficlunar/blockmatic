@@ -48,7 +48,7 @@ function Blocks({
 		tilemap.clear();
 
 		// Tile solid colors at smaller scales
-		if (scale >= 0.5) {
+		if (scale >= 0.4) {
 			blocks.forEach((block) => {
 				tilemap.tile(textures[block.name] ?? missingTexture, block.x * 16, block.y * 16);
 			});

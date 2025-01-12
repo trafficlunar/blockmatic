@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { CanvasContext } from "@/context/Canvas";
 import { useContext, useEffect, useState } from "react";
 
