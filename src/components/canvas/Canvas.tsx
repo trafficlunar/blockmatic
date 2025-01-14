@@ -13,6 +13,7 @@ import { useTextures } from "@/hooks/useTextures";
 
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
+import SelectionBox from "./SelectionBox";
 import Grid from "./Grid";
 import CanvasBorder from "./CanvasBorder";
 
@@ -40,6 +41,7 @@ function Canvas() {
 
 	const [holdingAlt, setHoldingAlt] = useState(false);
 	const [oldTool, setOldTool] = useState<Tool>("hand");
+	const [selectionBoxBounds, setSelectionBoxBounds] = useState<BoundingBox>({ minX: 0, minY: 0, maxX: 0, maxY: 0 });
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -64,14 +66,15 @@ function Canvas() {
 		);
 	}, [blocks, visibleArea]);
 
-	const zoomToMousePosition = useCallback(
+	const zoom = useCallback(
 		(newScale: number) => {
+			setScale(newScale);
 			setCoords({
 				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
 				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
 			});
 		},
-		[coords, mousePosition, scale, setCoords]
+		[coords, mousePosition, scale, setCoords, setScale]
 	);
 
 	const updateCssCursor = useCallback(() => {
@@ -148,39 +151,71 @@ function Canvas() {
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
-			if (dragging) {
-				if (tool === "hand") {
-					setCoords((prevCoords) => ({
-						x: prevCoords.x + e.movementX,
-						y: prevCoords.y + e.movementY,
-					}));
-				}
-				onToolUse();
-			}
-
 			if (!stageContainerRef.current) return;
+
+			const oldMouseCoords = mouseCoords;
 
 			const rect = stageContainerRef.current.getBoundingClientRect();
 			const mouseX = e.clientX - rect.left;
 			const mouseY = e.clientY - rect.top;
 
+			const newMouseCoords = {
+				x: Math.floor((mouseX - coords.x) / (16 * scale)),
+				y: Math.floor((mouseY - coords.y) / (16 * scale)),
+			};
+
 			setMousePosition({
 				x: mouseX,
 				y: mouseY,
 			});
-			setMouseCoords({
-				x: Math.floor((mouseX - coords.x) / (16 * scale)),
-				y: Math.floor((mouseY - coords.y) / (16 * scale)),
-			});
+			setMouseCoords(newMouseCoords);
+
+			if (dragging) {
+				switch (tool) {
+					case "hand":
+						setCoords((prevCoords) => ({
+							x: prevCoords.x + e.movementX,
+							y: prevCoords.y + e.movementY,
+						}));
+						break;
+					case "move": {
+						setSelectionBoxBounds((prev) => ({
+							minX: prev.minX + (newMouseCoords.x - oldMouseCoords.x),
+							minY: prev.minY + (newMouseCoords.y - oldMouseCoords.y),
+							maxX: prev.maxX + (newMouseCoords.x - oldMouseCoords.x),
+							maxY: prev.maxY + (newMouseCoords.y - oldMouseCoords.y),
+						}));
+						break;
+					}
+					case "rectangle-select":
+						setSelectionBoxBounds((prev) => ({
+							...prev,
+							maxX: mouseCoords.x + 1,
+							maxY: mouseCoords.y + 1,
+						}));
+						break;
+				}
+
+				onToolUse();
+			}
 		},
-		[dragging, coords, scale, tool, onToolUse, setCoords]
+		[dragging, coords, scale, tool, onToolUse, setCoords, setSelectionBoxBounds, mouseCoords]
 	);
 
 	const onMouseDown = useCallback(() => {
 		setDragging(true);
 		onToolUse();
 		updateCssCursor();
-	}, [onToolUse, updateCssCursor]);
+
+		if (tool == "rectangle-select") {
+			setSelectionBoxBounds({
+				minX: mouseCoords.x,
+				minY: mouseCoords.y,
+				maxX: mouseCoords.x,
+				maxY: mouseCoords.y,
+			});
+		}
+	}, [onToolUse, updateCssCursor, tool, setSelectionBoxBounds, mouseCoords]);
 
 	const onMouseUp = useCallback(() => {
 		setDragging(false);
@@ -192,10 +227,9 @@ function Canvas() {
 			e.preventDefault();
 			const scaleChange = e.deltaY > 0 ? -0.1 : 0.1;
 			const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
-			setScale(newScale);
-			zoomToMousePosition(newScale);
+			zoom(newScale);
 		},
-		[scale, zoomToMousePosition, setScale]
+		[scale, zoom]
 	);
 
 	const onClick = useCallback(() => {
@@ -208,15 +242,14 @@ function Canvas() {
 			case "zoom": {
 				const scaleChange = holdingAlt ? -0.1 : 0.1;
 				const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
-				setScale(newScale);
-				zoomToMousePosition(newScale);
+				zoom(newScale);
 				break;
 			}
 
 			default:
 				break;
 		}
-	}, [tool, holdingAlt, scale, mouseCoords, blocks, zoomToMousePosition, setScale, setSelectedBlock]);
+	}, [tool, holdingAlt, scale, mouseCoords, blocks, setSelectedBlock, zoom]);
 
 	const onKeyDown = (e: KeyboardEvent) => {
 		switch (e.key) {
@@ -230,15 +263,21 @@ function Canvas() {
 				setTool("hand");
 				break;
 			case "2":
-				setTool("pencil");
+				setTool("move");
 				break;
 			case "3":
-				setTool("eraser");
+				setTool("rectangle-select");
 				break;
 			case "4":
-				setTool("eyedropper");
+				setTool("pencil");
 				break;
 			case "5":
+				setTool("eraser");
+				break;
+			case "6":
+				setTool("eyedropper");
+				break;
+			case "7":
 				setTool("zoom");
 				break;
 			case "Alt":
@@ -327,6 +366,7 @@ function Canvas() {
 				<Container x={coords.x} y={coords.y} scale={scale}>
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
 					<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} />
+					<SelectionBox bounds={selectionBoxBounds} coords={coords} scale={scale} isDark={isDark} />
 				</Container>
 
 				{settings.grid && (

@@ -1,7 +1,7 @@
 import { Graphics } from "@pixi/react";
 
 interface Props {
-	canvasSize: CanvasSize;
+	canvasSize: BoundingBox;
 	isDark: boolean;
 }
 

@@ -10,7 +10,7 @@ interface Dimension {
 	height: number;
 }
 
-interface CanvasSize {
+interface BoundingBox {
 	minX: number;
 	minY: number;
 	maxX: number;
@@ -21,7 +21,7 @@ interface Block extends Position {
 	name: string;
 }
 
-type Tool = "hand" | "pencil" | "eraser" | "eyedropper" | "zoom";
+type Tool = "hand" | "move" | "rectangle-select" | "pencil" | "eraser" | "eyedropper" | "zoom";
 
 interface Settings {
 	grid: boolean;

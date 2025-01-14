@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pixi/graphics-smooth": "^1.1.1",
     "@pixi/react": "^7.1.2",
     "@pixi/tilemap": "4.1.0",
     "@radix-ui/react-checkbox": "^1.1.3",

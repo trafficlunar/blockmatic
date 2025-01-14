@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EraserIcon, HandIcon, PencilIcon, PipetteIcon, ZoomInIcon } from "lucide-react";
+import { EraserIcon, HandIcon, MousePointer2Icon, PencilIcon, PipetteIcon, SquareDashedIcon, ZoomInIcon } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -33,6 +33,30 @@ function Toolbar() {
 					</TooltipContent>
 				</Tooltip>
 
+				{/* Move */}
+				<Tooltip delayDuration={0}>
+					<TooltipTrigger>
+						<ToggleGroupItem value="move" className="!p-0 !h-8 !min-w-8">
+							<MousePointer2Icon />
+						</ToggleGroupItem>
+					</TooltipTrigger>
+					<TooltipContent side="right" sideOffset={10}>
+						<p>Move (2)</p>
+					</TooltipContent>
+				</Tooltip>
+
+				{/* Rectangle Select */}
+				<Tooltip delayDuration={0}>
+					<TooltipTrigger>
+						<ToggleGroupItem value="rectangle-select" className="!p-0 !h-8 !min-w-8">
+							<SquareDashedIcon />
+						</ToggleGroupItem>
+					</TooltipTrigger>
+					<TooltipContent side="right" sideOffset={10}>
+						<p>Rectangle Select (3)</p>
+					</TooltipContent>
+				</Tooltip>
+
 				{/* Pencil */}
 				<Tooltip delayDuration={0}>
 					<TooltipTrigger>
@@ -41,7 +65,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Pencil (2)</p>
+						<p>Pencil (4)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -53,7 +77,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Eraser (3)</p>
+						<p>Eraser (5)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -65,7 +89,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Eyedropper (4)</p>
+						<p>Eyedropper (6)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -77,7 +101,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Zoom (5)</p>
+						<p>Zoom (7)</p>
 					</TooltipContent>
 				</Tooltip>
 
