@@ -179,12 +179,40 @@ function Canvas() {
 						}));
 						break;
 					case "move": {
+						const movementX = newMouseCoords.x - oldMouseCoords.x;
+						const movementY = newMouseCoords.y - oldMouseCoords.y;
+
+						const movedBlocks: Block[] = [];
+
+						// Add movementX and movementY to each block in the selection box
+						// Also create air blocks to avoid other blocks inserting themself into the selection
+						for (let x = selectionBoxBounds.minX; x <= selectionBoxBounds.maxX - 1; x++) {
+							for (let y = selectionBoxBounds.minY; y <= selectionBoxBounds.maxY - 1; y++) {
+								const existingBlock = blocks.find((block) => block.x === x && block.y === y);
+
+								movedBlocks.push({
+									name: existingBlock ? existingBlock.name : "air",
+									x: x + movementX,
+									y: y + movementY,
+								});
+							}
+						}
+
+						// Avoid duplicates
+						const oldBlocks = blocks.filter((block) => {
+							return !movedBlocks.some((newBlock) => block.x === newBlock.x && block.y === newBlock.y);
+						});
+
+						// Remove air blocks
+						const nonAirBlocks = movedBlocks.filter((b) => b.name !== "air");
+
 						setSelectionBoxBounds((prev) => ({
-							minX: prev.minX + (newMouseCoords.x - oldMouseCoords.x),
-							minY: prev.minY + (newMouseCoords.y - oldMouseCoords.y),
-							maxX: prev.maxX + (newMouseCoords.x - oldMouseCoords.x),
-							maxY: prev.maxY + (newMouseCoords.y - oldMouseCoords.y),
+							minX: prev.minX + movementX,
+							minY: prev.minY + movementY,
+							maxX: prev.maxX + movementX,
+							maxY: prev.maxY + movementY,
 						}));
+						setBlocks([...nonAirBlocks, ...oldBlocks]);
 						break;
 					}
 					case "rectangle-select":
@@ -199,7 +227,7 @@ function Canvas() {
 				onToolUse();
 			}
 		},
-		[dragging, coords, scale, tool, onToolUse, setCoords, setSelectionBoxBounds, mouseCoords]
+		[dragging, coords, scale, tool, onToolUse, setCoords, setSelectionBoxBounds, mouseCoords, blocks, selectionBoxBounds, setBlocks]
 	);
 
 	const onMouseDown = useCallback(() => {
