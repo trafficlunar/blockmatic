@@ -14,7 +14,7 @@ import ImageComparison from "@/components/home/ImageComparison";
 function IndexPage() {
 	return (
 		<main className="flex flex-col items-center">
-			<header className="w-full flex justify-evenly p-8">
+			<header className="w-full flex justify-evenly p-8 z-10">
 				<BlockmaticLogo className="h-16 w-max" fill={"white"} />
 
 				<div className="flex items-center gap-2">
