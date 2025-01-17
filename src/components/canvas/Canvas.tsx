@@ -299,8 +299,6 @@ function Canvas() {
 	}, [tool, holdingAlt, scale, mouseCoords, blocks, setSelectedBlock, zoom]);
 
 	const onKeyDown = (e: KeyboardEvent) => {
-		console.log(e.key);
-
 		switch (e.key) {
 			case " ": // Space
 				setDragging(true);
@@ -426,7 +424,7 @@ function Canvas() {
 				</Container>
 
 				{settings.grid && (
-					<Container>
+					<Container filters={[new PIXI.AlphaFilter(0.1)]}>
 						<Grid stageSize={stageSize} coords={coords} scale={scale} isDark={isDark} />
 					</Container>
 				)}

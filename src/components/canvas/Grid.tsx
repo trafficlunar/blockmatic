@@ -12,7 +12,7 @@ function Grid({ stageSize, coords, scale, isDark }: Props) {
 		<Graphics
 			draw={(g) => {
 				g.clear();
-				g.lineStyle(1, isDark ? 0xffffff : 0x000000, 0.1);
+				g.lineStyle(1, isDark ? 0xffffff : 0x000000);
 
 				const tileSize = 16 * scale;
 
