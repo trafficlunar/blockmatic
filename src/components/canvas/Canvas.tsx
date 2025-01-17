@@ -37,13 +37,13 @@ function Canvas() {
 
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
-	const [dragging, setDragging] = useState(false);
-
 	const mouseMovement = useRef<Position>();
+	const [dragging, setDragging] = useState(false);
 
 	const [holdingAlt, setHoldingAlt] = useState(false);
 	const [oldTool, setOldTool] = useState<Tool>("hand");
 	const [selectionBoxBounds, setSelectionBoxBounds] = useState<BoundingBox>({ minX: 0, minY: 0, maxX: 0, maxY: 0 });
+	const selectionBoxBoundsRef = useRef<BoundingBox>();
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -121,31 +121,25 @@ function Canvas() {
 				if (!mouseMovement.current) return;
 				const { x: movementX, y: movementY } = mouseMovement.current;
 
-				setSelectionBoxBounds((prev) => ({
-					minX: prev.minX + movementX,
-					minY: prev.minY + movementY,
-					maxX: prev.maxX + movementX,
-					maxY: prev.maxY + movementY,
-				}));
+				setSelectionBoxBounds((prev) => {
+					const newBounds = {
+						minX: prev.minX + movementX,
+						minY: prev.minY + movementY,
+						maxX: prev.maxX + movementX,
+						maxY: prev.maxY + movementY,
+					};
+
+					selectionBoxBoundsRef.current = newBounds;
+					return newBounds;
+				});
 
 				setBlocks((prev) => {
-					const airBlocks: Block[] = [];
-
-					for (let x = selectionBoxBounds.minX; x < selectionBoxBounds.maxX; x++) {
-						for (let y = selectionBoxBounds.minY; y < selectionBoxBounds.maxY; y++) {
-							const existingBlock = prev.find((block) => block.x === x && block.y === y);
-							if (existingBlock) continue;
-
-							airBlocks.push({ name: "air", x, y });
-						}
-					}
-
-					return [...prev, ...airBlocks].map((block) => {
+					return prev.map((block) => {
 						if (
 							block.x >= selectionBoxBounds.minX &&
-							block.x <= selectionBoxBounds.maxX - 1 &&
+							block.x < selectionBoxBounds.maxX &&
 							block.y >= selectionBoxBounds.minY &&
-							block.y <= selectionBoxBounds.maxY - 1
+							block.y < selectionBoxBounds.maxY
 						) {
 							return {
 								...block,
@@ -156,6 +150,7 @@ function Canvas() {
 						return block;
 					});
 				});
+
 				break;
 			}
 			case "pencil": {
@@ -232,11 +227,16 @@ function Canvas() {
 						}));
 						break;
 					case "rectangle-select":
-						setSelectionBoxBounds((prev) => ({
-							...prev,
-							maxX: mouseCoords.x + 1,
-							maxY: mouseCoords.y + 1,
-						}));
+						setSelectionBoxBounds((prev) => {
+							const newBounds = {
+								...prev,
+								maxX: mouseCoords.x + 1,
+								maxY: mouseCoords.y + 1,
+							};
+
+							selectionBoxBoundsRef.current = newBounds;
+							return newBounds;
+						});
 						break;
 				}
 
@@ -252,12 +252,15 @@ function Canvas() {
 		updateCssCursor();
 
 		if (tool == "rectangle-select") {
-			setSelectionBoxBounds({
+			const newBounds = {
 				minX: mouseCoords.x,
 				minY: mouseCoords.y,
 				maxX: mouseCoords.x,
 				maxY: mouseCoords.y,
-			});
+			};
+
+			selectionBoxBoundsRef.current = newBounds;
+			setSelectionBoxBounds(newBounds);
 		}
 	}, [onToolUse, updateCssCursor, tool, setSelectionBoxBounds, mouseCoords]);
 
@@ -296,6 +299,8 @@ function Canvas() {
 	}, [tool, holdingAlt, scale, mouseCoords, blocks, setSelectedBlock, zoom]);
 
 	const onKeyDown = (e: KeyboardEvent) => {
+		console.log(e.key);
+
 		switch (e.key) {
 			case " ": // Space
 				setDragging(true);
@@ -328,6 +333,13 @@ function Canvas() {
 				setHoldingAlt(true);
 				setCssCursor("zoom-out");
 				break;
+			case "Delete": {
+				if (!selectionBoxBoundsRef.current) return;
+				const bounds = selectionBoxBoundsRef.current;
+
+				setBlocks((prev) => prev.filter((b) => !(b.x >= bounds.minX && b.x < bounds.maxX && b.y >= bounds.minY && b.y < bounds.maxY)));
+				break;
+			}
 		}
 	};
 
