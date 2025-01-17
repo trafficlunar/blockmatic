@@ -39,6 +39,8 @@ function Canvas() {
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
 	const [dragging, setDragging] = useState(false);
 
+	const mouseMovement = useRef<Position>();
+
 	const [holdingAlt, setHoldingAlt] = useState(false);
 	const [oldTool, setOldTool] = useState<Tool>("hand");
 	const [selectionBoxBounds, setSelectionBoxBounds] = useState<BoundingBox>({ minX: 0, minY: 0, maxX: 0, maxY: 0 });
@@ -115,6 +117,47 @@ function Canvas() {
 		};
 
 		switch (tool) {
+			case "move": {
+				if (!mouseMovement.current) return;
+				const { x: movementX, y: movementY } = mouseMovement.current;
+
+				setSelectionBoxBounds((prev) => ({
+					minX: prev.minX + movementX,
+					minY: prev.minY + movementY,
+					maxX: prev.maxX + movementX,
+					maxY: prev.maxY + movementY,
+				}));
+
+				setBlocks((prev) => {
+					const airBlocks: Block[] = [];
+
+					for (let x = selectionBoxBounds.minX; x < selectionBoxBounds.maxX; x++) {
+						for (let y = selectionBoxBounds.minY; y < selectionBoxBounds.maxY; y++) {
+							const existingBlock = prev.find((block) => block.x === x && block.y === y);
+							if (existingBlock) continue;
+
+							airBlocks.push({ name: "air", x, y });
+						}
+					}
+
+					return [...prev, ...airBlocks].map((block) => {
+						if (
+							block.x >= selectionBoxBounds.minX &&
+							block.x <= selectionBoxBounds.maxX - 1 &&
+							block.y >= selectionBoxBounds.minY &&
+							block.y <= selectionBoxBounds.maxY - 1
+						) {
+							return {
+								...block,
+								x: block.x + movementX,
+								y: block.y + movementY,
+							};
+						}
+						return block;
+					});
+				});
+				break;
+			}
 			case "pencil": {
 				if (selectedBlock == "air") {
 					eraseTool();
@@ -175,6 +218,11 @@ function Canvas() {
 			});
 			setMouseCoords(newMouseCoords);
 
+			mouseMovement.current = {
+				x: newMouseCoords.x - oldMouseCoords.x,
+				y: newMouseCoords.y - oldMouseCoords.y,
+			};
+
 			if (dragging) {
 				switch (tool) {
 					case "hand":
@@ -183,47 +231,6 @@ function Canvas() {
 							y: prevCoords.y + e.movementY,
 						}));
 						break;
-					case "move": {
-						const movementX = newMouseCoords.x - oldMouseCoords.x;
-						const movementY = newMouseCoords.y - oldMouseCoords.y;
-
-						setSelectionBoxBounds((prev) => ({
-							minX: prev.minX + movementX,
-							minY: prev.minY + movementY,
-							maxX: prev.maxX + movementX,
-							maxY: prev.maxY + movementY,
-						}));
-
-						setBlocks((prev) => {
-							const airBlocks: Block[] = [];
-
-							for (let x = selectionBoxBounds.minX; x < selectionBoxBounds.maxX; x++) {
-								for (let y = selectionBoxBounds.minY; y < selectionBoxBounds.maxY; y++) {
-									const existingBlock = prev.find((block) => block.x === x && block.y === y);
-									if (existingBlock) continue;
-
-									airBlocks.push({ name: "air", x, y });
-								}
-							}
-
-							return [...prev, ...airBlocks].map((block) => {
-								if (
-									block.x >= selectionBoxBounds.minX &&
-									block.x <= selectionBoxBounds.maxX - 1 &&
-									block.y >= selectionBoxBounds.minY &&
-									block.y <= selectionBoxBounds.maxY - 1
-								) {
-									return {
-										...block,
-										x: block.x + movementX,
-										y: block.y + movementY,
-									};
-								}
-								return block;
-							});
-						});
-						break;
-					}
 					case "rectangle-select":
 						setSelectionBoxBounds((prev) => ({
 							...prev,
@@ -236,7 +243,7 @@ function Canvas() {
 				onToolUse();
 			}
 		},
-		[dragging, coords, scale, tool, mouseCoords, selectionBoxBounds, onToolUse, setCoords, setSelectionBoxBounds, setBlocks]
+		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords, setSelectionBoxBounds]
 	);
 
 	const onMouseDown = useCallback(() => {
