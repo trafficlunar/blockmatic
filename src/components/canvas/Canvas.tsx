@@ -30,7 +30,8 @@ function Canvas() {
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture, solidTextures } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
-	const { tool, radius, selectedBlock, cssCursor, setTool, setSelectedBlock, setCssCursor } = useContext(ToolContext);
+	const { tool, radius, selectedBlock, selectionBoxBounds, cssCursor, setTool, setSelectedBlock, setSelectionBoxBounds, setCssCursor } =
+		useContext(ToolContext);
 
 	const textures = useTextures(version);
 	const stageContainerRef = useRef<HTMLDivElement>(null);
@@ -42,7 +43,6 @@ function Canvas() {
 
 	const [holdingAlt, setHoldingAlt] = useState(false);
 	const [oldTool, setOldTool] = useState<Tool>("hand");
-	const [selectionBoxBounds, setSelectionBoxBounds] = useState<BoundingBox>({ minX: 0, minY: 0, maxX: 0, maxY: 0 });
 	const selectionBoxBoundsRef = useRef<BoundingBox>();
 
 	const visibleArea = useMemo(() => {

@@ -7,6 +7,7 @@ import { ThemeContext } from "@/context/Theme";
 import { Menubar as UIMenubar } from "@/components/ui/menubar";
 
 import FileMenu from "./FileMenu";
+import EditMenu from "./EditMenu";
 import ViewMenu from "./ViewMenu";
 import MoreMenu from "./MoreMenu";
 
@@ -24,6 +25,7 @@ function Menubar() {
 				</Link>
 
 				<FileMenu />
+				<EditMenu />
 				<ViewMenu />
 				<MoreMenu />
 
