@@ -87,39 +87,28 @@ function Canvas() {
 	}, [dragging, holdingAlt, tool, setCssCursor]);
 
 	const onToolUse = useCallback(() => {
-		// If selection box is there
-		if (!(selectionBoxBounds.maxX == selectionBoxBounds.minX && selectionBoxBounds.maxY == selectionBoxBounds.maxY)) {
-			// If the mouse is not in the selection, return
-			if (
-				!(
-					mouseCoords.x >= selectionBoxBounds.minX &&
-					mouseCoords.x <= selectionBoxBounds.maxX - 1 &&
-					mouseCoords.y >= selectionBoxBounds.minY &&
-					mouseCoords.y <= selectionBoxBounds.maxY - 1
-				)
-			) {
-				return;
-			}
-		}
-
-		// Radius calculation - if odd number cursor is in center, if even cursor is in top-left corner
+		// Calculate the top-left position of the radius
 		const getRadiusPosition = (): Position => {
 			const halfSize = Math.floor(radius / 2);
 			const x = mouseCoords.x - (radius % 2 === 0 ? 0 : halfSize);
 			const y = mouseCoords.y - (radius % 2 === 0 ? 0 : halfSize);
-
 			return { x, y };
 		};
 
+		// Check if a block is within the selection bounds
+		const isInSelection = (x: number, y: number) => {
+			return x >= selectionBoxBounds.minX && x < selectionBoxBounds.maxX && y >= selectionBoxBounds.minY && y < selectionBoxBounds.maxY;
+		};
+
 		const eraseTool = () => {
-			// Fixes Infinity and NaN errors
+			// Fixes Infinity and NaN errors when no blocks are present
 			if (blocks.length == 1) return;
 
 			const radiusPosition = getRadiusPosition();
 			const updated = blocks.filter((block) => {
-				const withinSquare =
+				const withinRadius =
 					block.x >= radiusPosition.x && block.x < radiusPosition.x + radius && block.y >= radiusPosition.y && block.y < radiusPosition.y + radius;
-				return !withinSquare;
+				return !withinRadius || !isInSelection(block.x, block.y);
 			});
 
 			setBlocks(updated);
@@ -140,11 +129,14 @@ function Canvas() {
 						const tileX = radiusPosition.x + x;
 						const tileY = radiusPosition.y + y;
 
-						radiusBlocks.push({
-							name: selectedBlock,
-							x: tileX,
-							y: tileY,
-						});
+						// Only add blocks within the selection
+						if (isInSelection(tileX, tileY)) {
+							radiusBlocks.push({
+								name: selectedBlock,
+								x: tileX,
+								y: tileY,
+							});
+						}
 					}
 				}
 
