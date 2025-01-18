@@ -266,7 +266,7 @@ function Canvas() {
 				onToolUse();
 			}
 		},
-		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords, setSelectionCoords]
+		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords, setSelectionCoords, radius]
 	);
 
 	const onMouseDown = useCallback(() => {
