@@ -147,8 +147,20 @@ function Canvas() {
 			}
 			case "lasso": {
 				setSelectionCoords((prev) => {
-					const exists = prev.some(([x2, y2]) => x2 === mouseCoords.x && y2 === mouseCoords.y);
-					return exists ? prev : [...prev, [mouseCoords.x, mouseCoords.y]];
+					const radiusPosition = getRadiusPosition();
+					const radiusCoords: CoordinateArray = [];
+
+					for (let x = 0; x < radius; x++) {
+						for (let y = 0; y < radius; y++) {
+							const tileX = radiusPosition.x + x;
+							const tileY = radiusPosition.y + y;
+
+							const exists = prev.some(([x2, y2]) => x2 === tileX && y2 === tileY);
+							if (!exists) radiusCoords.push([tileX, tileY]);
+						}
+					}
+
+					return [...prev, ...radiusCoords];
 				});
 				break;
 			}
@@ -233,8 +245,10 @@ function Canvas() {
 							const newSelection: CoordinateArray = [];
 
 							// todo: fix dragging from bottom to top
-							for (let x = dragStartCoords.x; x < mouseCoords.x + 1; x++) {
-								for (let y = dragStartCoords.y; y < mouseCoords.y + 1; y++) {
+							const isEven = radius % 2 == 0;
+
+							for (let x = dragStartCoords.x; x < mouseCoords.x + (isEven ? radius : radius - 1); x++) {
+								for (let y = dragStartCoords.y; y < mouseCoords.y + (isEven ? radius : radius - 1); y++) {
 									newSelection.push([x, y]);
 								}
 							}
