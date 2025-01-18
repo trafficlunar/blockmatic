@@ -90,7 +90,8 @@ function Canvas() {
 	}, [dragging, holdingAlt, tool, setCssCursor]);
 
 	const onToolUse = useCallback(() => {
-		// Calculate the top-left position of the radius
+		// If number is odd, cursor is in the center
+		// if number is even, cursor is in the top-left corner
 		const getRadiusPosition = (): Position => {
 			const halfSize = Math.floor(radius / 2);
 			const x = mouseCoords.x - (radius % 2 === 0 ? 0 : halfSize);
@@ -142,6 +143,13 @@ function Canvas() {
 						return block;
 					})
 				);
+				break;
+			}
+			case "lasso": {
+				setSelectionCoords((prev) => {
+					const exists = prev.some(([x2, y2]) => x2 === mouseCoords.x && y2 === mouseCoords.y);
+					return exists ? prev : [...prev, [mouseCoords.x, mouseCoords.y]];
+				});
 				break;
 			}
 			case "pencil": {
@@ -296,6 +304,14 @@ function Canvas() {
 				setTool("hand");
 				setCssCursor("grabbing");
 				break;
+			case "Alt":
+				setHoldingAlt(true);
+				setCssCursor("zoom-out");
+				break;
+			case "Delete": {
+				setBlocks((prev) => prev.filter((b) => !selectionCoordsRef.current.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
+				break;
+			}
 			case "1":
 				setTool("hand");
 				break;
@@ -306,25 +322,20 @@ function Canvas() {
 				setTool("rectangle-select");
 				break;
 			case "4":
-				setTool("pencil");
+				setTool("lasso");
 				break;
 			case "5":
-				setTool("eraser");
+				setTool("pencil");
 				break;
 			case "6":
-				setTool("eyedropper");
+				setTool("eraser");
 				break;
 			case "7":
+				setTool("eyedropper");
+				break;
+			case "8":
 				setTool("zoom");
 				break;
-			case "Alt":
-				setHoldingAlt(true);
-				setCssCursor("zoom-out");
-				break;
-			case "Delete": {
-				setBlocks((prev) => prev.filter((b) => !selectionCoordsRef.current.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
-				break;
-			}
 		}
 	};
 
