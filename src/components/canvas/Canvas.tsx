@@ -42,8 +42,8 @@ function Canvas() {
 	const [dragging, setDragging] = useState(false);
 
 	const [holdingAlt, setHoldingAlt] = useState(false);
-	const [oldTool, setOldTool] = useState<Tool>("hand");
 	const selectionBoxBoundsRef = useRef<BoundingBox>();
+	const oldToolRef = useRef<Tool>();
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -302,7 +302,7 @@ function Canvas() {
 		switch (e.key) {
 			case " ": // Space
 				setDragging(true);
-				setOldTool(tool);
+				oldToolRef.current = tool;
 				setTool("hand");
 				setCssCursor("grabbing");
 				break;
@@ -344,9 +344,10 @@ function Canvas() {
 	const onKeyUp = (e: KeyboardEvent) => {
 		switch (e.key) {
 			case " ": // Space
+				if (!oldToolRef.current) return;
 				setDragging(false);
 				setCssCursor("grab");
-				setTool(oldTool);
+				setTool(oldToolRef.current);
 				break;
 			case "Alt":
 				setHoldingAlt(false);
