@@ -4,12 +4,12 @@ interface Context {
 	tool: Tool;
 	radius: number;
 	selectedBlock: string;
-	selectionBoxBounds: BoundingBox;
+	selectionCoords: CoordinateArray;
 	cssCursor: string;
 	setTool: React.Dispatch<React.SetStateAction<Tool>>;
 	setRadius: React.Dispatch<React.SetStateAction<number>>;
 	setSelectedBlock: React.Dispatch<React.SetStateAction<string>>;
-	setSelectionBoxBounds: React.Dispatch<React.SetStateAction<BoundingBox>>;
+	setSelectionCoords: React.Dispatch<React.SetStateAction<CoordinateArray>>;
 	setCssCursor: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -23,7 +23,7 @@ export const ToolProvider = ({ children }: Props) => {
 	const [tool, setTool] = useState<Tool>("hand");
 	const [radius, setRadius] = useState(1);
 	const [selectedBlock, setSelectedBlock] = useState("stone");
-	const [selectionBoxBounds, setSelectionBoxBounds] = useState<BoundingBox>({ minX: 0, minY: 0, maxX: 0, maxY: 0 });
+	const [selectionCoords, setSelectionCoords] = useState<CoordinateArray>([]);
 	const [cssCursor, setCssCursor] = useState("crosshair");
 
 	useEffect(() => {
@@ -47,12 +47,12 @@ export const ToolProvider = ({ children }: Props) => {
 				tool,
 				radius,
 				selectedBlock,
-				selectionBoxBounds,
+				selectionCoords,
 				cssCursor,
 				setTool,
 				setRadius,
 				setSelectedBlock,
-				setSelectionBoxBounds,
+				setSelectionCoords,
 				setCssCursor,
 			}}
 		>

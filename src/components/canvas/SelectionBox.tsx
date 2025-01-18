@@ -3,7 +3,7 @@ import { useApp } from "@pixi/react";
 import { DashLineShader, SmoothGraphics } from "@pixi/graphics-smooth";
 
 interface Props {
-	bounds: BoundingBox;
+	selection: CoordinateArray;
 	coords: Position;
 	scale: number;
 	isDark: boolean;
@@ -11,7 +11,7 @@ interface Props {
 
 const shader = new DashLineShader({ dash: 8, gap: 5 });
 
-function SelectionBox({ bounds, coords, scale, isDark }: Props) {
+function SelectionBox({ selection, coords, scale, isDark }: Props) {
 	const app = useApp();
 	const selectionRef = useRef<SmoothGraphics>();
 
@@ -20,12 +20,14 @@ function SelectionBox({ bounds, coords, scale, isDark }: Props) {
 		const graphics = selectionRef.current;
 		graphics.clear();
 		graphics.lineStyle({ width: 1, color: isDark ? 0xffffff : 0x000000, shader });
-		graphics.drawRect(
-			bounds.minX * 16 * scale,
-			bounds.minY * 16 * scale,
-			(bounds.maxX - bounds.minX) * 16 * scale,
-			(bounds.maxY - bounds.minY) * 16 * scale
-		);
+
+		selection.forEach(([x, y]) => {
+			const rectX = x * 16 * scale;
+			const rectY = y * 16 * scale;
+
+			graphics.drawRect(rectX, rectY, 16 * scale, 16 * scale);
+			// todo: remove lines on adjacent rectangles
+		});
 	};
 
 	useEffect(() => {
@@ -44,7 +46,7 @@ function SelectionBox({ bounds, coords, scale, isDark }: Props) {
 		drawSelection();
 	}, [coords]);
 
-	useEffect(drawSelection, [bounds]);
+	useEffect(drawSelection, [selection]);
 
 	return null;
 }

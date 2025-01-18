@@ -30,7 +30,7 @@ function Canvas() {
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture, solidTextures } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
-	const { tool, radius, selectedBlock, selectionBoxBounds, cssCursor, setTool, setSelectedBlock, setSelectionBoxBounds, setCssCursor } =
+	const { tool, radius, selectedBlock, selectionCoords, cssCursor, setTool, setSelectedBlock, setSelectionCoords, setCssCursor } =
 		useContext(ToolContext);
 
 	const textures = useTextures(version);
@@ -38,12 +38,13 @@ function Canvas() {
 
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
-	const mouseMovement = useRef<Position>();
+	const mouseMovementRef = useRef<Position>();
 	const [dragging, setDragging] = useState(false);
+	const dragStartCoordsRef = useRef<Position>();
 
 	const [holdingAlt, setHoldingAlt] = useState(false);
-	const selectionBoxBoundsRef = useRef<BoundingBox>();
 	const oldToolRef = useRef<Tool>();
+	const selectionCoordsRef = useRef<CoordinateArray>(selectionCoords);
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -97,9 +98,12 @@ function Canvas() {
 			return { x, y };
 		};
 
-		// Check if a block is within the selection bounds
-		const isInSelection = (x: number, y: number) => {
-			return x >= selectionBoxBounds.minX && x < selectionBoxBounds.maxX && y >= selectionBoxBounds.minY && y < selectionBoxBounds.maxY;
+		// Check if a block is within the selection
+		const isInSelection = (x: number, y: number): boolean => {
+			if (selectionCoords.length !== 0) {
+				return selectionCoords.some(([x2, y2]) => x2 === x && y2 === y);
+			}
+			return false;
 		};
 
 		const eraseTool = () => {
@@ -118,39 +122,26 @@ function Canvas() {
 
 		switch (tool) {
 			case "move": {
-				if (!mouseMovement.current) return;
-				const { x: movementX, y: movementY } = mouseMovement.current;
+				const mouseMovement = mouseMovementRef.current;
+				if (!mouseMovement) return;
 
-				setSelectionBoxBounds((prev) => {
-					const newBounds = {
-						minX: prev.minX + movementX,
-						minY: prev.minY + movementY,
-						maxX: prev.maxX + movementX,
-						maxY: prev.maxY + movementY,
-					};
+				// Increase each coordinate in the selection by the mouse movement
+				setSelectionCoords((prev) => prev.map(([x, y]) => [x + mouseMovement.x, y + mouseMovement.y]));
 
-					selectionBoxBoundsRef.current = newBounds;
-					return newBounds;
-				});
-
-				setBlocks((prev) => {
-					return prev.map((block) => {
-						if (
-							block.x >= selectionBoxBounds.minX &&
-							block.x < selectionBoxBounds.maxX &&
-							block.y >= selectionBoxBounds.minY &&
-							block.y < selectionBoxBounds.maxY
-						) {
+				// Increase each block in the selection by the mouse movement
+				setBlocks((prev) =>
+					prev.map((block) => {
+						if (isInSelection(block.x, block.y)) {
 							return {
 								...block,
-								x: block.x + movementX,
-								y: block.y + movementY,
+								x: block.x + mouseMovement.x,
+								y: block.y + mouseMovement.y,
 							};
 						}
-						return block;
-					});
-				});
 
+						return block;
+					})
+				);
 				break;
 			}
 			case "pencil": {
@@ -190,7 +181,7 @@ function Canvas() {
 				break;
 			}
 		}
-	}, [tool, mouseCoords, selectedBlock, blocks, radius, selectionBoxBounds, setBlocks]);
+	}, [tool, mouseCoords, selectedBlock, blocks, radius, selectionCoords, setSelectionCoords, setBlocks]);
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
@@ -213,7 +204,7 @@ function Canvas() {
 			});
 			setMouseCoords(newMouseCoords);
 
-			mouseMovement.current = {
+			mouseMovementRef.current = {
 				x: newMouseCoords.x - oldMouseCoords.x,
 				y: newMouseCoords.y - oldMouseCoords.y,
 			};
@@ -226,24 +217,30 @@ function Canvas() {
 							y: prevCoords.y + e.movementY,
 						}));
 						break;
-					case "rectangle-select":
-						setSelectionBoxBounds((prev) => {
-							const newBounds = {
-								...prev,
-								maxX: mouseCoords.x + 1,
-								maxY: mouseCoords.y + 1,
-							};
+					case "rectangle-select": {
+						const dragStartCoords = dragStartCoordsRef.current;
+						if (!dragStartCoords) return;
 
-							selectionBoxBoundsRef.current = newBounds;
-							return newBounds;
+						setSelectionCoords(() => {
+							const newSelection: CoordinateArray = [];
+
+							// todo: fix dragging from bottom to top
+							for (let x = dragStartCoords.x; x < mouseCoords.x + 1; x++) {
+								for (let y = dragStartCoords.y; y < mouseCoords.y + 1; y++) {
+									newSelection.push([x, y]);
+								}
+							}
+
+							return newSelection;
 						});
 						break;
+					}
 				}
 
 				onToolUse();
 			}
 		},
-		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords, setSelectionBoxBounds]
+		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords, setSelectionCoords]
 	);
 
 	const onMouseDown = useCallback(() => {
@@ -251,18 +248,11 @@ function Canvas() {
 		onToolUse();
 		updateCssCursor();
 
-		if (tool == "rectangle-select") {
-			const newBounds = {
-				minX: mouseCoords.x,
-				minY: mouseCoords.y,
-				maxX: mouseCoords.x,
-				maxY: mouseCoords.y,
-			};
+		dragStartCoordsRef.current = mouseCoords;
 
-			selectionBoxBoundsRef.current = newBounds;
-			setSelectionBoxBounds(newBounds);
-		}
-	}, [onToolUse, updateCssCursor, tool, setSelectionBoxBounds, mouseCoords]);
+		// Clear selection on click
+		if (tool === "rectangle-select") setSelectionCoords([]);
+	}, [onToolUse, updateCssCursor, mouseCoords, tool, setSelectionCoords]);
 
 	const onMouseUp = useCallback(() => {
 		setDragging(false);
@@ -332,10 +322,7 @@ function Canvas() {
 				setCssCursor("zoom-out");
 				break;
 			case "Delete": {
-				if (!selectionBoxBoundsRef.current) return;
-				const bounds = selectionBoxBoundsRef.current;
-
-				setBlocks((prev) => prev.filter((b) => !(b.x >= bounds.minX && b.x < bounds.maxX && b.y >= bounds.minY && b.y < bounds.maxY)));
+				setBlocks((prev) => prev.filter((b) => !selectionCoordsRef.current.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
 				break;
 			}
 		}
@@ -355,6 +342,10 @@ function Canvas() {
 				break;
 		}
 	};
+
+	useEffect(() => {
+		selectionCoordsRef.current = selectionCoords;
+	}, [selectionCoords]);
 
 	useEffect(() => {
 		const container = stageContainerRef.current;
@@ -421,7 +412,7 @@ function Canvas() {
 				<Container x={coords.x} y={coords.y} scale={scale}>
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
 					<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} />
-					<SelectionBox bounds={selectionBoxBounds} coords={coords} scale={scale} isDark={isDark} />
+					<SelectionBox selection={selectionCoords} coords={coords} scale={scale} isDark={isDark} />
 				</Container>
 
 				{settings.grid && (

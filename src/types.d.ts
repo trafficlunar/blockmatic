@@ -21,6 +21,8 @@ interface Block extends Position {
 	name: string;
 }
 
+type CoordinateArray = [number, number][];
+
 type Tool = "hand" | "move" | "rectangle-select" | "pencil" | "eraser" | "eyedropper" | "zoom";
 
 interface Settings {

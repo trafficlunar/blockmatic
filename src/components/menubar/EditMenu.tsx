@@ -24,7 +24,7 @@ function EditMenu() {
 				<MenubarItem onClick={cut}>Cut</MenubarItem>
 
 				<MenubarSeparator />
-				<MenubarItem onClick={() => setSelectionBoxBounds({ minX: 0, minY: 0, maxX: 0, maxY: 0 })}>Clear Selection</MenubarItem>
+				<MenubarItem onClick={() => setSelectionBoxBounds([])}>Clear Selection</MenubarItem>
 			</MenubarContent>
 		</MenubarMenu>
 	);
