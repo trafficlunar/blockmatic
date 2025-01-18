@@ -7,24 +7,24 @@ import { MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrig
 
 function EditMenu() {
 	const { setBlocks } = useContext(CanvasContext);
-	const { selectionBoxBounds, setSelectionBoxBounds } = useContext(ToolContext);
+	const { selectionCoords, setSelectionCoords } = useContext(ToolContext);
 
 	const cut = () => {
-		setBlocks((prev) =>
-			prev.filter(
-				(b) => !(b.x >= selectionBoxBounds.minX && b.x < selectionBoxBounds.maxX && b.y >= selectionBoxBounds.minY && b.y < selectionBoxBounds.maxY)
-			)
-		);
+		setBlocks((prev) => prev.filter((b) => !selectionCoords.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
 	};
 
 	return (
 		<MenubarMenu>
 			<MenubarTrigger>Edit</MenubarTrigger>
 			<MenubarContent>
+				<MenubarItem>Undo</MenubarItem>
+				<MenubarItem>Redo</MenubarItem>
+				<MenubarSeparator />
+
 				<MenubarItem onClick={cut}>Cut</MenubarItem>
 
 				<MenubarSeparator />
-				<MenubarItem onClick={() => setSelectionBoxBounds([])}>Clear Selection</MenubarItem>
+				<MenubarItem onClick={() => setSelectionCoords([])}>Clear Selection</MenubarItem>
 			</MenubarContent>
 		</MenubarMenu>
 	);
