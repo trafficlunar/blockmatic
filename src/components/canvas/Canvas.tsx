@@ -244,11 +244,15 @@ function Canvas() {
 						setSelectionCoords(() => {
 							const newSelection: CoordinateArray = [];
 
-							// todo: fix dragging from bottom to top
-							const isEven = radius % 2 == 0;
+							const startX = Math.min(dragStartCoords.x, mouseCoords.x);
+							const endX = Math.max(dragStartCoords.x, mouseCoords.x);
+							const startY = Math.min(dragStartCoords.y, mouseCoords.y);
+							const endY = Math.max(dragStartCoords.y, mouseCoords.y);
 
-							for (let x = dragStartCoords.x; x < mouseCoords.x + (isEven ? radius : radius - 1); x++) {
-								for (let y = dragStartCoords.y; y < mouseCoords.y + (isEven ? radius : radius - 1); y++) {
+							const isRadiusEven = radius % 2 == 0;
+
+							for (let x = startX; x < endX + (isRadiusEven ? radius : radius - 1); x++) {
+								for (let y = startY; y < endY + (isRadiusEven ? radius : radius - 1); y++) {
 									newSelection.push([x, y]);
 								}
 							}
