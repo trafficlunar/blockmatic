@@ -156,11 +156,15 @@ function Canvas() {
 							const tileY = radiusPosition.y + y;
 
 							const exists = prev.some(([x2, y2]) => x2 === tileX && y2 === tileY);
-							if (!exists) radiusCoords.push([tileX, tileY]);
+							if ((holdingAlt && exists) || !exists) radiusCoords.push([tileX, tileY]);
 						}
 					}
 
-					return [...prev, ...radiusCoords];
+					if (holdingAlt) {
+						return prev.filter(([x, y]) => !radiusCoords.some(([x2, y2]) => x2 === x && y2 === y));
+					} else {
+						return [...prev, ...radiusCoords];
+					}
 				});
 				break;
 			}
@@ -324,7 +328,7 @@ function Canvas() {
 				break;
 			case "Alt":
 				setHoldingAlt(true);
-				setCssCursor("zoom-out");
+				if (tool === "zoom") setCssCursor("zoom-out");
 				break;
 			case "Delete": {
 				setBlocks((prev) => prev.filter((b) => !selectionCoordsRef.current.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
@@ -412,12 +416,7 @@ function Canvas() {
 	}, []);
 
 	return (
-		<div
-			ref={stageContainerRef}
-			onContextMenu={() => null}
-			style={{ cursor: cssCursor }}
-			className="relative w-full h-full bg-zinc-200 dark:bg-black"
-		>
+		<div ref={stageContainerRef} style={{ cursor: cssCursor }} className="relative w-full h-full bg-zinc-200 dark:bg-black">
 			<Stage
 				width={stageSize.width}
 				height={stageSize.height}
