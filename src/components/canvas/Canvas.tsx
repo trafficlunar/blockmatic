@@ -42,7 +42,7 @@ function Canvas() {
 	const [dragging, setDragging] = useState(false);
 	const dragStartCoordsRef = useRef<Position>();
 
-	const [holdingAlt, setHoldingAlt] = useState(false);
+	const holdingAltRef = useRef(false);
 	const oldToolRef = useRef<Tool>();
 	const selectionCoordsRef = useRef<CoordinateArray>(selectionCoords);
 
@@ -83,11 +83,11 @@ function Canvas() {
 	const updateCssCursor = useCallback(() => {
 		const cursorMapping: Partial<Record<Tool, string>> = {
 			hand: dragging ? "grab" : "grabbing",
-			zoom: holdingAlt ? "zoom-out" : "zoom-in",
+			zoom: holdingAltRef.current ? "zoom-out" : "zoom-in",
 		};
 
 		setCssCursor(cursorMapping[tool] || "crosshair");
-	}, [dragging, holdingAlt, tool, setCssCursor]);
+	}, [dragging, holdingAltRef, tool, setCssCursor]);
 
 	const onToolUse = useCallback(() => {
 		// If number is odd, cursor is in the center
@@ -156,11 +156,11 @@ function Canvas() {
 							const tileY = radiusPosition.y + y;
 
 							const exists = prev.some(([x2, y2]) => x2 === tileX && y2 === tileY);
-							if ((holdingAlt && exists) || !exists) radiusCoords.push([tileX, tileY]);
+							if ((holdingAltRef.current && exists) || !exists) radiusCoords.push([tileX, tileY]);
 						}
 					}
 
-					if (holdingAlt) {
+					if (holdingAltRef.current) {
 						return prev.filter(([x, y]) => !radiusCoords.some(([x2, y2]) => x2 === x && y2 === y));
 					} else {
 						return [...prev, ...radiusCoords];
@@ -335,7 +335,15 @@ function Canvas() {
 				}
 
 				depthFirstSearch({ name: startBlock.name, x: mouseCoords.x, y: mouseCoords.y });
-				setSelectionCoords(result);
+				setSelectionCoords((prev) => {
+					if (holdingAltRef.current) {
+						// If holding alt, remove new magic wand selection
+						return prev.filter(([x, y]) => !result.some(([x2, y2]) => x2 === x && y2 === y));
+					}
+
+					// If not holding alt or shift, replace the existing selection with the magic wand selection
+					return result;
+				});
 				break;
 			}
 			case "eyedropper": {
@@ -344,7 +352,7 @@ function Canvas() {
 				break;
 			}
 			case "zoom": {
-				const scaleChange = holdingAlt ? -0.1 : 0.1;
+				const scaleChange = holdingAltRef.current ? -0.1 : 0.1;
 				const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
 				zoom(newScale);
 				break;
@@ -353,7 +361,7 @@ function Canvas() {
 			default:
 				break;
 		}
-	}, [tool, holdingAlt, scale, mouseCoords, blocks, setSelectedBlock, zoom]);
+	}, [tool, holdingAltRef, scale, mouseCoords, blocks, setSelectionCoords, setSelectedBlock, zoom]);
 
 	const onKeyDown = (e: KeyboardEvent) => {
 		switch (e.key) {
@@ -364,7 +372,7 @@ function Canvas() {
 				setCssCursor("grabbing");
 				break;
 			case "Alt":
-				setHoldingAlt(true);
+				holdingAltRef.current = true;
 				if (tool === "zoom") setCssCursor("zoom-out");
 				break;
 			case "Delete": {
@@ -410,7 +418,7 @@ function Canvas() {
 				setTool(oldToolRef.current);
 				break;
 			case "Alt":
-				setHoldingAlt(false);
+				holdingAltRef.current = false;
 				setCssCursor("zoom-in");
 				break;
 		}
