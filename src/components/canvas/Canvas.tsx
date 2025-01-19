@@ -105,7 +105,7 @@ function Canvas() {
 			if (selectionCoords.length !== 0) {
 				return selectionCoords.some(([x2, y2]) => x2 === x && y2 === y);
 			}
-			return false;
+			return true;
 		};
 
 		const eraseTool = () => {
