@@ -43,6 +43,7 @@ function Canvas() {
 	const dragStartCoordsRef = useRef<Position>();
 
 	const holdingAltRef = useRef(false);
+	const holdingShiftRef = useRef(false);
 	const oldToolRef = useRef<Tool>();
 	const selectionCoordsRef = useRef<CoordinateArray>(selectionCoords);
 
@@ -339,6 +340,11 @@ function Canvas() {
 					if (holdingAltRef.current) {
 						// If holding alt, remove new magic wand selection
 						return prev.filter(([x, y]) => !result.some(([x2, y2]) => x2 === x && y2 === y));
+					} else if (holdingShiftRef.current) {
+						// If holding shift, add magic wand selection to existing selection
+						const existing = new Set(prev.map(([x, y]) => `${x},${y}`));
+						const newCoords = result.filter(([x, y]) => !existing.has(`${x},${y}`));
+						return [...prev, ...newCoords];
 					}
 
 					// If not holding alt or shift, replace the existing selection with the magic wand selection
@@ -370,6 +376,9 @@ function Canvas() {
 				oldToolRef.current = tool;
 				setTool("hand");
 				setCssCursor("grabbing");
+				break;
+			case "Shift":
+				holdingShiftRef.current = true;
 				break;
 			case "Alt":
 				holdingAltRef.current = true;
@@ -416,6 +425,9 @@ function Canvas() {
 				setDragging(false);
 				setCssCursor("grab");
 				setTool(oldToolRef.current);
+				break;
+			case "Shift":
+				holdingShiftRef.current = false;
 				break;
 			case "Alt":
 				holdingAltRef.current = false;
