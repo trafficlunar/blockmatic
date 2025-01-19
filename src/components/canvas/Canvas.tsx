@@ -301,6 +301,43 @@ function Canvas() {
 
 	const onClick = useCallback(() => {
 		switch (tool) {
+			case "magic-wand": {
+				const visited = new Set<string>();
+				const result: CoordinateArray = [];
+				const startBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
+
+				// Return if the block is not found
+				if (!startBlock) return result;
+
+				function depthFirstSearch(block: Block) {
+					const key = `${block.x},${block.y}`;
+					if (visited.has(key)) return;
+					visited.add(key);
+					result.push([block.x, block.y]);
+
+					// Directions for adjacent blocks (up, down, left, right)
+					const directions = [
+						{ dx: 0, dy: 1 },
+						{ dx: 0, dy: -1 },
+						{ dx: 1, dy: 0 },
+						{ dx: -1, dy: 0 },
+					];
+
+					for (const { dx, dy } of directions) {
+						const newX = block.x + dx;
+						const newY = block.y + dy;
+						const adjacentBlock = blocks.find((b) => b.x === newX && b.y === newY && b.name === block.name);
+
+						if (adjacentBlock) {
+							depthFirstSearch({ ...block, x: newX, y: newY });
+						}
+					}
+				}
+
+				depthFirstSearch({ name: startBlock.name, x: mouseCoords.x, y: mouseCoords.y });
+				setSelectionCoords(result);
+				break;
+			}
 			case "eyedropper": {
 				const mouseBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
 				if (mouseBlock) setSelectedBlock(mouseBlock.name);
@@ -347,15 +384,18 @@ function Canvas() {
 				setTool("lasso");
 				break;
 			case "5":
-				setTool("pencil");
+				setTool("magic-wand");
 				break;
 			case "6":
-				setTool("eraser");
+				setTool("pencil");
 				break;
 			case "7":
-				setTool("eyedropper");
+				setTool("eraser");
 				break;
 			case "8":
+				setTool("eyedropper");
+				break;
+			case "9":
 				setTool("zoom");
 				break;
 		}
