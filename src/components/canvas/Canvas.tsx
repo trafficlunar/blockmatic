@@ -28,7 +28,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 function Canvas() {
 	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
 	const { settings } = useContext(SettingsContext);
-	const { missingTexture, solidTextures } = useContext(TexturesContext);
+	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
 	const { tool, radius, selectedBlock, selectionCoords, cssCursor, setTool, setSelectedBlock, setSelectionCoords, setCssCursor } =
 		useContext(ToolContext);
@@ -487,15 +487,7 @@ function Canvas() {
 				onClick={onClick}
 				options={{ backgroundAlpha: 0 }}
 			>
-				<Blocks
-					blocks={visibleBlocks}
-					missingTexture={missingTexture}
-					textures={textures}
-					solidTextures={solidTextures}
-					coords={coords}
-					scale={scale}
-					version={version}
-				/>
+				<Blocks blocks={visibleBlocks} missingTexture={missingTexture} textures={textures} coords={coords} scale={scale} version={version} />
 
 				<Container x={coords.x} y={coords.y} scale={scale}>
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}

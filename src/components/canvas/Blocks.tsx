@@ -9,7 +9,6 @@ interface Props {
 	blocks: Block[];
 	missingTexture: PIXI.Texture | undefined;
 	textures: Record<string, PIXI.Texture>;
-	solidTextures: Record<string, PIXI.Texture>;
 	coords: Position;
 	scale: number;
 	version: number;
@@ -18,7 +17,7 @@ interface Props {
 // Lifts 16,000 tiles limit
 settings.use32bitIndex = true;
 
-function Blocks({ blocks, missingTexture, textures, solidTextures, coords, scale, version }: Props) {
+function Blocks({ blocks, missingTexture, textures, coords, scale, version }: Props) {
 	const app = useApp();
 	const tilemapRef = useRef<CompositeTilemap>();
 
@@ -28,15 +27,9 @@ function Blocks({ blocks, missingTexture, textures, solidTextures, coords, scale
 		tilemap.clear();
 
 		// Tile solid colors at smaller scales
-		if (scale >= 0.4) {
-			blocks.forEach((block) => {
-				tilemap.tile(textures[block.name] ?? missingTexture, block.x * 16, block.y * 16);
-			});
-		} else {
-			blocks.forEach((block) => {
-				tilemap.tile(solidTextures[`${block.name}`] ?? missingTexture, block.x * 16, block.y * 16);
-			});
-		}
+		blocks.forEach((block) => {
+			tilemap.tile(textures[block.name] ?? missingTexture, block.x * 16, block.y * 16);
+		});
 	};
 
 	useEffect(() => {
