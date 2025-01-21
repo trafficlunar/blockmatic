@@ -35,7 +35,6 @@ function Blocks({ blocks, missingTexture, textures, coords, scale, version }: Pr
 	useEffect(() => {
 		const tilemap = new CompositeTilemap();
 		tilemapRef.current = tilemap;
-		tilemap.cullable = true;
 		app.stage.addChildAt(tilemap, 0);
 
 		tileBlocks();

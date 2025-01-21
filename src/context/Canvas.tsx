@@ -1,5 +1,7 @@
 import React, { createContext, ReactNode, useMemo, useState } from "react";
 
+import welcomeBlocksData from "@/data/welcome.json";
+
 interface Context {
 	stageSize: Dimension;
 	canvasSize: BoundingBox;
@@ -21,8 +23,8 @@ interface Props {
 export const CanvasContext = createContext<Context>({} as Context);
 
 export const CanvasProvider = ({ children }: Props) => {
-	const [stageSize, setStageSize] = useState({ width: 0, height: 0 } as Dimension);
-	const [blocks, setBlocks] = useState<Block[]>([]);
+	const [stageSize, setStageSize] = useState<Dimension>({ width: 0, height: 0 });
+	const [blocks, setBlocks] = useState<Block[]>(welcomeBlocksData);
 	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
 	const [scale, setScale] = useState(1);
 	const [version, setVersion] = useState(1214);

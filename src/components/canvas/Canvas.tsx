@@ -20,8 +20,6 @@ import CanvasBorder from "./CanvasBorder";
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
 
-import welcomeBlocksData from "@/data/welcome.json";
-
 // Set scale mode to NEAREST
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
@@ -460,8 +458,6 @@ function Canvas() {
 	}, [stageContainerRef]);
 
 	useEffect(() => {
-		setBlocks(welcomeBlocksData);
-
 		window.addEventListener("keydown", onKeyDown);
 		window.addEventListener("keyup", onKeyUp);
 		window.addEventListener("beforeunload", (e) => {
