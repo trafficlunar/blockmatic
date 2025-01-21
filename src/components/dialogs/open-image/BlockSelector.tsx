@@ -59,7 +59,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 								x={x}
 								y={y}
 								scale={2}
-								interactive={true}
+								eventMode={"static"}
 								pointerover={() => setHoverPosition({ x, y })}
 								click={() => onClick(block)}
 							/>
