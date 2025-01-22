@@ -11,6 +11,33 @@ import { Input } from "@/components/ui/input";
 import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
 
+interface BlockEntity {
+	Id: string;
+	Pos: Int32Array;
+}
+
+const blockEntitiesWhitelist = [
+	"barrel",
+	"beacon",
+	"bee",
+	"chiseled_bookshelf",
+	"command_block",
+	"crafter",
+	"creaking_heart",
+	"dispenser",
+	"dropper",
+	"furnace",
+	"jigsaw",
+	"spawner",
+	"piston",
+	"sculk",
+	"smoker",
+	"shulker",
+	"structure",
+	"suspicious",
+	"vault",
+];
+
 function SaveLitematic({ close }: DialogProps) {
 	const { canvasSize, blocks } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
@@ -26,11 +53,13 @@ function SaveLitematic({ close }: DialogProps) {
 		const width = canvasSize.maxX - canvasSize.minX;
 		const height = canvasSize.maxY - canvasSize.minY;
 
+		const blockEntities: BlockEntity[] = [];
+
 		// Fill in empty blocks with "air"
 		const filledBlocks: Block[] = [];
 
-		for (let x = canvasSize.minX; x <= canvasSize.maxX - 1; x++) {
-			for (let y = canvasSize.minY; y <= canvasSize.maxY - 1; y++) {
+		for (let x = canvasSize.minX; x < canvasSize.maxX; x++) {
+			for (let y = canvasSize.minY; y < canvasSize.maxY; y++) {
 				const existingBlock = blocks.find((block) => block.x === x && block.y === y);
 				if (existingBlock) {
 					filledBlocks.push(existingBlock);
@@ -58,6 +87,13 @@ function SaveLitematic({ close }: DialogProps) {
 								.map(([key, value]) => `${key}=${value}`)
 								.join(",")}]`
 						: "";
+
+					if (blockEntitiesWhitelist.some((i) => blockInfo.id.includes(i))) {
+						blockEntities.push({
+							Id: `minecraft:${blockInfo.id}`,
+							Pos: new Int32Array([block.x, block.y, 0]),
+						});
+					}
 					return `minecraft:${blockInfo.id}${properties}`;
 				})
 			)
@@ -92,9 +128,10 @@ function SaveLitematic({ close }: DialogProps) {
 				Height: new nbt.Int16(height),
 				Length: new nbt.Int16(1),
 				Metadata: {
-					Date: new Date().getTime(),
+					Date: BigInt(new Date().getTime()),
 				},
 				Blocks: {
+					BlockEntities: blockEntities,
 					Data: blockPlaceData,
 					Palette: blockPalette,
 				},

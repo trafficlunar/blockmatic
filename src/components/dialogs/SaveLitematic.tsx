@@ -29,8 +29,8 @@ function SaveLitematic({ close }: DialogProps) {
 		// Fill in empty blocks with "air"
 		const filledBlocks: Block[] = [];
 
-		for (let x = canvasSize.minX; x <= canvasSize.maxX - 1; x++) {
-			for (let y = canvasSize.minY; y <= canvasSize.maxY - 1; y++) {
+		for (let x = canvasSize.minX; x < canvasSize.maxX; x++) {
+			for (let y = canvasSize.minY; y < canvasSize.maxY; y++) {
 				const existingBlock = blocks.find((block) => block.x === x && block.y === y);
 				if (existingBlock) {
 					filledBlocks.push(existingBlock);
