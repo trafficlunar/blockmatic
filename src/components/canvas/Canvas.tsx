@@ -82,6 +82,7 @@ function Canvas() {
 	const updateCssCursor = useCallback(() => {
 		const cursorMapping: Partial<Record<Tool, string>> = {
 			hand: dragging ? "grab" : "grabbing",
+			move: "move",
 			zoom: holdingAltRef.current ? "zoom-out" : "zoom-in",
 		};
 

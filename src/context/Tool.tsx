@@ -27,18 +27,13 @@ export const ToolProvider = ({ children }: Props) => {
 	const [cssCursor, setCssCursor] = useState("crosshair");
 
 	useEffect(() => {
-		switch (tool) {
-			case "hand":
-				setCssCursor("grab");
-				break;
-			case "zoom":
-				setCssCursor("zoom-in");
-				break;
+		const cursorMapping: Partial<Record<Tool, string>> = {
+			hand: "grab",
+			move: "move",
+			zoom: "zoom-in",
+		};
 
-			default:
-				setCssCursor("crosshair");
-				break;
-		}
+		setCssCursor(cursorMapping[tool] || "crosshair");
 	}, [tool]);
 
 	return (
