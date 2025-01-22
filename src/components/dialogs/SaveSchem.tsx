@@ -4,6 +4,8 @@ import * as nbt from "nbtify";
 import { CanvasContext } from "@/context/Canvas";
 import { LoadingContext } from "@/context/Loading";
 
+import { encodeVarint } from "@/utils/varint";
+
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -103,10 +105,9 @@ function SaveLitematic({ close }: DialogProps) {
 		}, {});
 
 		// Get the block data
-		const buffer = new ArrayBuffer(filledBlocks.length);
-		const blockPlaceData = new Int8Array(buffer);
+		const ids: number[] = [];
 
-		filledBlocks.forEach((block, index) => {
+		filledBlocks.forEach((block) => {
 			const blockInfo = blockData[block.name.replace("minecraft:", "")];
 			const blockName = blockInfo ? blockInfo.id : block.name;
 			const properties = blockInfo.properties
@@ -116,8 +117,15 @@ function SaveLitematic({ close }: DialogProps) {
 				: "";
 			const blockId = blockPalette[`minecraft:${blockName}${properties}`];
 
-			blockPlaceData[index] = parseInt(blockId.toString());
+			// Parse blockId to number then encode as varint
+			const id = encodeVarint(parseInt(blockId.toString()));
+			// Push to separate array to make array buffer
+			ids.push(...id);
 		});
+
+		const buffer = new ArrayBuffer(ids.length);
+		const blockPlaceData = new Uint8Array(buffer);
+		blockPlaceData.set(ids);
 
 		// Generate NBT data
 		const data = {
