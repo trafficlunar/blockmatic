@@ -11,8 +11,11 @@ import { Input } from "@/components/ui/input";
 import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
 
+import _versionData from "@/data/versions.json";
+const versionData: Record<string, number> = _versionData;
+
 function SaveLitematic({ close }: DialogProps) {
-	const { canvasSize, blocks } = useContext(CanvasContext);
+	const { canvasSize, blocks, version } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
 
 	const [fileName, setFileName] = useState("blockmatic");
@@ -92,7 +95,7 @@ function SaveLitematic({ close }: DialogProps) {
 
 		// Generate NBT data
 		const data = {
-			MinecraftDataVersion: new nbt.Int32(4189),
+			MinecraftDataVersion: new nbt.Int32(versionData[version]),
 			Version: new nbt.Int32(7),
 			SubVersion: new nbt.Int32(1),
 			Metadata: {

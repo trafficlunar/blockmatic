@@ -7,11 +7,16 @@ import * as nbt from "nbtify";
 import { CanvasContext } from "@/context/Canvas";
 import { LoadingContext } from "@/context/Loading";
 
+import { decodeVarint } from "@/utils/varint";
+
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
+
+import _versionData from "@/data/versions.json";
+const versionData: Record<string, number> = _versionData;
 
 interface LitematicaBlockPalette extends nbt.CompoundTagLike {
 	Name: string;
@@ -19,6 +24,7 @@ interface LitematicaBlockPalette extends nbt.CompoundTagLike {
 }
 
 interface LitematicNBT extends nbt.ListTagLike {
+	MinecraftDataVersion: number;
 	Regions: {
 		Image: {
 			BlockStatePalette: LitematicaBlockPalette[];
@@ -34,13 +40,14 @@ interface SpongeNBT extends nbt.ListTagLike {
 			Data: Int8Array;
 			Palette: Record<string, number>;
 		};
+		DataVersion: number;
 		Width: number;
 		Height: number;
 	};
 }
 
 function OpenSchematic({ close }: DialogProps) {
-	const { setBlocks } = useContext(CanvasContext);
+	const { setBlocks, setVersion } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -61,16 +68,20 @@ function OpenSchematic({ close }: DialogProps) {
 			const data = await nbt.read(bytes);
 
 			if (fileExtension == "litematic") {
-				const litematicData = (data as nbt.NBTData<LitematicNBT>).data.Regions.Image;
+				const litematicData = (data as nbt.NBTData<LitematicNBT>).data;
+				const litematicRegionData = litematicData.Regions.Image;
+				const litematicVersion = Object.keys(versionData).find((key) => versionData[key] == litematicData.MinecraftDataVersion);
 
-				// todo: set version
-				const requiredBits = Math.max(Math.ceil(Math.log2(litematicData.BlockStatePalette.length)), 2);
+				// Set version to schematic version. If it doesn't find it in the data, return the latest version
+				setVersion(parseInt(litematicVersion || Object.keys(versionData)[0]));
+
+				const requiredBits = Math.max(Math.ceil(Math.log2(litematicRegionData.BlockStatePalette.length)), 2);
 
 				const getPaletteIndex = (index: number): bigint => {
-					const originalY = Math.floor(index / litematicData.Size.x);
-					const originalX = index % litematicData.Size.x;
-					const reversedY = litematicData.Size.y - 1 - originalY;
-					const reversedIndex = reversedY * litematicData.Size.x + originalX;
+					const originalY = Math.floor(index / litematicRegionData.Size.x);
+					const originalX = index % litematicRegionData.Size.x;
+					const reversedY = litematicRegionData.Size.y - 1 - originalY;
+					const reversedIndex = reversedY * litematicRegionData.Size.x + originalX;
 
 					// getAt() implementation - LitematicaBitArray.java
 					const startOffset = reversedIndex * requiredBits;
@@ -80,11 +91,12 @@ function OpenSchematic({ close }: DialogProps) {
 					const mask = (1 << requiredBits) - 1;
 
 					if (startArrayIndex === endArrayIndex) {
-						return (litematicData.BlockStates[startArrayIndex] >> BigInt(bitOffset)) & BigInt(mask);
+						return (litematicRegionData.BlockStates[startArrayIndex] >> BigInt(bitOffset)) & BigInt(mask);
 					} else {
 						const endOffset = 64 - bitOffset;
 						return (
-							((litematicData.BlockStates[startArrayIndex] >> BigInt(bitOffset)) | (litematicData.BlockStates[endArrayIndex] << BigInt(endOffset))) &
+							((litematicRegionData.BlockStates[startArrayIndex] >> BigInt(bitOffset)) |
+								(litematicRegionData.BlockStates[endArrayIndex] << BigInt(endOffset))) &
 							BigInt(mask)
 						);
 					}
@@ -94,11 +106,11 @@ function OpenSchematic({ close }: DialogProps) {
 				const blocks: Block[] = [];
 				let index = 0;
 
-				for (let y = 0; y < litematicData.Size.y; y++) {
-					for (let x = 0; x < litematicData.Size.x; x++) {
+				for (let y = 0; y < litematicRegionData.Size.y; y++) {
+					for (let x = 0; x < litematicRegionData.Size.x; x++) {
 						const paletteIndex = Number(getPaletteIndex(index));
 						console.log(paletteIndex);
-						const paletteBlock = litematicData.BlockStatePalette[paletteIndex];
+						const paletteBlock = litematicRegionData.BlockStatePalette[paletteIndex];
 
 						index++;
 						if (!paletteBlock) continue;
@@ -134,7 +146,10 @@ function OpenSchematic({ close }: DialogProps) {
 				setBlocks(blocks);
 			} else if (fileExtension == "schem") {
 				const spongeData = (data as nbt.NBTData<SpongeNBT>).data.Schematic;
-				// todo: set version
+				const schematicVersion = Object.keys(versionData).find((key) => versionData[key] == spongeData.DataVersion);
+
+				// Set version to schematic version. If it doesn't find it in the data, return the latest version
+				setVersion(parseInt(schematicVersion || Object.keys(versionData)[0]));
 
 				// Add every block to the canvas
 				const blocks: Block[] = [];

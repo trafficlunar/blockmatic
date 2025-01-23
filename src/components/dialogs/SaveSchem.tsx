@@ -13,6 +13,9 @@ import { Input } from "@/components/ui/input";
 import _blockData from "@/data/blocks/data.json";
 const blockData: BlockData = _blockData;
 
+import _versionData from "@/data/versions.json";
+const versionData: Record<string, number> = _versionData;
+
 interface BlockEntity {
 	Id: string;
 	Pos: Int32Array;
@@ -40,8 +43,8 @@ const blockEntitiesWhitelist = [
 	"vault",
 ];
 
-function SaveLitematic({ close }: DialogProps) {
-	const { canvasSize, blocks } = useContext(CanvasContext);
+function SaveSchem({ close }: DialogProps) {
+	const { canvasSize, blocks, version } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
 
 	const [fileName, setFileName] = useState("blockmatic");
@@ -130,7 +133,7 @@ function SaveLitematic({ close }: DialogProps) {
 		// Generate NBT data
 		const data = {
 			Schematic: {
-				DataVersion: new nbt.Int32(4189),
+				DataVersion: new nbt.Int32(versionData[version]),
 				Version: new nbt.Int32(3),
 				Width: new nbt.Int16(width),
 				Height: new nbt.Int16(height),
@@ -167,7 +170,7 @@ function SaveLitematic({ close }: DialogProps) {
 		<DialogContent>
 			<DialogHeader>
 				<DialogTitle>Save as .schem</DialogTitle>
-				<DialogDescription>Save your image as a .schem (Sponge)</DialogDescription>
+				<DialogDescription>Save your image as a .schem (Sponge Version 3)</DialogDescription>
 			</DialogHeader>
 
 			<div className="flex items-center gap-2">
@@ -187,4 +190,4 @@ function SaveLitematic({ close }: DialogProps) {
 	);
 }
 
-export default SaveLitematic;
+export default SaveSchem;
