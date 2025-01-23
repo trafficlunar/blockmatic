@@ -49,7 +49,7 @@ function OpenImage({ close }: DialogProps) {
 	const [blockTypeCheckboxesChecked, setBlockTypeCheckboxesChecked] = useState({
 		creative: false,
 		tile_entity: false,
-		fallable: false,
+		falling: false,
 	});
 
 	useEffect(() => {
@@ -271,11 +271,11 @@ function OpenImage({ close }: DialogProps) {
 								</div>
 								<div>
 									<Checkbox
-										id="fallable"
-										checked={blockTypeCheckboxesChecked.fallable}
-										onCheckedChange={(value) => onBlockTypeCheckedChange(value, "fallable")}
+										id="falling"
+										checked={blockTypeCheckboxesChecked.falling}
+										onCheckedChange={(value) => onBlockTypeCheckedChange(value, "falling")}
 									/>
-									<Label htmlFor="fallable">Fallable</Label>
+									<Label htmlFor="falling">Falling</Label>
 								</div>
 							</div>
 

@@ -200,7 +200,7 @@
 		"version": 1120,
 		"id": "black_concrete_powder",
 		"color": [27, 28, 33, 255],
-		"fallable": true
+		"falling": true
 	},
 	"black_glazed_terracotta": {
 		"name": "Black Glazed Terracotta",
@@ -262,7 +262,7 @@
 		"version": 1120,
 		"id": "blue_concrete_powder",
 		"color": [70, 74, 167, 255],
-		"fallable": true
+		"falling": true
 	},
 	"blue_glazed_terracotta": {
 		"name": "Blue Glazed Terracotta",
@@ -346,7 +346,7 @@
 		"version": 1120,
 		"id": "brown_concrete_powder",
 		"color": [126, 85, 54, 255],
-		"fallable": true
+		"falling": true
 	},
 	"brown_glazed_terracotta": {
 		"name": "Brown Glazed Terracotta",
@@ -790,7 +790,7 @@
 		"version": 1120,
 		"id": "cyan_concrete_powder",
 		"color": [37, 148, 157, 255],
-		"fallable": true
+		"falling": true
 	},
 	"cyan_glazed_terracotta": {
 		"name": "Cyan Glazed Terracotta",
@@ -1168,7 +1168,7 @@
 		"version": 1000,
 		"id": "gravel",
 		"color": [133, 129, 128, 255],
-		"fallable": true
+		"falling": true
 	},
 	"gray_concrete": {
 		"name": "Gray Concrete",
@@ -1181,7 +1181,7 @@
 		"version": 1120,
 		"id": "gray_concrete_powder",
 		"color": [77, 81, 85, 255],
-		"fallable": true
+		"falling": true
 	},
 	"gray_glazed_terracotta": {
 		"name": "Gray Glazed Terracotta",
@@ -1225,7 +1225,7 @@
 		"version": 1120,
 		"id": "green_concrete_powder",
 		"color": [97, 119, 45, 255],
-		"fallable": true
+		"falling": true
 	},
 	"green_glazed_terracotta": {
 		"name": "Green Glazed Terracotta",
@@ -1373,7 +1373,7 @@
 		"version": 1120,
 		"id": "light_blue_concrete_powder",
 		"color": [75, 181, 213, 255],
-		"fallable": true
+		"falling": true
 	},
 	"light_blue_glazed_terracotta": {
 		"name": "Light Blue Glazed Terracotta",
@@ -1417,7 +1417,7 @@
 		"version": 1120,
 		"id": "light_gray_concrete_powder",
 		"color": [155, 155, 149, 255],
-		"fallable": true
+		"falling": true
 	},
 	"light_gray_glazed_terracotta": {
 		"name": "Light Gray Glazed Terracotta",
@@ -1461,7 +1461,7 @@
 		"version": 1120,
 		"id": "lime_concrete_powder",
 		"color": [126, 189, 42, 255],
-		"fallable": true
+		"falling": true
 	},
 	"lime_glazed_terracotta": {
 		"name": "Lime Glazed Terracotta",
@@ -1529,7 +1529,7 @@
 		"version": 1120,
 		"id": "magenta_concrete_powder",
 		"color": [193, 85, 185, 255],
-		"fallable": true
+		"falling": true
 	},
 	"magenta_glazed_terracotta": {
 		"name": "Magenta Glazed Terracotta",
@@ -1765,7 +1765,7 @@
 		"version": 1120,
 		"id": "orange_concrete_powder",
 		"color": [227, 132, 34, 255],
-		"fallable": true
+		"falling": true
 	},
 	"orange_glazed_terracotta": {
 		"name": "Orange Glazed Terracotta",
@@ -1911,7 +1911,7 @@
 		"version": 1120,
 		"id": "pink_concrete_powder",
 		"color": [229, 154, 181, 255],
-		"fallable": true
+		"falling": true
 	},
 	"pink_glazed_terracotta": {
 		"name": "Pink Glazed Terracotta",
@@ -2060,7 +2060,7 @@
 		"version": 1120,
 		"id": "purple_concrete_powder",
 		"color": [132, 56, 178, 255],
-		"fallable": true
+		"falling": true
 	},
 	"purple_glazed_terracotta": {
 		"name": "Purple Glazed Terracotta",
@@ -2152,7 +2152,7 @@
 		"version": 1120,
 		"id": "red_concrete_powder",
 		"color": [168, 54, 51, 255],
-		"fallable": true
+		"falling": true
 	},
 	"red_glazed_terracotta": {
 		"name": "Red Glazed Terracotta",
@@ -2177,7 +2177,7 @@
 		"version": 1072,
 		"id": "red_sand",
 		"color": [191, 103, 33, 255],
-		"fallable": true
+		"falling": true
 	},
 	"red_sandstone": {
 		"name": "Red Sandstone",
@@ -2271,7 +2271,7 @@
 		"version": 1000,
 		"id": "sand",
 		"color": [219, 207, 164, 255],
-		"fallable": true
+		"falling": true
 	},
 	"sandstone": {
 		"name": "Sandstone",
@@ -2619,7 +2619,7 @@
 		"version": 1200,
 		"id": "suspicious_gravel",
 		"color": [131, 127, 126, 255],
-		"fallable": true,
+		"falling": true,
 		"creative": true
 	},
 	"suspicious_sand_0": {
@@ -2627,7 +2627,7 @@
 		"version": 1200,
 		"id": "suspicious_sand",
 		"color": [218, 205, 160, 255],
-		"fallable": true,
+		"falling": true,
 		"creative": true
 	},
 	"target_side": {
@@ -2794,7 +2794,7 @@
 		"version": 1120,
 		"id": "white_concrete_powder",
 		"color": [226, 228, 228, 255],
-		"fallable": true
+		"falling": true
 	},
 	"white_glazed_terracotta": {
 		"name": "White Glazed Terracotta",
@@ -2838,7 +2838,7 @@
 		"version": 1120,
 		"id": "yellow_concrete_powder",
 		"color": [233, 199, 57, 255],
-		"fallable": true
+		"falling": true
 	},
 	"yellow_glazed_terracotta": {
 		"name": "Yellow Glazed Terracotta",

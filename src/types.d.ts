@@ -45,7 +45,7 @@ type BlockData = Record<
 		version: number;
 		id: string;
 		color: number[];
-		fallable?: boolean;
+		falling?: boolean;
 		creative?: boolean;
 		tile_entity?: boolean;
 		properties?: Record<string, string>;
