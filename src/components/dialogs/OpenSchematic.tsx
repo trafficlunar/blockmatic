@@ -37,7 +37,7 @@ interface LitematicNBT extends nbt.ListTagLike {
 interface SpongeNBT extends nbt.ListTagLike {
 	Schematic: {
 		Blocks: {
-			Data: Int8Array;
+			Data: Uint8Array;
 			Palette: Record<string, number>;
 		};
 		DataVersion: number;
@@ -153,14 +153,15 @@ function OpenSchematic({ close }: DialogProps) {
 
 				// Add every block to the canvas
 				const blocks: Block[] = [];
-				let index = 0;
+				let offset = 0;
 
 				for (let y = spongeData.Height; y > 0; y--) {
 					for (let x = 0; x < spongeData.Width; x++) {
-						const paletteValue = spongeData.Blocks.Data[index];
+						// Decode varint to get the pallete value
+						const { value: paletteValue, bytesRead } = decodeVarint(spongeData.Blocks.Data, offset);
 						const paletteBlock = Object.keys(spongeData.Blocks.Palette).find((key) => spongeData.Blocks.Palette[key] == paletteValue);
 
-						index++;
+						offset += bytesRead;
 						if (!paletteBlock) continue;
 
 						const blockIdWithProperties = paletteBlock.replace("minecraft:", "");
