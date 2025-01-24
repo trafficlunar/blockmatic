@@ -11,6 +11,7 @@ import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
 import { useTextures } from "@/hooks/useTextures";
+import { isInSelection } from "@/utils/selection";
 
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
@@ -20,8 +21,7 @@ import CanvasBorder from "./CanvasBorder";
 
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
-import SelectionToolbar from "./SelectionToolbar";
-import { isInSelection } from "@/utils/selection";
+import SelectionBar from "./SelectionBar";
 
 // Set scale mode to NEAREST
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -527,7 +527,7 @@ function Canvas() {
 			<CursorInformation mouseCoords={mouseCoords} />
 			<CanvasInformation />
 
-			<SelectionToolbar />
+			<SelectionBar />
 		</div>
 	);
 }

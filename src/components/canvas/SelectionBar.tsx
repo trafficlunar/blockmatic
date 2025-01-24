@@ -6,7 +6,7 @@ import { SelectionContext } from "@/context/Selection";
 
 import { Button } from "@/components/ui/button";
 
-function SelectionToolbar() {
+function SelectionBar() {
 	const { blocks, setBlocks } = useContext(CanvasContext);
 	const { layerBlocks, setLayerBlocks } = useContext(SelectionContext);
 
@@ -42,4 +42,4 @@ function SelectionToolbar() {
 	);
 }
 
-export default SelectionToolbar;
+export default SelectionBar;
