@@ -21,6 +21,7 @@ import CanvasBorder from "./CanvasBorder";
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
 import SelectionToolbar from "./SelectionToolbar";
+import { isInSelection } from "@/utils/selection";
 
 // Set scale mode to NEAREST
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -106,14 +107,6 @@ function Canvas() {
 			return { x, y };
 		};
 
-		// Check if a block is within the selection
-		const isInSelection = (x: number, y: number): boolean => {
-			if (selectionCoords.length !== 0) {
-				return selectionCoords.some(([x2, y2]) => x2 === x && y2 === y);
-			}
-			return true;
-		};
-
 		const eraseTool = () => {
 			// Fixes Infinity and NaN errors when no blocks are present
 			if (blocks.length == 1) return;
@@ -122,7 +115,7 @@ function Canvas() {
 			const updated = blocks.filter((block) => {
 				const withinRadius =
 					block.x >= radiusPosition.x && block.x < radiusPosition.x + radius && block.y >= radiusPosition.y && block.y < radiusPosition.y + radius;
-				return !withinRadius || !isInSelection(block.x, block.y);
+				return !withinRadius || !isInSelection(selectionCoords, block.x, block.y);
 			});
 
 			setBlocks(updated);
@@ -139,7 +132,7 @@ function Canvas() {
 
 					setBlocks((prev) =>
 						prev.filter((b) => {
-							const isSelected = selectionCoords.some(([x, y]) => b.x === x && b.y === y);
+							const isSelected = isInSelection(selectionCoords, b.x, b.y);
 
 							// Add blocks in the selection coords to the selection layer
 							if (isSelected) result.push(b);
@@ -194,7 +187,7 @@ function Canvas() {
 						const tileY = radiusPosition.y + y;
 
 						// Only add blocks within the selection
-						if (isInSelection(tileX, tileY)) {
+						if (isInSelection(selectionCoords, tileX, tileY)) {
 							radiusBlocks.push({
 								name: selectedBlock,
 								x: tileX,
