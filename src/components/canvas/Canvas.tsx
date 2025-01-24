@@ -13,7 +13,7 @@ import { useTextures } from "@/hooks/useTextures";
 
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
-import SelectionBox from "./SelectionBox";
+import Selection from "./Selection";
 import Grid from "./Grid";
 import CanvasBorder from "./CanvasBorder";
 
@@ -489,7 +489,7 @@ function Canvas() {
 				<Container x={coords.x} y={coords.y} scale={scale}>
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
 					<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} />
-					<SelectionBox selection={selectionCoords} coords={coords} scale={scale} isDark={isDark} />
+					<Selection selection={selectionCoords} coords={coords} scale={scale} isDark={isDark} />
 				</Container>
 
 				{settings.grid && (

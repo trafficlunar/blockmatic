@@ -12,7 +12,7 @@ interface Props {
 
 const shader = new DashLineShader({ dash: 8, gap: 5 });
 
-function SelectionBox({ selection, coords, scale, isDark }: Props) {
+function Selection({ selection, coords, scale, isDark }: Props) {
 	const app = useApp();
 	const selectionRef = useRef<SmoothGraphics>();
 
@@ -70,4 +70,4 @@ function SelectionBox({ selection, coords, scale, isDark }: Props) {
 	return null;
 }
 
-export default SelectionBox;
+export default Selection;
