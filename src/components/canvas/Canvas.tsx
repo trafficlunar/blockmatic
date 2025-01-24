@@ -11,7 +11,7 @@ import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
 import { useTextures } from "@/hooks/useTextures";
-import { isInSelection } from "@/utils/selection";
+import { confirmSelection, isInSelection } from "@/utils/selection";
 
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
@@ -51,7 +51,6 @@ function Canvas() {
 	const holdingAltRef = useRef(false);
 	const holdingShiftRef = useRef(false);
 	const oldToolRef = useRef<Tool>();
-	const selectionCoordsRef = useRef<CoordinateArray>(selectionCoords);
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -383,76 +382,84 @@ function Canvas() {
 		}
 	}, [tool, holdingAltRef, scale, mouseCoords, blocks, setSelectionCoords, setSelectedBlock, zoom]);
 
-	const onKeyDown = (e: KeyboardEvent) => {
-		switch (e.key) {
-			case " ": // Space
-				setDragging(true);
-				oldToolRef.current = tool;
-				setTool("hand");
-				setCssCursor("grabbing");
-				break;
-			case "Shift":
-				holdingShiftRef.current = true;
-				break;
-			case "Alt":
-				holdingAltRef.current = true;
-				if (tool === "zoom") setCssCursor("zoom-out");
-				break;
-			case "Delete": {
-				setBlocks((prev) => prev.filter((b) => !selectionCoordsRef.current.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
-				break;
+	const onKeyDown = useCallback(
+		(e: KeyboardEvent) => {
+			switch (e.key) {
+				case "Escape":
+					setSelectionLayerBlocks([]);
+					break;
+				case "Enter":
+					confirmSelection(blocks, selectionLayerBlocks, setBlocks, setSelectionLayerBlocks);
+					break;
+				case " ": // Space
+					setDragging(true);
+					oldToolRef.current = tool;
+					setTool("hand");
+					setCssCursor("grabbing");
+					break;
+				case "Shift":
+					holdingShiftRef.current = true;
+					break;
+				case "Alt":
+					holdingAltRef.current = true;
+					if (tool === "zoom") setCssCursor("zoom-out");
+					break;
+				case "Delete": {
+					setBlocks((prev) => prev.filter((b) => !selectionCoords.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
+					break;
+				}
+				case "1":
+					setTool("hand");
+					break;
+				case "2":
+					setTool("move");
+					break;
+				case "3":
+					setTool("rectangle-select");
+					break;
+				case "4":
+					setTool("lasso");
+					break;
+				case "5":
+					setTool("magic-wand");
+					break;
+				case "6":
+					setTool("pencil");
+					break;
+				case "7":
+					setTool("eraser");
+					break;
+				case "8":
+					setTool("eyedropper");
+					break;
+				case "9":
+					setTool("zoom");
+					break;
 			}
-			case "1":
-				setTool("hand");
-				break;
-			case "2":
-				setTool("move");
-				break;
-			case "3":
-				setTool("rectangle-select");
-				break;
-			case "4":
-				setTool("lasso");
-				break;
-			case "5":
-				setTool("magic-wand");
-				break;
-			case "6":
-				setTool("pencil");
-				break;
-			case "7":
-				setTool("eraser");
-				break;
-			case "8":
-				setTool("eyedropper");
-				break;
-			case "9":
-				setTool("zoom");
-				break;
-		}
-	};
+		},
+		[tool, blocks, selectionCoords, selectionLayerBlocks, setBlocks, setCssCursor, setSelectionLayerBlocks, setTool]
+	);
 
-	const onKeyUp = (e: KeyboardEvent) => {
-		switch (e.key) {
-			case " ": // Space
-				if (!oldToolRef.current) return;
-				setDragging(false);
-				setCssCursor("grab");
-				setTool(oldToolRef.current);
-				break;
-			case "Shift":
-				holdingShiftRef.current = false;
-				break;
-			case "Alt":
-				holdingAltRef.current = false;
-				setCssCursor("zoom-in");
-				break;
-		}
-	};
-
-	useEffect(() => {
-		selectionCoordsRef.current = selectionCoords;
-	}, [selectionCoords]);
+	const onKeyUp = useCallback(
+		(e: KeyboardEvent) => {
+			switch (e.key) {
+				case " ": // Space
+					if (!oldToolRef.current) return;
+					setDragging(false);
+					setCssCursor("grab");
+					setTool(oldToolRef.current);
+					break;
+				case "Shift":
+					holdingShiftRef.current = false;
+					break;
+				case "Alt":
+					holdingAltRef.current = false;
+					setCssCursor("zoom-in");
+					break;
+			}
+		},
+		[setCssCursor, setTool]
+	);
 
 	useEffect(() => {
 		const container = stageContainerRef.current;
@@ -470,8 +477,7 @@ function Canvas() {
 
 		resizeCanvas();
 		return () => resizeObserver.disconnect();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [stageContainerRef]);
+	}, [stageContainerRef, setStageSize]);
 
 	useEffect(() => {
 		window.addEventListener("keydown", onKeyDown);
@@ -484,8 +490,7 @@ function Canvas() {
 			window.removeEventListener("keydown", onKeyDown);
 			window.removeEventListener("keyup", onKeyUp);
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [onKeyDown, onKeyUp]);
 
 	return (
 		<div ref={stageContainerRef} style={{ cursor: cssCursor }} className="relative w-full h-full bg-zinc-200 dark:bg-black">
