@@ -7,7 +7,7 @@ import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [react(), svgr(), ViteImageOptimizer()],
+	plugins: [react(), svgr(), ViteImageOptimizer({ exclude: "spritesheet.png" })],
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
