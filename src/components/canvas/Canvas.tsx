@@ -267,7 +267,7 @@ function Canvas() {
 							const startY = Math.min(dragStartCoords.y, mouseCoords.y);
 							const endY = Math.max(dragStartCoords.y, mouseCoords.y);
 
-							const isRadiusEven = radius % 2 == 0;
+							const isRadiusEven = radius == 1 || radius % 2 == 0;
 
 							for (let x = startX; x < endX + (isRadiusEven ? radius : radius - 1); x++) {
 								for (let y = startY; y < endY + (isRadiusEven ? radius : radius - 1); y++) {
