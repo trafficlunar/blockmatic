@@ -4,6 +4,7 @@ import * as PIXI from "pixi.js";
 import { Container, Stage } from "@pixi/react";
 
 import { CanvasContext } from "@/context/Canvas";
+import { SelectionContext } from "@/context/Selection";
 import { SettingsContext } from "@/context/Settings";
 import { TexturesContext } from "@/context/Textures";
 import { ThemeContext } from "@/context/Theme";
@@ -19,17 +20,23 @@ import CanvasBorder from "./CanvasBorder";
 
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
+import SelectionToolbar from "./SelectionToolbar";
 
 // Set scale mode to NEAREST
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
 	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
+	const {
+		coords: selectionCoords,
+		layerBlocks: selectionLayerBlocks,
+		setCoords: setSelectionCoords,
+		setLayerBlocks: setSelectionLayerBlocks,
+	} = useContext(SelectionContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
-	const { tool, radius, selectedBlock, selectionCoords, cssCursor, setTool, setSelectedBlock, setSelectionCoords, setCssCursor } =
-		useContext(ToolContext);
+	const { tool, radius, selectedBlock, cssCursor, setTool, setSelectedBlock, setCssCursor } = useContext(ToolContext);
 
 	const textures = useTextures(version);
 	const stageContainerRef = useRef<HTMLDivElement>(null);
@@ -126,23 +133,27 @@ function Canvas() {
 				const mouseMovement = mouseMovementRef.current;
 				if (!mouseMovement) return;
 
+				// If there is no selection currently being moved...
+				if (selectionLayerBlocks.length == 0) {
+					const result: Block[] = [];
+
+					setBlocks((prev) =>
+						prev.filter((b) => {
+							const isSelected = selectionCoords.some(([x, y]) => b.x === x && b.y === y);
+
+							// Add blocks in the selection coords to the selection layer
+							if (isSelected) result.push(b);
+
+							// Remove blocks originally there
+							return !isSelected;
+						})
+					);
+					setSelectionLayerBlocks(result);
+				}
+
 				// Increase each coordinate in the selection by the mouse movement
 				setSelectionCoords((prev) => prev.map(([x, y]) => [x + mouseMovement.x, y + mouseMovement.y]));
-
-				// Increase each block in the selection by the mouse movement
-				setBlocks((prev) =>
-					prev.map((block) => {
-						if (isInSelection(block.x, block.y)) {
-							return {
-								...block,
-								x: block.x + mouseMovement.x,
-								y: block.y + mouseMovement.y,
-							};
-						}
-
-						return block;
-					})
-				);
+				setSelectionLayerBlocks((prev) => prev.map((b) => ({ ...b, x: b.x + mouseMovement.x, y: b.y + mouseMovement.y })));
 				break;
 			}
 			case "lasso": {
@@ -205,7 +216,18 @@ function Canvas() {
 				break;
 			}
 		}
-	}, [tool, mouseCoords, selectedBlock, blocks, radius, selectionCoords, setSelectionCoords, setBlocks]);
+	}, [
+		tool,
+		mouseCoords,
+		selectedBlock,
+		blocks,
+		radius,
+		selectionCoords,
+		selectionLayerBlocks,
+		setSelectionCoords,
+		setSelectionLayerBlocks,
+		setBlocks,
+	]);
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
@@ -485,6 +507,16 @@ function Canvas() {
 				options={{ backgroundAlpha: 0 }}
 			>
 				<Blocks blocks={visibleBlocks} missingTexture={missingTexture} textures={textures} coords={coords} scale={scale} version={version} />
+				{/* Selection layer */}
+				<Blocks
+					isSelectionLayer
+					blocks={selectionLayerBlocks}
+					missingTexture={missingTexture}
+					textures={textures}
+					coords={coords}
+					scale={scale}
+					version={version}
+				/>
 
 				<Container x={coords.x} y={coords.y} scale={scale}>
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
@@ -501,6 +533,8 @@ function Canvas() {
 
 			<CursorInformation mouseCoords={mouseCoords} />
 			<CanvasInformation />
+
+			<SelectionToolbar />
 		</div>
 	);
 }

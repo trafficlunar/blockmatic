@@ -4,12 +4,10 @@ interface Context {
 	tool: Tool;
 	radius: number;
 	selectedBlock: string;
-	selectionCoords: CoordinateArray;
 	cssCursor: string;
 	setTool: React.Dispatch<React.SetStateAction<Tool>>;
 	setRadius: React.Dispatch<React.SetStateAction<number>>;
 	setSelectedBlock: React.Dispatch<React.SetStateAction<string>>;
-	setSelectionCoords: React.Dispatch<React.SetStateAction<CoordinateArray>>;
 	setCssCursor: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -23,7 +21,6 @@ export const ToolProvider = ({ children }: Props) => {
 	const [tool, setTool] = useState<Tool>("hand");
 	const [radius, setRadius] = useState(1);
 	const [selectedBlock, setSelectedBlock] = useState("stone");
-	const [selectionCoords, setSelectionCoords] = useState<CoordinateArray>([]);
 	const [cssCursor, setCssCursor] = useState("crosshair");
 
 	useEffect(() => {
@@ -42,12 +39,10 @@ export const ToolProvider = ({ children }: Props) => {
 				tool,
 				radius,
 				selectedBlock,
-				selectionCoords,
 				cssCursor,
 				setTool,
 				setRadius,
 				setSelectedBlock,
-				setSelectionCoords,
 				setCssCursor,
 			}}
 		>

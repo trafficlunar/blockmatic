@@ -1,13 +1,13 @@
 import { useContext } from "react";
 
 import { CanvasContext } from "@/context/Canvas";
-import { ToolContext } from "@/context/Tool";
+import { SelectionContext } from "@/context/Selection";
 
 import { MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
 
 function EditMenu() {
 	const { setBlocks } = useContext(CanvasContext);
-	const { selectionCoords, setSelectionCoords } = useContext(ToolContext);
+	const { coords: selectionCoords, setCoords: setSelectionCoords } = useContext(SelectionContext);
 
 	const cut = () => {
 		setBlocks((prev) => prev.filter((b) => !selectionCoords.some(([x2, y2]) => x2 === b.x && y2 === b.y)));

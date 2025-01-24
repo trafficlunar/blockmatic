@@ -12,12 +12,13 @@ interface Props {
 	coords: Position;
 	scale: number;
 	version: number;
+	isSelectionLayer?: boolean;
 }
 
 // Lifts 16,000 tiles limit
 settings.use32bitIndex = true;
 
-function Blocks({ blocks, missingTexture, textures, coords, scale, version }: Props) {
+function Blocks({ blocks, missingTexture, textures, coords, scale, version, isSelectionLayer }: Props) {
 	const app = useApp();
 	const tilemapRef = useRef<CompositeTilemap>();
 
@@ -33,10 +34,18 @@ function Blocks({ blocks, missingTexture, textures, coords, scale, version }: Pr
 	};
 
 	useEffect(() => {
+		const container = new PIXI.Container();
+		// Put selection layer on top of the blocks layer
+		app.stage.addChildAt(container, isSelectionLayer ? 1 : 0);
+
 		const tilemap = new CompositeTilemap();
 		tilemapRef.current = tilemap;
-		app.stage.addChildAt(tilemap, 0);
 
+		if (isSelectionLayer) {
+			container.filters = [new PIXI.AlphaFilter(0.5)];
+		}
+
+		container.addChild(tilemap);
 		tileBlocks();
 	}, []);
 
