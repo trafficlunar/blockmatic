@@ -6,7 +6,7 @@ function CanvasInformation() {
 	const { stageSize, canvasSize, scale, setCoords, setScale } = useContext(CanvasContext);
 
 	const onValueChange = (value: number[]) => {
-		const newScale = value[0];
+		const newScale = Math.pow(10, value[0]);
 		setScale(newScale);
 
 		// Center canvas
@@ -32,10 +32,10 @@ function CanvasInformation() {
 			<div className="info-child">
 				<Slider
 					defaultValue={[1]}
-					min={0.1}
-					max={32}
-					step={0.1}
-					value={[scale]}
+					min={-1} // 10^(-1) = 0.1
+					max={1.50515} // 10^(1.50515) = ≈32
+					step={0.01}
+					value={[Math.log10(scale)]}
 					onValueChange={onValueChange}
 					orientation="vertical"
 					className="!h-32"
