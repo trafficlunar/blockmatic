@@ -10,23 +10,41 @@ function PrivacyPolicy() {
 
 			<h1 className="text-2xl font-medium">Privacy Policy</h1>
 			<p className="mb-4">
-				<strong>Effective Date:</strong> January 2, 2025
+				<strong>Effective Date:</strong> January 25, 2025
 			</p>
 
 			<p>By using this website, you confirm that you understand and agree to this Privacy Policy.</p>
 
 			<ul className="list-disc ml-8 py-2">
-				<li>Blockmatic does not collect, store, or process any data in any form.</li>
-				<li>It also does not use cookies or analytics services.</li>
+				<li>
+					Blockmatic collects analytics through a self-hosted instance of{" "}
+					<a href="https://umami.is/" className="link">
+						Umami
+					</a>
+					. Umami is GDPR-compliant and{" "}
+					<a href="https://umami.is/docs/faq" className="link">
+						"does not collect any personally identifiable information and anonymizes all data collected"
+					</a>
+					.
+				</li>
+				<li>
+					Blockmatic does not use cookies. Umami also specifies in their{" "}
+					<a href="https://umami.is/docs/faq" className="link">
+						F.A.Q.
+					</a>{" "}
+					that they don't use cookies either.
+				</li>
 				<li>
 					Blockmatic is hosted by Vercel. I can not guarantee that Vercel does not collect any data, therefore I recommend reviewing their privacy
 					policy for clarification.
 				</li>
 			</ul>
 
-			<p>
+			<p>Please also note that this privacy policy may be updated occasionally. It is recommended to review it from time to time.</p>
+
+			<p className="mt-2">
 				If you have any questions or concerns, please contact me at:{" "}
-				<a href="mailto:hello@trafficlunar.net" className="text-blue-500 dark:text-blue-300">
+				<a href="mailto:hello@trafficlunar.net" className="link">
 					hello@trafficlunar.net
 				</a>
 			</p>

@@ -32,6 +32,8 @@ body {
 	@apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50;
 }
 
+.link {
+	@apply text-blue-500 dark:text-blue-300;
 }
 
 .info-child {
