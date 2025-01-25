@@ -29,7 +29,9 @@
 }
 
 body {
-	@apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50 overflow-y-hidden;
+	@apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50;
+}
+
 }
 
 .info-child {
