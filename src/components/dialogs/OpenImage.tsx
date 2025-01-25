@@ -24,7 +24,7 @@ import VersionCombobox from "../VersionCombobox";
 import { findBlockFromRgb } from "@/utils/findBlockFromRgb";
 
 function OpenImage({ close }: DialogProps) {
-	const { version, setVersion, setBlocks } = useContext(CanvasContext);
+	const { version, setBlocks, setVersion, centerCanvas } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -51,6 +51,8 @@ function OpenImage({ close }: DialogProps) {
 		tile_entity: false,
 		falling: false,
 	});
+
+	const [isFinished, setIsFinished] = useState(false);
 
 	useEffect(() => {
 		if (acceptedFiles[0]) {
@@ -96,6 +98,7 @@ function OpenImage({ close }: DialogProps) {
 
 	const onSubmit = async () => {
 		if (image) {
+			setIsFinished(false);
 			setLoading(true);
 			// Wait for loading indicator to appear
 			await new Promise((resolve) => setTimeout(resolve, 100));
@@ -131,9 +134,17 @@ function OpenImage({ close }: DialogProps) {
 			}
 
 			setLoading(false);
-			close();
+			setIsFinished(true);
 		}
 	};
+
+	useEffect(() => {
+		if (!isFinished) return;
+		centerCanvas();
+		close();
+
+		return () => setIsFinished(false);
+	}, [isFinished, centerCanvas, close]);
 
 	useEffect(() => {
 		Object.keys(blockTypeCheckboxesChecked).forEach((property) => {
