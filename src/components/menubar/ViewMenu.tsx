@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { MenubarCheckboxItem, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
 
+import { CanvasContext } from "@/context/Canvas";
 import { DialogContext } from "@/context/Dialog";
 import { SettingsContext } from "@/context/Settings";
 
 function ViewMenu() {
+	const { centerCanvas } = useContext(CanvasContext);
 	const openDialog = useContext(DialogContext);
 	const { settings, setSetting } = useContext(SettingsContext);
 
@@ -17,6 +19,7 @@ function ViewMenu() {
 			<MenubarTrigger>View</MenubarTrigger>
 			<MenubarContent>
 				<MenubarItem onClick={() => openDialog("SetScale")}>Set Scale</MenubarItem>
+				<MenubarItem onClick={centerCanvas}>Center Canvas</MenubarItem>
 				<MenubarSeparator />
 				<MenubarCheckboxItem checked={settings.grid} onCheckedChange={onCheckedChange("grid")}>
 					Grid
