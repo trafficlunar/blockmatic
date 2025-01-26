@@ -11,6 +11,7 @@ import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
 import { useTextures } from "@/hooks/useTextures";
+import { useBlockData } from "@/hooks/useBlockData";
 import { confirmSelection, isInSelection } from "@/utils/selection";
 
 import Blocks from "./Blocks";
@@ -40,6 +41,7 @@ function Canvas() {
 	const { tool, radius, selectedBlock, cssCursor, setTool, setSelectedBlock, setCssCursor } = useContext(ToolContext);
 
 	const textures = useTextures(version);
+	const blockData = useBlockData(version);
 	const stageContainerRef = useRef<HTMLDivElement>(null);
 
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
@@ -435,9 +437,22 @@ function Canvas() {
 				case "9":
 					setTool("zoom");
 					break;
+				case "ArrowRight":
+					if (holdingAltRef.current && holdingShiftRef.current) {
+						const newBlocks: Block[] = [];
+
+						Object.keys(blockData).forEach((name, index) => {
+							const x = index % 16;
+							const y = Math.floor(index / 16);
+							newBlocks.push({ name, x, y });
+						});
+
+						setBlocks(newBlocks);
+					}
+					break;
 			}
 		},
-		[tool, blocks, selectionCoords, selectionLayerBlocks, setBlocks, setCssCursor, setSelectionLayerBlocks, setTool]
+		[tool, blocks, selectionCoords, selectionLayerBlocks, blockData, setBlocks, setCssCursor, setSelectionLayerBlocks, setTool]
 	);
 
 	const onKeyUp = useCallback(
