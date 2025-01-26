@@ -157,7 +157,7 @@ function OpenSchematic({ close }: DialogProps) {
 
 				for (let y = spongeData.Height; y > 0; y--) {
 					for (let x = 0; x < spongeData.Width; x++) {
-						// Decode varint to get the pallete value
+						// Decode varint to get the palette value
 						const { value: paletteValue, bytesRead } = decodeVarint(spongeData.Blocks.Data, offset);
 						const paletteBlock = Object.keys(spongeData.Blocks.Palette).find((key) => spongeData.Blocks.Palette[key] == paletteValue);
 

@@ -14,6 +14,11 @@ const blockData: BlockData = _blockData;
 import _versionData from "@/data/versions.json";
 const versionData: Record<string, number> = _versionData;
 
+type BlockStatePalette = {
+	Name: string;
+	Properties?: Record<string, string>;
+}[];
+
 function SaveLitematic({ close }: DialogProps) {
 	const { canvasSize, blocks, version } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
@@ -44,15 +49,15 @@ function SaveLitematic({ close }: DialogProps) {
 		}
 
 		// Generate the block palette
-		const blockStatePalette = [
+		const blockStatePalette: BlockStatePalette = [
 			{ Name: "minecraft:air" },
 			...Array.from(
 				new Set(
 					blocks.map((block) => {
-						const blockInfo = blockData[block.name.replace("minecraft:", "")];
-						const returnData: { Name: string; Properties?: Record<string, string> } = {
+						const blockInfo = blockData[block.name];
+						const returnData = {
 							Name: `minecraft:${blockInfo.id}`,
-							...(blockInfo.properties ? { Properties: blockInfo.properties } : {}),
+							...(blockInfo.properties && { Properties: blockInfo.properties }),
 						};
 
 						// Stringify to remove duplicates
@@ -68,9 +73,17 @@ function SaveLitematic({ close }: DialogProps) {
 
 		filledBlocks.forEach((block) => {
 			const blockInfo = blockData[block.name.replace("minecraft:", "")];
-			const blockName = blockInfo ? blockInfo.id : block.name;
+			const blockName = blockInfo?.id ?? block.name;
+			const blockProperties = blockInfo?.properties;
 
-			const blockId = blockStatePalette.findIndex((entry) => entry.Name === `minecraft:${blockName}`);
+			// Get the index from the palette by checking the name and properties (if exists)
+			const blockIndex = blockStatePalette.findIndex((entry) => {
+				if (blockProperties) {
+					return entry.Name === `minecraft:${blockName}` && JSON.stringify(entry.Properties) === JSON.stringify(blockProperties);
+				}
+				return entry.Name === `minecraft:${blockName}` && !entry.Properties;
+			});
+			const blockId = BigInt(blockIndex);
 
 			const reversedY = height - 1 - block.y;
 			const index = reversedY * width + block.x;
@@ -79,17 +92,16 @@ function SaveLitematic({ close }: DialogProps) {
 			const startOffset = index * requiredBits;
 			const startArrayIndex = Math.floor(startOffset / 64);
 			const endArrayIndex = ((index + 1) * requiredBits - 1) >> 6;
-			const bitOffset = startOffset % 64;
-			const mask = (1 << requiredBits) - 1;
+			const bitOffset = BigInt(startOffset % 64);
+			const mask = BigInt((1 << requiredBits) - 1);
 
-			blockStates[startArrayIndex] =
-				(blockStates[startArrayIndex] & ~(BigInt(mask) << BigInt(bitOffset))) | (BigInt(blockId & mask) << BigInt(bitOffset));
+			blockStates[startArrayIndex] = (blockStates[startArrayIndex] & ~(mask << bitOffset)) | ((blockId & mask) << bitOffset);
 
-			if (startArrayIndex !== endArrayIndex) {
-				const endOffset = 64 - bitOffset;
-				const j1 = requiredBits - endOffset;
+			if (startArrayIndex != endArrayIndex) {
+				const endOffset = 64n - bitOffset;
+				const j1 = BigInt(requiredBits) - endOffset;
 
-				blockStates[endArrayIndex] = ((blockStates[endArrayIndex] >> BigInt(j1)) << BigInt(j1)) | (BigInt(blockId & mask) >> BigInt(endOffset));
+				blockStates[endArrayIndex] = ((blockStates[endArrayIndex] >> j1) << j1) | ((blockId & mask) >> endOffset);
 			}
 		});
 
