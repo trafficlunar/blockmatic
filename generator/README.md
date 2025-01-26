@@ -16,14 +16,17 @@ Before running any of these scripts you need to have a `blocks` directory with M
 1. Run `node scripts/filter.js`
 2. Every unneeded texture has been deleted
 
-## resize.js
+## fix.js
 
-> Resizes image files bigger than 16x16 (these files are usually for animations such as fire)
+> Rotates glazed_terracotta textures and resizes image files bigger than 16x16 (these files are usually for animations such as fire)
 
-1. Run `node scripts/resize.js`
-2. Every file has been resized accordingly
+1. Run `node scripts/fix.js`
+2. Every file has been fixed accordingly
 
 ## data.js
+
+> [!IMPORTANT]
+> Outdated
 
 > Generates average colors, versions, names, ids, properties for blocks (NEEDS MANUAL EDITING AFTER!)
 

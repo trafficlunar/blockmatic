@@ -40,7 +40,7 @@ const data = {};
 		data[fileName] = {
 			name: VERSION_DATA.blocksByName[fileName] ? VERSION_DATA.blocksByName[fileName].displayName : "REPLACE_ME_REPLACE_ME_REPLACE_ME_REPLACE_ME",
 			version: getVersion(),
-			id: VERSION_DATA.blocksByName[blockName] ? VERSION_DATA.blocksByName[blockName][property] : "REPLACE_ME_REPLACE_ME_REPLACE_ME_REPLACE_ME",
+			id: VERSION_DATA.blocksByName[blockName] ? VERSION_DATA.blocksByName[blockName].id : "REPLACE_ME_REPLACE_ME_REPLACE_ME_REPLACE_ME",
 			color: [color.value[0], color.value[1], color.value[2], color.value[3]],
 		};
 	}

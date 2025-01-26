@@ -47,15 +47,6 @@
 		"id": "ancient_debris",
 		"color": [99, 70, 63, 255]
 	},
-	"ancient_debris_top": {
-		"name": "Ancient Debris (Top)",
-		"version": 1160,
-		"id": "ancient_debris",
-		"color": [101, 78, 72, 255],
-		"properties": {
-			"axis": "z"
-		}
-	},
 	"andesite": {
 		"name": "Andesite",
 		"version": 1080,
@@ -102,13 +93,19 @@
 		"name": "Barrel (Bottom)",
 		"version": 1140,
 		"id": "barrel",
-		"color": [117, 86, 50, 255]
+		"color": [117, 86, 50, 255],
+		"properties": {
+			"facing": "north"
+		}
 	},
 	"barrel_side": {
 		"name": "Barrel",
 		"version": 1140,
 		"id": "barrel",
-		"color": [115, 85, 52, 255]
+		"color": [115, 85, 52, 255],
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"barrel_top": {
 		"name": "Barrel (Top)",
@@ -116,7 +113,7 @@
 		"id": "barrel",
 		"color": [136, 101, 59, 255],
 		"properties": {
-			"axis": "z"
+			"facing": "up"
 		}
 	},
 	"basalt_side": {
@@ -145,7 +142,10 @@
 		"name": "Bee Nest",
 		"version": 1150,
 		"id": "bee_nest",
-		"color": [191, 151, 80, 255]
+		"color": [191, 151, 80, 255],
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"bee_nest_side": {
 		"name": "Bee Nest (Side)",
@@ -213,7 +213,10 @@
 		"version": 1110,
 		"id": "black_shulker_box",
 		"color": [26, 26, 30, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"black_stained_glass": {
 		"name": "Black Stained Glass",
@@ -243,13 +246,19 @@
 		"name": "Blast Furnace",
 		"version": 1140,
 		"id": "blast_furnace",
-		"color": [115, 115, 114, 255]
+		"color": [115, 115, 114, 255],
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"blast_furnace_side": {
 		"name": "Blast Furnace (Side)",
 		"version": 1140,
 		"id": "blast_furnace",
-		"color": [113, 113, 113, 255]
+		"color": [113, 113, 113, 255],
+		"properties": {
+			"facing": "north"
+		}
 	},
 	"blue_concrete": {
 		"name": "Blue Concrete",
@@ -281,7 +290,10 @@
 		"version": 1110,
 		"id": "blue_shulker_box",
 		"color": [44, 46, 141, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"blue_stained_glass": {
 		"name": "Blue Stained Glass",
@@ -365,7 +377,10 @@
 		"version": 1110,
 		"id": "brown_shulker_box",
 		"color": [107, 66, 36, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"brown_stained_glass": {
 		"name": "Brown Stained Glass",
@@ -427,7 +442,10 @@
 		"version": 1042,
 		"id": "chain_command_block",
 		"color": [138, 170, 156, 255],
-		"creative": true
+		"creative": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"cherry_log": {
 		"name": "Cherry Log",
@@ -487,7 +505,10 @@
 		"name": "Chiseled Bookshelf (Side)",
 		"version": 1200,
 		"id": "chiseled_bookshelf",
-		"color": [176, 143, 88, 255]
+		"color": [176, 143, 88, 255],
+		"properties": {
+			"facing": "east"
+		}
 	},
 	"chiseled_copper": {
 		"name": "Chiseled Copper",
@@ -602,7 +623,10 @@
 		"version": 1042,
 		"id": "command_block",
 		"color": [185, 141, 120, 255],
-		"creative": true
+		"creative": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"composter_side": {
 		"name": "Composter",
@@ -682,11 +706,23 @@
 		"id": "cracked_stone_bricks",
 		"color": [120, 119, 120, 255]
 	},
+	"crafter_bottom": {
+		"name": "Crafter (Bottom)",
+		"version": 1200,
+		"id": "crafter",
+		"color": [80, 80, 80, 255],
+		"properties": {
+			"orientation": "up_north"
+		}
+	},
 	"crafter_north": {
 		"name": "Crafter",
 		"version": 1200,
 		"id": "crafter",
-		"color": [120, 114, 107, 255]
+		"color": [120, 114, 107, 255],
+		"properties": {
+			"orientation": "south_up"
+		}
 	},
 	"crafter_south": {
 		"name": "Crafter (South)",
@@ -694,7 +730,16 @@
 		"id": "crafter",
 		"color": [129, 118, 104, 255],
 		"properties": {
-			"orientation": "south_up"
+			"orientation": "north_up"
+		}
+	},
+	"crafter_top": {
+		"name": "Crafter (Top)",
+		"version": 1200,
+		"id": "crafter",
+		"color": [118, 112, 113, 255],
+		"properties": {
+			"orientation": "up_south"
 		}
 	},
 	"crafter_west": {
@@ -703,7 +748,7 @@
 		"id": "crafter",
 		"color": [136, 122, 103, 255],
 		"properties": {
-			"orientation": "east_up"
+			"orientation": "west_up"
 		}
 	},
 	"crafting_table_front": {
@@ -803,7 +848,10 @@
 		"version": 1110,
 		"id": "cyan_shulker_box",
 		"color": [20, 122, 136, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"cyan_stained_glass": {
 		"name": "Cyan Stained Glass",
@@ -1090,12 +1138,6 @@
 		"id": "fletching_table",
 		"color": [181, 164, 121, 255]
 	},
-	"fletching_table_side": {
-		"name": "Fletching Table (Side)",
-		"version": 1140,
-		"id": "fletching_table",
-		"color": [196, 178, 144, 255]
-	},
 	"furnace_front": {
 		"name": "Furnace",
 		"version": 1000,
@@ -1109,7 +1151,10 @@
 		"name": "Furnace (Side)",
 		"version": 1000,
 		"id": "furnace",
-		"color": [126, 126, 126, 255]
+		"color": [126, 126, 126, 255],
+		"properties": {
+			"facing": "north"
+		}
 	},
 	"gilded_blackstone": {
 		"name": "Gilded Blackstone",
@@ -1194,7 +1239,10 @@
 		"version": 1110,
 		"id": "gray_shulker_box",
 		"color": [56, 59, 63, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"gray_stained_glass": {
 		"name": "Gray Stained Glass",
@@ -1238,7 +1286,10 @@
 		"version": 1110,
 		"id": "green_shulker_box",
 		"color": [79, 101, 32, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"green_stained_glass": {
 		"name": "Green Stained Glass",
@@ -1386,7 +1437,10 @@
 		"version": 1110,
 		"id": "light_blue_shulker_box",
 		"color": [50, 165, 212, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"light_blue_stained_glass": {
 		"name": "Light Blue Stained Glass",
@@ -1430,7 +1484,10 @@
 		"version": 1110,
 		"id": "light_gray_shulker_box",
 		"color": [126, 126, 117, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"light_gray_stained_glass": {
 		"name": "Light Gray Stained Glass",
@@ -1474,7 +1531,10 @@
 		"version": 1110,
 		"id": "lime_shulker_box",
 		"color": [101, 174, 23, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"lime_stained_glass": {
 		"name": "Lime Stained Glass",
@@ -1500,23 +1560,23 @@
 		"id": "lodestone",
 		"color": [124, 125, 128, 255]
 	},
-	"loom_bottom": {
-		"name": "Loom (Bottom)",
-		"version": 1140,
-		"id": "loom",
-		"color": [79, 62, 37, 255]
-	},
 	"loom_front": {
 		"name": "Loom",
 		"version": 1140,
 		"id": "loom",
-		"color": [154, 125, 89, 255]
+		"color": [154, 125, 89, 255],
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"loom_side": {
 		"name": "Loom (Side)",
 		"version": 1140,
 		"id": "loom",
-		"color": [150, 108, 75, 255]
+		"color": [150, 108, 75, 255],
+		"properties": {
+			"facing": "east"
+		}
 	},
 	"magenta_concrete": {
 		"name": "Magenta Concrete",
@@ -1542,7 +1602,10 @@
 		"version": 1110,
 		"id": "magenta_shulker_box",
 		"color": [174, 55, 164, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"magenta_stained_glass": {
 		"name": "Magenta Stained Glass",
@@ -1638,7 +1701,15 @@
 		"name": "Mushroom Block (Inside)",
 		"version": 1080,
 		"id": "brown_mushroom_block",
-		"color": [202, 170, 120, 255]
+		"color": [202, 170, 120, 255],
+		"properties": {
+			"north": "false",
+			"east": "false",
+			"south": "false",
+			"west": "false",
+			"down": "false",
+			"up": "false"
+		}
 	},
 	"mushroom_stem": {
 		"name": "Mushroom Stem",
@@ -1728,7 +1799,10 @@
 		"name": "Observer (Back)",
 		"version": 1110,
 		"id": "observer",
-		"color": [77, 76, 76, 255]
+		"color": [77, 76, 76, 255],
+		"properties": {
+			"facing": "north"
+		}
 	},
 	"observer_front": {
 		"name": "Observer",
@@ -1740,7 +1814,19 @@
 		"name": "Observer (Side)",
 		"version": 1110,
 		"id": "observer",
-		"color": [75, 74, 74, 255]
+		"color": [75, 74, 74, 255],
+		"properties": {
+			"facing": "east"
+		}
+	},
+	"observer_top": {
+		"name": "Observer (Top)",
+		"version": 1110,
+		"id": "observer",
+		"color": [105, 105, 105, 255],
+		"properties": {
+			"facing": "down"
+		}
 	},
 	"obsidian": {
 		"name": "Obsidian",
@@ -1778,7 +1864,10 @@
 		"version": 1110,
 		"id": "orange_shulker_box",
 		"color": [235, 107, 11, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"orange_stained_glass": {
 		"name": "Orange Stained Glass",
@@ -1924,7 +2013,10 @@
 		"version": 1110,
 		"id": "pink_shulker_box",
 		"color": [231, 123, 158, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"pink_stained_glass": {
 		"name": "Pink Stained Glass",
@@ -1950,7 +2042,7 @@
 		"id": "piston",
 		"color": [158, 134, 98, 255],
 		"properties": {
-			"axis": "z"
+			"facing": "south"
 		}
 	},
 	"piston_top_sticky": {
@@ -1959,7 +2051,7 @@
 		"id": "sticky_piston",
 		"color": [132, 156, 105, 255],
 		"properties": {
-			"axis": "z"
+			"facing": "south"
 		}
 	},
 	"podzol_side": {
@@ -2073,7 +2165,10 @@
 		"version": 1110,
 		"id": "purple_shulker_box",
 		"color": [104, 33, 157, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"purple_stained_glass": {
 		"name": "Purple Stained Glass",
@@ -2190,7 +2285,10 @@
 		"version": 1110,
 		"id": "red_shulker_box",
 		"color": [141, 32, 30, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"red_stained_glass": {
 		"name": "Red Stained Glass",
@@ -2240,7 +2338,10 @@
 		"version": 1042,
 		"id": "repeating_command_block",
 		"color": [135, 120, 181, 255],
-		"creative": true
+		"creative": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"resin_block": {
 		"name": "Block of Resin",
@@ -2302,7 +2403,10 @@
 		"version": 1110,
 		"id": "shulker_box",
 		"color": [140, 97, 140, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"slime_block": {
 		"name": "Slime Block",
@@ -2316,17 +2420,14 @@
 		"id": "smithing_table",
 		"color": [62, 41, 44, 255]
 	},
-	"smithing_table_side": {
-		"name": "Smithing Table (Side)",
-		"version": 1140,
-		"id": "smithing_table",
-		"color": [61, 39, 41, 255]
-	},
 	"smoker_front": {
 		"name": "Smoker",
 		"version": 1140,
 		"id": "smoker",
-		"color": [97, 84, 70, 255]
+		"color": [97, 84, 70, 255],
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"smoker_side": {
 		"name": "Smoker (Side)",
@@ -2607,7 +2708,7 @@
 			"axis": "z"
 		}
 	},
-	"structure_block": {
+	"structure_block_load": {
 		"name": "Structure Block",
 		"version": 1090,
 		"id": "structure_block",
@@ -2807,7 +2908,10 @@
 		"version": 1110,
 		"id": "white_shulker_box",
 		"color": [216, 221, 222, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"white_stained_glass": {
 		"name": "White Stained Glass",
@@ -2851,7 +2955,10 @@
 		"version": 1110,
 		"id": "yellow_shulker_box",
 		"color": [248, 189, 30, 255],
-		"tile_entity": true
+		"tile_entity": true,
+		"properties": {
+			"facing": "south"
+		}
 	},
 	"yellow_stained_glass": {
 		"name": "Yellow Stained Glass",
