@@ -18,9 +18,11 @@ function ViewMenu() {
 		<MenubarMenu>
 			<MenubarTrigger>View</MenubarTrigger>
 			<MenubarContent>
+				<MenubarItem onClick={() => openDialog("SetCoords")}>Set Coordinates</MenubarItem>
 				<MenubarItem onClick={() => openDialog("SetScale")}>Set Scale</MenubarItem>
 				<MenubarItem onClick={centerCanvas}>Center Canvas</MenubarItem>
 				<MenubarSeparator />
+
 				<MenubarCheckboxItem checked={settings.grid} onCheckedChange={onCheckedChange("grid")}>
 					Grid
 				</MenubarCheckboxItem>
