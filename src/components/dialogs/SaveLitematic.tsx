@@ -30,7 +30,6 @@ function SaveLitematic({ close, registerSubmit, dialogKeyHandler }: DialogProps)
 		// Wait for loading indicator to appear
 		await new Promise((resolve) => setTimeout(resolve, 100));
 
-		// todo: check if file name input is empty/valid
 		const width = canvasSize.maxX - canvasSize.minX;
 		const height = canvasSize.maxY - canvasSize.minY;
 
@@ -174,7 +173,13 @@ function SaveLitematic({ close, registerSubmit, dialogKeyHandler }: DialogProps)
 			</DialogHeader>
 
 			<div className="flex items-center gap-2">
-				<Input value={fileName} onChange={(e) => setFileName(e.target.value)} autoFocus />
+				<Input
+					value={fileName}
+					onChange={(e) => {
+						if (e.target.value !== "") setFileName(e.target.value);
+					}}
+					autoFocus
+				/>
 				<span>.litematic</span>
 			</div>
 
