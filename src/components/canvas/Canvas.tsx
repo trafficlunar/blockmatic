@@ -38,7 +38,7 @@ function Canvas() {
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
-	const { tool, radius, selectedBlock, cssCursor, setTool, setSelectedBlock, setCssCursor } = useContext(ToolContext);
+	const { tool, radius, selectedBlock, setTool, setSelectedBlock } = useContext(ToolContext);
 
 	const textures = useTextures(version);
 	const blockData = useBlockData(version);
@@ -53,6 +53,7 @@ function Canvas() {
 	const holdingAltRef = useRef(false);
 	const holdingShiftRef = useRef(false);
 	const oldToolRef = useRef<Tool>();
+	const [cssCursor, setCssCursor] = useState("crosshair");
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -487,6 +488,18 @@ function Canvas() {
 		[setCssCursor, setTool]
 	);
 
+	// Tool cursor handler
+	useEffect(() => {
+		const cursorMapping: Partial<Record<Tool, string>> = {
+			hand: "grab",
+			move: "move",
+			zoom: "zoom-in",
+		};
+
+		setCssCursor(cursorMapping[tool] || "crosshair");
+	}, [tool]);
+
+	// Resize canvas handler
 	useEffect(() => {
 		const container = stageContainerRef.current;
 		if (!container) return;
@@ -505,6 +518,7 @@ function Canvas() {
 		return () => resizeObserver.disconnect();
 	}, [stageContainerRef, setStageSize]);
 
+	// Window events handler
 	useEffect(() => {
 		window.addEventListener("keydown", onKeyDown);
 		window.addEventListener("keyup", onKeyUp);
