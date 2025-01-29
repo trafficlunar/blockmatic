@@ -44,6 +44,15 @@ export const CanvasProvider = ({ children }: Props) => {
 			if (coord.y > maxY) maxY = coord.y;
 		});
 
+		if (minX == Infinity || maxX == Infinity || minY == Infinity || maxY == Infinity) {
+			return {
+				minX: 0,
+				minY: 0,
+				maxX: 0,
+				maxY: 0,
+			};
+		}
+
 		return {
 			minX,
 			minY,

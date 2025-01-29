@@ -112,9 +112,6 @@ function Canvas() {
 		};
 
 		const eraseTool = () => {
-			// Fixes Infinity and NaN errors when no blocks are present
-			if (blocks.length == 1) return;
-
 			const radiusPosition = getRadiusPosition();
 			const updated = blocks.filter((block) => {
 				const withinRadius =
