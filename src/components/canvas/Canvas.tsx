@@ -12,7 +12,9 @@ import { ToolContext } from "@/context/Tool";
 
 import { useTextures } from "@/hooks/useTextures";
 import { useBlockData } from "@/hooks/useBlockData";
+
 import { confirmSelection, isInSelection } from "@/utils/selection";
+import * as clipboard from "@/utils/clipboard";
 
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
@@ -50,8 +52,8 @@ function Canvas() {
 	const [dragging, setDragging] = useState(false);
 	const dragStartCoordsRef = useRef<Position>();
 
-	const holdingAltRef = useRef(false);
 	const holdingShiftRef = useRef(false);
+	const holdingAltRef = useRef(false);
 	const oldToolRef = useRef<Tool>();
 	const [cssCursor, setCssCursor] = useState("crosshair");
 
@@ -126,7 +128,16 @@ function Canvas() {
 		switch (tool) {
 			case "move": {
 				const mouseMovement = mouseMovementRef.current;
-				if (!mouseMovement) return;
+				if (!mouseMovement) return; // Get all blocks within selection
+				const selectorBlocks = selectionCoords
+					.map((coord) => {
+						const [x, y] = coord;
+						return blocks.find((block) => block.x === x && block.y === y);
+					})
+					.filter((block) => block !== undefined);
+
+				// Write to clipboard
+				navigator.clipboard.writeText(JSON.stringify(selectorBlocks));
 
 				// If there is no selection currently being moved...
 				if (selectionLayerBlocks.length == 0) {
@@ -397,7 +408,7 @@ function Canvas() {
 	}, [tool, holdingAltRef, scale, mouseCoords, blocks, setSelectionCoords, setSelectedBlock, zoom]);
 
 	const onKeyDown = useCallback(
-		(e: KeyboardEvent) => {
+		async (e: KeyboardEvent) => {
 			switch (e.key) {
 				case "Escape":
 					setSelectionLayerBlocks([]);
@@ -420,6 +431,16 @@ function Canvas() {
 					break;
 				case "Delete": {
 					setBlocks((prev) => prev.filter((b) => !selectionCoords.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
+					break;
+				}
+				case "c": {
+					if (!e.ctrlKey) return;
+					clipboard.copy(selectionCoords, blocks);
+					break;
+				}
+				case "v": {
+					if (!e.ctrlKey) return;
+					clipboard.paste(setSelectionLayerBlocks, setSelectionCoords, setTool);
 					break;
 				}
 				case "1":
@@ -449,19 +470,21 @@ function Canvas() {
 				case "9":
 					setTool("zoom");
 					break;
-				case "ArrowRight":
-					if (holdingAltRef.current && holdingShiftRef.current) {
-						const newBlocks: Block[] = [];
+				case "ArrowRight": {
+					// Debug key combination
+					if (!e.altKey && !e.shiftKey) return;
 
-						Object.keys(blockData).forEach((name, index) => {
-							const x = index % 16;
-							const y = Math.floor(index / 16);
-							newBlocks.push({ name, x, y });
-						});
+					const newBlocks: Block[] = [];
 
-						setBlocks(newBlocks);
-					}
+					Object.keys(blockData).forEach((name, index) => {
+						const x = index % 16;
+						const y = Math.floor(index / 16);
+						newBlocks.push({ name, x, y });
+					});
+
+					setBlocks(newBlocks);
 					break;
+				}
 			}
 		},
 		[tool, blocks, selectionCoords, selectionLayerBlocks, blockData, setBlocks, setCssCursor, setSelectionLayerBlocks, setTool]
@@ -471,9 +494,10 @@ function Canvas() {
 		(e: KeyboardEvent) => {
 			switch (e.key) {
 				case " ": // Space
-					if (!oldToolRef.current) return;
 					setDragging(false);
 					setCssCursor("grab");
+
+					if (!oldToolRef.current) return;
 					setTool(oldToolRef.current);
 					break;
 				case "Shift":
@@ -481,11 +505,11 @@ function Canvas() {
 					break;
 				case "Alt":
 					holdingAltRef.current = false;
-					setCssCursor("zoom-in");
+					if (tool === "zoom") setCssCursor("zoom-in");
 					break;
 			}
 		},
-		[setCssCursor, setTool]
+		[setCssCursor, setTool, tool]
 	);
 
 	// Tool cursor handler
