@@ -36,6 +36,8 @@ interface Settings {
 
 interface DialogProps {
 	close: () => void;
+	registerSubmit: (fn: () => void) => void;
+	dialogKeyHandler: (e: React.KeyboardEvent) => void;
 }
 
 type BlockData = Record<

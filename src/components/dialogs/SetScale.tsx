@@ -6,7 +6,7 @@ import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTit
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-function SetScale({ close }: DialogProps) {
+function SetScale({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 	const { scale, setScale } = useContext(CanvasContext);
 
 	const [newScale, setNewScale] = useState(scale * 100);
@@ -16,14 +16,16 @@ function SetScale({ close }: DialogProps) {
 		close();
 	};
 
+	registerSubmit(onSubmit);
+
 	return (
-		<DialogContent>
+		<DialogContent onKeyDown={dialogKeyHandler}>
 			<DialogHeader>
 				<DialogTitle>Set Scale</DialogTitle>
 				<DialogDescription>Set your scale to a particular percentage</DialogDescription>
 			</DialogHeader>
 
-			<Input type="number" value={newScale} onChange={(e) => setNewScale(parseInt(e.target.value))} />
+			<Input type="number" value={newScale} onChange={(e) => setNewScale(parseInt(e.target.value))} autoFocus />
 
 			<DialogFooter>
 				<Button variant="outline" onClick={close}>

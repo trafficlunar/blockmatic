@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 
 import { useTextures } from "@/hooks/useTextures";
 
-function SaveImage({ close }: DialogProps) {
+function SaveImage({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 	const { blocks, canvasSize, version } = useContext(CanvasContext);
 	const { missingTexture } = useContext(TexturesContext);
 
@@ -59,15 +59,17 @@ function SaveImage({ close }: DialogProps) {
 		close();
 	};
 
+	registerSubmit(onSubmit);
+
 	return (
-		<DialogContent>
+		<DialogContent onKeyDown={dialogKeyHandler}>
 			<DialogHeader>
 				<DialogTitle>Save as image (.png)</DialogTitle>
 				<DialogDescription>Save your canvas as a full size image</DialogDescription>
 			</DialogHeader>
 
 			<div className="flex items-center gap-2">
-				<Input value={fileName} onChange={(e) => setFileName(e.target.value)} />
+				<Input value={fileName} onChange={(e) => setFileName(e.target.value)} autoFocus />
 				<span>.png</span>
 			</div>
 

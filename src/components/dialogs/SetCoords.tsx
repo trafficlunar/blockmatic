@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-function SetCoords({ close }: DialogProps) {
+function SetCoords({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 	const { stageSize, coords, scale, setCoords } = useContext(CanvasContext);
 
 	const [newTilemapCoords, setNewTilemapCoords] = useState(coords);
@@ -30,6 +30,8 @@ function SetCoords({ close }: DialogProps) {
 		close();
 	};
 
+	registerSubmit(onSubmit);
+
 	// Sets the current coordinates when the dialog is first opened
 	useEffect(() => {
 		// Get center of screen
@@ -47,7 +49,7 @@ function SetCoords({ close }: DialogProps) {
 	}, []);
 
 	return (
-		<DialogContent>
+		<DialogContent onKeyDown={dialogKeyHandler}>
 			<DialogHeader>
 				<DialogTitle>Set Coordinates</DialogTitle>
 				<DialogDescription>Set your coordinates to a particular position</DialogDescription>
@@ -62,6 +64,7 @@ function SetCoords({ close }: DialogProps) {
 						placeholder="X"
 						value={newTilemapCoords.x}
 						onChange={(e) => setNewTilemapCoords((prev) => ({ ...prev, x: parseInt(e.target.value) }))}
+						autoFocus
 					/>
 				</div>
 

@@ -29,7 +29,7 @@ function SetVersion({ close }: DialogProps) {
 				<Button variant="outline" onClick={close}>
 					Cancel
 				</Button>
-				<Button type="submit" onClick={onSubmit}>
+				<Button type="submit" onClick={onSubmit} autoFocus>
 					Set
 				</Button>
 			</DialogFooter>

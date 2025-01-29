@@ -43,7 +43,7 @@ const blockEntitiesWhitelist = [
 	"vault",
 ];
 
-function SaveSchem({ close }: DialogProps) {
+function SaveSchem({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 	const { canvasSize, blocks, version } = useContext(CanvasContext);
 	const { setLoading } = useContext(LoadingContext);
 
@@ -166,15 +166,17 @@ function SaveSchem({ close }: DialogProps) {
 		close();
 	};
 
+	registerSubmit(onSubmit);
+
 	return (
-		<DialogContent>
+		<DialogContent onKeyDown={dialogKeyHandler}>
 			<DialogHeader>
 				<DialogTitle>Save as .schem</DialogTitle>
 				<DialogDescription>Save your image as a .schem (Sponge Version 3)</DialogDescription>
 			</DialogHeader>
 
 			<div className="flex items-center gap-2">
-				<Input value={fileName} onChange={(e) => setFileName(e.target.value)} />
+				<Input value={fileName} onChange={(e) => setFileName(e.target.value)} autoFocus />
 				<span>.schem</span>
 			</div>
 
