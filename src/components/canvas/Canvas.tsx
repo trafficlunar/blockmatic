@@ -265,14 +265,25 @@ function Canvas() {
 							const newSelection: CoordinateArray = [];
 
 							const startX = Math.min(dragStartCoords.x, mouseCoords.x);
-							const endX = Math.max(dragStartCoords.x, mouseCoords.x);
+							let endX = Math.max(dragStartCoords.x, mouseCoords.x);
 							const startY = Math.min(dragStartCoords.y, mouseCoords.y);
-							const endY = Math.max(dragStartCoords.y, mouseCoords.y);
+							let endY = Math.max(dragStartCoords.y, mouseCoords.y);
 
 							const isRadiusEven = radius == 1 || radius % 2 == 0;
+							const radiusOffset = isRadiusEven ? radius : radius - 1;
 
-							for (let x = startX; x < endX + (isRadiusEven ? radius : radius - 1); x++) {
-								for (let y = startY; y < endY + (isRadiusEven ? radius : radius - 1); y++) {
+							// If holding shift, create a square selection
+							if (holdingShiftRef.current) {
+								const width = Math.abs(endX - startX);
+								const height = Math.abs(endY - startY);
+								const size = Math.max(width, height);
+
+								endX = startX + (endX < startX ? -size : size);
+								endY = startY + (endY < startY ? -size : size);
+							}
+
+							for (let x = startX; x < endX + radiusOffset; x++) {
+								for (let y = startY; y < endY + radiusOffset; y++) {
 									newSelection.push([x, y]);
 								}
 							}
