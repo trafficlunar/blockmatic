@@ -24,6 +24,19 @@ function SelectMenu() {
 		setSelectionCoords(newSelection);
 	};
 
+	// Add every block that isn't within in the selectio and within the canvas size to the temporary array
+	const inverse = () => {
+		const newSelection: CoordinateArray = [];
+
+		for (let x = canvasSize.minX; x < canvasSize.maxX; x++) {
+			for (let y = canvasSize.minY; y < canvasSize.maxY; y++) {
+				if (!selection.isIn(selectionCoords, x, y)) newSelection.push([x, y]);
+			}
+		}
+
+		setSelectionCoords(newSelection);
+	};
+
 	return (
 		<MenubarMenu>
 			<MenubarTrigger>Select</MenubarTrigger>
@@ -33,6 +46,7 @@ function SelectMenu() {
 					<MenubarShortcut>Ctrl A</MenubarShortcut>
 				</MenubarItem>
 				<MenubarItem onClick={() => setSelectionCoords([])}>Clear</MenubarItem>
+				<MenubarItem onClick={inverse}>Inverse</MenubarItem>
 			</MenubarContent>
 		</MenubarMenu>
 	);
