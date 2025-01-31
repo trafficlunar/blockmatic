@@ -341,15 +341,17 @@ function Canvas() {
 				const visited = new Set<string>();
 				const result: CoordinateArray = [];
 				const startBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
+				const startName = startBlock ? startBlock.name : "air";
 
-				// Return if the block is not found
-				if (!startBlock) return result;
-
-				function depthFirstSearch(block: Block) {
-					const key = `${block.x},${block.y}`;
+				function depthFirstSearch(x: number, y: number) {
+					const key = `${x},${y}`;
 					if (visited.has(key)) return;
 					visited.add(key);
-					result.push([block.x, block.y]);
+
+					const withinCanvas = x >= canvasSize.minX && x < canvasSize.maxX && y >= canvasSize.minY && y < canvasSize.maxY;
+					if (!withinCanvas) return;
+
+					result.push([x, y]);
 
 					// Directions for adjacent blocks (up, down, left, right)
 					const directions = [
@@ -360,17 +362,18 @@ function Canvas() {
 					];
 
 					for (const { dx, dy } of directions) {
-						const newX = block.x + dx;
-						const newY = block.y + dy;
-						const adjacentBlock = blocks.find((b) => b.x === newX && b.y === newY && b.name === block.name);
+						const newX = x + dx;
+						const newY = y + dy;
+						const adjacentBlock = blocks.find((b) => b.x === newX && b.y === newY);
+						const adjacentName = adjacentBlock ? adjacentBlock.name : "air";
 
-						if (adjacentBlock) {
-							depthFirstSearch({ ...block, x: newX, y: newY });
+						if (adjacentName === startName) {
+							depthFirstSearch(newX, newY);
 						}
 					}
 				}
 
-				depthFirstSearch({ name: startBlock.name, x: mouseCoords.x, y: mouseCoords.y });
+				depthFirstSearch(mouseCoords.x, mouseCoords.y);
 				setSelectionCoords((prev) => {
 					if (holdingAltRef.current) {
 						// If holding alt, remove new magic wand selection
@@ -402,7 +405,7 @@ function Canvas() {
 			default:
 				break;
 		}
-	}, [tool, holdingAltRef, scale, mouseCoords, blocks, setSelectionCoords, setSelectedBlock, zoom]);
+	}, [tool, holdingAltRef, scale, mouseCoords, blocks, canvasSize, setSelectionCoords, setSelectedBlock, zoom]);
 
 	const onKeyDown = useCallback(
 		async (e: KeyboardEvent) => {
