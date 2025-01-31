@@ -6,18 +6,10 @@ import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTit
 import { Button } from "@/components/ui/button";
 
 function ClearBlocks({ close }: DialogProps) {
-	const { stageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
+	const { setBlocks } = useContext(CanvasContext);
 
 	const onSubmit = () => {
-		const newScale = 8;
-		const blockCenter = (1 + 1 * 16) / 2;
-
 		setBlocks([{ name: "bedrock", x: 0, y: 0 }]);
-		setCoords({
-			x: stageSize.width / 2 - blockCenter * newScale,
-			y: stageSize.height / 2 - blockCenter * newScale,
-		});
-		setScale(newScale);
 		close();
 	};
 
