@@ -13,7 +13,7 @@ import { ToolContext } from "@/context/Tool";
 import { useTextures } from "@/hooks/useTextures";
 import { useBlockData } from "@/hooks/useBlockData";
 
-import { confirmSelection, isInSelection } from "@/utils/selection";
+import * as selection from "@/utils/selection";
 import * as clipboard from "@/utils/clipboard";
 
 import Blocks from "./Blocks";
@@ -116,7 +116,7 @@ function Canvas() {
 			const updated = blocks.filter((block) => {
 				const withinRadius =
 					block.x >= radiusPosition.x && block.x < radiusPosition.x + radius && block.y >= radiusPosition.y && block.y < radiusPosition.y + radius;
-				return !withinRadius || !isInSelection(selectionCoords, block.x, block.y);
+				return !withinRadius || !selection.isIn(selectionCoords, block.x, block.y);
 			});
 
 			setBlocks(updated);
@@ -142,7 +142,7 @@ function Canvas() {
 
 					setBlocks((prev) =>
 						prev.filter((b) => {
-							const isSelected = isInSelection(selectionCoords, b.x, b.y);
+							const isSelected = selection.isIn(selectionCoords, b.x, b.y);
 
 							// Add blocks in the selection coords to the selection layer
 							if (isSelected) result.push(b);
@@ -197,7 +197,7 @@ function Canvas() {
 						const tileY = radiusPosition.y + y;
 
 						// Only add blocks within the selection
-						if (isInSelection(selectionCoords, tileX, tileY)) {
+						if (selection.isIn(selectionCoords, tileX, tileY)) {
 							radiusBlocks.push({
 								name: selectedBlock,
 								x: tileX,
@@ -414,7 +414,7 @@ function Canvas() {
 					setSelectionLayerBlocks([]);
 					break;
 				case "Enter":
-					confirmSelection(blocks, selectionLayerBlocks, setBlocks, setSelectionLayerBlocks);
+					selection.confirm(blocks, selectionLayerBlocks, setBlocks, setSelectionLayerBlocks);
 					break;
 				case " ": // Space
 					setDragging(true);

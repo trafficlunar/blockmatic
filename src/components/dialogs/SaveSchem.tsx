@@ -4,7 +4,7 @@ import * as nbt from "nbtify";
 import { CanvasContext } from "@/context/Canvas";
 import { LoadingContext } from "@/context/Loading";
 
-import { encodeVarint } from "@/utils/varint";
+import * as varint from "@/utils/varint";
 
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -120,7 +120,7 @@ function SaveSchem({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 			const blockId = blockPalette[`minecraft:${blockName}${properties}`];
 
 			// Parse blockId to number then encode as varint
-			const id = encodeVarint(parseInt(blockId.toString()));
+			const id = varint.encode(parseInt(blockId.toString()));
 			// Push to separate array to make array buffer
 			ids.push(...id);
 		});

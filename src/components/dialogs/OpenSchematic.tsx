@@ -7,7 +7,7 @@ import * as nbt from "nbtify";
 import { CanvasContext } from "@/context/Canvas";
 import { LoadingContext } from "@/context/Loading";
 
-import { decodeVarint } from "@/utils/varint";
+import * as varint from "@/utils/varint";
 
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -158,7 +158,7 @@ function OpenSchematic({ close }: DialogProps) {
 				for (let y = spongeData.Height; y > 0; y--) {
 					for (let x = 0; x < spongeData.Width; x++) {
 						// Decode varint to get the palette value
-						const { value: paletteValue, bytesRead } = decodeVarint(spongeData.Blocks.Data, offset);
+						const { value: paletteValue, bytesRead } = varint.decode(spongeData.Blocks.Data, offset);
 						const paletteBlock = Object.keys(spongeData.Blocks.Palette).find((key) => spongeData.Blocks.Palette[key] == paletteValue);
 
 						offset += bytesRead;

@@ -4,7 +4,7 @@ import { CheckIcon, XIcon } from "lucide-react";
 import { CanvasContext } from "@/context/Canvas";
 import { SelectionContext } from "@/context/Selection";
 
-import { confirmSelection } from "@/utils/selection";
+import * as selection from "@/utils/selection";
 
 import { Button } from "@/components/ui/button";
 
@@ -29,7 +29,7 @@ function SelectionBar() {
 				<XIcon />
 			</Button>
 			<span className="mx-2 text-[0.85rem]">Confirm selection?</span>
-			<Button variant="ghost" className="w-8 h-8" onClick={() => confirmSelection(blocks, layerBlocks, setBlocks, setLayerBlocks)}>
+			<Button variant="ghost" className="w-8 h-8" onClick={() => selection.confirm(blocks, layerBlocks, setBlocks, setLayerBlocks)}>
 				<CheckIcon />
 			</Button>
 		</div>

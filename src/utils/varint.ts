@@ -1,4 +1,4 @@
-export function encodeVarint(number: number): Uint8Array {
+export function encode(number: number): Uint8Array {
 	const result = [];
 	while (number >= 0x80) {
 		// Take 7 bits and set the MSB
@@ -13,7 +13,7 @@ export function encodeVarint(number: number): Uint8Array {
 	return new Uint8Array(result);
 }
 
-export function decodeVarint(buffer: Uint8Array, offset: number): { value: number; bytesRead: number } {
+export function decode(buffer: Uint8Array, offset: number): { value: number; bytesRead: number } {
 	let value = 0;
 	let position = 0;
 	let byte: number;

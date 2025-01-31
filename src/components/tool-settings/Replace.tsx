@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 import { useTextures } from "@/hooks/useTextures";
-import { isInSelection } from "@/utils/selection";
+import * as selection from "@/utils/selection";
 
 function Replace() {
 	const { version, setBlocks } = useContext(CanvasContext);
@@ -36,7 +36,7 @@ function Replace() {
 		setBlocks((prev) =>
 			prev
 				.map((block) => {
-					if (isInSelection(selectionCoords, block.x, block.y)) {
+					if (selection.isIn(selectionCoords, block.x, block.y)) {
 						if (block.name === block1) {
 							// If block2 is air, return null
 							// If not, change the block name
