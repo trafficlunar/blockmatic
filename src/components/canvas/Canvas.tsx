@@ -433,6 +433,21 @@ function Canvas() {
 					setBlocks((prev) => prev.filter((b) => !selectionCoords.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
 					break;
 				}
+				case "a": {
+					if (!e.ctrlKey) return;
+					e.preventDefault();
+
+					const newSelection: CoordinateArray = [];
+
+					for (let x = canvasSize.minX; x < canvasSize.maxX; x++) {
+						for (let y = canvasSize.minY; y < canvasSize.maxY; y++) {
+							newSelection.push([x, y]);
+						}
+					}
+
+					setSelectionCoords(newSelection);
+					break;
+				}
 				case "c": {
 					if (!e.ctrlKey) return;
 					clipboard.copy(selectionCoords, blocks);
@@ -487,7 +502,19 @@ function Canvas() {
 				}
 			}
 		},
-		[tool, blocks, selectionCoords, selectionLayerBlocks, blockData, setBlocks, setCssCursor, setSelectionLayerBlocks, setTool]
+		[
+			tool,
+			blocks,
+			selectionCoords,
+			selectionLayerBlocks,
+			canvasSize,
+			blockData,
+			setBlocks,
+			setCssCursor,
+			setSelectionCoords,
+			setSelectionLayerBlocks,
+			setTool,
+		]
 	);
 
 	const onKeyUp = useCallback(
