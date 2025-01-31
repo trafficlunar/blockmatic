@@ -8,6 +8,7 @@ import { Menubar as UIMenubar } from "@/components/ui/menubar";
 
 import FileMenu from "./FileMenu";
 import EditMenu from "./EditMenu";
+import SelectMenu from "./SelectMenu";
 import ViewMenu from "./ViewMenu";
 import MoreMenu from "./MoreMenu";
 
@@ -28,6 +29,7 @@ function Menubar() {
 
 				<FileMenu />
 				<EditMenu />
+				<SelectMenu />
 				<ViewMenu />
 				<MoreMenu />
 

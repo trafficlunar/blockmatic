@@ -42,9 +42,6 @@ function EditMenu() {
 				<MenubarSeparator />
 
 				<MenubarItem onClick={cut}>Cut</MenubarItem>
-
-				<MenubarSeparator />
-				<MenubarItem onClick={() => setSelectionCoords([])}>Clear Selection</MenubarItem>
 			</MenubarContent>
 		</MenubarMenu>
 	);
