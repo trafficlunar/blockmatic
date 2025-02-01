@@ -37,5 +37,5 @@ body {
 }
 
 .info-child {
-	@apply bg-white dark:bg-zinc-900 px-2 py-1 rounded shadow-xl w-fit border border-zinc-200 dark:border-zinc-800;
+	@apply bg-zinc-50 dark:bg-zinc-900 px-2 py-1 rounded shadow-xl w-fit border border-zinc-200 dark:border-zinc-800;
 }

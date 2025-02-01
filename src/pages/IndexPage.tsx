@@ -1,17 +1,22 @@
 /// <reference types="vite-plugin-svgr/client" />
+import { useContext } from "react";
 import { Link } from "react-router";
+
+import { ThemeContext } from "@/context/Theme";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import BlockmaticLogo from "@/assets/blockmatic.svg?react";
-import GithubIcon from "@/assets/github.svg?react";
-
 import ThemeIcon from "@/components/home/ThemeIcon";
-import AppPreview from "@/components/home/AppPreview";
 import ImageComparison from "@/components/home/ImageComparison";
 
+import BlockmaticLogo from "@/assets/blockmatic.svg?react";
+import GithubIcon from "@/assets/github.svg?react";
+import { ChevronRightIcon } from "lucide-react";
+
 function IndexPage() {
+	const { isDark } = useContext(ThemeContext);
+
 	return (
 		<main className="flex flex-col items-center">
 			<header className="w-full flex justify-evenly p-8 z-10">
@@ -19,7 +24,7 @@ function IndexPage() {
 
 				<div className="flex items-center gap-2">
 					<Button className="bg-white text-black hover:bg-zinc-50/90 mr-4" asChild>
-						<Link to={{ pathname: "/app" }}>Go to app</Link>
+						<Link to={{ pathname: "/app" }}>Editor</Link>
 					</Button>
 
 					<a href="https://github.com/trafficlunar/blockmatic" className="w-8">
@@ -32,37 +37,40 @@ function IndexPage() {
 			<img
 				src="/screenshot1.png"
 				alt="screenshot"
-				className="absolute w-full h-full object-cover -z-20"
+				className="absolute w-full object-cover -z-20"
 				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(255,255,255,0) 100%)" }}
 			/>
 
-			<div className="absolute w-[30rem] -top-8 flex">
-				<img src="/oak_hanging_sign.png" alt="sign" className="absolute w-full -z-10" style={{ imageRendering: "pixelated" }} />
+			<section className="w-[40rem] mt-16 flex flex-col items-center gap-4">
+				<h1 className="text-6xl text-center font-inter font-bold">Create pixel art for Minecraft in minutes</h1>
+				<h5 className="text-xl font-inter">
+					Open images, draw, and export your art with{" "}
+					<span className="bg-white px-1 rounded">
+						<span className="text-blockmatic-green font-bold">block</span>
+						<span className="text-blockmatic-brown font-bold">matic</span>
+					</span>
+				</h5>
+				<Button className="w-min h-11 mt-4" asChild>
+					<Link to={{ pathname: "/app" }} className="!text-base">
+						Go to Editor
+						<ChevronRightIcon className="!h-6 !w-6" />
+					</Link>
+				</Button>
+			</section>
 
-				<Link to={{ pathname: "/app" }} className="text-6xl font-minecraft mt-[15.5rem] text-black text-center">
-					Create pixel art for Minecraft in minutes
-				</Link>
-			</div>
+			<section className="max-w-full px-20 mt-16">
+				<img
+					src={isDark ? "/blockmatic_screenshot_dark.png" : "/blockmatic_screenshot_light.png"}
+					alt="app preview"
+					className="max-w-[65rem] w-full rounded-xl border border-zinc-700"
+				/>
+			</section>
 
-			<AppPreview />
-
-			<div className="grid grid-cols-2 w-4/5 mt-8">
-				<div className="pr-32 py-32">
-					<h1 className="text-5xl font-minecraft font-bold mb-2">See the difference</h1>
-					<p>
-						Blockmatic lets you transform images into pixel art schematics for Minecraft. Easily adjust the width and height, and select the blocks
-						you want to use with the dialog.
-						<br />
-						<br />
-						Use the comparsion slider adjacent featuring the Windows XP background (also known as Bliss) to see the feature in action. Move it to the
-						left to see the blockmatic version and move it to the right to see the original version.
-						<br />
-						<br />
-						Try it out in the editor by opening the File menu at the top then clicking the Open Image button.
-					</p>
-				</div>
+			<section className="flex flex-col items-center mt-12">
+				<h1 className="text-5xl font-inter font-bold mb-2">See the difference</h1>
+				<p className="mb-8 text-lg">Blockmatic lets you transform images into pixel art schematics for Minecraft</p>
 				<ImageComparison />
-			</div>
+			</section>
 
 			<footer className="w-full h-16 mt-20 flex flex-col items-center">
 				<Separator className="w-2/5" />

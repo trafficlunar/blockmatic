@@ -13,7 +13,7 @@ function ImageComparison() {
 	};
 
 	return (
-		<div onMouseMove={onMouseMove} className="relative select-none w-full h-[calc(40vw*217/270)] flex justify-center">
+		<div onMouseMove={onMouseMove} className="relative select-none w-[40vw] h-[calc(40vw*217/270)] flex justify-center">
 			<img
 				src="/bliss/bliss_original.png"
 				alt="original version of bliss"
@@ -42,24 +42,6 @@ function ImageComparison() {
 			</div>
 
 			<span className="absolute top-[101.5%] left-1 text-zinc-500 text-xs">Windows XP Background 'Bliss' image owned by Microsoft Corporation</span>
-
-			<div className="absolute right-2 top-1/2 w-1/5 h-1/5 flex justify-center items-center -z-10">
-				<img
-					src="/bliss/bliss_original_zoomed.png"
-					alt="zoomed in version of blockmatic version of bliss"
-					draggable={false}
-					className="absolute w-full rounded-full"
-					style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`, imageRendering: "pixelated" }}
-				/>
-
-				<img
-					src="/bliss/bliss_zoomed.png"
-					alt="zoomed in version of blockmatic version of bliss"
-					draggable={false}
-					className="absolute w-full rounded-full"
-					style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
-				/>
-			</div>
 		</div>
 	);
 }

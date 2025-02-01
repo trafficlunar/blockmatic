@@ -11,7 +11,10 @@ export default {
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
 			},
-			colors: {},
+			colors: {
+				"blockmatic-green": "#adc178",
+				"blockmatic-brown": "#a98467",
+			},
 			fontFamily: {
 				minecraft: ["Minecraft", "sans-serif"],
 				inter: ["Inter", "sans-serif"],
