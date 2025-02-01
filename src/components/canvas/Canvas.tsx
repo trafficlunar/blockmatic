@@ -571,15 +571,18 @@ function Canvas() {
 
 	// Window events handler
 	useEffect(() => {
+		const onBeforeUnload = (e: BeforeUnloadEvent) => {
+			e.preventDefault();
+		};
+
 		window.addEventListener("keydown", onKeyDown);
 		window.addEventListener("keyup", onKeyUp);
-		window.addEventListener("beforeunload", (e) => {
-			e.preventDefault();
-		});
+		window.addEventListener("beforeunload", onBeforeUnload);
 
 		return () => {
 			window.removeEventListener("keydown", onKeyDown);
 			window.removeEventListener("keyup", onKeyUp);
+			window.removeEventListener("beforeunload", onBeforeUnload);
 		};
 	}, [onKeyDown, onKeyUp]);
 
