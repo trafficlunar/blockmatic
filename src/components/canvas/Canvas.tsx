@@ -408,7 +408,7 @@ function Canvas() {
 	}, [tool, holdingAltRef, scale, mouseCoords, blocks, canvasSize, setSelectionCoords, setSelectedBlock, zoom]);
 
 	const onKeyDown = useCallback(
-		async (e: KeyboardEvent) => {
+		async (e: React.KeyboardEvent) => {
 			switch (e.key) {
 				case "Escape":
 					setSelectionLayerBlocks([]);
@@ -518,7 +518,7 @@ function Canvas() {
 	);
 
 	const onKeyUp = useCallback(
-		(e: KeyboardEvent) => {
+		(e: React.KeyboardEvent) => {
 			switch (e.key) {
 				case " ": // Space
 					setDragging(false);
@@ -575,13 +575,9 @@ function Canvas() {
 			e.preventDefault();
 		};
 
-		window.addEventListener("keydown", onKeyDown);
-		window.addEventListener("keyup", onKeyUp);
 		window.addEventListener("beforeunload", onBeforeUnload);
 
 		return () => {
-			window.removeEventListener("keydown", onKeyDown);
-			window.removeEventListener("keyup", onKeyUp);
 			window.removeEventListener("beforeunload", onBeforeUnload);
 		};
 	}, [onKeyDown, onKeyUp]);
@@ -591,6 +587,9 @@ function Canvas() {
 			<Stage
 				width={stageSize.width}
 				height={stageSize.height}
+				tabIndex={0}
+				onKeyDown={onKeyDown}
+				onKeyUp={onKeyUp}
 				onMouseMove={onMouseMove}
 				onMouseDown={onMouseDown}
 				onMouseUp={onMouseUp}
