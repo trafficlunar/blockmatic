@@ -103,8 +103,6 @@ function IndexPage() {
 				</p>
 				<ImageComparison />
 			</section>
-				<ImageComparison />
-			</section>
 
 			<footer className="w-full h-16 mt-20 flex flex-col items-center">
 				<Separator className="max-w-[40rem]" />
