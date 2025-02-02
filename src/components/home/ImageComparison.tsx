@@ -13,12 +13,15 @@ function ImageComparison() {
 	};
 
 	return (
-		<div onMouseMove={onMouseMove} className="relative select-none w-[40vw] h-[calc(40vw*217/270)] flex justify-center">
+		<div
+			onMouseMove={onMouseMove}
+			className="relative select-none w-[40vw] h-[calc(40vw*217/270)] flex justify-center rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-md"
+		>
 			<img
 				src="/bliss/bliss_original.png"
 				alt="original version of bliss"
 				draggable={false}
-				className="absolute w-full -z-20"
+				className="absolute w-full -z-20 rounded-xl"
 				style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`, imageRendering: "pixelated" }}
 			/>
 
@@ -26,7 +29,7 @@ function ImageComparison() {
 				src="/bliss/bliss.png"
 				alt="blockmatic version of bliss"
 				draggable={false}
-				className="absolute w-full -z-20"
+				className="absolute w-full -z-20 rounded-xl"
 				style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
 			/>
 
@@ -36,7 +39,7 @@ function ImageComparison() {
 					left: `${sliderPosition}%`,
 				}}
 			>
-				<div className="bg-zinc-200 rounded-full absolute w-12 h-12 -translate-x-1/2 flex justify-center items-center cursor-pointer">
+				<div className="bg-zinc-200 rounded-full absolute w-12 h-12 -translate-x-1/2 flex justify-center items-center cursor-col-resize">
 					<ChevronsLeftRightIcon color="black" size={30} />
 				</div>
 			</div>

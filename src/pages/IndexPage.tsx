@@ -95,6 +95,14 @@ function IndexPage() {
 					</div>
 				</div>
 			</section>
+
+			<section className="flex flex-col items-center mt-32 mx-8 max-w-[40rem]">
+				<h1 className="text-5xl font-bold mb-2 text-center">See the difference</h1>
+				<p className="mb-8 text-lg text-center">
+					Blockmatic lets you pick what blocks you want for the image and change versions from 1.6.1 to the latest version.
+				</p>
+				<ImageComparison />
+			</section>
 				<ImageComparison />
 			</section>
 
