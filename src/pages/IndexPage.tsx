@@ -18,7 +18,7 @@ function IndexPage() {
 	const { isDark } = useContext(ThemeContext);
 
 	return (
-		<main className="flex flex-col items-center">
+		<main className="flex flex-col items-center font-inter">
 			<header className="w-full flex justify-evenly p-8 z-10">
 				<BlockmaticLogo className="h-16 w-max" fill={"white"} />
 
@@ -41,9 +41,9 @@ function IndexPage() {
 				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(255,255,255,0) 100%)" }}
 			/>
 
-			<section className="w-[40rem] mt-16 flex flex-col items-center gap-4">
-				<h1 className="text-6xl text-center font-inter font-bold">Create pixel art for Minecraft in minutes</h1>
-				<h5 className="text-xl font-inter">
+			<section className="max-w-[40rem] mt-16 mx-8 flex flex-col items-center gap-4">
+				<h1 className="text-6xl text-center font-bold">Create pixel art for Minecraft in minutes</h1>
+				<h5 className="text-xl text-center">
 					Open images, draw, and export your art with{" "}
 					<span className="bg-white px-1 rounded">
 						<span className="text-blockmatic-green font-bold">block</span>
@@ -58,7 +58,7 @@ function IndexPage() {
 				</Button>
 			</section>
 
-			<section className="max-w-full px-20 mt-16">
+			<section className="max-w-full mx-8 mt-16">
 				<img
 					src={isDark ? "/blockmatic_screenshot_dark.png" : "/blockmatic_screenshot_light.png"}
 					alt="app preview"
@@ -66,14 +66,40 @@ function IndexPage() {
 				/>
 			</section>
 
-			<section className="flex flex-col items-center mt-12">
-				<h1 className="text-5xl font-inter font-bold mb-2">See the difference</h1>
-				<p className="mb-8 text-lg">Blockmatic lets you transform images into pixel art schematics for Minecraft</p>
+			<section className="flex flex-col items-center mt-32 text-center mx-8">
+				<h1 className="text-5xl font-bold mb-2">Pixel art made easy</h1>
+				<p className="mb-8 text-lg">Blockmatic makes it easier to make changes and build by using schematics and the web editor.</p>
+				<div className="max-w-[56rem] grid grid-cols-3 max-md:grid-cols-2 gap-4 *:flex *:flex-col *:items-center *:gap-1 *:text-center *:p-4 *:border *:border-zinc-300 *:dark:border-zinc-800 *:rounded-lg *:bg-zinc-100 *:dark:bg-zinc-900 *:text-black *:dark:text-white">
+					<div>
+						<img
+							src="/shinji.png"
+							alt="shinji"
+							className="w-full rounded mb-4 border bg-zinc-300 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-800"
+						/>
+						<h2 className="font-bold text-xl">Open your image</h2>
+						<p>Open your image, or start drawing immediately with the editor.</p>
+					</div>
+					<div>
+						<img
+							src={isDark ? "/drawing_erasing.gif" : "/drawing_erasing_light.gif"}
+							alt="tool example gif"
+							className="w-full rounded mb-4 border border-zinc-300 dark:border-zinc-800"
+						/>
+						<h2 className="font-bold text-xl">Make changes</h2>
+						<p>Change blocks around with the replace, selection, pencil, and eraser tools</p>
+					</div>
+					<div>
+						<img src="/shinji_minecraft.png" alt="shinji in minecraft" className="w-full rounded mb-4 border border-zinc-300 dark:border-zinc-800" />
+						<h2 className="font-bold text-xl">Export your art</h2>
+						<p>Once you're done, you can export your canvas as a .png, .litematic, or .schem.</p>
+					</div>
+				</div>
+			</section>
 				<ImageComparison />
 			</section>
 
 			<footer className="w-full h-16 mt-20 flex flex-col items-center">
-				<Separator className="w-2/5" />
+				<Separator className="max-w-[40rem]" />
 
 				<div className="mt-8 flex justify-center items-center gap-16 text-zinc-500">
 					<Link to={{ pathname: "/privacy-policy" }}>Privacy</Link>
