@@ -9,7 +9,7 @@ function ImageComparison() {
 
 		const rect = e.currentTarget.getBoundingClientRect();
 		const newSliderPosition = ((e.clientX - rect.left) / rect.width) * 100;
-		setSliderPosition(Math.min(100, Math.max(0, newSliderPosition)));
+		setSliderPosition(Math.min(98, Math.max(2, newSliderPosition)));
 	};
 
 	return (
