@@ -1,5 +1,16 @@
 import { useContext } from "react";
-import { EraserIcon, HandIcon, LassoIcon, MousePointer2Icon, PencilIcon, PipetteIcon, SquareDashedIcon, WandIcon, ZoomInIcon } from "lucide-react";
+import {
+	EraserIcon,
+	HandIcon,
+	LassoIcon,
+	MousePointer2Icon,
+	PaintBucketIcon,
+	PencilIcon,
+	PipetteIcon,
+	SquareDashedIcon,
+	WandIcon,
+	ZoomInIcon,
+} from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -105,6 +116,18 @@ function Toolbar() {
 					</TooltipContent>
 				</Tooltip>
 
+				{/* Paint Bucket */}
+				<Tooltip delayDuration={0}>
+					<TooltipTrigger>
+						<ToggleGroupItem value="paint-bucket" className="!p-0 !h-8 !min-w-8">
+							<PaintBucketIcon />
+						</ToggleGroupItem>
+					</TooltipTrigger>
+					<TooltipContent side="right" sideOffset={10}>
+						<p>Paint Bucket (8)</p>
+					</TooltipContent>
+				</Tooltip>
+
 				{/* Eyedropper */}
 				<Tooltip delayDuration={0}>
 					<TooltipTrigger>
@@ -113,7 +136,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Eyedropper (8)</p>
+						<p>Eyedropper (9)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -125,7 +148,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Zoom (9)</p>
+						<p>Zoom (0)</p>
 					</TooltipContent>
 				</Tooltip>
 

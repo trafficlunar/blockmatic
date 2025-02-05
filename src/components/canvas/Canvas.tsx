@@ -336,6 +336,13 @@ function Canvas() {
 	);
 
 	const onClick = useCallback(() => {
+		// Directions for adjacent blocks (up, down, left, right)
+		const directions = [
+			{ dx: 0, dy: 1 },
+			{ dx: 0, dy: -1 },
+			{ dx: 1, dy: 0 },
+			{ dx: -1, dy: 0 },
+		];
 		switch (tool) {
 			case "magic-wand": {
 				const visited = new Set<string>();
@@ -353,13 +360,6 @@ function Canvas() {
 
 					result.push([x, y]);
 
-					// Directions for adjacent blocks (up, down, left, right)
-					const directions = [
-						{ dx: 0, dy: 1 },
-						{ dx: 0, dy: -1 },
-						{ dx: 1, dy: 0 },
-						{ dx: -1, dy: 0 },
-					];
 
 					for (const { dx, dy } of directions) {
 						const newX = x + dx;
@@ -390,6 +390,45 @@ function Canvas() {
 				});
 				break;
 			}
+			case "paint-bucket": {
+				const visited = new Set<string>();
+				const startBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
+				const startName = startBlock ? startBlock.name : "air";
+
+				// If the target area is already the selected block, break
+				if (startName === selectedBlock) break;
+
+				function floodFill(x: number, y: number) {
+					const key = `${x},${y}`;
+					if (visited.has(key)) return;
+					visited.add(key);
+
+					const withinCanvas = x >= canvasSize.minX && x < canvasSize.maxX && y >= canvasSize.minY && y < canvasSize.maxY;
+					if (!withinCanvas) return;
+
+					const block = blocks.find((b) => b.x === x && b.y === y);
+					const currentName = block ? block.name : "air";
+
+					// Only fill if the current block name matches the target block name.
+					if (currentName !== startName) return;
+
+					// Update block name or push new one
+					if (block) {
+						block.name = selectedBlock;
+					} else {
+						blocks.push({ x, y, name: selectedBlock });
+					}
+
+					// Recursive
+					for (const { dx, dy } of directions) {
+						floodFill(x + dx, y + dy);
+					}
+				}
+
+				floodFill(mouseCoords.x, mouseCoords.y);
+				setBlocks([...blocks]);
+				break;
+			}
 			case "eyedropper": {
 				const mouseBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
 				if (mouseBlock) setSelectedBlock(mouseBlock.name);
@@ -405,7 +444,7 @@ function Canvas() {
 			default:
 				break;
 		}
-	}, [tool, holdingAltRef, scale, mouseCoords, blocks, canvasSize, setSelectionCoords, setSelectedBlock, zoom]);
+	}, [tool, holdingAltRef, scale, mouseCoords, blocks, selectedBlock, canvasSize, setSelectionCoords, setBlocks, setSelectedBlock, zoom]);
 
 	const onKeyDown = useCallback(
 		async (e: React.KeyboardEvent) => {
@@ -480,9 +519,12 @@ function Canvas() {
 					setTool("eraser");
 					break;
 				case "8":
-					setTool("eyedropper");
+					setTool("paint-bucket");
 					break;
 				case "9":
+					setTool("eyedropper");
+					break;
+				case "0":
 					setTool("zoom");
 					break;
 				case "ArrowRight": {
