@@ -14,10 +14,7 @@ export function usePencilTool(mouseCoords: Position) {
 	const radiusPosition = useRadiusPosition(mouseCoords);
 
 	const use = () => {
-		// if (selectedBlock == "air") {
-		// 	eraseTool();
-		// 	break;
-		// }
+		if (selectedBlock == "air") return;
 		const radiusBlocks: Block[] = [];
 
 		for (let x = 0; x < radius; x++) {

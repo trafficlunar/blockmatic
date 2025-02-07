@@ -45,7 +45,7 @@ function Canvas() {
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
-	const { tool, radius, setTool } = useContext(ToolContext);
+	const { tool, radius, selectedBlock, setTool } = useContext(ToolContext);
 
 	const textures = useTextures(version);
 	const blockData = useBlockData(version);
@@ -125,8 +125,14 @@ function Canvas() {
 			eraser: eraserTool,
 		};
 
+		// Switch to eraser tool if selected block is air when using pencil
+		if (tool === "pencil" && selectedBlock === "air") {
+			eraserTool.use();
+			return;
+		}
+
 		tools[tool]?.use();
-	}, [tool, moveTool, lassoTool, pencilTool, eraserTool, rectangleSelectTool]);
+	}, [tool, selectedBlock, moveTool, lassoTool, pencilTool, eraserTool, rectangleSelectTool]);
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
