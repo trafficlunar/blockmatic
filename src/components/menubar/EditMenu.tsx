@@ -37,7 +37,7 @@ function EditMenu() {
 					Copy
 					<MenubarShortcut>Ctrl C</MenubarShortcut>
 				</MenubarItem>
-				<MenubarItem onClick={() => clipboard.paste(null, setSelectionLayerBlocks, setSelectionCoords, setTool)}>
+				<MenubarItem onClick={() => clipboard.paste(setSelectionLayerBlocks, setSelectionCoords, setTool)}>
 					Paste
 					<MenubarShortcut>Ctrl V</MenubarShortcut>
 				</MenubarItem>
