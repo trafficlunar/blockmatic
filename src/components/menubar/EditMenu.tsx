@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import { CanvasContext } from "@/context/Canvas";
+import { HistoryContext } from "@/context/History";
 import { SelectionContext } from "@/context/Selection";
 import { ToolContext } from "@/context/Tool";
 
@@ -10,6 +11,7 @@ import { MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarShor
 
 function EditMenu() {
 	const { blocks, setBlocks } = useContext(CanvasContext);
+	const { undo, redo, isUndoAvailable, isRedoAvailable } = useContext(HistoryContext);
 	const { selectionCoords, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
 	const { setTool } = useContext(ToolContext);
 
@@ -21,11 +23,11 @@ function EditMenu() {
 		<MenubarMenu>
 			<MenubarTrigger>Edit</MenubarTrigger>
 			<MenubarContent>
-				<MenubarItem>
+				<MenubarItem onClick={undo} disabled={!isUndoAvailable}>
 					Undo
 					<MenubarShortcut>Ctrl Z</MenubarShortcut>
 				</MenubarItem>
-				<MenubarItem>
+				<MenubarItem onClick={redo} disabled={!isRedoAvailable}>
 					Redo
 					<MenubarShortcut>Ctrl Y</MenubarShortcut>
 				</MenubarItem>
@@ -35,7 +37,7 @@ function EditMenu() {
 					Copy
 					<MenubarShortcut>Ctrl C</MenubarShortcut>
 				</MenubarItem>
-				<MenubarItem onClick={() => clipboard.paste(setSelectionLayerBlocks, setSelectionCoords, setTool)}>
+				<MenubarItem onClick={() => clipboard.paste(null, setSelectionLayerBlocks, setSelectionCoords, setTool)}>
 					Paste
 					<MenubarShortcut>Ctrl V</MenubarShortcut>
 				</MenubarItem>
