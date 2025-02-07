@@ -13,15 +13,15 @@ import { ToolContext } from "@/context/Tool";
 import { useTextures } from "@/hooks/useTextures";
 import { useBlockData } from "@/hooks/useBlockData";
 
-import { useMoveTool } from "@/hooks/tools/useMoveTool";
-import { useRectangleSelectTool } from "@/hooks/tools/useRectangleSelectTool";
-import { useLassoTool } from "@/hooks/tools/useLassoTool";
-import { useMagicWandTool } from "@/hooks/tools/useMagicWandTool";
-import { usePencilTool } from "@/hooks/tools/usePencilTool";
-import { useEraserTool } from "@/hooks/tools/useEraserTool";
-import { usePaintBucketTool } from "@/hooks/tools/usePaintBucketTool";
-import { useEyedropperTool } from "@/hooks/tools/useEyedropperTool";
-import { useZoomTool } from "@/hooks/tools/useZoomTool";
+import { useMoveTool } from "@/hooks/tools/move";
+import { useRectangleSelectTool } from "@/hooks/tools/rectangle-select";
+import { useLassoTool } from "@/hooks/tools/lasso";
+import { useMagicWandTool } from "@/hooks/tools/magic-wand";
+import { usePencilTool } from "@/hooks/tools/pencil";
+import { useEraserTool } from "@/hooks/tools/eraser";
+import { usePaintBucketTool } from "@/hooks/tools/paint-bucket";
+import { useEyedropperTool } from "@/hooks/tools/eyedropper";
+import { useZoomTool } from "@/hooks/tools/zoom";
 
 import * as selection from "@/utils/selection";
 import * as clipboard from "@/utils/clipboard";
