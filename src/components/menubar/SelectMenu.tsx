@@ -9,7 +9,7 @@ import * as selection from "@/utils/selection";
 
 function SelectMenu() {
 	const { canvasSize } = useContext(CanvasContext);
-	const { coords: selectionCoords, setCoords: setSelectionCoords } = useContext(SelectionContext);
+	const { selectionCoords, setSelectionCoords } = useContext(SelectionContext);
 
 	// Add every block within the canvas size to the temporary array
 	const selectAll = () => {

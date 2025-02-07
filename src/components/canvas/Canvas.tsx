@@ -31,12 +31,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
 	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
-	const {
-		coords: selectionCoords,
-		layerBlocks: selectionLayerBlocks,
-		setCoords: setSelectionCoords,
-		setLayerBlocks: setSelectionLayerBlocks,
-	} = useContext(SelectionContext);
+	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);

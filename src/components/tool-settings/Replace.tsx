@@ -14,7 +14,7 @@ import * as selection from "@/utils/selection";
 
 function Replace() {
 	const { version, setBlocks } = useContext(CanvasContext);
-	const { coords: selectionCoords } = useContext(SelectionContext);
+	const { selectionCoords } = useContext(SelectionContext);
 	const { selectedBlock, tool, setTool } = useContext(ToolContext);
 	const { missingTexture } = useContext(TexturesContext);
 

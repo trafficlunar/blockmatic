@@ -10,13 +10,13 @@ import { Button } from "@/components/ui/button";
 
 function SelectionBar() {
 	const { blocks, setBlocks } = useContext(CanvasContext);
-	const { layerBlocks, setLayerBlocks } = useContext(SelectionContext);
+	const { selectionLayerBlocks, setSelectionLayerBlocks } = useContext(SelectionContext);
 
 	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
-		setIsVisible(layerBlocks.length !== 0);
-	}, [layerBlocks]);
+		setIsVisible(selectionLayerBlocks.length !== 0);
+	}, [selectionLayerBlocks]);
 
 	return (
 		<div
@@ -25,11 +25,11 @@ function SelectionBar() {
 			`}
 		>
 			{/* todo: place back blocks removed */}
-			<Button variant="ghost" className="w-8 h-8" onClick={() => setLayerBlocks([])}>
+			<Button variant="ghost" className="w-8 h-8" onClick={() => setSelectionLayerBlocks([])}>
 				<XIcon />
 			</Button>
 			<span className="mx-2 text-[0.85rem]">Confirm selection?</span>
-			<Button variant="ghost" className="w-8 h-8" onClick={() => selection.confirm(blocks, layerBlocks, setBlocks, setLayerBlocks)}>
+			<Button variant="ghost" className="w-8 h-8" onClick={() => selection.confirm(blocks, selectionLayerBlocks, setBlocks, setSelectionLayerBlocks)}>
 				<CheckIcon />
 			</Button>
 		</div>

@@ -1,10 +1,11 @@
 import { createContext, ReactNode, useState } from "react";
 
 interface Context {
-	coords: CoordinateArray;
-	layerBlocks: Block[];
-	setCoords: React.Dispatch<React.SetStateAction<CoordinateArray>>;
-	setLayerBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
+	selectionCoords: CoordinateArray;
+	selectionLayerBlocks: Block[];
+	setSelectionCoords: React.Dispatch<React.SetStateAction<CoordinateArray>>;
+	setSelectionLayerBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
+	isInSelection: (x: number, y: number) => boolean;
 }
 
 interface Props {
@@ -14,16 +15,24 @@ interface Props {
 export const SelectionContext = createContext<Context>({} as Context);
 
 export const SelectionProvider = ({ children }: Props) => {
-	const [coords, setCoords] = useState<CoordinateArray>([]);
-	const [layerBlocks, setLayerBlocks] = useState<Block[]>([]);
+	const [selectionCoords, setSelectionCoords] = useState<CoordinateArray>([]);
+	const [selectionLayerBlocks, setSelectionLayerBlocks] = useState<Block[]>([]);
+
+	const isInSelection = (x: number, y: number): boolean => {
+		if (selectionCoords.length !== 0) {
+			return selectionCoords.some(([x2, y2]) => x2 === x && y2 === y);
+		}
+		return true;
+	};
 
 	return (
 		<SelectionContext.Provider
 			value={{
-				coords,
-				layerBlocks,
-				setCoords,
-				setLayerBlocks,
+				selectionCoords,
+				selectionLayerBlocks,
+				setSelectionCoords,
+				setSelectionLayerBlocks,
+				isInSelection,
 			}}
 		>
 			{children}

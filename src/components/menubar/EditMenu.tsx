@@ -10,7 +10,7 @@ import { MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarShor
 
 function EditMenu() {
 	const { blocks, setBlocks } = useContext(CanvasContext);
-	const { coords: selectionCoords, setCoords: setSelectionCoords, setLayerBlocks: setSelectionLayerBlocks } = useContext(SelectionContext);
+	const { selectionCoords, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
 	const { setTool } = useContext(ToolContext);
 
 	const cut = () => {
