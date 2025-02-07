@@ -125,16 +125,7 @@ function Canvas() {
 		switch (tool) {
 			case "move": {
 				const mouseMovement = mouseMovementRef.current;
-				if (!mouseMovement) return; // Get all blocks within selection
-				const selectorBlocks = selectionCoords
-					.map((coord) => {
-						const [x, y] = coord;
-						return blocks.find((block) => block.x === x && block.y === y);
-					})
-					.filter((block) => block !== undefined);
-
-				// Write to clipboard
-				navigator.clipboard.writeText(JSON.stringify(selectorBlocks));
+				if (!mouseMovement) return;
 
 				// If there is no selection currently being moved...
 				if (selectionLayerBlocks.length == 0) {
