@@ -1,15 +1,26 @@
 import { useContext } from "react";
 
 import { CanvasContext } from "@/context/Canvas";
+import { HistoryContext } from "@/context/History";
 
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 function ClearBlocks({ close }: DialogProps) {
 	const { setBlocks } = useContext(CanvasContext);
+	const { addHistory } = useContext(HistoryContext);
 
 	const onSubmit = () => {
-		setBlocks([{ name: "bedrock", x: 0, y: 0 }]);
+		const clearedBlocks = [{ name: "bedrock", x: 0, y: 0 }];
+		setBlocks((prev) => {
+			addHistory(
+				"Clear All",
+				() => setBlocks(clearedBlocks),
+				() => setBlocks(prev)
+			);
+			return clearedBlocks;
+		});
+
 		close();
 	};
 
