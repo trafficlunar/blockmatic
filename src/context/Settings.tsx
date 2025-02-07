@@ -12,8 +12,9 @@ interface Props {
 const defaultSettings: Settings = {
 	grid: true,
 	canvasBorder: false,
+	historyPanel: true,
 	colorPicker: false,
-	blockReplacer: true,
+	blockReplacer: false,
 	radiusChanger: true,
 	blockSelector: true,
 };

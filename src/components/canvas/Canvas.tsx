@@ -4,6 +4,7 @@ import * as PIXI from "pixi.js";
 import { Container, Stage } from "@pixi/react";
 
 import { CanvasContext } from "@/context/Canvas";
+import { HistoryContext } from "@/context/History";
 import { SelectionContext } from "@/context/Selection";
 import { SettingsContext } from "@/context/Settings";
 import { TexturesContext } from "@/context/Textures";
@@ -41,6 +42,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 function Canvas() {
 	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
+	const { addHistory, undo, redo } = useContext(HistoryContext);
 	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture } = useContext(TexturesContext);
@@ -61,6 +63,9 @@ function Canvas() {
 	const holdingAltRef = useRef(false);
 	const oldToolRef = useRef<Tool>();
 	const [cssCursor, setCssCursor] = useState("crosshair");
+
+	const startBlocksRef = useRef<Block[]>([]);
+	const startSelectionCoordsRef = useRef<CoordinateArray>([]);
 
 	const zoom = useCallback(
 		(newScale: number) => {
@@ -180,15 +185,40 @@ function Canvas() {
 		updateCssCursor();
 
 		dragStartCoordsRef.current = mouseCoords;
+		startBlocksRef.current = [...blocks];
+		startSelectionCoordsRef.current = [...selectionCoords];
 
 		// Clear selection on click
 		if (tool === "rectangle-select") setSelectionCoords([]);
-	}, [onToolUse, updateCssCursor, mouseCoords, tool, setSelectionCoords]);
+	}, [onToolUse, updateCssCursor, mouseCoords, blocks, selectionCoords, tool, setSelectionCoords]);
 
 	const onMouseUp = useCallback(() => {
 		setDragging(false);
 		updateCssCursor();
-	}, [updateCssCursor]);
+
+		// History entries for pencil and eraser
+		if (tool == "pencil" || tool == "eraser") {
+			// startBlocksRef will mutate if we pass it directly
+			const prevBlocks = [...startBlocksRef.current];
+
+			addHistory(
+				tool == "pencil" ? "Pencil" : "Eraser",
+				() => setBlocks([...blocks]),
+				() => setBlocks([...prevBlocks])
+			);
+		}
+
+		if (tool == "rectangle-select" || tool == "magic-wand" || tool == "lasso") {
+			// startSelectionCoordsRef will mutate if we pass it directly
+			const prevSelection = [...startSelectionCoordsRef.current];
+
+			addHistory(
+				tool == "rectangle-select" ? "Rectangle Select" : tool == "lasso" ? "Lasso" : "Magic Wand",
+				() => setSelectionCoords([...selectionCoords]),
+				() => setSelectionCoords([...prevSelection])
+			);
+		}
+	}, [updateCssCursor, blocks, tool, addHistory, setBlocks, selectionCoords, setSelectionCoords]);
 
 	const onWheel = useCallback(
 		(e: React.WheelEvent) => {
@@ -233,10 +263,18 @@ function Canvas() {
 					holdingAltRef.current = true;
 					if (tool === "zoom") setCssCursor("zoom-out");
 					break;
-				case "Delete": {
-					setBlocks((prev) => prev.filter((b) => !selectionCoords.some(([x2, y2]) => x2 === b.x && y2 === b.y)));
+				case "Delete":
+					setBlocks((prev) => {
+						const deletedBlocks = prev.filter((b) => !selectionCoords.some(([x2, y2]) => x2 === b.x && y2 === b.y));
+						addHistory(
+							"Delete",
+							() => setBlocks(deletedBlocks),
+							() => setBlocks(prev)
+						);
+
+						return deletedBlocks;
+					});
 					break;
-				}
 				case "a": {
 					if (!e.ctrlKey) return;
 					e.preventDefault();
@@ -252,16 +290,22 @@ function Canvas() {
 					setSelectionCoords(newSelection);
 					break;
 				}
-				case "c": {
+				case "z":
+					if (!e.ctrlKey) return;
+					undo();
+					break;
+				case "y":
+					if (!e.ctrlKey) return;
+					redo();
+					break;
+				case "c":
 					if (!e.ctrlKey) return;
 					clipboard.copy(selectionCoords, blocks);
 					break;
-				}
-				case "v": {
+				case "v":
 					if (!e.ctrlKey) return;
 					clipboard.paste(setSelectionLayerBlocks, setSelectionCoords, setTool);
 					break;
-				}
 				case "1":
 					setTool("hand");
 					break;
@@ -321,6 +365,8 @@ function Canvas() {
 			setSelectionCoords,
 			setSelectionLayerBlocks,
 			setTool,
+			redo,
+			undo,
 		]
 	);
 
@@ -383,7 +429,6 @@ function Canvas() {
 		};
 
 		window.addEventListener("beforeunload", onBeforeUnload);
-
 		return () => {
 			window.removeEventListener("beforeunload", onBeforeUnload);
 		};

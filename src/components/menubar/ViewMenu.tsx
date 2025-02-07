@@ -31,6 +31,9 @@ function ViewMenu() {
 				</MenubarCheckboxItem>
 
 				<MenubarSeparator />
+				<MenubarCheckboxItem checked={settings.historyPanel} onCheckedChange={onCheckedChange("historyPanel")}>
+					History Panel
+				</MenubarCheckboxItem>
 				<MenubarCheckboxItem checked={settings.colorPicker} onCheckedChange={onCheckedChange("colorPicker")}>
 					Color Picker
 				</MenubarCheckboxItem>

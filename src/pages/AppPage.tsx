@@ -1,4 +1,5 @@
 import { CanvasProvider } from "@/context/Canvas";
+import { HistoryProvider } from "@/context/History";
 import { LoadingProvider } from "@/context/Loading";
 import { SelectionProvider } from "@/context/Selection";
 import { SettingsProvider } from "@/context/Settings";
@@ -13,26 +14,28 @@ import ToolSettings from "@/components/tool-settings";
 
 function AppPage() {
 	return (
-		<CanvasProvider>
-			<LoadingProvider>
-				<SelectionProvider>
-					<SettingsProvider>
+		<LoadingProvider>
+			<SettingsProvider>
+				<HistoryProvider>
+					<CanvasProvider>
 						<TexturesProvider>
 							<ToolProvider>
-								<MobileNotice />
+								<SelectionProvider>
+									<MobileNotice />
 
-								<main className="overflow-y-hidden h-screen grid grid-rows-[2.5rem_minmax(0,1fr)] grid-cols-[2.5rem_minmax(0,1fr)_auto]">
-									<Menubar />
-									<Toolbar />
-									<Canvas />
-									<ToolSettings />
-								</main>
+									<main className="overflow-y-hidden h-screen grid grid-rows-[2.5rem_minmax(0,1fr)] grid-cols-[2.5rem_minmax(0,1fr)_auto]">
+										<Menubar />
+										<Toolbar />
+										<Canvas />
+										<ToolSettings />
+									</main>
+								</SelectionProvider>
 							</ToolProvider>
 						</TexturesProvider>
-					</SettingsProvider>
-				</SelectionProvider>
-			</LoadingProvider>
-		</CanvasProvider>
+					</CanvasProvider>
+				</HistoryProvider>
+			</SettingsProvider>
+		</LoadingProvider>
 	);
 }
 

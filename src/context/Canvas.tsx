@@ -1,5 +1,6 @@
-import React, { createContext, ReactNode, useMemo, useState } from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 
+import { HistoryContext } from "./History";
 import welcomeBlocksData from "@/data/welcome.json";
 
 interface Context {
@@ -24,6 +25,8 @@ interface Props {
 export const CanvasContext = createContext<Context>({} as Context);
 
 export const CanvasProvider = ({ children }: Props) => {
+	const { addHistory } = useContext(HistoryContext);
+
 	const [stageSize, setStageSize] = useState<Dimension>({ width: 0, height: 0 });
 	const [blocks, setBlocks] = useState<Block[]>(welcomeBlocksData);
 	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
@@ -84,9 +87,30 @@ export const CanvasProvider = ({ children }: Props) => {
 		setCoords({ x: newX, y: newY });
 	};
 
+	useEffect(() => {
+		addHistory(
+			"New Canvas",
+			() => setBlocks(welcomeBlocksData),
+			() => setBlocks([])
+		);
+	}, []);
+
 	return (
 		<CanvasContext.Provider
-			value={{ stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale, setVersion, centerCanvas }}
+			value={{
+				stageSize,
+				canvasSize,
+				blocks,
+				coords,
+				scale,
+				version,
+				setStageSize,
+				setBlocks,
+				setCoords,
+				setScale,
+				setVersion,
+				centerCanvas,
+			}}
 		>
 			{children}
 		</CanvasContext.Provider>

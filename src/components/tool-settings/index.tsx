@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { GripVerticalIcon } from "lucide-react";
 
 import { SettingsContext } from "@/context/Settings";
 
@@ -6,11 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+import History from "./History";
 import ColorPicker from "./ColorPicker";
 import Replace from "./Replace";
 import Radius from "./Radius";
 import BlockSelector from "./BlockSelector";
-import { GripVerticalIcon } from "lucide-react";
 
 function ToolSettings() {
 	const { settings } = useContext(SettingsContext);
@@ -81,6 +82,14 @@ function ToolSettings() {
 					>
 						<GripVerticalIcon />
 					</div>
+
+					{settings.historyPanel && (
+						<>
+							{/* <span className="text-xs text-zinc-600">History</span> */}
+							<History />
+							<Separator />
+						</>
+					)}
 
 					{settings.colorPicker && (
 						<>

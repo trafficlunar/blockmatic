@@ -28,6 +28,7 @@ type Tool = "hand" | "move" | "rectangle-select" | "lasso" | "magic-wand" | "pen
 interface Settings {
 	grid: boolean;
 	canvasBorder: boolean;
+	historyPanel: boolean;
 	colorPicker: boolean;
 	blockReplacer: boolean;
 	radiusChanger: boolean;
@@ -53,3 +54,9 @@ type BlockData = Record<
 		properties?: Record<string, string>;
 	}
 >;
+
+interface HistoryEntry {
+	name: string;
+	apply: () => void;
+	revert: () => void;
+}
