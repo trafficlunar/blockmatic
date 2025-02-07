@@ -13,6 +13,16 @@ import { ToolContext } from "@/context/Tool";
 import { useTextures } from "@/hooks/useTextures";
 import { useBlockData } from "@/hooks/useBlockData";
 
+import { useMoveTool } from "@/hooks/tools/useMoveTool";
+import { useRectangleSelectTool } from "@/hooks/tools/useRectangleSelectTool";
+import { useLassoTool } from "@/hooks/tools/useLassoTool";
+import { useMagicWandTool } from "@/hooks/tools/useMagicWandTool";
+import { usePencilTool } from "@/hooks/tools/usePencilTool";
+import { useEraserTool } from "@/hooks/tools/useEraserTool";
+import { usePaintBucketTool } from "@/hooks/tools/usePaintBucketTool";
+import { useEyedropperTool } from "@/hooks/tools/useEyedropperTool";
+import { useZoomTool } from "@/hooks/tools/useZoomTool";
+
 import * as selection from "@/utils/selection";
 import * as clipboard from "@/utils/clipboard";
 
@@ -35,7 +45,7 @@ function Canvas() {
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
-	const { tool, radius, selectedBlock, setTool, setSelectedBlock } = useContext(ToolContext);
+	const { tool, radius, setTool } = useContext(ToolContext);
 
 	const textures = useTextures(version);
 	const blockData = useBlockData(version);
@@ -43,14 +53,35 @@ function Canvas() {
 
 	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
-	const mouseMovementRef = useRef<Position>();
+	const mouseMovementRef = useRef<Position>({ x: 0, y: 0 });
 	const [dragging, setDragging] = useState(false);
-	const dragStartCoordsRef = useRef<Position>();
+	const dragStartCoordsRef = useRef<Position>({ x: 0, y: 0 });
 
 	const holdingShiftRef = useRef(false);
 	const holdingAltRef = useRef(false);
 	const oldToolRef = useRef<Tool>();
 	const [cssCursor, setCssCursor] = useState("crosshair");
+
+	const zoom = useCallback(
+		(newScale: number) => {
+			setScale(newScale);
+			setCoords({
+				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
+				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
+			});
+		},
+		[coords, mousePosition, scale, setCoords, setScale]
+	);
+
+	const moveTool = useMoveTool(mouseMovementRef.current);
+	const rectangleSelectTool = useRectangleSelectTool(mouseCoords, dragStartCoordsRef.current, holdingShiftRef.current);
+	const lassoTool = useLassoTool(mouseCoords, holdingAltRef.current);
+	const magicWandTool = useMagicWandTool(mouseCoords, holdingShiftRef.current, holdingAltRef.current);
+	const pencilTool = usePencilTool(mouseCoords);
+	const eraserTool = useEraserTool(mouseCoords);
+	const paintBucketTool = usePaintBucketTool(mouseCoords);
+	const eyedropperTool = useEyedropperTool(mouseCoords);
+	const zoomTool = useZoomTool(zoom, holdingAltRef.current);
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -75,17 +106,6 @@ function Canvas() {
 		);
 	}, [blocks, visibleArea]);
 
-	const zoom = useCallback(
-		(newScale: number) => {
-			setScale(newScale);
-			setCoords({
-				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
-				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
-			});
-		},
-		[coords, mousePosition, scale, setCoords, setScale]
-	);
-
 	const updateCssCursor = useCallback(() => {
 		const cursorMapping: Partial<Record<Tool, string>> = {
 			hand: dragging ? "grab" : "grabbing",
@@ -97,126 +117,16 @@ function Canvas() {
 	}, [dragging, holdingAltRef, tool, setCssCursor]);
 
 	const onToolUse = useCallback(() => {
-		// If number is odd, cursor is in the center
-		// if number is even, cursor is in the top-left corner
-		const getRadiusPosition = (): Position => {
-			const halfSize = Math.floor(radius / 2);
-			const x = mouseCoords.x - (radius % 2 === 0 ? 0 : halfSize);
-			const y = mouseCoords.y - (radius % 2 === 0 ? 0 : halfSize);
-			return { x, y };
+		const tools: Partial<Record<Tool, { use: () => void }>> = {
+			move: moveTool,
+			"rectangle-select": rectangleSelectTool,
+			lasso: lassoTool,
+			pencil: pencilTool,
+			eraser: eraserTool,
 		};
 
-		const eraseTool = () => {
-			const radiusPosition = getRadiusPosition();
-			const updated = blocks.filter((block) => {
-				const withinRadius =
-					block.x >= radiusPosition.x && block.x < radiusPosition.x + radius && block.y >= radiusPosition.y && block.y < radiusPosition.y + radius;
-				return !withinRadius || !selection.isIn(selectionCoords, block.x, block.y);
-			});
-
-			setBlocks(updated);
-		};
-
-		switch (tool) {
-			case "move": {
-				const mouseMovement = mouseMovementRef.current;
-				if (!mouseMovement) return;
-
-				// If there is no selection currently being moved...
-				if (selectionLayerBlocks.length == 0) {
-					const result: Block[] = [];
-
-					setBlocks((prev) =>
-						prev.filter((b) => {
-							const isSelected = selection.isIn(selectionCoords, b.x, b.y);
-
-							// Add blocks in the selection coords to the selection layer
-							if (isSelected) result.push(b);
-
-							// Remove blocks originally there
-							return !isSelected;
-						})
-					);
-					setSelectionLayerBlocks(result);
-				}
-
-				// Increase each coordinate in the selection by the mouse movement
-				setSelectionCoords((prev) => prev.map(([x, y]) => [x + mouseMovement.x, y + mouseMovement.y]));
-				setSelectionLayerBlocks((prev) => prev.map((b) => ({ ...b, x: b.x + mouseMovement.x, y: b.y + mouseMovement.y })));
-				break;
-			}
-			case "lasso": {
-				setSelectionCoords((prev) => {
-					const radiusPosition = getRadiusPosition();
-					const radiusCoords: CoordinateArray = [];
-
-					for (let x = 0; x < radius; x++) {
-						for (let y = 0; y < radius; y++) {
-							const tileX = radiusPosition.x + x;
-							const tileY = radiusPosition.y + y;
-
-							const exists = prev.some(([x2, y2]) => x2 === tileX && y2 === tileY);
-							if ((holdingAltRef.current && exists) || !exists) radiusCoords.push([tileX, tileY]);
-						}
-					}
-
-					if (holdingAltRef.current) {
-						return prev.filter(([x, y]) => !radiusCoords.some(([x2, y2]) => x2 === x && y2 === y));
-					} else {
-						return [...prev, ...radiusCoords];
-					}
-				});
-				break;
-			}
-			case "pencil": {
-				if (selectedBlock == "air") {
-					eraseTool();
-					break;
-				}
-
-				const radiusPosition = getRadiusPosition();
-				const radiusBlocks: Block[] = [];
-
-				for (let x = 0; x < radius; x++) {
-					for (let y = 0; y < radius; y++) {
-						const tileX = radiusPosition.x + x;
-						const tileY = radiusPosition.y + y;
-
-						// Only add blocks within the selection
-						if (selection.isIn(selectionCoords, tileX, tileY)) {
-							radiusBlocks.push({
-								name: selectedBlock,
-								x: tileX,
-								y: tileY,
-							});
-						}
-					}
-				}
-
-				const mergedBlocks = blocks.filter((block) => {
-					return !radiusBlocks.some((newBlock) => block.x === newBlock.x && block.y === newBlock.y);
-				});
-
-				setBlocks([...mergedBlocks, ...radiusBlocks]);
-				break;
-			}
-			case "eraser": {
-				eraseTool();
-				break;
-			}
-		}
-	}, [
-		tool,
-		mouseCoords,
-		selectedBlock,
-		blocks,
-		radius,
-		selectionCoords,
-		selectionLayerBlocks,
-		setSelectionCoords,
-		setSelectionLayerBlocks,
-		setBlocks,
-	]);
+		tools[tool]?.use();
+	}, [tool, moveTool, lassoTool, pencilTool, eraserTool, rectangleSelectTool]);
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
@@ -245,54 +155,17 @@ function Canvas() {
 			};
 
 			if (dragging) {
-				switch (tool) {
-					case "hand":
-						setCoords((prevCoords) => ({
-							x: prevCoords.x + e.movementX,
-							y: prevCoords.y + e.movementY,
-						}));
-						break;
-					case "rectangle-select": {
-						const dragStartCoords = dragStartCoordsRef.current;
-						if (!dragStartCoords) return;
-
-						setSelectionCoords(() => {
-							const newSelection: CoordinateArray = [];
-
-							const startX = Math.min(dragStartCoords.x, mouseCoords.x);
-							let endX = Math.max(dragStartCoords.x, mouseCoords.x);
-							const startY = Math.min(dragStartCoords.y, mouseCoords.y);
-							let endY = Math.max(dragStartCoords.y, mouseCoords.y);
-
-							const isRadiusEven = radius == 1 || radius % 2 == 0;
-							const radiusOffset = isRadiusEven ? radius : radius - 1;
-
-							// If holding shift, create a square selection
-							if (holdingShiftRef.current) {
-								const width = Math.abs(endX - startX);
-								const height = Math.abs(endY - startY);
-								const size = Math.max(width, height);
-
-								endX = startX + (endX < startX ? -size : size);
-								endY = startY + (endY < startY ? -size : size);
-							}
-
-							for (let x = startX; x < endX + radiusOffset; x++) {
-								for (let y = startY; y < endY + radiusOffset; y++) {
-									newSelection.push([x, y]);
-								}
-							}
-
-							return newSelection;
-						});
-						break;
-					}
+				if (tool === "hand") {
+					setCoords((prevCoords) => ({
+						x: prevCoords.x + e.movementX,
+						y: prevCoords.y + e.movementY,
+					}));
 				}
 
 				onToolUse();
 			}
 		},
-		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords, setSelectionCoords, radius]
+		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords]
 	);
 
 	const onMouseDown = useCallback(() => {
@@ -322,115 +195,15 @@ function Canvas() {
 	);
 
 	const onClick = useCallback(() => {
-		// Directions for adjacent blocks (up, down, left, right)
-		const directions = [
-			{ dx: 0, dy: 1 },
-			{ dx: 0, dy: -1 },
-			{ dx: 1, dy: 0 },
-			{ dx: -1, dy: 0 },
-		];
-		switch (tool) {
-			case "magic-wand": {
-				const visited = new Set<string>();
-				const result: CoordinateArray = [];
-				const startBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
-				const startName = startBlock ? startBlock.name : "air";
+		const tools: Partial<Record<Tool, { use: () => void }>> = {
+			"magic-wand": magicWandTool,
+			"paint-bucket": paintBucketTool,
+			eyedropper: eyedropperTool,
+			zoom: zoomTool,
+		};
 
-				function depthFirstSearch(x: number, y: number) {
-					const key = `${x},${y}`;
-					if (visited.has(key)) return;
-					visited.add(key);
-
-					const withinCanvas = x >= canvasSize.minX && x < canvasSize.maxX && y >= canvasSize.minY && y < canvasSize.maxY;
-					if (!withinCanvas) return;
-
-					result.push([x, y]);
-
-
-					for (const { dx, dy } of directions) {
-						const newX = x + dx;
-						const newY = y + dy;
-						const adjacentBlock = blocks.find((b) => b.x === newX && b.y === newY);
-						const adjacentName = adjacentBlock ? adjacentBlock.name : "air";
-
-						if (adjacentName === startName) {
-							depthFirstSearch(newX, newY);
-						}
-					}
-				}
-
-				depthFirstSearch(mouseCoords.x, mouseCoords.y);
-				setSelectionCoords((prev) => {
-					if (holdingAltRef.current) {
-						// If holding alt, remove new magic wand selection
-						return prev.filter(([x, y]) => !result.some(([x2, y2]) => x2 === x && y2 === y));
-					} else if (holdingShiftRef.current) {
-						// If holding shift, add magic wand selection to existing selection
-						const existing = new Set(prev.map(([x, y]) => `${x},${y}`));
-						const newCoords = result.filter(([x, y]) => !existing.has(`${x},${y}`));
-						return [...prev, ...newCoords];
-					}
-
-					// If not holding alt or shift, replace the existing selection with the magic wand selection
-					return result;
-				});
-				break;
-			}
-			case "paint-bucket": {
-				const visited = new Set<string>();
-				const startBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
-				const startName = startBlock ? startBlock.name : "air";
-
-				// If the target area is already the selected block, break
-				if (startName === selectedBlock) break;
-
-				function floodFill(x: number, y: number) {
-					const key = `${x},${y}`;
-					if (visited.has(key)) return;
-					visited.add(key);
-
-					const withinCanvas = x >= canvasSize.minX && x < canvasSize.maxX && y >= canvasSize.minY && y < canvasSize.maxY;
-					if (!withinCanvas) return;
-
-					const block = blocks.find((b) => b.x === x && b.y === y);
-					const currentName = block ? block.name : "air";
-
-					// Only fill if the current block name matches the target block name.
-					if (currentName !== startName) return;
-
-					// Update block name or push new one
-					if (block) {
-						block.name = selectedBlock;
-					} else {
-						blocks.push({ x, y, name: selectedBlock });
-					}
-
-					// Recursive
-					for (const { dx, dy } of directions) {
-						floodFill(x + dx, y + dy);
-					}
-				}
-
-				floodFill(mouseCoords.x, mouseCoords.y);
-				setBlocks([...blocks]);
-				break;
-			}
-			case "eyedropper": {
-				const mouseBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
-				if (mouseBlock) setSelectedBlock(mouseBlock.name);
-				break;
-			}
-			case "zoom": {
-				const scaleChange = holdingAltRef.current ? -0.1 : 0.1;
-				const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
-				zoom(newScale);
-				break;
-			}
-
-			default:
-				break;
-		}
-	}, [tool, holdingAltRef, scale, mouseCoords, blocks, selectedBlock, canvasSize, setSelectionCoords, setBlocks, setSelectedBlock, zoom]);
+		tools[tool]?.use();
+	}, [tool, magicWandTool, paintBucketTool, eyedropperTool, zoomTool]);
 
 	const onKeyDown = useCallback(
 		async (e: React.KeyboardEvent) => {
