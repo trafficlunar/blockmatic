@@ -16,9 +16,15 @@ const iconMap = {
 function History() {
 	const { history, currentIndex, jumpTo } = useContext(HistoryContext);
 
+	const divRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		divRef.current?.scrollIntoView(false);
+	}, [history]);
+
 	return (
 		<ScrollArea key={history.length} className="h-48 border border-zinc-200 dark:border-zinc-800 rounded-md">
-			<div className="flex flex-col">
+			<div ref={divRef} className="flex flex-col">
 				{history.map(({ name }, index) => {
 					const IconComponent = iconMap[name as keyof typeof iconMap];
 
