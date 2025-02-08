@@ -36,7 +36,7 @@ function CursorInformation({ mouseCoords }: Props) {
 
 	return (
 		<div className="absolute left-4 bottom-4 flex flex-col gap-1">
-			<div className="info-child">{blockName ?? "air"}</div>
+			<div className="info-child">{blockName ?? "Air"}</div>
 			<div className="info-child">
 				<span>X: {position.x} </span>
 				<span>Y: {position.y}</span>
