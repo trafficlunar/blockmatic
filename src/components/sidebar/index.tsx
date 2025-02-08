@@ -6,15 +6,15 @@ import { SettingsContext } from "@/context/Settings";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import History from "./History";
 import ColorPicker from "./ColorPicker";
 import Replace from "./Replace";
 import Radius from "./Radius";
 import BlockSelector from "./BlockSelector";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
-function ToolSettings() {
+function Sidebar() {
 	const { settings } = useContext(SettingsContext);
 
 	const [width, setWidth] = useState(300);
@@ -145,4 +145,4 @@ function ToolSettings() {
 	);
 }
 
-export default ToolSettings;
+export default Sidebar;

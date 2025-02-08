@@ -10,7 +10,7 @@ import MobileNotice from "@/components/MobileNotice";
 import Menubar from "@/components/menubar";
 import Toolbar from "@/components/toolbar";
 import Canvas from "@/components/canvas/Canvas";
-import ToolSettings from "@/components/tool-settings";
+import Sidebar from "@/components/sidebar";
 
 function AppPage() {
 	return (
@@ -27,7 +27,7 @@ function AppPage() {
 										<Menubar />
 										<Toolbar />
 										<Canvas />
-										<ToolSettings />
+										<Sidebar />
 									</main>
 								</SelectionProvider>
 							</ToolProvider>

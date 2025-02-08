@@ -1,13 +1,14 @@
 import { useContext, useEffect, useRef } from "react";
 import { HistoryContext } from "@/context/History";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BombIcon, EraserIcon, PencilIcon, PresentationIcon, SquareDashedIcon, Trash2Icon, WandIcon } from "lucide-react";
+import { BombIcon, EraserIcon, LassoIcon, PencilIcon, PresentationIcon, SquareDashedIcon, Trash2Icon, WandIcon } from "lucide-react";
 
 const iconMap = {
 	"New Canvas": PresentationIcon,
 	Pencil: PencilIcon,
 	Eraser: EraserIcon,
 	"Rectangle Select": SquareDashedIcon,
+	Lasso: LassoIcon,
 	"Magic Wand": WandIcon,
 	"Clear All": BombIcon,
 	Delete: Trash2Icon,
