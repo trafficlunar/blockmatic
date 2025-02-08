@@ -13,6 +13,7 @@ import { ToolContext } from "@/context/Tool";
 
 import { useTextures } from "@/hooks/useTextures";
 import { useBlockData } from "@/hooks/useBlockData";
+import { useClipboard } from "@/hooks/useClipboard";
 
 import { useMoveTool } from "@/hooks/tools/move";
 import { useRectangleSelectTool } from "@/hooks/tools/rectangle-select";
@@ -25,7 +26,6 @@ import { useEyedropperTool } from "@/hooks/tools/eyedropper";
 import { useZoomTool } from "@/hooks/tools/zoom";
 
 import * as selection from "@/utils/selection";
-import * as clipboard from "@/utils/clipboard";
 
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
@@ -66,6 +66,8 @@ function Canvas() {
 
 	const startBlocksRef = useRef<Block[]>([]);
 	const startSelectionCoordsRef = useRef<CoordinateArray>([]);
+
+	const clipboard = useClipboard();
 
 	const zoom = useCallback(
 		(newScale: number) => {
@@ -300,11 +302,11 @@ function Canvas() {
 					break;
 				case "c":
 					if (!e.ctrlKey) return;
-					clipboard.copy(selectionCoords, blocks);
+					clipboard.copy();
 					break;
 				case "v":
 					if (!e.ctrlKey) return;
-					clipboard.paste(setSelectionLayerBlocks, setSelectionCoords, setTool);
+					clipboard.paste();
 					break;
 				case "1":
 					setTool("hand");
@@ -360,11 +362,12 @@ function Canvas() {
 			selectionLayerBlocks,
 			canvasSize,
 			blockData,
+			clipboard,
 			setBlocks,
-			setCssCursor,
 			setSelectionCoords,
 			setSelectionLayerBlocks,
 			setTool,
+			addHistory,
 			redo,
 			undo,
 		]
