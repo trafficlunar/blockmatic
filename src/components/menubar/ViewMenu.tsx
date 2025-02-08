@@ -1,5 +1,15 @@
 import { useContext } from "react";
-import { MenubarCheckboxItem, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
+import {
+	MenubarCheckboxItem,
+	MenubarContent,
+	MenubarItem,
+	MenubarMenu,
+	MenubarSeparator,
+	MenubarSub,
+	MenubarSubContent,
+	MenubarSubTrigger,
+	MenubarTrigger,
+} from "@/components/ui/menubar";
 
 import { CanvasContext } from "@/context/Canvas";
 import { DialogContext } from "@/context/Dialog";
@@ -31,15 +41,20 @@ function ViewMenu() {
 				</MenubarCheckboxItem>
 
 				<MenubarSeparator />
-				<MenubarCheckboxItem checked={settings.historyPanel} onCheckedChange={onCheckedChange("historyPanel")}>
-					History Panel
-				</MenubarCheckboxItem>
-				<MenubarCheckboxItem checked={settings.colorPicker} onCheckedChange={onCheckedChange("colorPicker")}>
-					Color Picker
-				</MenubarCheckboxItem>
-				<MenubarCheckboxItem checked={settings.blockReplacer} onCheckedChange={onCheckedChange("blockReplacer")}>
-					Block Replacer
-				</MenubarCheckboxItem>
+				<MenubarSub>
+					<MenubarSubTrigger>Tabs</MenubarSubTrigger>
+					<MenubarSubContent>
+						<MenubarCheckboxItem checked={settings.historyPanel} onCheckedChange={onCheckedChange("historyPanel")}>
+							History
+						</MenubarCheckboxItem>
+						<MenubarCheckboxItem checked={settings.colorPicker} onCheckedChange={onCheckedChange("colorPicker")}>
+							Color Picker
+						</MenubarCheckboxItem>
+						<MenubarCheckboxItem checked={settings.blockReplacer} onCheckedChange={onCheckedChange("blockReplacer")}>
+							Block Replacer
+						</MenubarCheckboxItem>
+					</MenubarSubContent>
+				</MenubarSub>
 				<MenubarCheckboxItem checked={settings.radiusChanger} onCheckedChange={onCheckedChange("radiusChanger")}>
 					Radius Changer
 				</MenubarCheckboxItem>

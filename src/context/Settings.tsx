@@ -13,8 +13,8 @@ const defaultSettings: Settings = {
 	grid: true,
 	canvasBorder: false,
 	historyPanel: true,
-	colorPicker: false,
-	blockReplacer: false,
+	colorPicker: true,
+	blockReplacer: true,
 	radiusChanger: true,
 	blockSelector: true,
 };

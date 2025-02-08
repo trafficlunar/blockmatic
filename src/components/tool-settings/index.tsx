@@ -12,16 +12,22 @@ import ColorPicker from "./ColorPicker";
 import Replace from "./Replace";
 import Radius from "./Radius";
 import BlockSelector from "./BlockSelector";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 function ToolSettings() {
 	const { settings } = useContext(SettingsContext);
 
-	const [width, setWidth] = useState(288);
+	const [width, setWidth] = useState(300);
 	const [resizing, setResizing] = useState(false);
 
 	const divRef = useRef<HTMLDivElement>(null);
 	const [stageWidth, setStageWidth] = useState(0);
 	const [searchInput, setSearchInput] = useState("");
+
+	const enabledTabs = [settings.historyPanel, settings.colorPicker, settings.blockReplacer].filter(Boolean).length;
+	const defaultTab = settings.historyPanel ? "history" : settings.colorPicker ? "color-picker" : settings.blockReplacer ? "replace" : undefined;
+
+	const [activeTab, setActiveTab] = useState(defaultTab);
 
 	const onMouseDown = () => {
 		setResizing(true);
@@ -69,9 +75,13 @@ function ToolSettings() {
 		};
 	}, [divRef]);
 
+	useEffect(() => {
+		setActiveTab(settings.historyPanel ? "history" : settings.colorPicker ? "color-picker" : settings.blockReplacer ? "replace" : undefined);
+	}, [settings]);
+
 	return (
 		<>
-			{(settings.colorPicker || settings.blockReplacer || settings.radiusChanger || settings.blockSelector) && (
+			{(settings.historyPanel || settings.colorPicker || settings.blockReplacer || settings.radiusChanger || settings.blockSelector) && (
 				<div
 					style={{ width: `${width}px` }}
 					className="w-72 border-l border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 pb-0 flex flex-col h-full gap-2 relative"
@@ -83,24 +93,33 @@ function ToolSettings() {
 						<GripVerticalIcon />
 					</div>
 
-					{settings.historyPanel && (
+					{(settings.historyPanel || settings.colorPicker || settings.blockReplacer) && (
 						<>
-							{/* <span className="text-xs text-zinc-600">History</span> */}
-							<History />
-							<Separator />
-						</>
-					)}
+							<Tabs value={activeTab} onValueChange={setActiveTab} className="[&>*:first-child]:mt-0">
+								{enabledTabs > 1 && (
+									<TabsList className={`grid w-full grid-cols-${enabledTabs} h-8 *:p-0.5`}>
+										{settings.historyPanel && <TabsTrigger value="history">History</TabsTrigger>}
+										{settings.colorPicker && <TabsTrigger value="color-picker">Color</TabsTrigger>}
+										{settings.blockReplacer && <TabsTrigger value="replace">Replace</TabsTrigger>}
+									</TabsList>
+								)}
+								{settings.historyPanel && (
+									<TabsContent value="history">
+										<History />
+									</TabsContent>
+								)}
+								{settings.colorPicker && (
+									<TabsContent value="color-picker">
+										<ColorPicker />
+									</TabsContent>
+								)}
+								{settings.blockReplacer && (
+									<TabsContent value="replace">
+										<Replace />
+									</TabsContent>
+								)}
+							</Tabs>
 
-					{settings.colorPicker && (
-						<>
-							<ColorPicker />
-							<Separator />
-						</>
-					)}
-
-					{settings.blockReplacer && (
-						<>
-							<Replace />
 							<Separator />
 						</>
 					)}
