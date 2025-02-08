@@ -31,7 +31,6 @@ export const HistoryProvider = ({ children }: Props) => {
 
 		if (newHistory.length > MAX_HISTORY) {
 			newHistory.shift();
-			setCurrentIndex((prev) => Math.max(prev - 1, 0));
 		} else {
 			setCurrentIndex(newHistory.length - 1);
 		}
