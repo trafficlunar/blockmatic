@@ -2,7 +2,11 @@ import { useContext } from "react";
 import { ThemeContext } from "@/context/Theme";
 import { MoonIcon, SunIcon, SunMoonIcon } from "lucide-react";
 
-function ThemeIcon() {
+interface Props {
+	inApp?: boolean;
+}
+
+function ThemeIcon({ inApp }: Props) {
 	const { theme, setTheme } = useContext(ThemeContext);
 
 	const onClick = () => {
@@ -11,18 +15,20 @@ function ThemeIcon() {
 	};
 
 	const getIcon = () => {
+		const size = inApp ? 24 : 30;
+
 		switch (theme) {
 			case "light":
-				return <SunIcon size={30} />;
+				return <SunIcon size={size} />;
 			case "dark":
-				return <MoonIcon size={30} />;
+				return <MoonIcon size={size} />;
 			case "system":
-				return <SunMoonIcon size={30} />;
+				return <SunMoonIcon size={size} />;
 		}
 	};
 
 	return (
-		<button onClick={onClick} title={theme} className="text-white">
+		<button onClick={onClick} title={theme} className={`text-white ${inApp ? "text-black" : ""}`}>
 			{getIcon()}
 		</button>
 	);
