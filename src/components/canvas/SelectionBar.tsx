@@ -1,16 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "lucide-react";
 
-import { CanvasContext } from "@/context/Canvas";
 import { SelectionContext } from "@/context/Selection";
-
-import * as selection from "@/utils/selection";
 
 import { Button } from "@/components/ui/button";
 
 function SelectionBar() {
-	const { blocks, setBlocks } = useContext(CanvasContext);
-	const { selectionLayerBlocks, setSelectionLayerBlocks } = useContext(SelectionContext);
+	const { selectionLayerBlocks, setSelectionLayerBlocks, confirmSelection } = useContext(SelectionContext);
 
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -29,7 +25,7 @@ function SelectionBar() {
 				<XIcon />
 			</Button>
 			<span className="mx-2 text-[0.85rem]">Confirm selection?</span>
-			<Button variant="ghost" className="w-8 h-8" onClick={() => selection.confirm(blocks, selectionLayerBlocks, setBlocks, setSelectionLayerBlocks)}>
+			<Button variant="ghost" className="w-8 h-8" onClick={confirmSelection}>
 				<CheckIcon />
 			</Button>
 		</div>

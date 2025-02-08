@@ -25,8 +25,6 @@ import { usePaintBucketTool } from "@/hooks/tools/paint-bucket";
 import { useEyedropperTool } from "@/hooks/tools/eyedropper";
 import { useZoomTool } from "@/hooks/tools/zoom";
 
-import * as selection from "@/utils/selection";
-
 import Blocks from "./Blocks";
 import Cursor from "./Cursor";
 import Selection from "./Selection";
@@ -43,7 +41,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 function Canvas() {
 	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
 	const { addHistory, undo, redo } = useContext(HistoryContext);
-	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
+	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks, confirmSelection } = useContext(SelectionContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
@@ -250,7 +248,7 @@ function Canvas() {
 					setSelectionLayerBlocks([]);
 					break;
 				case "Enter":
-					selection.confirm(blocks, selectionLayerBlocks, setBlocks, setSelectionLayerBlocks);
+					confirmSelection();
 					break;
 				case " ": // Space
 					setDragging(true);
