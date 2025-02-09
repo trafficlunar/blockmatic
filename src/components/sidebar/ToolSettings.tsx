@@ -4,7 +4,7 @@ import { ToolContext } from "@/context/Tool";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-function Radius() {
+function ToolSettings() {
 	const { radius, setRadius } = useContext(ToolContext);
 
 	return (
@@ -22,4 +22,4 @@ function Radius() {
 	);
 }
 
-export default Radius;
+export default ToolSettings;

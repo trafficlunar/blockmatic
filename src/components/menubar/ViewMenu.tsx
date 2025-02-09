@@ -55,8 +55,8 @@ function ViewMenu() {
 						</MenubarCheckboxItem>
 					</MenubarSubContent>
 				</MenubarSub>
-				<MenubarCheckboxItem checked={settings.radiusChanger} onCheckedChange={onCheckedChange("radiusChanger")}>
-					Radius Changer
+				<MenubarCheckboxItem checked={settings.toolSettings} onCheckedChange={onCheckedChange("toolSettings")}>
+					Tool Settings
 				</MenubarCheckboxItem>
 				<MenubarCheckboxItem checked={settings.blockSelector} onCheckedChange={onCheckedChange("blockSelector")}>
 					Block Selector

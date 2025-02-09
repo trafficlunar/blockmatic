@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import History from "./History";
 import ColorPicker from "./ColorPicker";
 import Replace from "./Replace";
-import Radius from "./Radius";
+import ToolSettings from "./ToolSettings";
 import BlockSelector from "./BlockSelector";
 
 function Sidebar() {
@@ -81,7 +81,7 @@ function Sidebar() {
 
 	return (
 		<>
-			{(settings.historyPanel || settings.colorPicker || settings.blockReplacer || settings.radiusChanger || settings.blockSelector) && (
+			{(settings.historyPanel || settings.colorPicker || settings.blockReplacer || settings.toolSettings || settings.blockSelector) && (
 				<div
 					style={{ width: `${width}px` }}
 					className="w-72 border-l border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 pb-0 flex flex-col h-full gap-2 relative"
@@ -124,9 +124,9 @@ function Sidebar() {
 						</>
 					)}
 
-					{settings.radiusChanger && (
+					{settings.toolSettings && (
 						<>
-							<Radius />
+							<ToolSettings />
 							<Separator />
 						</>
 					)}

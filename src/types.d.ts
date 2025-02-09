@@ -31,7 +31,7 @@ interface Settings {
 	historyPanel: boolean;
 	colorPicker: boolean;
 	blockReplacer: boolean;
-	radiusChanger: boolean;
+	toolSettings: boolean;
 	blockSelector: boolean;
 }
 

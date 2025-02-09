@@ -15,7 +15,7 @@ const defaultSettings: Settings = {
 	historyPanel: true,
 	colorPicker: true,
 	blockReplacer: true,
-	radiusChanger: true,
+	toolSettings: true,
 	blockSelector: true,
 };
 
