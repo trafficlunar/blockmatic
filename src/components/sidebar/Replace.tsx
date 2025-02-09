@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Container, Sprite, Stage } from "@pixi/react";
 
 import { CanvasContext } from "@/context/Canvas";
+import { HistoryContext } from "@/context/History";
 import { SelectionContext } from "@/context/Selection";
 import { ToolContext } from "@/context/Tool";
 import { TexturesContext } from "@/context/Textures";
@@ -13,6 +14,7 @@ import { useTextures } from "@/hooks/useTextures";
 
 function Replace() {
 	const { version, setBlocks } = useContext(CanvasContext);
+	const { addHistory } = useContext(HistoryContext);
 	const { isInSelection } = useContext(SelectionContext);
 	const { selectedBlock, tool, setTool } = useContext(ToolContext);
 	const { missingTexture } = useContext(TexturesContext);
@@ -32,8 +34,10 @@ function Replace() {
 
 	const onClickReplace = () => {
 		// If block2 name is air, delete the block instead.
-		setBlocks((prev) =>
-			prev
+		setBlocks((prev) => {
+			const oldBlocks = [...prev];
+
+			const replacedBlocks = prev
 				.map((block) => {
 					if (isInSelection(block.x, block.y)) {
 						if (block.name === block1) {
@@ -45,8 +49,15 @@ function Replace() {
 					return block;
 				})
 				// Remove all blocks that are null
-				.filter((block) => block !== null)
-		);
+				.filter((block) => block !== null);
+
+			addHistory(
+				"Replace",
+				() => setBlocks(replacedBlocks),
+				() => setBlocks(oldBlocks)
+			);
+			return replacedBlocks;
+		});
 	};
 
 	useEffect(() => {

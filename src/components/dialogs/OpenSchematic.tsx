@@ -5,6 +5,7 @@ import { UploadIcon } from "lucide-react";
 import * as nbt from "nbtify";
 
 import { CanvasContext } from "@/context/Canvas";
+import { HistoryContext } from "@/context/History";
 import { LoadingContext } from "@/context/Loading";
 
 import * as varint from "@/utils/varint";
@@ -47,7 +48,8 @@ interface SpongeNBT extends nbt.ListTagLike {
 }
 
 function OpenSchematic({ close }: DialogProps) {
-	const { setBlocks, setVersion } = useContext(CanvasContext);
+	const { blocks, setBlocks, setVersion } = useContext(CanvasContext);
+	const { addHistory } = useContext(HistoryContext);
 	const { setLoading } = useContext(LoadingContext);
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -66,6 +68,8 @@ function OpenSchematic({ close }: DialogProps) {
 			const fileExtension = file.name.split(".").pop();
 			const bytes = await file.arrayBuffer();
 			const data = await nbt.read(bytes);
+
+			const oldBlocks = [...blocks];
 
 			if (fileExtension == "litematic") {
 				const litematicData = (data as nbt.NBTData<LitematicNBT>).data;
@@ -144,6 +148,11 @@ function OpenSchematic({ close }: DialogProps) {
 				}
 
 				setBlocks(blocks);
+				addHistory(
+					"Open Schematic",
+					() => setBlocks(blocks),
+					() => setBlocks(oldBlocks)
+				);
 			} else if (fileExtension == "schem") {
 				const spongeData = (data as nbt.NBTData<SpongeNBT>).data.Schematic;
 				const schematicVersion = Object.keys(versionData).find((key) => versionData[key] == spongeData.DataVersion);
@@ -192,6 +201,11 @@ function OpenSchematic({ close }: DialogProps) {
 				}
 
 				setBlocks(blocks);
+				addHistory(
+					"Open Schematic",
+					() => setBlocks(blocks),
+					() => setBlocks(oldBlocks)
+				);
 			}
 		}
 

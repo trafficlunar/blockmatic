@@ -1,18 +1,28 @@
 import { useContext, useState } from "react";
 
 import { CanvasContext } from "@/context/Canvas";
+import { HistoryContext } from "@/context/History";
 
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import VersionCombobox from "../VersionCombobox";
+import VersionCombobox from "@/components/VersionCombobox";
 
 function SetVersion({ close }: DialogProps) {
 	const { version: contextVersion, setVersion: setContextVersion } = useContext(CanvasContext);
+	const { addHistory } = useContext(HistoryContext);
 
 	const [version, setVersion] = useState(contextVersion);
 
 	const onSubmit = () => {
+		const oldVersion = contextVersion;
+
 		setContextVersion(version);
+		addHistory(
+			"Set Version",
+			() => setContextVersion(version),
+			() => setContextVersion(oldVersion)
+		);
+
 		close();
 	};
 

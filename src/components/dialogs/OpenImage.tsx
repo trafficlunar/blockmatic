@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { CircleAlertIcon, LinkIcon, UploadIcon } from "lucide-react";
 
 import { CanvasContext } from "@/context/Canvas";
+import { HistoryContext } from "@/context/History";
 import { LoadingContext } from "@/context/Loading";
 
 import { Button } from "@/components/ui/button";
@@ -20,11 +21,13 @@ import { Toggle } from "@/components/ui/toggle";
 import { useBlockData } from "@/hooks/useBlockData";
 
 import BlockSelector from "./open-image/BlockSelector";
-import VersionCombobox from "../VersionCombobox";
+import VersionCombobox from "@/components/VersionCombobox";
+
 import { findBlockFromRgb } from "@/utils/findBlockFromRgb";
 
 function OpenImage({ close }: DialogProps) {
-	const { version, setBlocks, setVersion, centerCanvas } = useContext(CanvasContext);
+	const { blocks, version, setBlocks, setVersion, centerCanvas } = useContext(CanvasContext);
+	const { addHistory } = useContext(HistoryContext);
 	const { setLoading } = useContext(LoadingContext);
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -98,6 +101,8 @@ function OpenImage({ close }: DialogProps) {
 
 	const onSubmit = async () => {
 		if (image) {
+			const oldBlocks = [...blocks];
+
 			setIsFinished(false);
 			setLoading(true);
 			// Wait for loading indicator to appear
@@ -131,6 +136,11 @@ function OpenImage({ close }: DialogProps) {
 				}
 
 				setBlocks(newBlocks);
+				addHistory(
+					"Open Image",
+					() => setBlocks(newBlocks),
+					() => setBlocks(oldBlocks)
+				);
 			}
 
 			setLoading(false);
@@ -318,7 +328,7 @@ function OpenImage({ close }: DialogProps) {
 			</div>
 
 			<DialogFooter className="!justify-between">
-				<VersionCombobox version={version} setVersion={setVersion} />
+				<VersionCombobox version={version} setVersion={setVersion} isContext />
 
 				<div className="flex gap-2">
 					<Button variant="outline" onClick={close}>

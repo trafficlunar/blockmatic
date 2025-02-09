@@ -34,7 +34,7 @@ function Menubar() {
 				<ViewMenu />
 
 				<div className="absolute right-3 flex items-center gap-1">
-					<ThemeIcon inApp={true} />
+					<ThemeIcon inApp />
 					<a href="https://github.com/trafficlunar/blockmatic" className="w-5">
 						<GithubIcon fill={isDark ? "white" : "black"} />
 					</a>

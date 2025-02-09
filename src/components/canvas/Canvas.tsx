@@ -287,7 +287,16 @@ function Canvas() {
 						}
 					}
 
-					setSelectionCoords(newSelection);
+					setSelectionCoords((prev) => {
+						const prevSelection = [...prev];
+						addHistory(
+							"Select All",
+							() => setSelectionCoords(newSelection),
+							() => setSelectionCoords(prevSelection)
+						);
+
+						return newSelection;
+					});
 					break;
 				}
 				case "z":

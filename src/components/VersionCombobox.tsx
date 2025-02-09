@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 import { cn } from "@/lib/utils";
 import { numberToVersion, versionToNumber } from "@/utils/version";
+import { HistoryContext } from "@/context/History";
 
 const versions = [
 	"1.21.4",
@@ -31,14 +32,29 @@ const versions = [
 interface Props {
 	version: number;
 	setVersion: React.Dispatch<React.SetStateAction<number>>;
+	// If both variables above are from the context
+	isContext?: boolean;
 }
 
-function VersionCombobox({ version, setVersion }: Props) {
+function VersionCombobox({ version, setVersion, isContext }: Props) {
+	const { addHistory } = useContext(HistoryContext);
+
 	const [comboboxOpen, setComboboxOpen] = useState(false);
 	const [comboboxValue, setComboboxValue] = useState(numberToVersion(version));
 
 	useEffect(() => {
-		setVersion(versionToNumber(comboboxValue));
+		setVersion((prev) => {
+			if (isContext) {
+				const oldVersion = prev;
+				addHistory(
+					"Set Version",
+					() => setVersion(versionToNumber(comboboxValue)),
+					() => setVersion(oldVersion)
+				);
+			}
+
+			return versionToNumber(comboboxValue);
+		});
 	}, [comboboxValue]);
 
 	return (

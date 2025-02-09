@@ -1,17 +1,38 @@
 import { useContext, useEffect, useRef } from "react";
+import {
+	BombIcon,
+	EraserIcon,
+	FileIcon,
+	ImageIcon,
+	LassoIcon,
+	PaintBucketIcon,
+	PencilIcon,
+	PresentationIcon,
+	ReplaceIcon,
+	SlidersHorizontalIcon,
+	SquareDashedIcon,
+	Trash2Icon,
+	WandIcon,
+} from "lucide-react";
+
 import { HistoryContext } from "@/context/History";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BombIcon, EraserIcon, LassoIcon, PencilIcon, PresentationIcon, SquareDashedIcon, Trash2Icon, WandIcon } from "lucide-react";
 
 const iconMap = {
-	"New Canvas": PresentationIcon,
-	Pencil: PencilIcon,
-	Eraser: EraserIcon,
-	"Rectangle Select": SquareDashedIcon,
-	Lasso: LassoIcon,
-	"Magic Wand": WandIcon,
 	"Clear All": BombIcon,
 	Delete: Trash2Icon,
+	Eraser: EraserIcon,
+	Lasso: LassoIcon,
+	"Magic Wand": WandIcon,
+	"New Canvas": PresentationIcon,
+	"Open Image": ImageIcon,
+	"Open Schematic": FileIcon,
+	"Paint Bucket": PaintBucketIcon,
+	Pencil: PencilIcon,
+	Replace: ReplaceIcon,
+	"Rectangle Select": SquareDashedIcon,
+	"Select All": SquareDashedIcon,
+	"Set Version": SlidersHorizontalIcon,
 };
 
 function History() {

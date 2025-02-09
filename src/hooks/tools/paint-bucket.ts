@@ -2,9 +2,11 @@ import { useContext } from "react";
 
 import { CanvasContext } from "@/context/Canvas";
 import { ToolContext } from "@/context/Tool";
+import { HistoryContext } from "@/context/History";
 
 export function usePaintBucketTool(mouseCoords: Position) {
 	const { blocks, canvasSize, setBlocks } = useContext(CanvasContext);
+	const { addHistory } = useContext(HistoryContext);
 	const { selectedBlock } = useContext(ToolContext);
 
 	// Directions for adjacent blocks (up, down, left, right)
@@ -16,6 +18,9 @@ export function usePaintBucketTool(mouseCoords: Position) {
 	];
 
 	const use = () => {
+		// Create a copy
+		const oldBlocks = blocks.map((block) => ({ ...block }));
+
 		const visited = new Set<string>();
 		const startBlock = blocks.find((block) => block.x === mouseCoords.x && block.y === mouseCoords.y);
 		const startName = startBlock ? startBlock.name : "air";
@@ -51,7 +56,13 @@ export function usePaintBucketTool(mouseCoords: Position) {
 		}
 
 		floodFill(mouseCoords.x, mouseCoords.y);
-		setBlocks(() => [...blocks]);
+		setBlocks([...blocks]);
+
+		addHistory(
+			"Paint Bucket",
+			() => setBlocks([...blocks]),
+			() => setBlocks(oldBlocks)
+		);
 	};
 
 	return { use };
