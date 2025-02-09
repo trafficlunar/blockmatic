@@ -5,7 +5,8 @@ import { CanvasContext } from "@/context/Canvas";
 
 export function useMoveTool(mouseMovement: Position) {
 	const { setBlocks } = useContext(CanvasContext);
-	const { selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks, isInSelection } = useContext(SelectionContext);
+	const { selectionLayerBlocks, confirmHistoryEntryNameRef, setSelectionCoords, setSelectionLayerBlocks, isInSelection } =
+		useContext(SelectionContext);
 
 	const use = () => {
 		// If there is no selection currently being moved...
@@ -29,6 +30,8 @@ export function useMoveTool(mouseMovement: Position) {
 		// Increase each coordinate in the selection by the mouse movement
 		setSelectionCoords((prev) => prev.map(([x, y]) => [x + mouseMovement.x, y + mouseMovement.y]));
 		setSelectionLayerBlocks((prev) => prev.map((b) => ({ ...b, x: b.x + mouseMovement.x, y: b.y + mouseMovement.y })));
+
+		confirmHistoryEntryNameRef.current = "Move Selection";
 	};
 
 	return { use };

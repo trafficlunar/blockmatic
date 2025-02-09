@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import {
+	CircleIcon,
 	EraserIcon,
 	HandIcon,
 	LassoIcon,
@@ -7,6 +8,8 @@ import {
 	PaintBucketIcon,
 	PencilIcon,
 	PipetteIcon,
+	RectangleHorizontalIcon,
+	SplineIcon,
 	SquareDashedIcon,
 	WandIcon,
 	ZoomInIcon,
@@ -19,10 +22,18 @@ import { ToolContext } from "@/context/Tool";
 
 import SelectedBlock from "./SelectedBlock";
 
+const shapeIconMap = {
+	line: SplineIcon,
+	rectangle: RectangleHorizontalIcon,
+	circle: CircleIcon,
+};
+
 function Toolbar() {
-	const { tool, setTool } = useContext(ToolContext);
+	const { tool, shape, setTool } = useContext(ToolContext);
 
 	const onToolChange = (value: string) => setTool(value as Tool);
+
+	const ShapeIconComponent = shapeIconMap[shape as keyof typeof shapeIconMap];
 
 	return (
 		<TooltipProvider>
@@ -125,6 +136,18 @@ function Toolbar() {
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Paint Bucket (G)</p>
+					</TooltipContent>
+				</Tooltip>
+
+				{/* Shape */}
+				<Tooltip delayDuration={0}>
+					<TooltipTrigger>
+						<ToggleGroupItem value="shape" className="!p-0 !h-8 !min-w-8">
+							{ShapeIconComponent && <ShapeIconComponent />}
+						</ToggleGroupItem>
+					</TooltipTrigger>
+					<TooltipContent side="right" sideOffset={10}>
+						<p>Shape (U)</p>
 					</TooltipContent>
 				</Tooltip>
 

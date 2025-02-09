@@ -1,8 +1,9 @@
-import { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useRef, useState } from "react";
 
 interface Context {
 	selectionCoords: CoordinateArray;
 	selectionLayerBlocks: Block[];
+	confirmHistoryEntryNameRef: React.MutableRefObject<string>;
 	setSelectionCoords: React.Dispatch<React.SetStateAction<CoordinateArray>>;
 	setSelectionLayerBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
 	isInSelection: (x: number, y: number) => boolean;
@@ -17,6 +18,7 @@ export const SelectionContext = createContext<Context>({} as Context);
 export const SelectionProvider = ({ children }: Props) => {
 	const [selectionCoords, setSelectionCoords] = useState<CoordinateArray>([]);
 	const [selectionLayerBlocks, setSelectionLayerBlocks] = useState<Block[]>([]);
+	const confirmHistoryEntryNameRef = useRef("Move Selection");
 
 	const isInSelection = (x: number, y: number): boolean => {
 		if (selectionCoords.length !== 0) {
@@ -30,6 +32,7 @@ export const SelectionProvider = ({ children }: Props) => {
 			value={{
 				selectionCoords,
 				selectionLayerBlocks,
+				confirmHistoryEntryNameRef,
 				setSelectionCoords,
 				setSelectionLayerBlocks,
 				isInSelection,

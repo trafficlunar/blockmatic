@@ -23,7 +23,8 @@ interface Block extends Position {
 
 type CoordinateArray = [number, number][];
 
-type Tool = "hand" | "move" | "rectangle-select" | "lasso" | "magic-wand" | "pencil" | "eraser" | "paint-bucket" | "eyedropper" | "zoom";
+type Tool = "hand" | "move" | "rectangle-select" | "lasso" | "magic-wand" | "pencil" | "eraser" | "paint-bucket" | "shape" | "eyedropper" | "zoom";
+type Shape = "line" | "rectangle" | "circle";
 
 interface Settings {
 	grid: boolean;

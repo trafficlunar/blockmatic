@@ -22,6 +22,7 @@ import { useMagicWandTool } from "@/hooks/tools/magic-wand";
 import { usePencilTool } from "@/hooks/tools/pencil";
 import { useEraserTool } from "@/hooks/tools/eraser";
 import { usePaintBucketTool } from "@/hooks/tools/paint-bucket";
+import { useShapeTool } from "@/hooks/tools/shape";
 import { useEyedropperTool } from "@/hooks/tools/eyedropper";
 import { useZoomTool } from "@/hooks/tools/zoom";
 
@@ -85,6 +86,7 @@ function Canvas() {
 	const pencilTool = usePencilTool(mouseCoords);
 	const eraserTool = useEraserTool(mouseCoords);
 	const paintBucketTool = usePaintBucketTool(mouseCoords);
+	const shapeTool = useShapeTool(mouseCoords, dragStartCoordsRef.current, holdingShiftRef.current);
 	const eyedropperTool = useEyedropperTool(mouseCoords);
 	const zoomTool = useZoomTool(zoom, holdingAltRef.current);
 
@@ -128,6 +130,7 @@ function Canvas() {
 			lasso: lassoTool,
 			pencil: pencilTool,
 			eraser: eraserTool,
+			shape: shapeTool,
 		};
 
 		// Switch to eraser tool if selected block is air when using pencil
@@ -137,12 +140,11 @@ function Canvas() {
 		}
 
 		tools[tool]?.use();
-	}, [tool, selectedBlock, moveTool, lassoTool, pencilTool, eraserTool, rectangleSelectTool]);
+	}, [tool, selectedBlock, moveTool, rectangleSelectTool, lassoTool, pencilTool, eraserTool, shapeTool]);
 
 	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
 			if (!stageContainerRef.current) return;
-
 			const oldMouseCoords = mouseCoords;
 
 			const rect = stageContainerRef.current.getBoundingClientRect();
@@ -197,23 +199,23 @@ function Canvas() {
 		updateCssCursor();
 
 		// History entries for pencil and eraser
-		if (tool == "pencil" || tool == "eraser") {
+		if (tool === "pencil" || tool === "eraser") {
 			// startBlocksRef will mutate if we pass it directly
 			const prevBlocks = [...startBlocksRef.current];
 
 			addHistory(
-				tool == "pencil" ? "Pencil" : "Eraser",
+				tool === "pencil" ? "Pencil" : "Eraser",
 				() => setBlocks([...blocks]),
 				() => setBlocks([...prevBlocks])
 			);
 		}
 
-		if (tool == "rectangle-select" || tool == "magic-wand" || tool == "lasso") {
+		if (tool === "rectangle-select" || tool === "magic-wand" || tool === "lasso") {
 			// startSelectionCoordsRef will mutate if we pass it directly
 			const prevSelection = [...startSelectionCoordsRef.current];
 
 			addHistory(
-				tool == "rectangle-select" ? "Rectangle Select" : tool == "lasso" ? "Lasso" : "Magic Wand",
+				tool === "rectangle-select" ? "Rectangle Select" : tool == "lasso" ? "Lasso" : "Magic Wand",
 				() => setSelectionCoords([...selectionCoords]),
 				() => setSelectionCoords([...prevSelection])
 			);

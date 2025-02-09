@@ -15,7 +15,8 @@ interface Props {
 function SelectionBar({ startBlocks, startSelectionCoords }: Props) {
 	const { blocks, setBlocks } = useContext(CanvasContext);
 	const { addHistory } = useContext(HistoryContext);
-	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
+	const { selectionCoords, selectionLayerBlocks, confirmHistoryEntryNameRef, setSelectionCoords, setSelectionLayerBlocks } =
+		useContext(SelectionContext);
 
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -29,7 +30,7 @@ function SelectionBar({ startBlocks, startSelectionCoords }: Props) {
 		setSelectionLayerBlocks([]);
 
 		addHistory(
-			"Move Selection",
+			confirmHistoryEntryNameRef.current,
 			() => {
 				setBlocks(uniqueBlocks);
 				setSelectionCoords(oldSelectionCoords);
@@ -60,7 +61,7 @@ function SelectionBar({ startBlocks, startSelectionCoords }: Props) {
 			<Button variant="ghost" className="w-8 h-8" onClick={cancel}>
 				<XIcon />
 			</Button>
-			<span className="mx-2 text-[0.85rem]">Confirm selection?</span>
+			<span className="mx-2 text-[0.85rem]">Confirm?</span>
 			<Button variant="ghost" className="w-8 h-8" onClick={confirm}>
 				<CheckIcon />
 			</Button>

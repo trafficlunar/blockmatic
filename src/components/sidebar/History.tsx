@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import {
 	BombIcon,
+	CircleIcon,
 	EraserIcon,
 	FileIcon,
 	ImageIcon,
@@ -9,8 +10,10 @@ import {
 	PaintBucketIcon,
 	PencilIcon,
 	PresentationIcon,
+	RectangleHorizontalIcon,
 	ReplaceIcon,
 	SlidersHorizontalIcon,
+	SplineIcon,
 	SquareDashedIcon,
 	Trash2Icon,
 	WandIcon,
@@ -20,10 +23,12 @@ import { HistoryContext } from "@/context/History";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const iconMap = {
-	"Clear All": BombIcon,
+	Circle: CircleIcon,
 	Delete: Trash2Icon,
 	Eraser: EraserIcon,
+	"Clear All": BombIcon,
 	Lasso: LassoIcon,
+	Line: SplineIcon,
 	"Magic Wand": WandIcon,
 	"Move Selection": MoveIcon,
 	"New Canvas": PresentationIcon,
@@ -31,8 +36,9 @@ const iconMap = {
 	"Open Schematic": FileIcon,
 	"Paint Bucket": PaintBucketIcon,
 	Pencil: PencilIcon,
-	Replace: ReplaceIcon,
+	Rectangle: RectangleHorizontalIcon,
 	"Rectangle Select": SquareDashedIcon,
+	Replace: ReplaceIcon,
 	"Select All": SquareDashedIcon,
 	"Set Version": SlidersHorizontalIcon,
 };
