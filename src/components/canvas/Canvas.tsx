@@ -312,8 +312,8 @@ function Canvas() {
 					break;
 				}
 				case "z":
-					if (!e.ctrlKey) return;
-					undo();
+					if (e.ctrlKey) undo();
+					else setTool("zoom");
 					break;
 				case "y":
 					if (!e.ctrlKey) return;
@@ -324,38 +324,32 @@ function Canvas() {
 					clipboard.copy();
 					break;
 				case "v":
-					if (!e.ctrlKey) return;
-					clipboard.paste();
+					if (e.ctrlKey) clipboard.paste();
+					else setTool("move");
 					break;
-				case "1":
+				case "h":
 					setTool("hand");
 					break;
-				case "2":
-					setTool("move");
-					break;
-				case "3":
+				case "m":
 					setTool("rectangle-select");
 					break;
-				case "4":
+				case "l":
 					setTool("lasso");
 					break;
-				case "5":
+				case "w":
 					setTool("magic-wand");
 					break;
-				case "6":
+				case "b":
 					setTool("pencil");
 					break;
-				case "7":
+				case "e":
 					setTool("eraser");
 					break;
-				case "8":
+				case "g":
 					setTool("paint-bucket");
 					break;
-				case "9":
+				case "i":
 					setTool("eyedropper");
-					break;
-				case "0":
-					setTool("zoom");
 					break;
 				case "ArrowRight": {
 					// Debug key combination

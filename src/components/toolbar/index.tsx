@@ -40,7 +40,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Hand (1)</p>
+						<p>Hand (H)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -52,7 +52,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Move (2)</p>
+						<p>Move (V)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -64,7 +64,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Rectangle Select (3)</p>
+						<p>Rectangle Select (M)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -76,7 +76,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Lasso (4)</p>
+						<p>Lasso (L)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -88,7 +88,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Magic Wand (5)</p>
+						<p>Magic Wand (W)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -100,7 +100,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Pencil (6)</p>
+						<p>Pencil (B)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -112,7 +112,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Eraser (7)</p>
+						<p>Eraser (E)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -124,7 +124,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Paint Bucket (8)</p>
+						<p>Paint Bucket (G)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -136,7 +136,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Eyedropper (9)</p>
+						<p>Eyedropper (I)</p>
 					</TooltipContent>
 				</Tooltip>
 
@@ -148,7 +148,7 @@ function Toolbar() {
 						</ToggleGroupItem>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
-						<p>Zoom (0)</p>
+						<p>Zoom (Z)</p>
 					</TooltipContent>
 				</Tooltip>
 
