@@ -41,7 +41,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 function Canvas() {
 	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
 	const { addHistory, undo, redo } = useContext(HistoryContext);
-	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks, confirmSelection } = useContext(SelectionContext);
+	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
 	const { settings } = useContext(SettingsContext);
 	const { missingTexture } = useContext(TexturesContext);
 	const { isDark } = useContext(ThemeContext);
@@ -245,11 +245,23 @@ function Canvas() {
 		async (e: React.KeyboardEvent) => {
 			switch (e.key) {
 				case "Escape":
+					setBlocks(startBlocksRef.current);
 					setSelectionLayerBlocks([]);
 					break;
-				case "Enter":
-					confirmSelection();
+				case "Enter": {
+					const combinedBlocks = [...blocks, ...selectionLayerBlocks];
+					const uniqueBlocks = Array.from(new Map(combinedBlocks.map((block) => [`${block.x},${block.y}`, block])).values());
+
+					setBlocks(uniqueBlocks);
+					setSelectionLayerBlocks([]);
+
+					addHistory(
+						"Move Selection",
+						() => setBlocks(uniqueBlocks),
+						() => setBlocks(startBlocksRef.current)
+					);
 					break;
+				}
 				case " ": // Space
 					setDragging(true);
 					oldToolRef.current = tool;
@@ -364,11 +376,11 @@ function Canvas() {
 		},
 		[
 			tool,
-			blocks,
 			selectionCoords,
-			selectionLayerBlocks,
 			canvasSize,
 			blockData,
+			blocks,
+			selectionLayerBlocks,
 			clipboard,
 			setBlocks,
 			setSelectionCoords,
@@ -487,7 +499,7 @@ function Canvas() {
 			<CursorInformation mouseCoords={mouseCoords} />
 			<CanvasInformation />
 
-			<SelectionBar />
+			<SelectionBar startBlocks={startBlocksRef.current} startSelectionCoords={startSelectionCoordsRef.current} />
 		</div>
 	);
 }

@@ -1,14 +1,51 @@
 import { useContext, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "lucide-react";
 
+import { HistoryContext } from "@/context/History";
 import { SelectionContext } from "@/context/Selection";
 
 import { Button } from "@/components/ui/button";
+import { CanvasContext } from "@/context/Canvas";
 
-function SelectionBar() {
-	const { selectionLayerBlocks, setSelectionLayerBlocks, confirmSelection } = useContext(SelectionContext);
+interface Props {
+	startBlocks: Block[];
+	startSelectionCoords: CoordinateArray;
+}
+
+function SelectionBar({ startBlocks, startSelectionCoords }: Props) {
+	const { blocks, setBlocks } = useContext(CanvasContext);
+	const { addHistory } = useContext(HistoryContext);
+	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
 
 	const [isVisible, setIsVisible] = useState(false);
+
+	const confirm = () => {
+		const oldSelectionCoords = [...selectionCoords];
+
+		const combinedBlocks = [...blocks, ...selectionLayerBlocks];
+		const uniqueBlocks = Array.from(new Map(combinedBlocks.map((block) => [`${block.x},${block.y}`, block])).values());
+
+		setBlocks(uniqueBlocks);
+		setSelectionLayerBlocks([]);
+
+		addHistory(
+			"Move Selection",
+			() => {
+				setBlocks(uniqueBlocks);
+				setSelectionCoords(oldSelectionCoords);
+			},
+			() => {
+				setBlocks(startBlocks);
+				setSelectionCoords(startSelectionCoords);
+			}
+		);
+	};
+
+	const cancel = () => {
+		setBlocks(startBlocks);
+		setSelectionLayerBlocks([]);
+		setSelectionCoords(startSelectionCoords);
+	};
 
 	useEffect(() => {
 		setIsVisible(selectionLayerBlocks.length !== 0);
@@ -20,12 +57,11 @@ function SelectionBar() {
 				${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}
 			`}
 		>
-			{/* todo: place back blocks removed */}
-			<Button variant="ghost" className="w-8 h-8" onClick={() => setSelectionLayerBlocks([])}>
+			<Button variant="ghost" className="w-8 h-8" onClick={cancel}>
 				<XIcon />
 			</Button>
 			<span className="mx-2 text-[0.85rem]">Confirm selection?</span>
-			<Button variant="ghost" className="w-8 h-8" onClick={confirmSelection}>
+			<Button variant="ghost" className="w-8 h-8" onClick={confirm}>
 				<CheckIcon />
 			</Button>
 		</div>
