@@ -14,7 +14,7 @@ function ImageComparison() {
 
 	return (
 		<div
-			onMouseMove={onMouseMove}
+			onPointerMove={onMouseMove}
 			className="relative select-none w-[40vw] h-[calc(40vw*217/270)] flex justify-center rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-md"
 		>
 			<img

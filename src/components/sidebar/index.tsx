@@ -46,16 +46,16 @@ function Sidebar() {
 
 	useEffect(() => {
 		if (resizing) {
-			document.addEventListener("mousemove", onMouseMove);
-			document.addEventListener("mouseup", onMouseUp);
+			document.addEventListener("pointermove", onMouseMove);
+			document.addEventListener("pointerup", onMouseUp);
 		} else {
-			document.removeEventListener("mousemove", onMouseMove);
-			document.removeEventListener("mouseup", onMouseUp);
+			document.removeEventListener("pointermove", onMouseMove);
+			document.removeEventListener("pointerup", onMouseUp);
 		}
 
 		return () => {
-			document.removeEventListener("mousemove", onMouseMove);
-			document.removeEventListener("mouseup", onMouseUp);
+			document.removeEventListener("pointermove", onMouseMove);
+			document.removeEventListener("pointerup", onMouseUp);
 		};
 	}, [resizing]);
 
@@ -87,8 +87,8 @@ function Sidebar() {
 					className="w-72 border-l border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 pb-0 flex flex-col h-full gap-2 relative"
 				>
 					<div
-						onMouseDown={onMouseDown}
 						className="absolute top-0 -left-2 h-full w-4 bg-zinc-300 dark:bg-zinc-800 flex justify-center items-center cursor-e-resize opacity-0 transition-opacity duration-300 delay-100 hover:opacity-100"
+						onPointerDown={onMouseDown}
 					>
 						<GripVerticalIcon />
 					</div>

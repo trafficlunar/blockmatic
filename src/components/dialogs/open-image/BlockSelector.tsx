@@ -44,7 +44,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 			width={stageWidth}
 			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2)}
 			options={{ backgroundAlpha: 0 }}
-			onMouseLeave={() => setHoverPosition(null)}
+			onPointerLeave={() => setHoverPosition(null)}
 		>
 			<Container>
 				{filteredBlocks.map((block, index) => {
