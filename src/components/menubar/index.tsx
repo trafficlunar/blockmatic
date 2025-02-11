@@ -16,6 +16,7 @@ import ThemeIcon from "@/components/ThemeIcon";
 import BlockmaticIcon from "@/assets/blockmatic-icon-colored.svg?react";
 import BlockmaticText from "@/assets/blockmatic-text-colored.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
+import TrafficConeIcon from "@/assets/traffic_cone.svg?react";
 
 function Menubar() {
 	const { isDark } = useContext(ThemeContext);
@@ -33,10 +34,13 @@ function Menubar() {
 				<SelectMenu />
 				<ViewMenu />
 
-				<div className="absolute right-3 flex items-center gap-1">
+				<div className="absolute right-3 grid grid-cols-3 items-center gap-1">
 					<ThemeIcon inApp />
 					<a href="https://github.com/trafficlunar/blockmatic" className="w-5">
 						<GithubIcon fill={isDark ? "white" : "black"} />
+					</a>
+					<a href="https://trafficlunar.net" className="w-5">
+						<TrafficConeIcon fill={isDark ? "white" : "black"} className="hover:fill-orange-400 transition-colors" />
 					</a>
 				</div>
 			</UIMenubar>

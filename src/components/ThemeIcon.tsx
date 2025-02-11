@@ -15,7 +15,7 @@ function ThemeIcon({ inApp }: Props) {
 	};
 
 	const getIcon = () => {
-		const size = inApp ? 24 : 30;
+		const size = inApp ? 22 : 30;
 		const color = inApp ? (isDark ? "white" : "black") : "white";
 
 		switch (theme) {
