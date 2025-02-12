@@ -24,24 +24,26 @@ function Menubar() {
 	return (
 		<DialogProvider>
 			<UIMenubar className="rounded-none border-t-0 border-x-0 col-span-3">
-				<Link to={{ pathname: "/" }} className="px-4 w-40 flex gap-2 items-center">
-					<BlockmaticIcon className="h-full w-8" />
-					<BlockmaticText className="h-full w-full" />
-				</Link>
+				<div className="w-full flex items-center space-x-1 overflow-x-auto">
+					<Link to={{ pathname: "/" }} className="px-4 min-w-40 flex gap-2 items-center">
+						<BlockmaticIcon className="h-full w-8" />
+						<BlockmaticText className="h-full w-full" />
+					</Link>
 
-				<FileMenu />
-				<EditMenu />
-				<SelectMenu />
-				<ViewMenu />
+					<FileMenu />
+					<EditMenu />
+					<SelectMenu />
+					<ViewMenu />
 
-				<div className="absolute right-3 grid grid-cols-3 items-center gap-1">
-					<ThemeIcon inApp />
-					<a href="https://github.com/trafficlunar/blockmatic" className="w-5">
-						<GithubIcon fill={isDark ? "white" : "black"} />
-					</a>
-					<a href="https://trafficlunar.net" className="w-5">
-						<TrafficConeIcon fill={isDark ? "white" : "black"} className="hover:fill-orange-400 transition-colors" />
-					</a>
+					<div className="!ml-auto pl-4 grid grid-cols-3 items-center gap-1 min-w-20">
+						<ThemeIcon inApp />
+						<a href="https://github.com/trafficlunar/blockmatic" className="w-5">
+							<GithubIcon fill={isDark ? "white" : "black"} />
+						</a>
+						<a href="https://trafficlunar.net" className="w-5">
+							<TrafficConeIcon fill={isDark ? "white" : "black"} className="hover:fill-orange-400 transition-colors" />
+						</a>
+					</div>
 				</div>
 			</UIMenubar>
 		</DialogProvider>
