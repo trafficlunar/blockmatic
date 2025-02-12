@@ -8,6 +8,7 @@ import { ToolContext } from "@/context/Tool";
 
 import { useBlockData } from "@/hooks/useBlockData";
 import { useTextures } from "@/hooks/useTextures";
+import { Application } from "pixi.js";
 
 interface Props {
 	stageWidth: number;
@@ -18,6 +19,8 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 	const { version } = useContext(CanvasContext);
 	const { isDark } = useContext(ThemeContext);
 	const { selectedBlock, setSelectedBlock } = useContext(ToolContext);
+
+	const [app, setApp] = useState<Application>();
 
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
 	const [selectedBlockPosition, setSelectedBlockPosition] = useState<Position | null>({ x: 0, y: 0 });
@@ -44,6 +47,13 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 		setSelectedBlockPosition(position);
 	}, [searchInput, selectedBlock]);
 
+	useEffect(() => {
+		if (!app?.renderer?.view?.style) return;
+
+		// Can't set it in props for some reason
+		app.renderer.view.style.touchAction = "auto";
+	}, [app]);
+
 	if (filteredBlocks.length == 0) {
 		return (
 			<div className="w-full h-full flex flex-col justify-center items-center gap-1 text-zinc-400">
@@ -59,11 +69,17 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2) + 8}
 			options={{ backgroundAlpha: 0 }}
 			onMouseLeave={() => setHoverPosition(null)}
+			onMount={setApp}
 		>
 			<Container>
 				{filteredBlocks.map((block, index) => {
 					const texture = textures[block];
 					const { x, y } = getBlockPosition(index);
+
+					const onClick = () => {
+						setSelectedBlock(block);
+						setSelectedBlockPosition({ x, y });
+					};
 
 					return (
 						<Sprite
@@ -73,11 +89,9 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 							y={y}
 							scale={2}
 							eventMode={"static"}
-							pointerover={() => setHoverPosition({ x, y })}
-							click={() => {
-								setSelectedBlock(block);
-								setSelectedBlockPosition({ x, y });
-							}}
+							mouseover={() => setHoverPosition({ x, y })}
+							click={onClick}
+							tap={onClick}
 						/>
 					);
 				})}

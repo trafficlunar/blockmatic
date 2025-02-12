@@ -1,3 +1,5 @@
+import { isMobile, useMobileOrientation } from "react-device-detect";
+
 import { CanvasProvider } from "@/context/Canvas";
 import { HistoryProvider } from "@/context/History";
 import { LoadingProvider } from "@/context/Loading";
@@ -13,6 +15,9 @@ import Canvas from "@/components/canvas/Canvas";
 import Sidebar from "@/components/sidebar";
 
 function AppPage() {
+	const { isLandscape } = useMobileOrientation();
+	const isMobileView = isMobile && !isLandscape;
+
 	return (
 		<LoadingProvider>
 			<SettingsProvider>
@@ -23,7 +28,13 @@ function AppPage() {
 								<SelectionProvider>
 									<MobileNotice />
 
-									<main className="overflow-y-hidden h-screen grid grid-rows-[2.5rem_minmax(0,1fr)] grid-cols-[2.5rem_minmax(0,1fr)_auto]">
+									<main
+										className={`overflow-y-hidden h-[100svh] grid ${
+											isMobileView
+												? "grid-rows-[2.5rem_minmax(0,1fr)_auto] grid-cols-[2.5rem_minmax(0,1fr)]"
+												: "grid-rows-[2.5rem_minmax(0,1fr)] grid-cols-[2.5rem_minmax(0,1fr)_auto]"
+										}`}
+									>
 										<Menubar />
 										<Toolbar />
 										<Canvas />

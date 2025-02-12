@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { GripVerticalIcon } from "lucide-react";
+import { isMobile, useMobileOrientation } from "react-device-detect";
+import { GripHorizontalIcon, GripVerticalIcon } from "lucide-react";
 
 import { SettingsContext } from "@/context/Settings";
 
@@ -17,6 +18,12 @@ import BlockSelector from "./BlockSelector";
 function Sidebar() {
 	const { settings } = useContext(SettingsContext);
 
+	const { isLandscape } = useMobileOrientation();
+	const isMobileView = isMobile && !isLandscape;
+
+	// For mobile
+	const [height, setHeight] = useState(300);
+	// For horizontal screens
 	const [width, setWidth] = useState(300);
 	const [resizing, setResizing] = useState(false);
 
@@ -31,17 +38,22 @@ function Sidebar() {
 
 	const onMouseDown = () => {
 		setResizing(true);
-		document.body.style.cursor = "ew-resize";
+		document.body.style.cursor = isMobileView ? "ns-resize" : "ew-resize";
+		document.body.style.touchAction = "none";
+		document.body.style.userSelect = "none";
 	};
 
 	const onMouseUp = () => {
 		setResizing(false);
 		document.body.style.cursor = "auto";
+		document.body.style.touchAction = "auto";
+		document.body.style.userSelect = "auto";
 	};
 
-	const onMouseMove = (e: MouseEvent) => {
+	const onMouseMove = (e: PointerEvent) => {
 		if (!resizing) return;
-		setWidth(() => Math.min(Math.max(window.innerWidth - e.clientX, 200), 1000));
+		if (isMobileView) setHeight(() => Math.min(Math.max(window.innerHeight - e.clientY, 200), 500));
+		setWidth(() => Math.min(Math.max(window.innerWidth - e.clientX, 200), 500));
 	};
 
 	useEffect(() => {
@@ -83,14 +95,21 @@ function Sidebar() {
 		<>
 			{(settings.historyPanel || settings.colorPicker || settings.blockReplacer || settings.toolSettings || settings.blockSelector) && (
 				<div
-					style={{ width: `${width}px` }}
-					className="w-72 border-l border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 pb-0 flex flex-col h-full gap-2 relative"
+					style={{ width: `${isMobileView ? "auto" : `${width}px`}`, height: `${isMobileView ? `${height}px` : "auto"}` }}
+					className={`border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 pb-0 flex flex-col h-full gap-2 relative ${
+						isMobileView ? "row-start-3 col-span-full border-t w-full overflow-y-auto" : "border-l w-72"
+					}`}
 				>
 					<div
-						className="absolute top-0 -left-2 h-full w-4 bg-zinc-300 dark:bg-zinc-800 flex justify-center items-center cursor-e-resize opacity-0 transition-opacity duration-300 delay-100 hover:opacity-100"
+						onTouchStart={onMouseDown}
 						onPointerDown={onMouseDown}
+						className={`absolute bg-zinc-300 dark:bg-zinc-800 top-0 z-10 flex justify-center items-center opacity-0 transition-opacity duration-300 delay-100 ${
+							isMobileView
+								? `${resizing ? "opacity-100" : "opacity-0"} left-0 h-4 w-full cursor-s-resize`
+								: "-left-2 h-full w-4 cursor-e-resize hover:opacity-100"
+						}`}
 					>
-						<GripVerticalIcon />
+						{isMobileView ? <GripHorizontalIcon /> : <GripVerticalIcon />}
 					</div>
 
 					{(settings.historyPanel || settings.colorPicker || settings.blockReplacer) && (
@@ -127,14 +146,14 @@ function Sidebar() {
 					{settings.toolSettings && (
 						<>
 							<ToolSettings />
-							<Separator />
+							{settings.blockSelector && <Separator />}
 						</>
 					)}
 
 					{settings.blockSelector && (
 						<>
 							<Input placeholder="Search for blocks..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
-							<ScrollArea ref={divRef} className="w-full flex-1 pb-0">
+							<ScrollArea ref={divRef} className={`w-full flex-1 pb-0 ${isMobileView ? "min-h-48" : ""}`}>
 								<BlockSelector stageWidth={stageWidth} searchInput={searchInput} />
 							</ScrollArea>
 						</>
