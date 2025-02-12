@@ -18,7 +18,7 @@ function MobileNotice() {
 					<SmartphoneIcon size={64} className="mb-2" />
 
 					<DialogTitle>Phone Detected</DialogTitle>
-					<DialogDescription>Using a phone with Blockmatic is not supported as of right now. Proceed with caution.</DialogDescription>
+					<DialogDescription>Using a phone with blockmatic is currently unstable. Use a desktop for the best experience.</DialogDescription>
 				</DialogHeader>
 
 				<DialogFooter>
