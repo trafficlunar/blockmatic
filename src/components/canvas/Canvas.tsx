@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useGesture } from "@use-gesture/react";
 
 import * as PIXI from "pixi.js";
 import { Container, Stage } from "@pixi/react";
@@ -68,17 +69,6 @@ function Canvas() {
 
 	const clipboard = useClipboard();
 
-	const zoom = useCallback(
-		(newScale: number) => {
-			setScale(newScale);
-			setCoords({
-				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
-				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
-			});
-		},
-		[coords, mousePosition, scale, setCoords, setScale]
-	);
-
 	const moveTool = useMoveTool(mouseMovementRef.current);
 	const rectangleSelectTool = useRectangleSelectTool(mouseCoords, dragStartCoordsRef.current, holdingShiftRef.current);
 	const lassoTool = useLassoTool(mouseCoords, holdingAltRef.current);
@@ -88,7 +78,7 @@ function Canvas() {
 	const paintBucketTool = usePaintBucketTool(mouseCoords);
 	const shapeTool = useShapeTool(mouseCoords, dragStartCoordsRef.current, holdingShiftRef.current);
 	const eyedropperTool = useEyedropperTool(mouseCoords);
-	const zoomTool = useZoomTool(zoom, holdingAltRef.current);
+	const zoomTool = useZoomTool(mousePosition, holdingAltRef.current);
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -225,11 +215,16 @@ function Canvas() {
 	const onWheel = useCallback(
 		(e: React.WheelEvent) => {
 			e.preventDefault();
-			const scaleChange = e.deltaY > 0 ? -0.1 : 0.1;
-			const newScale = Math.min(Math.max(scale + scaleChange * scale, 0.1), 32);
-			zoom(newScale);
+			const zoomFactor = e.deltaY > 0 ? -0.1 : 0.1;
+			const newScale = Math.min(Math.max(scale + zoomFactor * scale, 0.1), 32);
+
+			setScale(newScale);
+			setCoords({
+				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
+				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
+			});
 		},
-		[scale, zoom]
+		[scale, setScale, setCoords, mousePosition, coords]
 	);
 
 	const onClick = useCallback(() => {
@@ -452,20 +447,39 @@ function Canvas() {
 		};
 	}, [onKeyDown, onKeyUp]);
 
+	useGesture(
+		{
+			onPinch: ({ offset: [d] }) => {
+				setScale(d);
+				setCoords({
+					x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * d,
+					y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * d,
+				});
+			},
+		},
+		{
+			target: stageContainerRef,
+			pinch: { threshold: 0.1, scaleBounds: { min: 0.1, max: 32 }, pinchOnWheel: false },
+			eventOptions: { passive: false },
+		}
+	);
+
 	return (
-		<div ref={stageContainerRef} style={{ cursor: cssCursor }} className="relative w-full h-full bg-zinc-200 dark:bg-black">
+		<div ref={stageContainerRef} className="relative">
 			<Stage
 				width={stageSize.width}
 				height={stageSize.height}
 				tabIndex={0}
+				onClick={onClick}
 				onKeyDown={onKeyDown}
 				onKeyUp={onKeyUp}
-				onMouseMove={onMouseMove}
-				onMouseDown={onMouseDown}
-				onMouseUp={onMouseUp}
+				onPointerDown={onMouseDown}
+				onPointerMove={onMouseMove}
+				onPointerUp={onMouseUp}
 				onWheel={onWheel}
-				onClick={onClick}
 				options={{ backgroundAlpha: 0 }}
+				style={{ cursor: cssCursor }}
+				className="w-full h-full bg-zinc-100 dark:bg-black touch-none select-none"
 			>
 				<Blocks blocks={visibleBlocks} missingTexture={missingTexture} textures={textures} coords={coords} scale={scale} version={version} />
 				{/* Selection layer */}
