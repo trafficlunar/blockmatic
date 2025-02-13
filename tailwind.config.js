@@ -16,7 +16,6 @@ export default {
 				"blockmatic-brown": "#a98467",
 			},
 			fontFamily: {
-				minecraft: ["Minecraft", "sans-serif"],
 				inter: ["Inter", "sans-serif"],
 			},
 		},
