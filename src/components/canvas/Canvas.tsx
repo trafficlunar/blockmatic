@@ -188,6 +188,8 @@ function Canvas() {
 		setDragging(false);
 		updateCssCursor();
 
+		pencilTool.stop();
+
 		// History entries for pencil and eraser
 		if (tool === "pencil" || tool === "eraser") {
 			// startBlocksRef will mutate if we pass it directly
@@ -210,7 +212,7 @@ function Canvas() {
 				() => setSelectionCoords([...prevSelection])
 			);
 		}
-	}, [updateCssCursor, blocks, tool, addHistory, setBlocks, selectionCoords, setSelectionCoords]);
+	}, [updateCssCursor, pencilTool, blocks, tool, addHistory, setBlocks, selectionCoords, setSelectionCoords]);
 
 	const onWheel = useCallback(
 		(e: React.WheelEvent) => {
