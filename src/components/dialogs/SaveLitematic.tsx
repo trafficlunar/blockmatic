@@ -28,7 +28,7 @@ function SaveLitematic({ close, registerSubmit, dialogKeyHandler }: DialogProps)
 	const onSubmit = async () => {
 		setLoading(true);
 		// Wait for loading indicator to appear
-		await new Promise((resolve) => setTimeout(resolve, 100));
+		await new Promise((resolve) => setTimeout(resolve, 1));
 
 		const width = canvasSize.maxX - canvasSize.minX;
 		const height = canvasSize.maxY - canvasSize.minY;

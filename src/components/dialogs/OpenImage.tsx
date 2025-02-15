@@ -55,7 +55,7 @@ function OpenImage({ close }: DialogProps) {
 		falling: false,
 	});
 
-	const [isFinished, setIsFinished] = useState(false);
+	const isFinished = useRef(false);
 
 	useEffect(() => {
 		if (acceptedFiles[0]) {
@@ -103,10 +103,11 @@ function OpenImage({ close }: DialogProps) {
 		if (image) {
 			const oldBlocks = [...blocks];
 
-			setIsFinished(false);
+			isFinished.current = false;
 			setLoading(true);
+
 			// Wait for loading indicator to appear
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await new Promise((resolve) => setTimeout(resolve, 1));
 
 			// Load image through JS canvas
 			const canvas = document.createElement("canvas");
@@ -144,16 +145,18 @@ function OpenImage({ close }: DialogProps) {
 			}
 
 			setLoading(false);
-			setIsFinished(true);
+			isFinished.current = true;
 		}
 	};
 
 	useEffect(() => {
-		if (!isFinished) return;
+		if (!isFinished.current) return;
 		centerCanvas();
 		close();
 
-		return () => setIsFinished(false);
+		return () => {
+			isFinished.current = false;
+		};
 	}, [isFinished, centerCanvas, close]);
 
 	useEffect(() => {

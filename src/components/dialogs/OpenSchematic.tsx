@@ -63,7 +63,7 @@ function OpenSchematic({ close }: DialogProps) {
 		if (file) {
 			setLoading(true);
 			// Wait for loading indicator to appear
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await new Promise((resolve) => setTimeout(resolve, 1));
 
 			const fileExtension = file.name.split(".").pop();
 			const bytes = await file.arrayBuffer();
