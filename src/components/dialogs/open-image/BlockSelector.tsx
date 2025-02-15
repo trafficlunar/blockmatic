@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useRef, useState } from "react";
 import { Container, Graphics, Sprite, Stage } from "@pixi/react";
 
 import { CanvasContext } from "@/context/Canvas";
@@ -25,6 +25,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 	const textures = useTextures(version);
 
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
+	const showStage = useRef(true);
 
 	const filteredBlocks = useMemo(() => Object.keys(blockData).filter((value) => value.includes(searchInput)), [searchInput, blockData]);
 	const blocksPerColumn = Math.floor(stageWidth / (32 + 2));
@@ -39,12 +40,18 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 		}
 	};
 
+	// Fixes issue #1 - entire app crashing when closing dialog with Stage mounted
+	if (!showStage.current) return null;
+
 	return (
 		<Stage
 			width={stageWidth}
 			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2)}
 			options={{ backgroundAlpha: 0 }}
 			onPointerLeave={() => setHoverPosition(null)}
+			onUnmount={() => {
+				showStage.current = false;
+			}}
 		>
 			<Container>
 				{filteredBlocks.map((block, index) => {
