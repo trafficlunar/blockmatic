@@ -44,6 +44,9 @@ function VersionCombobox({ version, setVersion, isContext }: Props) {
 
 	useEffect(() => {
 		setVersion((prev) => {
+			// If the previous and current values are the same, return
+			if (numberToVersion(prev) == comboboxValue) return prev;
+
 			if (isContext) {
 				const oldVersion = prev;
 				addHistory(
