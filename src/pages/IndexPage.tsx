@@ -19,8 +19,8 @@ function IndexPage() {
 
 	return (
 		<main className="flex flex-col items-center font-inter">
-			<header className="w-full flex justify-evenly p-8 z-10">
-				<BlockmaticLogo className="h-16 w-max" fill={"white"} />
+			<header className="w-full flex justify-evenly p-8 z-10 gap-8">
+				<BlockmaticLogo className="h-20 w-max" fill={"white"} />
 
 				<div className="flex items-center gap-1">
 					<Button className="bg-white text-black hover:bg-zinc-50/90 mr-4" asChild>
@@ -86,7 +86,7 @@ function IndexPage() {
 							className="w-full rounded mb-4 border border-zinc-300 dark:border-zinc-800"
 						/>
 						<h2 className="font-bold text-xl">Make changes</h2>
-						<p>Change blocks around with the replace, selection, pencil, and eraser tools</p>
+						<p>Change blocks around with the replace, selection, shape, pencil, and eraser tools</p>
 					</div>
 					<div>
 						<img src="/shinji_minecraft.png" alt="shinji in minecraft" className="w-full rounded mb-4 border border-zinc-300 dark:border-zinc-800" />
