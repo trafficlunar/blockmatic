@@ -12,7 +12,7 @@ import ImageComparison from "@/components/home/ImageComparison";
 
 import BlockmaticLogo from "@/assets/blockmatic.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon, LinkIcon } from "lucide-react";
 
 function IndexPage() {
 	const { isDark } = useContext(ThemeContext);
@@ -104,7 +104,28 @@ function IndexPage() {
 				<ImageComparison />
 			</section>
 
-			<footer className="w-full h-16 mt-20 flex flex-col items-center">
+			<section className="flex flex-col items-center mt-32 mx-8 max-w-[40rem]">
+				<h1 className="text-5xl font-bold mb-2 text-center">Open source</h1>
+				<p className="mb-8 text-lg text-center">Blockmatic is free and open source. Host it yourself, modify it, or contribute to its development.</p>
+
+				<Button className="w-min h-11" variant="outline" asChild>
+					<a href="https://github.com/trafficlunar/blockmatic" className="!text-base">
+						<LinkIcon className="!h-5 !w-5" />
+						Source code
+					</a>
+				</Button>
+			</section>
+
+			<Separator className="max-w-[40rem] mt-20 mb-8" />
+
+			<Button className="w-min h-11" asChild>
+				<Link to={{ pathname: "/app" }} className="!text-base">
+					Go to Editor
+					<ChevronRightIcon className="!h-6 !w-6" />
+				</Link>
+			</Button>
+
+			<footer className="w-full h-16 mt-8 flex flex-col items-center">
 				<Separator className="max-w-[40rem]" />
 
 				<div className="mt-8 flex justify-center items-center gap-16 text-zinc-500">
