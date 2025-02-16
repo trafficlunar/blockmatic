@@ -3,14 +3,14 @@ import { Link } from "react-router";
 
 function PrivacyPolicy() {
 	return (
-		<div className="p-16">
+		<div className="p-16 max-sm:p-8">
 			<Link to={{ pathname: "/" }} className="flex gap-1 mb-4 underline-offset-4 hover:underline">
 				<ArrowLeftIcon /> back
 			</Link>
 
 			<h1 className="text-2xl font-medium">Privacy Policy</h1>
 			<p className="mb-4">
-				<strong>Effective Date:</strong> January 25, 2025
+				<strong>Effective Date:</strong> February 16, 2025
 			</p>
 
 			<p>By using this website, you confirm that you understand and agree to this Privacy Policy.</p>
@@ -27,13 +27,7 @@ function PrivacyPolicy() {
 					</a>
 					.
 				</li>
-				<li>
-					Blockmatic does not use cookies. Umami also specifies in their{" "}
-					<a href="https://umami.is/docs/faq" className="link">
-						F.A.Q.
-					</a>{" "}
-					that they don't use cookies either.
-				</li>
+				<li>Blockmatic also does not use cookies.</li>
 				<li>
 					Blockmatic is hosted by Vercel. I can not guarantee that Vercel does not collect any data, therefore I recommend reviewing their privacy
 					policy for clarification.
