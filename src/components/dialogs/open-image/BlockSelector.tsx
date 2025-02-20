@@ -1,5 +1,6 @@
 import React, { useContext, useMemo, useRef, useState } from "react";
 import { Container, Graphics, Sprite, Stage } from "@pixi/react";
+import { AlphaFilter } from "pixi.js";
 
 import { CanvasContext } from "@/context/Canvas";
 import { ThemeContext } from "@/context/Theme";
@@ -69,6 +70,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 								eventMode={"static"}
 								pointerover={() => setHoverPosition({ x, y })}
 								click={() => onClick(block)}
+								filters={selectedBlocks.includes(block) ? [] : [new AlphaFilter(0.3)]}
 							/>
 
 							{selectedBlocks.includes(block) && (
@@ -78,8 +80,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 									y={y}
 									draw={(g) => {
 										g.clear();
-										g.beginFill(0x000000, 0.5);
-										g.lineStyle(2, isDark ? 0xffffff : 0x000000, 1, 1);
+										g.lineStyle(2, isDark ? 0xffffff : 0x000000, 0.5, 0);
 										g.drawRect(0, 0, 32, 32);
 									}}
 								/>
@@ -94,7 +95,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 						y={hoverPosition.y}
 						draw={(g) => {
 							g.clear();
-							g.lineStyle(2, isDark ? 0xffffff : 0x000000, 1, 1);
+							g.lineStyle(4, isDark ? 0xffffff : 0x000000, 1, 1);
 							g.drawRect(0, 0, 32, 32);
 						}}
 					/>
