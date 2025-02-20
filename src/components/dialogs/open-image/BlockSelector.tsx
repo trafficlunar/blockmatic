@@ -52,7 +52,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 			onPointerLeave={() => setHoverPosition(null)}
 			onUnmount={() => {
 				// NOTE: this event gets called a couple times when run in development
-				// showStage.current = false;
+				showStage.current = false;
 			}}
 		>
 			<Container>
