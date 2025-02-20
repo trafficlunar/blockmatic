@@ -41,7 +41,7 @@ function IndexPage() {
 				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(255,255,255,0) 100%)" }}
 			/>
 
-			<section className="max-w-[40rem] mt-16 mx-8 flex flex-col items-center gap-4">
+			<section className="max-w-xl mt-16 mx-8 flex flex-col items-center gap-4">
 				<h1 className="text-6xl text-center font-bold">Create pixel art for Minecraft in minutes</h1>
 				<h5 className="text-xl text-center">
 					Open images, draw, and export your art with{" "}
@@ -96,7 +96,7 @@ function IndexPage() {
 				</div>
 			</section>
 
-			<section className="flex flex-col items-center mt-32 mx-8 max-w-[40rem]">
+			<section className="flex flex-col items-center mt-32 mx-8 max-w-xl">
 				<h1 className="text-5xl font-bold mb-2 text-center">See the difference</h1>
 				<p className="mb-8 text-lg text-center">
 					Blockmatic lets you pick what blocks you want for the image and change versions from 1.6.1 to the latest version.
@@ -104,7 +104,7 @@ function IndexPage() {
 				<ImageComparison />
 			</section>
 
-			<section className="flex flex-col items-center mt-32 mx-8 max-w-[40rem]">
+			<section className="flex flex-col items-center mt-32 mx-8 max-w-xl">
 				<h1 className="text-5xl font-bold mb-2 text-center">Open source</h1>
 				<p className="mb-8 text-lg text-center">Blockmatic is free and open source. Host it yourself, modify it, or contribute to its development.</p>
 
@@ -116,7 +116,7 @@ function IndexPage() {
 				</Button>
 			</section>
 
-			<Separator className="max-w-[40rem] mt-20 mb-8" />
+			<Separator className="max-w-xl mt-20 mb-8" />
 
 			<Button className="w-min h-11" asChild>
 				<Link to={{ pathname: "/app" }} className="!text-base">
@@ -126,7 +126,7 @@ function IndexPage() {
 			</Button>
 
 			<footer className="w-full h-16 mt-8 flex flex-col items-center">
-				<Separator className="max-w-[40rem]" />
+				<Separator className="max-w-xl" />
 
 				<div className="mt-8 flex justify-center items-center gap-16 text-zinc-500">
 					<Link to={{ pathname: "/privacy-policy" }}>Privacy</Link>
