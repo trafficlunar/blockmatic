@@ -51,7 +51,8 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 			options={{ backgroundAlpha: 0 }}
 			onPointerLeave={() => setHoverPosition(null)}
 			onUnmount={() => {
-				showStage.current = false;
+				// NOTE: this event gets called a couple times when run in development
+				// showStage.current = false;
 			}}
 		>
 			<Container>
@@ -70,7 +71,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 								eventMode={"static"}
 								pointerover={() => setHoverPosition({ x, y })}
 								click={() => onClick(block)}
-								filters={selectedBlocks.includes(block) ? [] : [new AlphaFilter(0.3)]}
+								filters={selectedBlocks.includes(block) ? [] : [new AlphaFilter(0.2)]}
 							/>
 
 							{selectedBlocks.includes(block) && (
@@ -80,7 +81,8 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 									y={y}
 									draw={(g) => {
 										g.clear();
-										g.lineStyle(2, isDark ? 0xffffff : 0x000000, 0.5, 0);
+										g.beginFill(0xffffff, 0.2);
+										g.lineStyle(2, isDark ? 0xffffff : 0x000000, 0.4, 0);
 										g.drawRect(0, 0, 32, 32);
 									}}
 								/>
