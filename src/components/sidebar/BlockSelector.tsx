@@ -8,7 +8,7 @@ import { ToolContext } from "@/context/Tool";
 
 import { useBlockData } from "@/hooks/useBlockData";
 import { useTextures } from "@/hooks/useTextures";
-import { Application } from "pixi.js";
+import { AlphaFilter, Application } from "pixi.js";
 
 interface Props {
 	stageWidth: number;
@@ -92,6 +92,7 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 							mouseover={() => setHoverPosition({ x, y })}
 							click={onClick}
 							tap={onClick}
+							filters={selectedBlock == block ? [] : [new AlphaFilter(0.3)]}
 						/>
 					);
 				})}
@@ -102,8 +103,7 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 						y={hoverPosition.y}
 						draw={(g) => {
 							g.clear();
-							g.beginFill(0x000000, 0.5);
-							g.lineStyle(2, isDark ? 0xffffff : 0x000000, 1, 1);
+							g.lineStyle(4, isDark ? 0xffffff : 0x000000, 1, 1);
 							g.drawRect(0, 0, 32, 32);
 						}}
 					/>
@@ -115,7 +115,7 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 						y={selectedBlockPosition.y}
 						draw={(g) => {
 							g.clear();
-							g.lineStyle(2, isDark ? 0xffffff : 0x000000, 1, 1);
+							g.lineStyle(2, isDark ? 0xffffff : 0x000000, 0.75, 0);
 							g.drawRect(0, 0, 32, 32);
 						}}
 					/>
