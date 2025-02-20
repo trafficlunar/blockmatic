@@ -49,7 +49,7 @@ function OpenImage({ close }: DialogProps) {
 	const [stageWidth, setStageWidth] = useState(0);
 
 	const [selectedBlocks, setSelectedBlocks] = useState<string[]>(Object.keys(blockData));
-	const [blockTypeCheckboxesChecked, setBlockTypeCheckboxesChecked] = useState({
+	const [blockTypeCheckboxesChecked, setBlockTypeCheckboxesChecked] = useState<Record<string, CheckedState>>({
 		creative: false,
 		tile_entity: false,
 		falling: false,
@@ -160,13 +160,26 @@ function OpenImage({ close }: DialogProps) {
 	}, [isFinished, centerCanvas, close]);
 
 	useEffect(() => {
-		Object.keys(blockTypeCheckboxesChecked).forEach((property) => {
-			const blocksWithProperty = Object.entries(blockData)
-				.filter(([, data]) => data[property as keyof BlockData[string]] === true)
-				.map(([blockName]) => blockName);
+		setBlockTypeCheckboxesChecked((prev) => {
+			const newState = { ...prev };
 
-			const propertyChecked = blocksWithProperty.every((block) => selectedBlocks.includes(block));
-			setBlockTypeCheckboxesChecked((prev) => ({ ...prev, [property]: propertyChecked }));
+			Object.keys(prev).forEach((property) => {
+				const blocksWithProperty = Object.entries(blockData)
+					.filter(([, data]) => data[property as keyof BlockData[string]] === true)
+					.map(([blockName]) => blockName);
+
+				const selectedCount = blocksWithProperty.filter((block) => selectedBlocks.includes(block)).length;
+
+				if (selectedCount === 0) {
+					newState[property] = false;
+				} else if (selectedCount === blocksWithProperty.length) {
+					newState[property] = true;
+				} else {
+					newState[property] = "indeterminate";
+				}
+			});
+
+			return newState;
 		});
 	}, [selectedBlocks]);
 
