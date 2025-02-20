@@ -84,15 +84,15 @@ function SaveLitematic({ close, registerSubmit, dialogKeyHandler }: DialogProps)
 			});
 			const blockId = BigInt(blockIndex);
 
-			const reversedY = height - 1 - block.y;
-			const index = reversedY * width + block.x;
+			const reversedY = height - 1 - (block.y - canvasSize.minY);
+			const index = reversedY * width + (block.x - canvasSize.minX);
 
 			// setAt() implementation - LitematicaBitArray.java
 			const startOffset = index * requiredBits;
 			const startArrayIndex = Math.floor(startOffset / 64);
 			const endArrayIndex = ((index + 1) * requiredBits - 1) >> 6;
 			const bitOffset = BigInt(startOffset % 64);
-			const mask = BigInt((1 << requiredBits) - 1);
+			const mask = (1n << BigInt(requiredBits)) - 1n;
 
 			blockStates[startArrayIndex] = (blockStates[startArrayIndex] & ~(mask << bitOffset)) | ((blockId & mask) << bitOffset);
 
