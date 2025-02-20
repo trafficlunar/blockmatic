@@ -32,6 +32,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
+    "embla-carousel-react": "^8.5.2",
     "lucide-react": "^0.464.0",
     "nbtify": "^2.2.0",
     "pixi.js": "^7.4.2",
