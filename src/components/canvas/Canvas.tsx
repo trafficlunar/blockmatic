@@ -53,10 +53,10 @@ function Canvas() {
 	const blockData = useBlockData(version);
 	const stageContainerRef = useRef<HTMLDivElement>(null);
 
-	const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
+	const mousePosition = useRef<Position>({ x: 0, y: 0 });
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
 	const mouseMovementRef = useRef<Position>({ x: 0, y: 0 });
-	const [dragging, setDragging] = useState(false);
+	const dragging = useRef(false);
 	const dragStartCoordsRef = useRef<Position>({ x: 0, y: 0 });
 
 	const holdingShiftRef = useRef(false);
@@ -78,7 +78,7 @@ function Canvas() {
 	const paintBucketTool = usePaintBucketTool(mouseCoords);
 	const shapeTool = useShapeTool(mouseCoords, dragStartCoordsRef.current, holdingShiftRef.current);
 	const eyedropperTool = useEyedropperTool(mouseCoords);
-	const zoomTool = useZoomTool(mousePosition, holdingAltRef.current);
+	const zoomTool = useZoomTool(mousePosition.current, holdingAltRef.current);
 
 	const visibleArea = useMemo(() => {
 		const blockSize = 16 * scale;
@@ -105,7 +105,7 @@ function Canvas() {
 
 	const updateCssCursor = useCallback(() => {
 		const cursorMapping: Partial<Record<Tool, string>> = {
-			hand: dragging ? "grab" : "grabbing",
+			hand: dragging.current ? "grabbing" : "grab",
 			move: "move",
 			zoom: holdingAltRef.current ? "zoom-out" : "zoom-in",
 		};
@@ -132,7 +132,7 @@ function Canvas() {
 		tools[tool]?.use();
 	}, [tool, selectedBlock, moveTool, rectangleSelectTool, lassoTool, pencilTool, eraserTool, shapeTool]);
 
-	const onMouseMove = useCallback(
+	const onPointerMove = useCallback(
 		(e: React.MouseEvent) => {
 			if (!stageContainerRef.current) return;
 			const oldMouseCoords = mouseCoords;
@@ -146,18 +146,20 @@ function Canvas() {
 				y: Math.floor((mouseY - coords.y) / (16 * scale)),
 			};
 
-			setMousePosition({
+			mousePosition.current = {
 				x: mouseX,
 				y: mouseY,
-			});
-			setMouseCoords(newMouseCoords);
+			};
+			if (newMouseCoords.x !== mouseCoords.x || newMouseCoords.y !== mouseCoords.y) {
+				setMouseCoords(newMouseCoords);
+			}
 
 			mouseMovementRef.current = {
 				x: newMouseCoords.x - oldMouseCoords.x,
 				y: newMouseCoords.y - oldMouseCoords.y,
 			};
 
-			if (dragging) {
+			if (dragging.current) {
 				if (tool === "hand") {
 					setCoords((prevCoords) => ({
 						x: prevCoords.x + e.movementX,
@@ -172,7 +174,8 @@ function Canvas() {
 	);
 
 	const onMouseDown = useCallback(() => {
-		setDragging(true);
+		dragging.current = true;
+
 		onToolUse();
 		updateCssCursor();
 
@@ -185,7 +188,8 @@ function Canvas() {
 	}, [onToolUse, updateCssCursor, mouseCoords, blocks, selectionCoords, tool, setSelectionCoords]);
 
 	const onMouseUp = useCallback(() => {
-		setDragging(false);
+		dragging.current = false;
+
 		updateCssCursor();
 
 		pencilTool.stop();
@@ -203,7 +207,7 @@ function Canvas() {
 			);
 		}
 
-		if (tool === "rectangle-select" || tool === "magic-wand" || tool === "lasso") {
+		if (["rectangle-select", "magic-wand", "lasso"].includes(tool)) {
 			// startSelectionCoordsRef will mutate if we pass it directly
 			const prevSelection = [...startSelectionCoordsRef.current];
 
@@ -223,8 +227,8 @@ function Canvas() {
 
 			setScale(newScale);
 			setCoords({
-				x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * newScale,
-				y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * newScale,
+				x: mousePosition.current.x - ((mousePosition.current.x - coords.x) / scale) * newScale,
+				y: mousePosition.current.y - ((mousePosition.current.y - coords.y) / scale) * newScale,
 			});
 		},
 		[scale, setScale, setCoords, mousePosition, coords]
@@ -263,7 +267,7 @@ function Canvas() {
 					break;
 				}
 				case " ": // Space
-					setDragging(true);
+					dragging.current = true;
 					oldToolRef.current = tool;
 					setTool("hand");
 					setCssCursor("grabbing");
@@ -390,7 +394,7 @@ function Canvas() {
 		(e: React.KeyboardEvent) => {
 			switch (e.key) {
 				case " ": // Space
-					setDragging(false);
+					dragging.current = false;
 					setCssCursor("grab");
 
 					if (!oldToolRef.current) return;
@@ -455,8 +459,8 @@ function Canvas() {
 			onPinch: ({ offset: [d] }) => {
 				setScale(d);
 				setCoords({
-					x: mousePosition.x - ((mousePosition.x - coords.x) / scale) * d,
-					y: mousePosition.y - ((mousePosition.y - coords.y) / scale) * d,
+					x: mousePosition.current.x - ((mousePosition.current.x - coords.x) / scale) * d,
+					y: mousePosition.current.y - ((mousePosition.current.y - coords.y) / scale) * d,
 				});
 			},
 		},
@@ -477,7 +481,7 @@ function Canvas() {
 				onKeyDown={onKeyDown}
 				onKeyUp={onKeyUp}
 				onPointerDown={onMouseDown}
-				onPointerMove={onMouseMove}
+				onPointerMove={onPointerMove}
 				onPointerUp={onMouseUp}
 				onWheel={onWheel}
 				options={{ backgroundAlpha: 0 }}

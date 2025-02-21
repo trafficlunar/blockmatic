@@ -28,7 +28,7 @@ export function useEraserTool(mouseCoords: Position) {
 			}
 		};
 
-		// Interpolate to ensure continuous erasing
+		// Interpolate to remove holes
 		if (lastPosition.current) {
 			const interpolatedPositions = interpolate(radius, lastPosition.current, radiusPosition);
 			if (!interpolatedPositions) return;
