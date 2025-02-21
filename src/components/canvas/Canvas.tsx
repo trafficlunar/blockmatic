@@ -173,19 +173,23 @@ function Canvas() {
 		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords]
 	);
 
-	const onPointerDown = useCallback(() => {
-		dragging.current = true;
+	const onPointerDown = useCallback(
+		(e: React.MouseEvent) => {
+			dragging.current = true;
 
-		onToolUse();
-		updateCssCursor();
+			onToolUse();
+			onPointerMove(e);
+			updateCssCursor();
 
-		dragStartCoordsRef.current = mouseCoords;
-		startBlocksRef.current = [...blocks];
-		startSelectionCoordsRef.current = [...selectionCoords];
+			dragStartCoordsRef.current = mouseCoords;
+			startBlocksRef.current = [...blocks];
+			startSelectionCoordsRef.current = [...selectionCoords];
 
-		// Clear selection on click
-		if (tool === "rectangle-select") setSelectionCoords([]);
-	}, [onToolUse, updateCssCursor, mouseCoords, blocks, selectionCoords, tool, setSelectionCoords]);
+			// Clear selection on click
+			if (tool === "rectangle-select") setSelectionCoords([]);
+		},
+		[onToolUse, updateCssCursor, mouseCoords, blocks, selectionCoords, tool, setSelectionCoords]
+	);
 
 	const onPointerUp = useCallback(() => {
 		dragging.current = false;
