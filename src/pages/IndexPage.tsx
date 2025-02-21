@@ -21,10 +21,10 @@ function IndexPage() {
 
 	return (
 		<main className="flex flex-col items-center font-inter">
-			<header className="w-full flex justify-evenly p-8 z-10 gap-8">
-				<div className="flex gap-2 items-center">
-					<BlockmaticIcon className="h-14" fill={"white"} />
-					<BlockmaticText className="h-7" fill={"white"} />
+			<header className="max-w-2xl w-full flex justify-between my-8 px-4 z-10 gap-8">
+				<div className="flex gap-2 items-center max-w-48">
+					<BlockmaticIcon className="w-14" fill={"white"} />
+					<BlockmaticText className="w-full" fill={"white"} />
 				</div>
 
 				<div className="flex items-center gap-1">
@@ -101,7 +101,7 @@ function IndexPage() {
 				</div>
 			</section>
 
-			<section className="mt-32 mx-8 max-w-2xl">
+			<section className="mt-32 px-16 max-w-2xl">
 				<h1 className="text-5xl font-bold mb-2 text-center">Gallery</h1>
 				<p className="mb-8 text-lg text-center">See examples of opening and placing art within Minecraft!</p>
 
