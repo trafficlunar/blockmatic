@@ -26,7 +26,7 @@ function SelectionBar({ startBlocks, startSelectionCoords }: Props) {
 		const combinedBlocks = [...blocks, ...selectionLayerBlocks];
 		const uniqueBlocks = Array.from(new Map(combinedBlocks.map((block) => [`${block.x},${block.y}`, block])).values());
 
-		setBlocks(uniqueBlocks);
+		setBlocks(uniqueBlocks.filter((b) => b.name !== "air"));
 		setSelectionLayerBlocks([]);
 
 		addHistory(

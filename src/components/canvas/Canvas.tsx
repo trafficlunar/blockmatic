@@ -173,7 +173,7 @@ function Canvas() {
 		[dragging, coords, scale, tool, mouseCoords, onToolUse, setCoords]
 	);
 
-	const onMouseDown = useCallback(() => {
+	const onPointerDown = useCallback(() => {
 		dragging.current = true;
 
 		onToolUse();
@@ -187,7 +187,7 @@ function Canvas() {
 		if (tool === "rectangle-select") setSelectionCoords([]);
 	}, [onToolUse, updateCssCursor, mouseCoords, blocks, selectionCoords, tool, setSelectionCoords]);
 
-	const onMouseUp = useCallback(() => {
+	const onPointerUp = useCallback(() => {
 		dragging.current = false;
 
 		updateCssCursor();
@@ -253,10 +253,12 @@ function Canvas() {
 					setSelectionLayerBlocks([]);
 					break;
 				case "Enter": {
+					if (selectionLayerBlocks.length == 0) return;
+
 					const combinedBlocks = [...blocks, ...selectionLayerBlocks];
 					const uniqueBlocks = Array.from(new Map(combinedBlocks.map((block) => [`${block.x},${block.y}`, block])).values());
 
-					setBlocks(uniqueBlocks);
+					setBlocks(uniqueBlocks.filter((b) => b.name !== "air"));
 					setSelectionLayerBlocks([]);
 
 					addHistory(
@@ -480,9 +482,9 @@ function Canvas() {
 				onClick={onClick}
 				onKeyDown={onKeyDown}
 				onKeyUp={onKeyUp}
-				onPointerDown={onMouseDown}
+				onPointerDown={onPointerDown}
 				onPointerMove={onPointerMove}
-				onPointerUp={onMouseUp}
+				onPointerUp={onPointerUp}
 				onWheel={onWheel}
 				options={{ backgroundAlpha: 0 }}
 				style={{ cursor: cssCursor }}
