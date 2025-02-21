@@ -55,6 +55,7 @@ function OpenImage({ close }: DialogProps) {
 		falling: false,
 	});
 
+	// Used for centering the canvas
 	const isFinished = useRef(false);
 
 	useEffect(() => {

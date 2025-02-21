@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadIcon } from "lucide-react";
 
@@ -48,9 +48,12 @@ interface SpongeNBT extends nbt.ListTagLike {
 }
 
 function OpenSchematic({ close }: DialogProps) {
-	const { blocks, setBlocks, setVersion } = useContext(CanvasContext);
+	const { blocks, setBlocks, setVersion, centerCanvas } = useContext(CanvasContext);
 	const { addHistory } = useContext(HistoryContext);
 	const { setLoading } = useContext(LoadingContext);
+
+	// Used for centering the canvas
+	const isFinished = useRef(false);
 
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
 		accept: {
@@ -61,7 +64,9 @@ function OpenSchematic({ close }: DialogProps) {
 	const onSubmit = async () => {
 		const file = acceptedFiles[0];
 		if (file) {
+			isFinished.current = false;
 			setLoading(true);
+
 			// Wait for loading indicator to appear
 			await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -210,8 +215,18 @@ function OpenSchematic({ close }: DialogProps) {
 		}
 
 		setLoading(false);
-		close();
+		isFinished.current = true;
 	};
+
+	useEffect(() => {
+		if (!isFinished.current) return;
+		centerCanvas();
+		close();
+
+		return () => {
+			isFinished.current = false;
+		};
+	}, [isFinished, centerCanvas, close]);
 
 	return (
 		<DialogContent>
