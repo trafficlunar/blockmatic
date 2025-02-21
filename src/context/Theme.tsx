@@ -27,6 +27,7 @@ export function ThemeProvider({ children, defaultTheme = "system", storageKey = 
 			const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 			root.classList.add(systemTheme ? "dark" : "light");
+			setIsDark(systemTheme);
 			return;
 		}
 
