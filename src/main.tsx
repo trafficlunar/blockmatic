@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/context/Theme.tsx";
 import IndexPage from "./pages/IndexPage.tsx";
 import AppPage from "./pages/AppPage.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
 import "./index.css";
 
@@ -18,6 +19,7 @@ createRoot(document.getElementById("root")!).render(
 					<Route path="/" element={<IndexPage />} />
 					<Route path="/app" element={<AppPage />} />
 					<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</BrowserRouter>
 		</ThemeProvider>
