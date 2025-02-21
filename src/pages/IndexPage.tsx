@@ -7,6 +7,7 @@ import { ThemeContext } from "@/context/Theme";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 import ThemeIcon from "@/components/ThemeIcon";
 import ImageComparison from "@/components/home/ImageComparison";
@@ -39,8 +40,8 @@ function IndexPage() {
 			</header>
 
 			<img
-				src="/screenshot1.png"
-				alt="screenshot"
+				src="/background.png"
+				alt="background"
 				className="absolute w-full object-cover -z-20"
 				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(255,255,255,0) 100%)" }}
 			/>
@@ -98,6 +99,33 @@ function IndexPage() {
 						<p>Once you're done, you can export your canvas as a .png, .litematic, or .schem.</p>
 					</div>
 				</div>
+			</section>
+
+			<section className="mt-32 mx-8 max-w-2xl">
+				<h1 className="text-5xl font-bold mb-2 text-center">Gallery</h1>
+				<p className="mb-8 text-lg text-center">See examples of opening and placing art within Minecraft!</p>
+
+				<Carousel className="w-full">
+					<CarouselContent>
+						<CarouselItem>
+							<img src="/miku.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+						</CarouselItem>
+						<CarouselItem>
+							<img src="/nyan_cat.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+						</CarouselItem>
+						<CarouselItem>
+							<img src="/pikachu.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+						</CarouselItem>
+						<CarouselItem>
+							<img src="/portal.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+						</CarouselItem>
+						<CarouselItem>
+							<img src="/windows.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+						</CarouselItem>
+					</CarouselContent>
+					<CarouselPrevious />
+					<CarouselNext />
+				</Carousel>
 			</section>
 
 			<section className="flex flex-col items-center mt-32 mx-8 max-w-xl">
