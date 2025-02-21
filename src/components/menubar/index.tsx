@@ -26,8 +26,8 @@ function Menubar() {
 			<UIMenubar className="rounded-none border-t-0 border-x-0 col-span-3">
 				<div className="w-full flex items-center space-x-1 overflow-x-auto">
 					<Link to={{ pathname: "/" }} className="px-4 min-w-40 flex gap-2 items-center">
-						<BlockmaticIcon className="h-full w-8" />
-						<BlockmaticText className="h-full w-full" />
+						<BlockmaticIcon className="h-8" />
+						<BlockmaticText className="h-4 w-min" />
 					</Link>
 
 					<FileMenu />

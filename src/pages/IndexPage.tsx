@@ -1,6 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { useContext } from "react";
 import { Link } from "react-router";
+import { ChevronRightIcon, LinkIcon } from "lucide-react";
 
 import { ThemeContext } from "@/context/Theme";
 
@@ -10,9 +11,9 @@ import { Separator } from "@/components/ui/separator";
 import ThemeIcon from "@/components/ThemeIcon";
 import ImageComparison from "@/components/home/ImageComparison";
 
-import BlockmaticLogo from "@/assets/blockmatic.svg?react";
+import BlockmaticIcon from "@/assets/blockmatic-icon.svg?react";
+import BlockmaticText from "@/assets/blockmatic-text.svg?react";
 import GithubIcon from "@/assets/github.svg?react";
-import { ChevronRightIcon, LinkIcon } from "lucide-react";
 
 function IndexPage() {
 	const { isDark } = useContext(ThemeContext);
@@ -20,7 +21,10 @@ function IndexPage() {
 	return (
 		<main className="flex flex-col items-center font-inter">
 			<header className="w-full flex justify-evenly p-8 z-10 gap-8">
-				<BlockmaticLogo className="h-20 w-max" fill={"white"} />
+				<div className="flex gap-2 items-center">
+					<BlockmaticIcon className="h-14" fill={"white"} />
+					<BlockmaticText className="h-7" fill={"white"} />
+				</div>
 
 				<div className="flex items-center gap-1">
 					<Button className="bg-white text-black hover:bg-zinc-50/90 mr-4" asChild>
