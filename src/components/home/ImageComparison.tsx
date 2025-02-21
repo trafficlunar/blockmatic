@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { ChevronsLeftRightIcon } from "lucide-react";
+import { GripVerticalIcon } from "lucide-react";
 
 function ImageComparison() {
 	const [sliderPosition, setSliderPosition] = useState(50);
 
-	const onMouseMove = (e: React.MouseEvent) => {
+	const onPointerMove = (e: React.MouseEvent) => {
 		if (e.buttons !== 1) return;
 
 		const rect = e.currentTarget.getBoundingClientRect();
@@ -14,8 +14,8 @@ function ImageComparison() {
 
 	return (
 		<div
-			onPointerMove={onMouseMove}
-			className="relative select-none w-[40vw] h-[calc(40vw*217/270)] flex justify-center rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-md"
+			onPointerMove={onPointerMove}
+			className="relative select-none w-full aspect-[270/217] aspect flex justify-center rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-md"
 		>
 			<img
 				src="/bliss/bliss_original.png"
@@ -39,9 +39,9 @@ function ImageComparison() {
 					left: `${sliderPosition}%`,
 				}}
 			>
-				<div className="bg-zinc-200 rounded-full absolute w-12 h-12 -translate-x-1/2 flex justify-center items-center cursor-col-resize">
-					<ChevronsLeftRightIcon color="black" size={30} />
-				</div>
+				<button className="bg-zinc-200 rounded hover:scale-110 transition-all w-5 h-10 select-none -translate-y-1/2 absolute top-1/2 -ml-2 z-30 cursor-ew-resize flex justify-center items-center">
+					<GripVerticalIcon color="black" className="w-4 h-4" />
+				</button>
 			</div>
 
 			<span className="absolute top-[101.5%] left-1 text-zinc-500 text-xs">Windows XP Background 'Bliss' image owned by Microsoft Corporation</span>
