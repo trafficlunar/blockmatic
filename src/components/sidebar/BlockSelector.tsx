@@ -92,7 +92,7 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 							mouseover={() => setHoverPosition({ x, y })}
 							click={onClick}
 							tap={onClick}
-							alpha={0.3}
+							alpha={selectedBlock == block ? 1 : 0.3}
 						/>
 					);
 				})}

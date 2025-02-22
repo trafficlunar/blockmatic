@@ -70,7 +70,7 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 								eventMode={"static"}
 								pointerover={() => setHoverPosition({ x, y })}
 								click={() => onClick(block)}
-								alpha={0.2}
+								alpha={selectedBlocks.includes(block) ? 1 : 0.2}
 							/>
 
 							{selectedBlocks.includes(block) && (
@@ -80,7 +80,6 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 									y={y}
 									draw={(g) => {
 										g.clear();
-										g.beginFill(0xffffff, 0.2);
 										g.lineStyle(2, isDark ? 0xffffff : 0x000000, 0.4, 0);
 										g.drawRect(0, 0, 32, 32);
 									}}
