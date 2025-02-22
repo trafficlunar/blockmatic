@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useGesture } from "@use-gesture/react";
+import { isMobile } from "react-device-detect";
 
 import * as PIXI from "pixi.js";
 import { Container, Stage } from "@pixi/react";
@@ -177,8 +178,8 @@ function Canvas() {
 		(e: React.MouseEvent) => {
 			dragging.current = true;
 
+			if (isMobile) onPointerMove(e);
 			onToolUse();
-			onPointerMove(e);
 			updateCssCursor();
 
 			dragStartCoordsRef.current = mouseCoords;
@@ -188,7 +189,7 @@ function Canvas() {
 			// Clear selection on click
 			if (tool === "rectangle-select") setSelectionCoords([]);
 		},
-		[onToolUse, updateCssCursor, mouseCoords, blocks, selectionCoords, tool, setSelectionCoords]
+		[onPointerMove, onToolUse, updateCssCursor, mouseCoords, blocks, selectionCoords, tool, setSelectionCoords]
 	);
 
 	const onPointerUp = useCallback(() => {
