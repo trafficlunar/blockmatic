@@ -169,7 +169,7 @@ function SaveLitematic({ close, registerSubmit, dialogKeyHandler }: DialogProps)
 		<DialogContent onKeyDown={dialogKeyHandler}>
 			<DialogHeader>
 				<DialogTitle>Save as .litematic</DialogTitle>
-				<DialogDescription>Save your image as a litematic</DialogDescription>
+				<DialogDescription>Save your canvas as a litematic</DialogDescription>
 			</DialogHeader>
 
 			<div className="flex items-center gap-2">

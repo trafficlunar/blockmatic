@@ -171,7 +171,7 @@ function SaveSchem({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 		<DialogContent onKeyDown={dialogKeyHandler}>
 			<DialogHeader>
 				<DialogTitle>Save as .schem</DialogTitle>
-				<DialogDescription>Save your image as a .schem (Sponge Version 3)</DialogDescription>
+				<DialogDescription>Save your canvas as a .schem (Sponge Version 3)</DialogDescription>
 			</DialogHeader>
 
 			<div className="flex items-center gap-2">
