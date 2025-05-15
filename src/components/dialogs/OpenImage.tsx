@@ -277,9 +277,9 @@ function OpenImage({ close }: DialogProps) {
 										</div>
 
 										{imageDimensions.height > (version >= 1180 ? 384 : 256) && (
-											<div className="flex items-center gap-1 mt-auto mb-1">
-												<CircleAlertIcon className="text-red-400" size={22} />
-												<span className="text-red-400 text-sm">The height is above {version >= 1180 ? 384 : 256} blocks!</span>
+											<div className="flex items-start gap-1 mt-auto mb-1">
+												<CircleAlertIcon className="text-amber-500" size={22} />
+												<span className="text-amber-500 text-sm">Warning: The height is above {version >= 1180 ? 384 : 256} blocks!</span>
 											</div>
 										)}
 									</div>
