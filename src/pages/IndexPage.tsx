@@ -40,7 +40,7 @@ function IndexPage() {
 			</header>
 
 			<img
-				src="/background.png"
+				src="/home/background.png"
 				alt="background"
 				className="absolute w-full object-cover -z-20"
 				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(255,255,255,0) 100%)" }}
@@ -65,7 +65,7 @@ function IndexPage() {
 
 			<section className="max-w-full mx-8 mt-16">
 				<img
-					src={isDark ? "/blockmatic_screenshot_dark.png" : "/blockmatic_screenshot_light.png"}
+					src={isDark ? "/home/blockmatic_screenshot_dark.png" : "/home/blockmatic_screenshot_light.png"}
 					alt="app preview"
 					className="max-w-[65rem] w-full rounded-xl border border-zinc-700"
 				/>
@@ -77,7 +77,7 @@ function IndexPage() {
 				<div className="max-w-[56rem] grid grid-cols-3 max-md:grid-cols-2 gap-4 *:flex *:flex-col *:items-center *:gap-1 *:text-center *:p-4 *:border *:border-zinc-300 *:dark:border-zinc-800 *:rounded-lg *:bg-zinc-100 *:dark:bg-zinc-900 *:text-black *:dark:text-white">
 					<div>
 						<img
-							src="/shinji.png"
+							src="/home/shinji.png"
 							alt="shinji"
 							className="w-full rounded mb-4 border bg-zinc-300 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-800"
 						/>
@@ -86,7 +86,7 @@ function IndexPage() {
 					</div>
 					<div>
 						<img
-							src={isDark ? "/drawing_erasing.gif" : "/drawing_erasing_light.gif"}
+							src={isDark ? "/home/drawing_erasing.gif" : "/home/drawing_erasing_light.gif"}
 							alt="tool example gif"
 							className="w-full rounded mb-4 border border-zinc-300 dark:border-zinc-800"
 						/>
@@ -94,7 +94,11 @@ function IndexPage() {
 						<p>Change blocks around with the replace, selection, shape, pencil, and eraser tools</p>
 					</div>
 					<div>
-						<img src="/shinji_minecraft.png" alt="shinji in minecraft" className="w-full rounded mb-4 border border-zinc-300 dark:border-zinc-800" />
+						<img
+							src="/home/shinji_minecraft.png"
+							alt="shinji in minecraft"
+							className="w-full rounded mb-4 border border-zinc-300 dark:border-zinc-800"
+						/>
 						<h2 className="font-bold text-xl">Export your art</h2>
 						<p>Once you're done, you can export your canvas as a .png, .litematic, or .schem.</p>
 					</div>
@@ -108,19 +112,19 @@ function IndexPage() {
 				<Carousel className="w-full">
 					<CarouselContent>
 						<CarouselItem>
-							<img src="/miku.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/miku.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 						<CarouselItem>
-							<img src="/nyan_cat.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/nyan_cat.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 						<CarouselItem>
-							<img src="/pikachu.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/pikachu.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 						<CarouselItem>
-							<img src="/portal.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/portal.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 						<CarouselItem>
-							<img src="/windows.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/windows.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 					</CarouselContent>
 					<CarouselPrevious />
