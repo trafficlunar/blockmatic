@@ -29,7 +29,7 @@ function ThemeIcon({ inApp }: Props) {
 	};
 
 	return (
-		<button onClick={onClick} title={theme} className={`text-white ${inApp ? "text-black" : ""}`}>
+		<button onClick={onClick} title={theme} className={`cursor-pointer text-white ${inApp ? "text-black" : ""}`}>
 			{getIcon()}
 		</button>
 	);

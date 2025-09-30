@@ -28,10 +28,6 @@ function PrivacyPolicy() {
 					.
 				</li>
 				<li>Blockmatic also does not use cookies.</li>
-				<li>
-					Blockmatic is hosted by Vercel. I can not guarantee that Vercel does not collect any data, therefore I recommend reviewing their privacy
-					policy for clarification.
-				</li>
 			</ul>
 
 			<p>Please also note that this privacy policy may be updated occasionally. It is recommended to review it from time to time.</p>

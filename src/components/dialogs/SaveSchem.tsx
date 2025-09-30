@@ -150,7 +150,7 @@ function SaveSchem({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 
 		// Write to file
 		const bytes = await nbt.write(data, { compression: "gzip" });
-		const blob = new Blob([bytes], { type: "application/x-gzip" });
+		const blob = new Blob([new Uint8Array(bytes)], { type: "application/x-gzip" });
 		const url = URL.createObjectURL(blob);
 
 		setLoading(false);
