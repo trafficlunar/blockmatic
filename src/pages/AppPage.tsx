@@ -29,10 +29,10 @@ function AppPage() {
 									<MobileNotice />
 
 									<main
-										className={`overflow-y-hidden h-[100svh] grid ${
+										className={`overflow-y-hidden h-svh grid ${
 											isMobileView
-												? "grid-rows-[2.5rem_minmax(0,1fr)_auto] grid-cols-[2.5rem_minmax(0,1fr)]"
-												: "grid-rows-[2.5rem_minmax(0,1fr)] grid-cols-[2.5rem_minmax(0,1fr)_auto]"
+												? "grid-rows-[2.3rem_minmax(0,1fr)_auto] grid-cols-[2.3rem_minmax(0,1fr)]"
+												: "grid-rows-[2.3rem_minmax(0,1fr)] grid-cols-[2.3rem_minmax(0,1fr)_auto]"
 										}`}
 									>
 										<Menubar />

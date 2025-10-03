@@ -35,7 +35,7 @@ function Menubar() {
 					<SelectMenu />
 					<ViewMenu />
 
-					<div className="!ml-auto pl-4 grid grid-cols-3 items-center gap-1 min-w-20">
+					<div className="ml-auto! pl-4 grid grid-cols-3 items-center gap-1 min-w-20">
 						<ThemeIcon inApp />
 						<a href="https://github.com/trafficlunar/blockmatic" className="w-5">
 							<GithubIcon fill={isDark ? "white" : "black"} />

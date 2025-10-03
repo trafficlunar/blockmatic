@@ -108,7 +108,7 @@ function OpenImage({ close }: DialogProps) {
 			setLoading(true);
 
 			// Wait for loading indicator to appear
-			await new Promise((resolve) => setTimeout(resolve, 1));
+			await new Promise((resolve) => setTimeout(resolve, 5));
 
 			// Load image through JS canvas
 			const canvas = document.createElement("canvas");
@@ -150,9 +150,14 @@ function OpenImage({ close }: DialogProps) {
 		}
 	};
 
+	// Trying to center and close above doesn't work for some reason
 	useEffect(() => {
 		if (!isFinished.current) return;
-		centerCanvas();
+
+		// Wrap in requestAnimationFrame() to fix bug where canvas is black
+		requestAnimationFrame(() => {
+			centerCanvas();
+		});
 		close();
 
 		return () => {
@@ -224,13 +229,13 @@ function OpenImage({ close }: DialogProps) {
 							</p>
 						</div>
 
-						<div className="grid grid-cols-[auto,1fr] gap-2">
+						<div className="grid grid-cols-[auto_1fr] gap-2">
 							{image && acceptedFiles[0] && (
 								<>
 									<img
 										src={image.src}
 										alt="your image"
-										className="w-48 h-48 object-contain border rounded-lg"
+										className="size-48 object-contain border rounded-lg"
 										style={{ background: "repeating-conic-gradient(#fff 0 90deg, #bbb 0 180deg) 0 0/25% 25%" }}
 									/>
 
@@ -259,7 +264,7 @@ function OpenImage({ close }: DialogProps) {
 												variant="outline"
 												pressed={linkAspectRatio}
 												onPressedChange={() => setLinkAspectRatio(!linkAspectRatio)}
-												className="h-8 !min-w-8 p-0 mt-auto mb-1"
+												className="h-8 min-w-8! p-0 mt-auto mb-1"
 											>
 												<LinkIcon />
 											</Toggle>
@@ -344,7 +349,7 @@ function OpenImage({ close }: DialogProps) {
 				</Tabs>
 			</div>
 
-			<DialogFooter className="!justify-between">
+			<DialogFooter className="justify-between!">
 				<VersionCombobox version={version} setVersion={setVersion} isContext />
 
 				<div className="flex gap-2">

@@ -15,7 +15,7 @@ function ImageComparison() {
 	return (
 		<div
 			onPointerMove={onPointerMove}
-			className="relative select-none w-full aspect-[270/217] aspect flex justify-center rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-md"
+			className="relative select-none w-full aspect-270/217 aspect flex justify-center rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-md"
 		>
 			<img
 				src="/bliss/bliss_original.png"
@@ -40,7 +40,7 @@ function ImageComparison() {
 				}}
 			>
 				<button className="bg-zinc-200 rounded hover:scale-110 transition-all w-5 h-10 select-none -translate-y-1/2 absolute top-1/2 -ml-2 z-30 cursor-ew-resize flex justify-center items-center">
-					<GripVerticalIcon color="black" className="w-4 h-4" />
+					<GripVerticalIcon color="black" className="size-4" />
 				</button>
 			</div>
 

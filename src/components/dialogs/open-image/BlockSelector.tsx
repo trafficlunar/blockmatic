@@ -1,5 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from "react";
-import { Container, Graphics, Sprite, Stage } from "@pixi/react";
+import React, { useContext, useMemo, useState } from "react";
 
 import { CanvasContext } from "@/context/Canvas";
 import { ThemeContext } from "@/context/Theme";
@@ -7,13 +6,14 @@ import { TexturesContext } from "@/context/Textures";
 
 import { useBlockData } from "@/hooks/useBlockData";
 import { useTextures } from "@/hooks/useTextures";
+import { Application } from "@pixi/react";
 
 interface Props {
 	stageWidth: number;
 	searchInput: string;
 	selectedBlocks: string[];
 	setSelectedBlocks: React.Dispatch<React.SetStateAction<string[]>>;
-	userModifiedBlocks: React.MutableRefObject<boolean>;
+	userModifiedBlocks: React.RefObject<boolean>;
 }
 
 function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlocks, userModifiedBlocks }: Props) {
@@ -25,7 +25,6 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 	const textures = useTextures(version);
 
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
-	const showStage = useRef(true);
 
 	const filteredBlocks = useMemo(() => Object.keys(blockData).filter((value) => value.includes(searchInput)), [searchInput, blockData]);
 	const blocksPerColumn = Math.floor(stageWidth / (32 + 2));
@@ -40,68 +39,58 @@ function BlockSelector({ stageWidth, searchInput, selectedBlocks, setSelectedBlo
 		}
 	};
 
-	// Fixes issue #1 - entire app crashing when closing dialog with Stage mounted
-	if (!showStage.current) return null;
-
 	return (
-		<Stage
-			width={stageWidth}
-			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2)}
-			options={{ backgroundAlpha: 0 }}
-			onPointerLeave={() => setHoverPosition(null)}
-			onUnmount={() => {
-				// NOTE: this event gets called a couple times when run in development
-				showStage.current = false;
-			}}
-		>
-			<Container>
-				{filteredBlocks.map((block, index) => {
-					const x = (index % blocksPerColumn) * (32 + 2) + 2;
-					const y = Math.floor(index / blocksPerColumn) * (32 + 2) + 2;
+		<div onPointerLeave={() => setHoverPosition(null)}>
+			<Application width={stageWidth} height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2)} backgroundAlpha={0}>
+				<pixiContainer>
+					{filteredBlocks.map((block, index) => {
+						const x = (index % blocksPerColumn) * (32 + 2) + 2;
+						const y = Math.floor(index / blocksPerColumn) * (32 + 2) + 2;
 
-					return (
-						<>
-							<Sprite
-								key={block}
-								texture={textures[block] ?? missingTexture}
-								x={x}
-								y={y}
-								scale={2}
-								eventMode={"static"}
-								pointerover={() => setHoverPosition({ x, y })}
-								click={() => onClick(block)}
-								alpha={selectedBlocks.includes(block) ? 1 : 0.2}
-							/>
-
-							{selectedBlocks.includes(block) && (
-								<Graphics
-									key={index}
+						return (
+							<>
+								<pixiSprite
+									key={block}
+									texture={textures[block] ?? missingTexture}
 									x={x}
 									y={y}
-									draw={(g) => {
-										g.clear();
-										g.lineStyle(2, isDark ? 0xffffff : 0x000000, 0.4, 0);
-										g.drawRect(0, 0, 32, 32);
-									}}
+									scale={2}
+									eventMode={"static"}
+									onPointerOver={() => setHoverPosition({ x, y })}
+									onClick={() => onClick(block)}
+									alpha={selectedBlocks.includes(block) ? 1 : 0.2}
 								/>
-							)}
-						</>
-					);
-				})}
 
-				{hoverPosition && (
-					<Graphics
-						x={hoverPosition.x}
-						y={hoverPosition.y}
-						draw={(g) => {
-							g.clear();
-							g.lineStyle(4, isDark ? 0xffffff : 0x000000, 1, 1);
-							g.drawRect(0, 0, 32, 32);
-						}}
-					/>
-				)}
-			</Container>
-		</Stage>
+								{selectedBlocks.includes(block) && (
+									<pixiGraphics
+										key={index}
+										x={x}
+										y={y}
+										draw={(g) => {
+											g.clear();
+											g.rect(0, 0, 32, 32);
+											g.stroke({ width: 2, color: isDark ? 0xffffff : 0x000000, alpha: 0.4, alignment: 0 });
+										}}
+									/>
+								)}
+							</>
+						);
+					})}
+
+					{hoverPosition && (
+						<pixiGraphics
+							x={hoverPosition.x}
+							y={hoverPosition.y}
+							draw={(g) => {
+								g.clear();
+								g.rect(0, 0, 32, 32);
+								g.stroke({ width: 4, color: isDark ? 0xffffff : 0x000000, alignment: 1 });
+							}}
+						/>
+					)}
+				</pixiContainer>
+			</Application>
+		</div>
 	);
 }
 

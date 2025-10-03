@@ -19,6 +19,7 @@ const defaultSettings: Settings = {
 	blockSelector: true,
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const SettingsContext = createContext<Context>({} as Context);
 
 export const SettingsProvider = ({ children }: Props) => {

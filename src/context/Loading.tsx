@@ -10,6 +10,7 @@ interface Props {
 	children: ReactNode;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const LoadingContext = createContext<Context>({} as Context);
 
 export const LoadingProvider = ({ children }: Props) => {
@@ -18,10 +19,10 @@ export const LoadingProvider = ({ children }: Props) => {
 	return (
 		<LoadingContext.Provider value={{ loading, setLoading }}>
 			{loading && (
-				<div className="absolute w-full h-full cursor-wait flex justify-center items-center">
+				<div className="absolute size-full cursor-wait flex justify-center items-center">
 					{/* Keep loading indicator outside of div with backdrop-filter due to Chrome */}
-					<LoadingIndicator fill="white" className="w-16 h-16 z-[10000]" />
-					<div className="absolute w-full h-full z-[9999] backdrop-brightness-50 flex justify-center items-center gap-4"></div>
+					<LoadingIndicator fill="white" className="w-16 h-16 z-10000" />
+					<div className="absolute size-full z-9999 backdrop-brightness-50 flex justify-center items-center gap-4"></div>
 				</div>
 			)}
 			{children}

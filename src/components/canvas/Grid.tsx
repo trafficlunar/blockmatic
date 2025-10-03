@@ -1,5 +1,3 @@
-import { Graphics } from "@pixi/react";
-
 interface Props {
 	stageSize: Dimension;
 	coords: Position;
@@ -9,10 +7,9 @@ interface Props {
 
 function Grid({ stageSize, coords, scale, isDark }: Props) {
 	return (
-		<Graphics
+		<pixiGraphics
 			draw={(g) => {
 				g.clear();
-				g.lineStyle(1, isDark ? 0xffffff : 0x000000);
 
 				const tileSize = 16 * scale;
 
@@ -25,6 +22,8 @@ function Grid({ stageSize, coords, scale, isDark }: Props) {
 					g.moveTo(0, y);
 					g.lineTo(stageSize.width, y);
 				}
+
+				g.stroke({ width: 1, color: isDark ? 0xffffff : 0x000000 });
 			}}
 		/>
 	);

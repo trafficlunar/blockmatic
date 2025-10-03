@@ -153,7 +153,7 @@ function Sidebar() {
 					{settings.blockSelector && (
 						<>
 							<Input placeholder="Search for blocks..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
-							<ScrollArea ref={divRef} className={`w-full flex-1 pb-0 ${isMobileView ? "min-h-48" : ""}`}>
+							<ScrollArea ref={divRef} className={`h-48 w-full flex-1 pb-0 ${isMobileView ? "min-h-48" : ""}`}>
 								<BlockSelector stageWidth={stageWidth} searchInput={searchInput} />
 							</ScrollArea>
 						</>

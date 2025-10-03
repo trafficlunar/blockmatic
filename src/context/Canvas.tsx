@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import { HistoryContext } from "./History";
 import welcomeBlocksData from "@/data/welcome.json";
@@ -22,6 +22,7 @@ interface Props {
 	children: ReactNode;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const CanvasContext = createContext<Context>({} as Context);
 
 export const CanvasProvider = ({ children }: Props) => {
@@ -31,7 +32,7 @@ export const CanvasProvider = ({ children }: Props) => {
 	const [blocks, setBlocks] = useState<Block[]>(welcomeBlocksData);
 	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
 	const [scale, setScale] = useState(1);
-	const [version, setVersion] = useState(1214);
+	const [version, setVersion] = useState(1219);
 
 	// Get the farthest away blocks in each direction
 	const canvasSize = useMemo(() => {
@@ -64,7 +65,7 @@ export const CanvasProvider = ({ children }: Props) => {
 		};
 	}, [blocks]);
 
-	const centerCanvas = () => {
+	const centerCanvas = useCallback(() => {
 		// Margin of 8 blocks on each side
 		const margin = 8 * 16;
 
@@ -85,7 +86,7 @@ export const CanvasProvider = ({ children }: Props) => {
 
 		setScale(newScale);
 		setCoords({ x: newX, y: newY });
-	};
+	}, [canvasSize, stageSize]);
 
 	useEffect(() => {
 		addHistory(
@@ -93,6 +94,7 @@ export const CanvasProvider = ({ children }: Props) => {
 			() => setBlocks(welcomeBlocksData),
 			() => setBlocks([])
 		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

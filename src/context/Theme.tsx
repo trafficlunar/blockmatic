@@ -12,6 +12,7 @@ interface Context {
 	setTheme: (theme: Theme) => void;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ThemeContext = createContext<Context>({} as Context);
 
 export function ThemeProvider({ children, defaultTheme = "system", storageKey = "vite-ui-theme", ...props }: Props) {

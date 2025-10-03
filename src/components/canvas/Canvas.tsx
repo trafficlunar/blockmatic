@@ -3,8 +3,9 @@ import { useGesture } from "@use-gesture/react";
 import { isMobile } from "react-device-detect";
 
 import * as PIXI from "pixi.js";
-import { Container, Stage } from "@pixi/react";
+import { Application } from "@pixi/react";
 
+import { LoadingContext } from "@/context/Loading";
 import { CanvasContext } from "@/context/Canvas";
 import { HistoryContext } from "@/context/History";
 import { SelectionContext } from "@/context/Selection";
@@ -39,10 +40,12 @@ import CanvasInformation from "./information/Canvas";
 import SelectionBar from "./SelectionBar";
 
 // Set scale mode to NEAREST
-PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+PIXI.TextureSource.defaultOptions.scaleMode = "nearest";
 
 function Canvas() {
-	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale } = useContext(CanvasContext);
+	const { loading } = useContext(LoadingContext);
+	const { stageSize, canvasSize, blocks, coords, scale, version, setStageSize, setBlocks, setCoords, setScale, centerCanvas } =
+		useContext(CanvasContext);
 	const { addHistory, undo, redo } = useContext(HistoryContext);
 	const { selectionCoords, selectionLayerBlocks, setSelectionCoords, setSelectionLayerBlocks } = useContext(SelectionContext);
 	const { settings } = useContext(SettingsContext);
@@ -59,10 +62,11 @@ function Canvas() {
 	const mouseMovementRef = useRef<Position>({ x: 0, y: 0 });
 	const dragging = useRef(false);
 	const dragStartCoordsRef = useRef<Position>({ x: 0, y: 0 });
+	const hasCenteredRef = useRef(false); // For centering canvas on startup
 
 	const holdingShiftRef = useRef(false);
 	const holdingAltRef = useRef(false);
-	const oldToolRef = useRef<Tool>();
+	const oldToolRef = useRef<Tool>(null);
 	const [cssCursor, setCssCursor] = useState("crosshair");
 
 	const startBlocksRef = useRef<Block[]>([]);
@@ -447,7 +451,7 @@ function Canvas() {
 
 		resizeCanvas();
 		return () => resizeObserver.disconnect();
-	}, [stageContainerRef, setStageSize]);
+	}, [loading, setStageSize]);
 
 	// Window events handler
 	useEffect(() => {
@@ -478,23 +482,31 @@ function Canvas() {
 		}
 	);
 
+	// Center canvas on startup
+	useEffect(() => {
+		if (hasCenteredRef.current || loading) return;
+		centerCanvas();
+
+		hasCenteredRef.current = true;
+	}, [centerCanvas]);
+
+	if (loading) return null;
+
 	return (
-		<div ref={stageContainerRef} className="relative">
-			<Stage
-				width={stageSize.width}
-				height={stageSize.height}
-				tabIndex={0}
-				onClick={onClick}
-				onKeyDown={onKeyDown}
-				onKeyUp={onKeyUp}
-				onPointerDown={onPointerDown}
-				onPointerMove={onPointerMove}
-				onPointerUp={onPointerUp}
-				onWheel={onWheel}
-				options={{ backgroundAlpha: 0 }}
-				style={{ cursor: cssCursor }}
-				className="w-full h-full bg-zinc-100 dark:bg-black touch-none select-none"
-			>
+		<div
+			ref={stageContainerRef}
+			tabIndex={0}
+			onClick={onClick}
+			onKeyDown={onKeyDown}
+			onKeyUp={onKeyUp}
+			onPointerDown={onPointerDown}
+			onPointerMove={onPointerMove}
+			onPointerUp={onPointerUp}
+			onWheel={onWheel}
+			style={{ cursor: cssCursor }}
+			className="relative"
+		>
+			<Application resizeTo={stageContainerRef} backgroundAlpha={0} className="touch-none select-none">
 				<Blocks blocks={visibleBlocks} missingTexture={missingTexture} textures={textures} coords={coords} scale={scale} version={version} />
 				{/* Selection layer */}
 				<Blocks
@@ -507,18 +519,18 @@ function Canvas() {
 					version={version}
 				/>
 
-				<Container x={coords.x} y={coords.y} scale={scale}>
+				<pixiContainer x={coords.x} y={coords.y} scale={scale}>
 					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
 					<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} />
-					<Selection selection={selectionCoords} coords={coords} scale={scale} isDark={isDark} />
-				</Container>
+					<Selection selection={selectionCoords} isDark={isDark} />
+				</pixiContainer>
 
 				{settings.grid && (
-					<Container filters={[new PIXI.AlphaFilter(0.1)]}>
+					<pixiContainer filters={[new PIXI.AlphaFilter({ alpha: 0.1 })]}>
 						<Grid stageSize={stageSize} coords={coords} scale={scale} isDark={isDark} />
-					</Container>
+					</pixiContainer>
 				)}
-			</Stage>
+			</Application>
 
 			<CursorInformation mouseCoords={mouseCoords} />
 			<CanvasInformation />

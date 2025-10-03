@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { Container, Sprite, Stage } from "@pixi/react";
+import { useContext, useEffect, useState } from "react";
+import { Application } from "@pixi/react";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -18,7 +18,6 @@ function SelectedBlock() {
 	const { selectedBlock } = useContext(ToolContext);
 
 	const textures = useTextures(version);
-	const divRef = useRef<HTMLDivElement>(null);
 
 	const [selectedBlockName, setSelectedBlockName] = useState("Stone");
 
@@ -31,12 +30,12 @@ function SelectedBlock() {
 		<TooltipProvider>
 			<Tooltip delayDuration={0}>
 				<TooltipTrigger asChild>
-					<div ref={divRef} className="absolute bottom-1 w-8 h-8 outline outline-1 outline-zinc-800 dark:outline-zinc-200 rounded">
-						<Stage width={divRef.current?.clientWidth} height={divRef.current?.clientHeight}>
-							<Container>
-								<Sprite texture={textures[selectedBlock] ?? missingTexture} scale={2} />
-							</Container>
-						</Stage>
+					<div className="absolute bottom-1 w-8 h-8 outline-solid outline-1 outline-zinc-800 dark:outline-zinc-200 rounded p-0!">
+						<Application width={32} height={32}>
+							<pixiContainer>
+								<pixiSprite texture={textures[selectedBlock] ?? missingTexture} scale={2} />
+							</pixiContainer>
+						</Application>
 					</div>
 				</TooltipTrigger>
 				<TooltipContent side="right" sideOffset={10}>

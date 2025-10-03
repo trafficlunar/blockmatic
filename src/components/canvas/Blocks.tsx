@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 
 import * as PIXI from "pixi.js";
-import { useApp } from "@pixi/react";
+import { useApplication } from "@pixi/react";
 import { CompositeTilemap, settings } from "@pixi/tilemap";
 
 interface Props {
@@ -19,9 +19,9 @@ interface Props {
 settings.use32bitIndex = true;
 
 function Blocks({ blocks, missingTexture, textures, coords, scale, version, isSelectionLayer }: Props) {
-	const app = useApp();
-	const tilemapRef = useRef<CompositeTilemap>();
-	const containerRef = useRef<PIXI.Container>();
+	const app = useApplication().app;
+	const tilemapRef = useRef<CompositeTilemap | null>(null);
+	const containerRef = useRef<PIXI.Container | null>(null);
 
 	useEffect(() => {
 		if (!tilemapRef.current) return;
@@ -29,7 +29,6 @@ function Blocks({ blocks, missingTexture, textures, coords, scale, version, isSe
 
 		tilemap.clear();
 
-		// Tile solid colors at smaller scales
 		blocks.forEach((block) => {
 			tilemap.tile(textures[block.name] ?? missingTexture, block.x * 16, block.y * 16);
 		});
@@ -48,7 +47,7 @@ function Blocks({ blocks, missingTexture, textures, coords, scale, version, isSe
 		tilemapRef.current = tilemap;
 		container.addChild(tilemap);
 
-		if (isSelectionLayer) container.filters = [new PIXI.AlphaFilter(0.5)];
+		if (isSelectionLayer) container.filters = [new PIXI.AlphaFilter({ alpha: 0.5 })];
 	}, []);
 
 	useEffect(() => {

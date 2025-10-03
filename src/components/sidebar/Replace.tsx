@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { Container, Sprite, Stage } from "@pixi/react";
 
 import { CanvasContext } from "@/context/Canvas";
 import { HistoryContext } from "@/context/History";
@@ -11,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 import { useTextures } from "@/hooks/useTextures";
+import { Application } from "@pixi/react";
 
 function Replace() {
 	const { version, setBlocks } = useContext(CanvasContext);
@@ -80,11 +80,11 @@ function Replace() {
 				onClick={() => onClickBlockButton(1)}
 				className="h-10 rounded-md border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 flex justify-center items-center"
 			>
-				<Stage width={32} height={32} options={{ backgroundAlpha: 0 }}>
-					<Container>
-						<Sprite texture={textures[block1] ?? missingTexture} scale={2} />
-					</Container>
-				</Stage>
+				<Application width={32} height={32} backgroundAlpha={0}>
+					<pixiContainer>
+						<pixiSprite texture={textures[block1] ?? missingTexture} scale={2} />
+					</pixiContainer>
+				</Application>
 			</button>
 
 			<Label htmlFor="radius">Block 2</Label>
@@ -92,11 +92,11 @@ function Replace() {
 				onClick={() => onClickBlockButton(2)}
 				className="h-10 rounded-md border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 flex justify-center items-center"
 			>
-				<Stage width={32} height={32} options={{ backgroundAlpha: 0 }}>
-					<Container>
-						<Sprite texture={textures[block2] ?? missingTexture} scale={2} />
-					</Container>
-				</Stage>
+				<Application width={32} height={32} backgroundAlpha={0}>
+					<pixiContainer>
+						<pixiSprite texture={textures[block2] ?? missingTexture} scale={2} />
+					</pixiContainer>
+				</Application>
 			</button>
 
 			<br />

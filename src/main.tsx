@@ -10,6 +10,14 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 import "./index.css";
+import { extend } from "@pixi/react";
+import { Container, Graphics, Sprite } from "pixi.js";
+
+extend({
+	Container,
+	Sprite,
+	Graphics,
+});
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>

@@ -25,7 +25,7 @@ function ToolSettings() {
 			{tool === "shape" && (
 				<>
 					<Label htmlFor="shape">Shape</Label>
-					<Select value={shape} onValueChange={(value) => setShape(value as Shape)}>
+					<Select value={shape} onValueChange={(value: string) => setShape(value as Shape)}>
 						<SelectTrigger>
 							<SelectValue placeholder="Select a shape" />
 						</SelectTrigger>
@@ -39,7 +39,7 @@ function ToolSettings() {
 					</Select>
 
 					<Label htmlFor="filled">Filled</Label>
-					<Checkbox name="filled" checked={filled} onCheckedChange={(checked) => setFilled(!!checked)} className="w-6 h-6" />
+					<Checkbox name="filled" checked={filled} onCheckedChange={(checked) => setFilled(!!checked)} className="size-6" />
 				</>
 			)}
 		</div>

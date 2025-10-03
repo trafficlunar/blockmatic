@@ -10,6 +10,7 @@ import { numberToVersion, versionToNumber } from "@/utils/version";
 import { HistoryContext } from "@/context/History";
 
 const versions = [
+	"1.21.9",
 	"1.21.4",
 	"1.21",
 	"1.20",

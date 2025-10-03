@@ -15,6 +15,7 @@ interface Props {
 	children: ReactNode;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const HistoryContext = createContext<Context>({} as Context);
 
 export const HistoryProvider = ({ children }: Props) => {

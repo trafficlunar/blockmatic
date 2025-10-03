@@ -1,5 +1,3 @@
-import { Graphics } from "@pixi/react";
-
 interface Props {
 	mouseCoords: Position;
 	radius: number;
@@ -14,13 +12,13 @@ function Cursor({ mouseCoords, radius, isDark }: Props) {
 	const size = radius * 16;
 
 	return (
-		<Graphics
+		<pixiGraphics
 			x={(mouseCoords.x + offset) * 16}
 			y={(mouseCoords.y + offset) * 16}
 			draw={(g) => {
 				g.clear();
-				g.lineStyle(1, isDark ? 0xffffff : 0x000000, 1);
-				g.drawRect(0, 0, size, size);
+				g.rect(0, 0, size, size);
+				g.stroke({ width: 1, color: isDark ? 0xffffff : 0x000000, alignment: 1 });
 			}}
 		/>
 	);

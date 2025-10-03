@@ -1,14 +1,16 @@
 import { useContext, useEffect, useMemo, useState } from "react";
-import { Container, Graphics, Sprite, Stage } from "@pixi/react";
 import { BlocksIcon } from "lucide-react";
 
+import { Application } from "@pixi/react";
+import * as PIXI from "pixi.js";
+
+import { LoadingContext } from "@/context/Loading";
 import { CanvasContext } from "@/context/Canvas";
 import { ThemeContext } from "@/context/Theme";
 import { ToolContext } from "@/context/Tool";
 
 import { useBlockData } from "@/hooks/useBlockData";
 import { useTextures } from "@/hooks/useTextures";
-import { Application } from "pixi.js";
 
 interface Props {
 	stageWidth: number;
@@ -16,11 +18,12 @@ interface Props {
 }
 
 function BlockSelector({ stageWidth, searchInput }: Props) {
+	const { loading } = useContext(LoadingContext);
 	const { version } = useContext(CanvasContext);
 	const { isDark } = useContext(ThemeContext);
 	const { selectedBlock, setSelectedBlock } = useContext(ToolContext);
 
-	const [app, setApp] = useState<Application>();
+	const [app, setApp] = useState<PIXI.Application>();
 
 	const [hoverPosition, setHoverPosition] = useState<Position | null>(null);
 	const [selectedBlockPosition, setSelectedBlockPosition] = useState<Position | null>({ x: 0, y: 0 });
@@ -48,15 +51,17 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 	}, [searchInput, selectedBlock]);
 
 	useEffect(() => {
-		if (!app?.renderer?.view?.style) return;
+		if (!app?.renderer?.view?.canvas.style) return;
 
 		// Can't set it in props for some reason
-		app.renderer.view.style.touchAction = "auto";
+		app.renderer.view.canvas.style.touchAction = "auto";
 	}, [app]);
+
+	if (loading) return null;
 
 	if (filteredBlocks.length == 0) {
 		return (
-			<div className="w-full h-full flex flex-col justify-center items-center gap-1 text-zinc-400">
+			<div className="size-full flex flex-col justify-center items-center gap-1 text-zinc-400">
 				<BlocksIcon size={40} />
 				<span>No blocks found</span>
 			</div>
@@ -64,64 +69,65 @@ function BlockSelector({ stageWidth, searchInput }: Props) {
 	}
 
 	return (
-		<Stage
-			width={stageWidth}
-			height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2) + 8}
-			options={{ backgroundAlpha: 0 }}
-			onMouseLeave={() => setHoverPosition(null)}
-			onMount={setApp}
-		>
-			<Container>
-				{filteredBlocks.map((block, index) => {
-					const texture = textures[block];
-					const { x, y } = getBlockPosition(index);
+		<div onMouseLeave={() => setHoverPosition(null)} className="h-min">
+			<Application
+				width={stageWidth}
+				height={Math.ceil(Object.keys(blockData).length / blocksPerColumn) * (32 + 2) + 8}
+				backgroundAlpha={0}
+				onInit={setApp}
+			>
+				<pixiContainer>
+					{filteredBlocks.map((block, index) => {
+						const texture = textures[block];
+						const { x, y } = getBlockPosition(index);
 
-					const onClick = () => {
-						setSelectedBlock(block);
-						setSelectedBlockPosition({ x, y });
-					};
+						const onClick = () => {
+							setSelectedBlock(block);
+							setSelectedBlockPosition({ x, y });
+						};
 
-					return (
-						<Sprite
-							key={block}
-							texture={texture}
-							x={x}
-							y={y}
-							scale={2}
-							eventMode={"static"}
-							mouseover={() => setHoverPosition({ x, y })}
-							click={onClick}
-							tap={onClick}
-							alpha={selectedBlock == block ? 1 : 0.3}
+						return (
+							<pixiSprite
+								key={block}
+								texture={texture}
+								x={x}
+								y={y}
+								scale={2}
+								eventMode={"static"}
+								onMouseOver={() => setHoverPosition({ x, y })}
+								onClick={onClick}
+								onTap={onClick}
+								alpha={selectedBlock == block ? 1 : 0.3}
+							/>
+						);
+					})}
+
+					{hoverPosition && (
+						<pixiGraphics
+							x={hoverPosition.x}
+							y={hoverPosition.y}
+							draw={(g) => {
+								g.clear();
+								g.rect(0, 0, 32, 32);
+								g.stroke({ width: 2, color: isDark ? 0xffffff : 0x000000, alignment: 1 });
+							}}
 						/>
-					);
-				})}
+					)}
 
-				{hoverPosition && (
-					<Graphics
-						x={hoverPosition.x}
-						y={hoverPosition.y}
-						draw={(g) => {
-							g.clear();
-							g.lineStyle(4, isDark ? 0xffffff : 0x000000, 1, 1);
-							g.drawRect(0, 0, 32, 32);
-						}}
-					/>
-				)}
-
-				{selectedBlockPosition && (
-					<Graphics
-						x={selectedBlockPosition.x}
-						y={selectedBlockPosition.y}
-						draw={(g) => {
-							g.clear();
-							g.lineStyle(2, isDark ? 0xffffff : 0x000000, 0.75, 0);
-							g.drawRect(0, 0, 32, 32);
-						}}
-					/>
-				)}
-			</Container>
-		</Stage>
+					{selectedBlockPosition && (
+						<pixiGraphics
+							x={selectedBlockPosition.x}
+							y={selectedBlockPosition.y}
+							draw={(g) => {
+								g.clear();
+								g.rect(0, 0, 32, 32);
+								g.stroke({ width: 2, color: isDark ? 0xffffff : 0x000000, alpha: 0.75, alignment: 0 });
+							}}
+						/>
+					)}
+				</pixiContainer>
+			</Application>
+		</div>
 	);
 }
 

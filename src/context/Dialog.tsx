@@ -7,6 +7,7 @@ interface Props {
 	children: ReactNode;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const DialogContext = createContext<Context>({} as Context);
 
 export const DialogProvider = ({ children }: Props) => {
@@ -34,7 +35,7 @@ export const DialogProvider = ({ children }: Props) => {
 		<DialogContext.Provider value={openDialog}>
 			<Dialog open={open} onOpenChange={(value) => setOpen(value)}>
 				{LazyDialogContent && (
-					<Suspense fallback={<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">Loading dialog...</div>}>
+					<Suspense>
 						<LazyDialogContent close={() => setOpen(false)} registerSubmit={(fn) => (onSubmitRef.current = fn)} dialogKeyHandler={dialogKeyHandler} />
 					</Suspense>
 				)}

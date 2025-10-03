@@ -41,14 +41,16 @@ function Toolbar() {
 				type="single"
 				value={tool}
 				onValueChange={onToolChange}
-				className="flex flex-col justify-start py-1 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
+				className="w-full flex flex-col items-center border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 *:py-0.5"
 			>
 				{/* Hand */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="hand" className="!p-0 !h-8 !min-w-8">
-							<HandIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="hand" className="p-0! h-8! min-w-8! rounded-xl">
+								<HandIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Hand (H)</p>
@@ -57,10 +59,12 @@ function Toolbar() {
 
 				{/* Move */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="move" className="!p-0 !h-8 !min-w-8">
-							<MousePointer2Icon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="move" className="p-0! h-8! min-w-8! rounded-xl">
+								<MousePointer2Icon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Move (V)</p>
@@ -69,10 +73,12 @@ function Toolbar() {
 
 				{/* Rectangle Select */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="rectangle-select" className="!p-0 !h-8 !min-w-8">
-							<SquareDashedIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="rectangle-select" className="p-0! h-8! min-w-8! rounded-xl">
+								<SquareDashedIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Rectangle Select (M)</p>
@@ -81,10 +87,12 @@ function Toolbar() {
 
 				{/* Lasso */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="lasso" className="!p-0 !h-8 !min-w-8">
-							<LassoIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="lasso" className="p-0! h-8! min-w-8! rounded-xl">
+								<LassoIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Lasso (L)</p>
@@ -93,10 +101,12 @@ function Toolbar() {
 
 				{/* Magic Wand */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="magic-wand" className="!p-0 !h-8 !min-w-8">
-							<WandIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="magic-wand" className="p-0! h-8! min-w-8! rounded-xl">
+								<WandIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Magic Wand (W)</p>
@@ -105,10 +115,12 @@ function Toolbar() {
 
 				{/* Pencil */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="pencil" className="!p-0 !h-8 !min-w-8">
-							<PencilIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="pencil" className="p-0! h-8! min-w-8! rounded-xl">
+								<PencilIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Pencil (B)</p>
@@ -117,10 +129,12 @@ function Toolbar() {
 
 				{/* Eraser */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="eraser" className="!p-0 !h-8 !min-w-8">
-							<EraserIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="eraser" className="p-0! h-8! min-w-8! rounded-xl">
+								<EraserIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Eraser (E)</p>
@@ -129,10 +143,12 @@ function Toolbar() {
 
 				{/* Paint Bucket */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="paint-bucket" className="!p-0 !h-8 !min-w-8">
-							<PaintBucketIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="paint-bucket" className="p-0! h-8! min-w-8! rounded-xl">
+								<PaintBucketIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Paint Bucket (G)</p>
@@ -141,10 +157,12 @@ function Toolbar() {
 
 				{/* Shape */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="shape" className="!p-0 !h-8 !min-w-8">
-							{ShapeIconComponent && <ShapeIconComponent />}
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="shape" className="p-0! h-8! min-w-8! rounded-xl">
+								{ShapeIconComponent && <ShapeIconComponent />}
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Shape (U)</p>
@@ -153,10 +171,12 @@ function Toolbar() {
 
 				{/* Eyedropper */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="eyedropper" className="!p-0 !h-8 !min-w-8">
-							<PipetteIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="eyedropper" className="p-0! h-8! min-w-8! rounded-xl">
+								<PipetteIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Eyedropper (I)</p>
@@ -165,10 +185,12 @@ function Toolbar() {
 
 				{/* Zoom */}
 				<Tooltip delayDuration={0}>
-					<TooltipTrigger>
-						<ToggleGroupItem value="zoom" className="!p-0 !h-8 !min-w-8">
-							<ZoomInIcon />
-						</ToggleGroupItem>
+					<TooltipTrigger asChild>
+						<span>
+							<ToggleGroupItem value="zoom" className="p-0! h-8! min-w-8! rounded-xl">
+								<ZoomInIcon />
+							</ToggleGroupItem>
+						</span>
 					</TooltipTrigger>
 					<TooltipContent side="right" sideOffset={10}>
 						<p>Zoom (Z)</p>

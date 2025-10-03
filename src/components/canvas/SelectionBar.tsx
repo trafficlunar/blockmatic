@@ -58,11 +58,11 @@ function SelectionBar({ startBlocks, startSelectionCoords }: Props) {
 				${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}
 			`}
 		>
-			<Button variant="ghost" className="w-8 h-8" onClick={cancel}>
+			<Button variant="ghost" className="size h-8" onClick={cancel}>
 				<XIcon />
 			</Button>
 			<span className="mx-2 text-[0.85rem]">Confirm?</span>
-			<Button variant="ghost" className="w-8 h-8" onClick={confirm}>
+			<Button variant="ghost" className="size h-8" onClick={confirm}>
 				<CheckIcon />
 			</Button>
 		</div>

@@ -38,7 +38,7 @@ function CanvasInformation() {
 					value={[Math.log10(scale)]}
 					onValueChange={onValueChange}
 					orientation="vertical"
-					className="!h-32"
+					className="h-32!"
 				/>
 			</div>
 		</div>

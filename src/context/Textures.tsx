@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useRef } from "react";
-import * as PIXI from "pixi.js";
+import { Assets, Spritesheet, Texture } from "pixi.js";
 
 import { LoadingContext } from "./Loading";
 
@@ -7,48 +7,57 @@ import spritesheet from "@/data/blocks/spritesheet.json";
 import programmerArtSpritesheet from "@/data/blocks/programmer-art/spritesheet.json";
 
 interface Context {
-	missingTexture: PIXI.Texture;
-	textures: Record<string, PIXI.Texture>;
-	programmerArtTextures: Record<string, PIXI.Texture>;
+	missingTexture: Texture;
+	textures: Record<string, Texture>;
+	programmerArtTextures: Record<string, Texture>;
 }
 
 interface Props {
 	children: ReactNode;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const TexturesContext = createContext<Context>({} as Context);
 
 export const TexturesProvider = ({ children }: Props) => {
 	const { setLoading } = useContext(LoadingContext);
 
-	// Load missing texture through data string just incase of network errors
-	const missingTextureRef = useRef<PIXI.Texture>(
-		new PIXI.Texture(
-			new PIXI.BaseTexture(
-				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR42mPABX4w/MCKaKJhVMPgcOuoBgDZRfgBVl5QdQAAAABJRU5ErkJggg=="
-			)
-		)
-	);
-	const texturesRef = useRef<Record<string, PIXI.Texture>>({});
-	const programmerArtTexturesRef = useRef<Record<string, PIXI.Texture>>({});
+	// Load missing texture through data string just in case of network errors
+	const missingTextureRef = useRef<Texture>(Texture.EMPTY);
+	const texturesRef = useRef<Record<string, Texture>>({});
+	const programmerArtTexturesRef = useRef<Record<string, Texture>>({});
 
 	// Load textures
 	useEffect(() => {
-		// Add air texture
-		const airBaseTexture = new PIXI.BaseTexture("/blocks/air.png");
-		const airTexture = new PIXI.Texture(airBaseTexture);
+		const loadTextures = async () => {
+			try {
+				// Load base textures
+				missingTextureRef.current = await Assets.load(
+					"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR42mPABX4w/MCKaKJhVMPgcOuoBgDZRfgBVl5QdQAAAABJRU5ErkJggg=="
+				);
+				const airBaseTexture = await Assets.load("/blocks/air.png");
+				const sheetTexture = await Assets.load("/blocks/spritesheet.png");
+				const programmerArtSheetTexture = await Assets.load("/blocks/programmer-art/spritesheet.png");
 
-		const sheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/spritesheet.png"), spritesheet);
-		sheet.parse().then((t) => {
-			texturesRef.current = { ...t, "air.png": airTexture };
-		});
+				// Create and parse main spritesheet
+				const sheet = new Spritesheet(sheetTexture, spritesheet);
+				await sheet.parse();
+				texturesRef.current = { ...sheet.textures, "air.png": airBaseTexture };
 
-		const programmerArtSheet = new PIXI.Spritesheet(PIXI.BaseTexture.from("/blocks/programmer-art/spritesheet.png"), programmerArtSpritesheet);
-		programmerArtSheet.parse().then((t) => {
-			programmerArtTexturesRef.current = { ...t, "air.png": airTexture };
-		});
-		setLoading(false);
-	}, []);
+				// Create and parse programmer art spritesheet
+				const programmerArtSheet = new Spritesheet(programmerArtSheetTexture, programmerArtSpritesheet);
+				await programmerArtSheet.parse();
+				programmerArtTexturesRef.current = { ...programmerArtSheet.textures, "air.png": airBaseTexture };
+
+				setLoading(false);
+			} catch (error) {
+				console.error("Failed to load textures:", error);
+				setLoading(false);
+			}
+		};
+
+		loadTextures();
+	}, [setLoading]);
 
 	return (
 		<TexturesContext.Provider

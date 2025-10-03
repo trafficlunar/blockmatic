@@ -17,11 +17,12 @@ function SaveImage({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 	const [fileName, setFileName] = useState("blockmatic");
 	const textures = useTextures(version);
 
-	const onSubmit = () => {
+	const onSubmit = async () => {
 		const width = canvasSize.maxX - canvasSize.minX;
 		const height = canvasSize.maxY - canvasSize.minY;
 
-		const renderer = new PIXI.Renderer({
+		const app = new PIXI.Application();
+		await app.init({
 			width: 16 * width,
 			height: 16 * height,
 			backgroundAlpha: 1,
@@ -35,15 +36,10 @@ function SaveImage({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 			container.addChild(sprite);
 		});
 
-		const renderTexture = PIXI.RenderTexture.create({
-			width: 16 * width,
-			height: 16 * height,
-		});
+		app.stage.addChild(container);
+		app.renderer.render(app.stage);
 
-		renderer.render(container, { renderTexture });
-
-		const canvas = renderer.extract.canvas(renderTexture);
-		canvas.toBlob!((blob) => {
+		app.canvas.toBlob!((blob) => {
 			if (!blob) return;
 
 			const link = document.createElement("a");
@@ -52,10 +48,9 @@ function SaveImage({ close, registerSubmit, dialogKeyHandler }: DialogProps) {
 			link.click();
 
 			URL.revokeObjectURL(link.href);
-		});
+		}, "image/png");
 
-		renderer.destroy();
-
+		app.destroy(true);
 		close();
 	};
 

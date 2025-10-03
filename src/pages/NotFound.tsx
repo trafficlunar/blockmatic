@@ -12,7 +12,7 @@ function NotFound() {
 	const { isDark } = useContext(ThemeContext);
 
 	return (
-		<div className="absolute w-full h-full flex flex-col justify-center items-center">
+		<div className="absolute size-full flex flex-col justify-center items-center">
 			<div className="flex gap-2 items-center">
 				<BlockmaticLogo className="h-8" fill={isDark ? "white" : "black"} />
 				<BlockmaticText className="h-3.5" fill={isDark ? "white" : "black"} />
@@ -24,7 +24,7 @@ function NotFound() {
 			<Button variant="outline" asChild>
 				<Link to={{ pathname: "/" }}>
 					Go back
-					<ChevronLeftIcon className="!h-6 !w-6" />
+					<ChevronLeftIcon className="size-6!" />
 				</Link>
 			</Button>
 		</div>
