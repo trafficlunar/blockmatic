@@ -17,6 +17,7 @@ const defaultSettings: Settings = {
 	blockReplacer: true,
 	toolSettings: true,
 	blockSelector: true,
+	fpsCounter: false,
 };
 
 // eslint-disable-next-line react-refresh/only-export-components

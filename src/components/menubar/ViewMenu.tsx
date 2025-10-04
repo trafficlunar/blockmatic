@@ -39,6 +39,9 @@ function ViewMenu() {
 				<MenubarCheckboxItem checked={settings.canvasBorder} onCheckedChange={onCheckedChange("canvasBorder")}>
 					Canvas Border
 				</MenubarCheckboxItem>
+				<MenubarCheckboxItem checked={settings.fpsCounter} onCheckedChange={onCheckedChange("fpsCounter")}>
+					FPS Counter
+				</MenubarCheckboxItem>
 
 				<MenubarSeparator />
 				<MenubarSub>

@@ -3,7 +3,7 @@ import { useGesture } from "@use-gesture/react";
 import { isMobile } from "react-device-detect";
 
 import * as PIXI from "pixi.js";
-import { Application } from "@pixi/react";
+import { Application, ApplicationRef } from "@pixi/react";
 
 import { LoadingContext } from "@/context/Loading";
 import { CanvasContext } from "@/context/Canvas";
@@ -38,6 +38,7 @@ import CanvasBorder from "./CanvasBorder";
 import CursorInformation from "./information/Cursor";
 import CanvasInformation from "./information/Canvas";
 import SelectionBar from "./SelectionBar";
+import FPS from "./information/FPS";
 
 // Set scale mode to NEAREST
 PIXI.TextureSource.defaultOptions.scaleMode = "nearest";
@@ -56,6 +57,8 @@ function Canvas() {
 	const textures = useTextures(version);
 	const blockData = useBlockData(version);
 	const stageContainerRef = useRef<HTMLDivElement>(null);
+
+	const appRef = useRef<ApplicationRef>(null);
 
 	const mousePosition = useRef<Position>({ x: 0, y: 0 });
 	const [mouseCoords, setMouseCoords] = useState<Position>({ x: 0, y: 0 });
@@ -506,7 +509,7 @@ function Canvas() {
 			style={{ cursor: cssCursor }}
 			className="relative"
 		>
-			<Application resizeTo={stageContainerRef} backgroundAlpha={0} className="touch-none select-none">
+			<Application resizeTo={stageContainerRef} ref={appRef} backgroundAlpha={0} className="touch-none select-none">
 				<Blocks blocks={visibleBlocks} missingTexture={missingTexture} textures={textures} coords={coords} scale={scale} version={version} />
 				{/* Selection layer */}
 				<Blocks
@@ -534,6 +537,8 @@ function Canvas() {
 
 			<CursorInformation mouseCoords={mouseCoords} />
 			<CanvasInformation />
+
+			{settings.fpsCounter && <FPS fps={appRef.current?.getApplication()?.ticker.FPS} />}
 
 			<SelectionBar startBlocks={startBlocksRef.current} startSelectionCoords={startSelectionCoordsRef.current} />
 		</div>

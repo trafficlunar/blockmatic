@@ -34,6 +34,7 @@ interface Settings {
 	blockReplacer: boolean;
 	toolSettings: boolean;
 	blockSelector: boolean;
+	fpsCounter: boolean;
 }
 
 interface DialogProps {
