@@ -10,7 +10,7 @@ function PrivacyPolicy() {
 
 			<h1 className="text-2xl font-medium">Privacy Policy</h1>
 			<p className="mb-4">
-				<strong>Effective Date:</strong> February 16, 2025
+				<strong>Effective Date:</strong> October 3, 2025
 			</p>
 
 			<p>By using this website, you confirm that you understand and agree to this Privacy Policy.</p>
