@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /app
+
+Sitemap: https://blockmatic.trafficlunar.net/sitemap.xml
