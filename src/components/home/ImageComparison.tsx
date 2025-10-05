@@ -26,7 +26,7 @@ function ImageComparison() {
 			/>
 
 			<img
-				src="/bliss/bliss.png"
+				src="/bliss/bliss.jpg"
 				alt="blockmatic version of bliss"
 				draggable={false}
 				className="absolute w-full -z-20 rounded-xl"

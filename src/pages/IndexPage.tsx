@@ -40,7 +40,7 @@ function IndexPage() {
 			</header>
 
 			<img
-				src="/home/background.png"
+				src="/home/background.jpg"
 				alt="background"
 				className="absolute w-full object-cover -z-20"
 				style={{ maskImage: "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(255,255,255,0) 100%)" }}
@@ -65,7 +65,7 @@ function IndexPage() {
 
 			<section className="max-w-full mx-8 mt-16">
 				<img
-					src={isDark ? "/home/blockmatic_screenshot_dark.png" : "/home/blockmatic_screenshot_light.png"}
+					src={isDark ? "/home/blockmatic_screenshot_dark.jpg" : "/home/blockmatic_screenshot_light.jpg"}
 					alt="app preview"
 					className="max-w-260 w-full rounded-xl border border-zinc-700"
 				/>
@@ -112,19 +112,19 @@ function IndexPage() {
 				<Carousel className="w-full">
 					<CarouselContent>
 						<CarouselItem>
-							<img src="/home/miku.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/miku.jpg" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 						<CarouselItem>
-							<img src="/home/nyan_cat.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/nyan_cat.jpg" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 						<CarouselItem>
-							<img src="/home/pikachu.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/pikachu.jpg" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 						<CarouselItem>
-							<img src="/home/portal.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/portal.jpg" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 						<CarouselItem>
-							<img src="/home/windows.png" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
+							<img src="/home/windows.jpg" className="rounded-xl border border-zinc-300 dark:border-zinc-800"></img>
 						</CarouselItem>
 					</CarouselContent>
 					<CarouselPrevious />
