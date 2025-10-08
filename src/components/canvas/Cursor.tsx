@@ -2,9 +2,10 @@ interface Props {
 	mouseCoords: Position;
 	radius: number;
 	isDark: boolean;
+	scale: number;
 }
 
-function Cursor({ mouseCoords, radius, isDark }: Props) {
+function Cursor({ mouseCoords, radius, isDark, scale }: Props) {
 	const isOddRadius = radius % 2 !== 0;
 	const halfSize = Math.floor(radius / 2);
 
@@ -18,7 +19,7 @@ function Cursor({ mouseCoords, radius, isDark }: Props) {
 			draw={(g) => {
 				g.clear();
 				g.rect(0, 0, size, size);
-				g.stroke({ width: 1, color: isDark ? 0xffffff : 0x000000, alignment: 1 });
+				g.stroke({ width: 2 / scale, color: isDark ? 0xffffff : 0x000000, alignment: 0 });
 			}}
 		/>
 	);

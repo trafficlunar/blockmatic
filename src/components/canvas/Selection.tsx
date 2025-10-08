@@ -1,12 +1,13 @@
 interface Props {
 	selection: CoordinateArray;
 	isDark: boolean;
+	scale: number;
 }
 
 const DASH_LENGTH = 8;
 const GAP_LENGTH = 5;
 
-function Selection({ selection, isDark }: Props) {
+function Selection({ selection, isDark, scale }: Props) {
 	return (
 		<pixiGraphics
 			draw={(g) => {
@@ -62,7 +63,7 @@ function Selection({ selection, isDark }: Props) {
 				});
 
 				// Render the lines
-				g.stroke({ width: 2, color: isDark ? 0xffffff : 0x000000, alignment: 0 });
+				g.stroke({ width: 2 / scale, color: isDark ? 0xffffff : 0x000000, alignment: 0 });
 			}}
 		/>
 	);

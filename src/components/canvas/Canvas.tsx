@@ -527,8 +527,8 @@ function Canvas() {
 
 					<pixiContainer x={coords.x} y={coords.y} scale={scale}>
 						{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
-						<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} />
-						<Selection selection={selectionCoords} isDark={isDark} />
+						<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} scale={scale} />
+						<Selection selection={selectionCoords} isDark={isDark} scale={scale} />
 					</pixiContainer>
 
 					{settings.grid && (
