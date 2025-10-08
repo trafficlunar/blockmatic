@@ -27,16 +27,17 @@ export const HistoryProvider = ({ children }: Props) => {
 	const MAX_HISTORY = 20;
 
 	const addHistory = (name: string, apply: () => void, revert: () => void) => {
-		const newHistory = history.slice(0, currentIndex + 1);
-		newHistory.push({ name, apply, revert });
+		setHistory((prev) => {
+			const newHistory = prev.slice(0, currentIndex + 1);
+			newHistory.push({ name, apply, revert });
 
-		if (newHistory.length > MAX_HISTORY) {
-			newHistory.shift();
-		} else {
+			if (newHistory.length > MAX_HISTORY) {
+				newHistory.shift();
+			}
+
 			setCurrentIndex(newHistory.length - 1);
-		}
-
-		setHistory(newHistory);
+			return newHistory;
+		});
 	};
 
 	const undo = () => {

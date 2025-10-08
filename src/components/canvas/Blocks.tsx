@@ -15,7 +15,7 @@ interface Props {
 	isSelectionLayer?: boolean;
 }
 
-// Lifts 16,000 tiles limit
+// Removes 16,000 tiles limit
 settings.use32bitIndex = true;
 
 function Blocks({ blocks, missingTexture, textures, coords, scale, version, isSelectionLayer }: Props) {

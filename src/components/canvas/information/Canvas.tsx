@@ -29,7 +29,7 @@ function CanvasInformation() {
 				</div>
 			</div>
 
-			<div className="info-child">
+			<div className="info-child py-2!">
 				<Slider
 					defaultValue={[1]}
 					min={-1} // 10^(-1) = 0.1

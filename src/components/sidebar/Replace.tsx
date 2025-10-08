@@ -78,7 +78,7 @@ function Replace() {
 			<Label htmlFor="radius">Block 1</Label>
 			<button
 				onClick={() => onClickBlockButton(1)}
-				className="h-10 rounded-md border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 flex justify-center items-center"
+				className="h-10 rounded-md cursor-pointer border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 flex justify-center items-center"
 			>
 				<Application width={32} height={32} backgroundAlpha={0}>
 					<pixiContainer>
@@ -90,7 +90,7 @@ function Replace() {
 			<Label htmlFor="radius">Block 2</Label>
 			<button
 				onClick={() => onClickBlockButton(2)}
-				className="h-10 rounded-md border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 flex justify-center items-center"
+				className="h-10 rounded-md cursor-pointer border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 flex justify-center items-center"
 			>
 				<Application width={32} height={32} backgroundAlpha={0}>
 					<pixiContainer>

@@ -30,10 +30,10 @@ function SelectedBlock() {
 		<TooltipProvider>
 			<Tooltip delayDuration={0}>
 				<TooltipTrigger asChild>
-					<div className="absolute bottom-1 w-8 h-8 outline-solid outline-1 outline-zinc-800 dark:outline-zinc-200 rounded p-0!">
-						<Application width={32} height={32}>
+					<div className="absolute bottom-1 w-7 h-7 outline-solid outline-1 outline-zinc-800 dark:outline-zinc-200 rounded p-0!">
+						<Application width={28} height={28}>
 							<pixiContainer>
-								<pixiSprite texture={textures[selectedBlock] ?? missingTexture} scale={2} />
+								<pixiSprite texture={textures[selectedBlock] ?? missingTexture} scale={1.75} />
 							</pixiContainer>
 						</Application>
 					</div>

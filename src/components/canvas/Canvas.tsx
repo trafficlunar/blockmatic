@@ -527,6 +527,9 @@ function Canvas() {
 				</Application>
 			</div>
 
+			{/* Overlay for the inset shadow */}
+			<div className="absolute inset-0 pointer-events-none  shadow-[inset_0_0_20px_rgba(0,0,0,0.6)] shadow-black/15 dark:shadow-black/45" />
+
 			<CursorInformation mouseCoords={mouseCoords} />
 			<CanvasInformation />
 

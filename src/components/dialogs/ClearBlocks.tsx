@@ -28,7 +28,7 @@ function ClearBlocks({ close }: DialogProps) {
 		<DialogContent>
 			<DialogHeader>
 				<DialogTitle>Are you sure?</DialogTitle>
-				<DialogDescription>This action will delete every block on the canvas. It cannot be undone once completed.</DialogDescription>
+				<DialogDescription>This action will delete every block on the canvas!</DialogDescription>
 			</DialogHeader>
 
 			<DialogFooter>

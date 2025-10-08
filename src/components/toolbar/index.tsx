@@ -41,7 +41,7 @@ function Toolbar() {
 				type="single"
 				value={tool}
 				onValueChange={onToolChange}
-				className="w-full flex flex-col items-center border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 *:py-0.5"
+				className="rounded-none w-full flex flex-col items-center border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 *:py-0.5"
 			>
 				{/* Hand */}
 				<Tooltip delayDuration={0}>
