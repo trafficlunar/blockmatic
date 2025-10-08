@@ -1,18 +1,17 @@
-export function versionToNumber(version: string) {
-	const parts = version.split(".").map(Number);
-	return parts[0] * 1000 + (parts[1] || 0) * 10 + (parts[2] || 0);
+// For Minecraft versions
+// 12110 = 1.21.10
+// 12109 = 1.21.9
+
+export function versionToNumber(version: string): number {
+	const [major, minor = 0, patch = 0] = version.split(".").map(Number);
+	return major * 10000 + minor * 100 + patch;
 }
 
-export function numberToVersion(version: number) {
-	const major = Math.floor(version / 1000);
-	const minor = version % 1000; // Remainder becomes the minor and patch version
+export function numberToVersion(version: number): string {
+	const major = Math.floor(version / 10000);
+	const minor = Math.floor((version % 10000) / 100);
+	const patch = version % 100;
 
-	// If minor is a multiple of 10, it's just minor with no patch
-	if (minor % 10 === 0) {
-		return `${major}.${Math.floor(minor / 10)}`;
-	}
-
-	// Otherwise, split into minor and patch
-	const patch = minor % 10;
-	return `${major}.${Math.floor(minor / 10)}.${patch}`;
+	if (patch === 0) return `${major}.${minor}`;
+	return `${major}.${minor}.${patch}`;
 }

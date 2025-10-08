@@ -33,7 +33,7 @@ export const CanvasProvider = ({ children }: Props) => {
 	const [blocks, setBlocks] = useState<Block[]>(welcomeBlocksData);
 	const [coords, setCoords] = useState<Position>({ x: 0, y: 0 });
 	const [scale, setScale] = useState(1);
-	const [version, setVersion] = useState(1219);
+	const [version, setVersion] = useState(12110);
 
 	// Get the farthest away blocks in each direction
 	const canvasSize = useMemo(() => {
