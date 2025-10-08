@@ -496,44 +496,48 @@ function Canvas() {
 	if (loading) return null;
 
 	return (
-		<div
-			ref={stageContainerRef}
-			tabIndex={0}
-			onClick={onClick}
-			onKeyDown={onKeyDown}
-			onKeyUp={onKeyUp}
-			onPointerDown={onPointerDown}
-			onPointerMove={onPointerMove}
-			onPointerUp={onPointerUp}
-			onWheel={onWheel}
-			style={{ cursor: cssCursor }}
-			className="relative"
-		>
-			<Application resizeTo={stageContainerRef} ref={appRef} backgroundAlpha={0} className="touch-none select-none">
-				<Blocks blocks={visibleBlocks} missingTexture={missingTexture} textures={textures} coords={coords} scale={scale} version={version} />
-				{/* Selection layer */}
-				<Blocks
-					isSelectionLayer
-					blocks={selectionLayerBlocks}
-					missingTexture={missingTexture}
-					textures={textures}
-					coords={coords}
-					scale={scale}
-					version={version}
-				/>
+		// Relative for canvas information
+		<div className="relative">
+			{/* Wrap application around div to use events */}
+			<div
+				ref={stageContainerRef}
+				tabIndex={0}
+				onClick={onClick}
+				onKeyDown={onKeyDown}
+				onKeyUp={onKeyUp}
+				onPointerDown={onPointerDown}
+				onPointerMove={onPointerMove}
+				onPointerUp={onPointerUp}
+				onWheel={onWheel}
+				style={{ cursor: cssCursor }}
+				className="size-full"
+			>
+				<Application resizeTo={stageContainerRef} ref={appRef} backgroundAlpha={0} className="touch-none select-none">
+					<Blocks blocks={visibleBlocks} missingTexture={missingTexture} textures={textures} coords={coords} scale={scale} version={version} />
+					{/* Selection layer */}
+					<Blocks
+						isSelectionLayer
+						blocks={selectionLayerBlocks}
+						missingTexture={missingTexture}
+						textures={textures}
+						coords={coords}
+						scale={scale}
+						version={version}
+					/>
 
-				<pixiContainer x={coords.x} y={coords.y} scale={scale}>
-					{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
-					<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} />
-					<Selection selection={selectionCoords} isDark={isDark} />
-				</pixiContainer>
-
-				{settings.grid && (
-					<pixiContainer filters={[new PIXI.AlphaFilter({ alpha: 0.1 })]}>
-						<Grid stageSize={stageSize} coords={coords} scale={scale} isDark={isDark} />
+					<pixiContainer x={coords.x} y={coords.y} scale={scale}>
+						{settings.canvasBorder && <CanvasBorder canvasSize={canvasSize} isDark={isDark} />}
+						<Cursor mouseCoords={mouseCoords} radius={radius} isDark={isDark} />
+						<Selection selection={selectionCoords} isDark={isDark} />
 					</pixiContainer>
-				)}
-			</Application>
+
+					{settings.grid && (
+						<pixiContainer filters={[new PIXI.AlphaFilter({ alpha: 0.1 })]}>
+							<Grid stageSize={stageSize} coords={coords} scale={scale} isDark={isDark} />
+						</pixiContainer>
+					)}
+				</Application>
+			</div>
 
 			<CursorInformation mouseCoords={mouseCoords} />
 			<CanvasInformation />
