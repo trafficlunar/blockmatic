@@ -456,18 +456,6 @@ function Canvas() {
 		return () => resizeObserver.disconnect();
 	}, [loading, setStageSize]);
 
-	// Window events handler
-	useEffect(() => {
-		const onBeforeUnload = (e: BeforeUnloadEvent) => {
-			e.preventDefault();
-		};
-
-		window.addEventListener("beforeunload", onBeforeUnload);
-		return () => {
-			window.removeEventListener("beforeunload", onBeforeUnload);
-		};
-	}, [onKeyDown, onKeyUp]);
-
 	useGesture(
 		{
 			onPinch: ({ offset: [d] }) => {

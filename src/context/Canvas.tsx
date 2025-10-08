@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import pako from "pako";
 
 import { HistoryContext } from "./History";
 import welcomeBlocksData from "@/data/welcome.json";
@@ -89,13 +90,48 @@ export const CanvasProvider = ({ children }: Props) => {
 	}, [canvasSize, stageSize]);
 
 	useEffect(() => {
-		addHistory(
-			"New Canvas",
-			() => setBlocks(welcomeBlocksData),
-			() => setBlocks([])
-		);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// Load blocks from previous session (if any)
+		const localStorageBlocks = localStorage.getItem("blocks");
+		if (localStorageBlocks) {
+			try {
+				// Convert stored string (Base64) back to bytes
+				const compressedData = Uint8Array.from(atob(localStorageBlocks), (c) => c.charCodeAt(0));
+				const decompressed = pako.inflate(compressedData, { to: "string" });
+				const parsedBlocks = JSON.parse(decompressed);
+
+				setBlocks(parsedBlocks);
+				addHistory(
+					"Load Previous Session",
+					() => setBlocks(parsedBlocks),
+					() => setBlocks(welcomeBlocksData)
+				);
+			} catch (err) {
+				console.error("Failed to load blocks from localStorage:", err);
+				localStorage.removeItem("blocks");
+			}
+		} else {
+			// Add history entry for new canvas
+			addHistory(
+				"New Canvas",
+				() => setBlocks(welcomeBlocksData),
+				() => setBlocks([])
+			);
+		}
 	}, []);
+
+	// Set blocks to localStorage for session persistence
+	useEffect(() => {
+		// If blocks are the same as the starting welcome blocks, return
+		if (JSON.stringify(blocks) === JSON.stringify(welcomeBlocksData)) return;
+
+		const encoder = new TextEncoder();
+		const data = encoder.encode(JSON.stringify(blocks));
+		const compressed = pako.deflate(data);
+
+		// Store compressed data as Base64 string
+		const base64 = btoa(String.fromCharCode(...compressed));
+		localStorage.setItem("blocks", base64);
+	}, [blocks]);
 
 	return (
 		<CanvasContext.Provider

@@ -17,6 +17,7 @@ import {
 	SquareDashedIcon,
 	Trash2Icon,
 	WandIcon,
+	SaveIcon,
 } from "lucide-react";
 
 import { HistoryContext } from "@/context/History";
@@ -32,6 +33,7 @@ const iconMap = {
 	"Magic Wand": WandIcon,
 	"Move Selection": MoveIcon,
 	"New Canvas": PresentationIcon,
+	"Load Previous Session": SaveIcon,
 	"Open Image": ImageIcon,
 	"Open Schematic": FileIcon,
 	"Paint Bucket": PaintBucketIcon,
