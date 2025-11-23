@@ -55,8 +55,8 @@ function OpenImage({ close }: DialogProps) {
 		falling: false,
 	});
 
-	// Used for centering the canvas
-	const isFinished = useRef(false);
+	// Changed from ref to state so React re-renders when it changes
+	const [isFinished, setIsFinished] = useState(false);
 
 	useEffect(() => {
 		if (acceptedFiles[0]) {
@@ -104,7 +104,7 @@ function OpenImage({ close }: DialogProps) {
 		if (image) {
 			const oldBlocks = [...blocks];
 
-			isFinished.current = false;
+			setIsFinished(false);
 			setLoading(true);
 
 			// Wait for loading indicator to appear
@@ -146,22 +146,23 @@ function OpenImage({ close }: DialogProps) {
 			}
 
 			setLoading(false);
-			isFinished.current = true;
+			setIsFinished(true);
 		}
 	};
 
-	// Trying to center and close above doesn't work for some reason
+	// This effect now properly triggers when isFinished changes
 	useEffect(() => {
-		if (!isFinished.current) return;
+		if (!isFinished) return;
 
 		// Wrap in requestAnimationFrame() to fix bug where canvas is black
 		requestAnimationFrame(() => {
 			centerCanvas();
+			close();
 		});
-		close();
 
+		// Cleanup
 		return () => {
-			isFinished.current = false;
+			setIsFinished(false);
 		};
 	}, [isFinished, centerCanvas, close]);
 
@@ -187,13 +188,13 @@ function OpenImage({ close }: DialogProps) {
 
 			return newState;
 		});
-	}, [selectedBlocks]);
+	}, [selectedBlocks, blockData]);
 
 	useEffect(() => {
 		if (!userModifiedBlocks.current) {
 			setSelectedBlocks(Object.keys(blockData));
 		}
-	}, [version]);
+	}, [version, blockData]);
 
 	useEffect(() => {
 		if (!divRef.current) return;
