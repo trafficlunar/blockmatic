@@ -12,4 +12,18 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "./src"),
 		},
 	},
+	build: {
+		rolldownOptions: {
+			output: {
+				codeSplitting: {
+					groups: [
+						{
+							name: "pixi",
+							test: /node_modules[\\/](pixi\.js|@pixi)[\\/]/,
+						},
+					],
+				},
+			},
+		},
+	},
 });
